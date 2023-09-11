@@ -9,5 +9,4 @@ class ShootformoneyApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }

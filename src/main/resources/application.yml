@@ -8,11 +8,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/shootformoney
     username: root
-    password: aA!123456
+    password: 1234
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
@@ -22,3 +22,9 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
+
+# football-data.org API 연동
+football:
+  api:
+    key: 26d128ed6a694c3699f698df83a4eb54
+    base-url: https://api.football-data.org/v4
