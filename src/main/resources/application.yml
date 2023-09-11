@@ -2,6 +2,7 @@ server:
   address : localhost
   port : 8080
 
+# MySQL 연동 
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
