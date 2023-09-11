@@ -32,7 +32,7 @@
 
 - Cliet가 웹 사이트 방문 시 flow chart 작성
 
-![userflow](https://raw.githubusercontent.com/hyensukim/Ait/main/%EC%82%AC%EC%A7%84/UserFlow.jpg?token=GHSAT0AAAAAACC6I4BV3R6MQQPJ5HVVLNMQZH6PAZA)
+![userflow](https://raw.githubusercontent.com/hyensukim/SpringBootTeamproject/main/image/UserFlow.jpg)
 
 
 # 4. 기능 명세서
@@ -299,4 +299,4 @@
 
 # 8. 일정표
 
-![1694355767033](https://raw.githubusercontent.com/hyensukim/Ait/main/image/teamProject/1694355767033.png?token=GHSAT0AAAAAACC6I4BUW5BDTFVEHJ6KB7RQZH6PD5A)
+![1694355767033](https://raw.githubusercontent.com/hyensukim/SpringBootTeamproject/main/image/%EC%9D%BC%EC%A0%95%ED%91%9C.png)
