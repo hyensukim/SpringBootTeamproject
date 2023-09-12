@@ -11,11 +11,11 @@ import lombok.Data;
 public class ConfigEntity {
 
     @Id
-    @Column(name="code_", length = 45)
-    private String code;
+    @Column(name = "code_", length = 45)
+    private String code;    // PK
 
     @Lob
     @Column(name = "value_")
-    private String value;
+    private String value;   // json 형태의 데이터
 
 }
