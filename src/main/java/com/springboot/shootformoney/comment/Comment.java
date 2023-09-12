@@ -14,7 +14,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "c_no")
-    private Integer cNo;
+    private Long cNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "m_no", nullable = false)

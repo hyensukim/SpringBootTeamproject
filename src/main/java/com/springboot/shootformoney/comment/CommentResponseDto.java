@@ -5,7 +5,7 @@ import com.springboot.shootformoney.comment.Comment;
 import java.time.LocalDateTime;
 
 public class CommentResponseDto { //댓글 조회 요청에 대한 응답을 전달하기 위한 DTO
-    private Integer cNo;
+    private Long cNo;
     private Integer mNo;
     private Integer pNo;
     private String cContent;
@@ -17,11 +17,11 @@ public class CommentResponseDto { //댓글 조회 요청에 대한 응답을 전
 
     // getters and setters...
 
-    public Integer getcNo() {
+    public Long getcNo() {
         return cNo;
     }
 
-    public void setcNo(Integer cNo) {
+    public void setcNo(Long cNo) {
         this.cNo = cNo;
     }
 
