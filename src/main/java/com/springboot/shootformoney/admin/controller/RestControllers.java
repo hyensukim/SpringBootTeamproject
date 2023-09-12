@@ -6,13 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin/config/post")
+@RequestMapping("/admin/config")
 @RequiredArgsConstructor
 public class RestControllers {
 
@@ -20,14 +17,20 @@ public class RestControllers {
     private final ConfigInfoService infoService;
     private String code = "siteConfig";
 
+    @GetMapping
+    public ResponseEntity<ConfigForm> configGet(Model model) {
+        ConfigForm configForm = infoService.get(code, ConfigForm.class);
+
+        // configForm -> null = 새로운 configForm, null != 이전의 configForm
+        return ResponseEntity.ok(configForm == null ? new ConfigForm() : configForm);
+    }
+
     @PostMapping
-    public ResponseEntity<ConfigForm> configPost(ConfigForm configForm, Model model) {
-//        commonProcess(model);
-//        System.out.println(siteTitle);
+    public ResponseEntity<ConfigForm> configPost(@RequestBody ConfigForm configForm) {
+        //json 형식의 데이터 처리를 위해 @RequestBody 사용
         saveService.configSave(code, configForm);
-//        model.addAttribute("message", "설정 저장 완료");
-        return ResponseEntity.status(HttpStatus.OK).body(configForm);
-//        return null;
+
+        return ResponseEntity.ok(configForm);
     }
 
 }
