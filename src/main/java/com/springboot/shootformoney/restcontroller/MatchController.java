@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class RestControllers {
+public class MatchController {
 
     private final MatchService matchService;
-    public RestControllers(MatchService matchService){
+    public MatchController(MatchService matchService){
         this.matchService = matchService;
     }
     @GetMapping("/epl")
