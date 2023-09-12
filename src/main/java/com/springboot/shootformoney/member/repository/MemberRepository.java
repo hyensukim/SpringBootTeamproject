@@ -1,11 +1,13 @@
 package com.springboot.shootformoney.member.repository;
 
-import com.springboot.shootformoney.member.entity.MemberEntity;
+import com.springboot.shootformoney.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    // 아이디로 회원 조회.
-    MemberEntity findByM_id(String m_id);
+    Member findBymId(String mId); // 회원 Id로 조회.
+    Member findBymNickName(String mNickName); // 닉네임으로 조회
+    Member findBymPhone(String mPhone); // 전화 번호로 조회
+    Member findBymEmail(String mEmail); // 이메일로 조회
 
 }

@@ -1,4 +1,4 @@
-package com.springboot.shootformoney.member.service;
+package com.springboot.shootformoney.member.services;
 
 import org.springframework.stereotype.Service;
 
