@@ -2,6 +2,7 @@ package com.springboot.shootformoney.game.entity;
 
 import com.springboot.shootformoney.game.dto.data.Result;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +11,11 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "game")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class Game {
 
     //PK 설정
@@ -25,7 +31,7 @@ public class Game {
     private String gAwayTeam;
 
     @Column(name="g_start_time", nullable = false)
-    private LocalDateTime gStartTime;
+    private String gStartTime;
 
     //end time은 경기마다 다르므로 굳이 저장하지 않을 예정
 

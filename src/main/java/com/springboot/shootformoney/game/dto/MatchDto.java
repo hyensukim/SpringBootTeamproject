@@ -18,5 +18,5 @@ import java.util.List;
 @Builder
 public class MatchDto {
     @JsonProperty("matches")
-    private List<Matches> matches;
+    private List<Match> matches;
 }
