@@ -3,7 +3,6 @@ package com.springboot.shootformoney.admin.controller;
 import com.springboot.shootformoney.admin.service.ConfigInfoService;
 import com.springboot.shootformoney.admin.service.ConfigSaveService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/admin/config")
 @RequiredArgsConstructor
-public class RestControllers {
+public class ConfigRestControllers {
 
     private final ConfigSaveService saveService;
     private final ConfigInfoService infoService;
