@@ -37,7 +37,6 @@ public class MatchService {
     @Autowired
     private GameRepository gameRepository;
 
-    public LocalDateTime date = LocalDateTime.now();
 
     //기간 내의 모든 EPL 경기를 조회하는 메서드.
     public MatchDto getPLMatches() {
@@ -150,7 +149,7 @@ public class MatchService {
         gameRepository.saveAll(games);
     }
 
-    //외부 API에서 JSON 형식으로 받아 온 데이터를 DB에 저장할 수 있는 List<Game>으로 변환하는 메서드.
+    //외부 API에서 JSON 형식으로 받아 온 데이터를 DB에 저장할 수 있는 List<Game>으로 변환하는 메서드.ddd
     private List<Game> convertToEntity(List<Match> matches){
         return matches.stream()
                 .map(match -> Game.builder()
