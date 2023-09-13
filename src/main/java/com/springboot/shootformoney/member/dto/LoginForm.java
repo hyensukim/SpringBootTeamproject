@@ -9,5 +9,5 @@ public class LoginForm {
 
     private String mPassword;
 
-    private boolean savedId; // 아이디 저장
+    private boolean saveId; // 아이디 저장
 }

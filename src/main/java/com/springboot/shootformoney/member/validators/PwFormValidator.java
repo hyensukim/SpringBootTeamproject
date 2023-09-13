@@ -11,7 +11,7 @@ public interface PwFormValidator {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(mPassword);
 
-        return matcher.matches();
+        return matcher.find();
     }
 
     default boolean checkForm_number(String mPassword){
@@ -20,7 +20,7 @@ public interface PwFormValidator {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(mPassword);
 
-        return matcher.matches();
+        return matcher.find();
     }
 
     default boolean checkForm_special(String mPassword){
@@ -29,6 +29,6 @@ public interface PwFormValidator {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(mPassword);
 
-        return matcher.matches();
+        return matcher.find();
     }
 }
