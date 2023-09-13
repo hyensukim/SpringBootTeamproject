@@ -1,5 +1,9 @@
 package com.springboot.shootformoney.post;
 
+
+
+import com.springboot.shootformoney.board.entity.Board;
+import com.springboot.shootformoney.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,19 +17,32 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
-
+    private final BoardRepository boardRepository;
 
     //저장
     @Transactional
-    public Long savePost(Post post){
-        postRepository.save(post);
+    public Long savePost(PostDTO postDto){
+        Board board = boardRepository.findBybNo(postDto.getBNo());
+        if (board == null) {
+            throw new IllegalArgumentException("해당 번호의 게시판이 존재하지 않습니다: " + postDto.getBNo());
+        }
+
+        Post post = new Post();
+        post.setPTitle(postDto.getPTitle());
+        post.setPContent(postDto.getPContent());
+
+        // 연관 관계 설정
+        post.setBoard(board);
+
+        // Save the post
+        postRepository.save(post,postDto.getBNo());
+
         return post.getPNo();
     }
-
     //삭제
     @Transactional
-    public void deletePost(Long id) {
-        Post post = postRepository.findOne(id);
+    public void deletePost(Long pNo) {
+        Post post = postRepository.findOne(pNo);
         if (post != null) {
             postRepository.delete(post);
         }
@@ -36,10 +53,10 @@ public class PostService {
 
     //수정
     @Transactional
-    public void updatePost(Long id, String title, String content) {
-        Post post = postRepository.findOne(id);
+    public void updatePost(Long pNo, String pTitle, String pContent) {
+        Post post = postRepository.findOne(pNo);
         if (post != null) {
-            post.update(title, content);
+            post.update(pTitle, pContent);
         } else {
             throw new IllegalArgumentException("해당 아이디의 게시물이 존재하지 않습니다.");
         }
@@ -52,8 +69,8 @@ public class PostService {
     }
 
     //단일 조회
-    public Post findPost(Long id) {
-        Post post = postRepository.findOne(id);
+    public Post findPost(Long pNo) {
+        Post post = postRepository.findOne(pNo);
         if (post != null) {
             post.incrementViewCount();
             return post;
@@ -63,8 +80,10 @@ public class PostService {
     }
 
     // 제목으로 찾기
-    public List<Post> findPostsByTitle(String title) {
-        return postRepository.findByTitle(title);
+    public List<Post> findPostsByTitle(String pTitle) {
+        return postRepository.findByTitle(pTitle);
     }
+
+
 
 }
