@@ -63,19 +63,19 @@ public class SignUpValidator implements Validator, PhoneFormValidator, PwFormVal
                 signUpForm.setMPhone(mPhone);
             }
         }else{
-            errors.rejectValue("mPhone","","전화 번호 양식이 잘못됨");
+            errors.rejectValue("mPhone","","전화 번호 양식이 잘못되었습니다.");
         }
 
         // 비밀번호 양식 체크
         if( mPw != null && !mPw.isBlank() && mPwCheck != null && !mPwCheck.isBlank()){
             // 비밀번호와 비밀번호 확인 일치여부 확인
             if(!mPw.equals(mPwCheck)){
-                errors.rejectValue("mPasswordCheck","","비밀번호와 확인이 일치하지 않음");
+                errors.rejectValue("mPasswordCheck","","비밀번호가 일치하지 않습니다.");
             }
 
             // 비밀번호 양식 확인
             if(!checkForm_number(mPw) || !checkForm_alphabet(mPw) || !checkForm_special(mPw)){
-                errors.rejectValue("mPassword","","비밀번호 양식이 잘못됨");
+                errors.rejectValue("mPassword","","비밀번호 양식이 잘못되었습니다.");
             }
         }
     }

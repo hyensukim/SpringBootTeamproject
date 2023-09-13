@@ -7,28 +7,28 @@ package com.springboot.shootformoney.member.dto;
     @Data
     public class SignUpForm {
 
-        @NotBlank
-        @Size(min=4, max=16)
+        @NotBlank(message = "아이디를 입력해주세요.")
+        @Size(min=4, max=16 , message="최소 4자 최대 16자로 입력해주세요.")
         private String mId;
 
-        @NotBlank
-        @Size(min=8, max=16)
+        @NotBlank(message = "비밀번호를 입력해주세요.")
+        @Size(min=8, max=16 , message="최소 8자 최대 16자로 입력해주세요.")
         private String mPassword;
 
-        @NotBlank
+        @NotBlank(message = "비밀번호 확인을 입력해주세요.")
         private String mPasswordCheck; // 비밀번호 확인
 
-        @NotBlank
-        @Size(min=2, max=20)
+        @NotBlank(message = "이름을 입력해주세요.")
+        @Size(min=2, max=20, message="최소 2자 최대 20자로 입력해주세요.")
         private String mName;
 
-        @NotBlank
+        @NotBlank(message = "연락처를 입력해주세요.")
         private String mPhone;
 
-        @Email
+        @Email(message = "이메일 양식에 맞지 않습니다.")
         private String mEmail;
 
-        @NotBlank
-        @Size(min=4, max=16)
+        @NotBlank(message = "별명을 입력해주세요.")
+        @Size(min=4, max=16, message="최소 4자 최대 16자로 입력해주세요.")
         private String mNickName;
     }

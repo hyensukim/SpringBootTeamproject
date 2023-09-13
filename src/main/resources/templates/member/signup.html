@@ -20,7 +20,8 @@
 
     <div class='form-group'>
         <label for='mPasswordCheck'>Confirm Password:</label>
-        <input type='password' id='mPasswordCheck' name='passwordCheck' class='form-control'/>
+        <input type='password' id='mPasswordCheck' name='mPasswordCheck' class='form-control'/>
+        <span th:if="${#fields.hasErrors('mPasswordCheck')}" th:errors="*{mPasswordCheck}"></span>
     </div>
 
     <!-- Add other form fields here -->
