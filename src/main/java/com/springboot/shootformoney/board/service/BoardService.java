@@ -21,6 +21,11 @@ public class BoardService {
     // 게시판 저장
     @Transactional
     public Long saveBoardInfo(Board board) {
+        Board existingBoard = boardRepository.findBybName(board.getBName());
+        if (existingBoard != null) {
+            throw new IllegalArgumentException("이미 존재하는 게시판입니다.");
+        }
+
         boardRepository.save(board);
         return board.getBNo();
     }

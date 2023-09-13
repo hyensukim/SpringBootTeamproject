@@ -1,10 +1,14 @@
 package com.springboot.shootformoney.board.dto;
 
 import com.springboot.shootformoney.board.entity.Board;
+import com.springboot.shootformoney.post.PostDTO;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -33,17 +37,27 @@ public class BoardDto {
         this.bIsFile = false;
     }
 
-    // fromEntity() 메소드를 통해 Board Entity 객체를 받아서 BoardDTO 객체로 변환하는 기능
-    public static BoardDto fromEntity(Board board) {
-        BoardDto boardDto = new BoardDto();
-        boardDto.setBNo(board.getBNo());
-        boardDto.setBName(board.getBName());
-        boardDto.setBPageNo(board.getBPageNo());
-        boardDto.setBUnitNo(board.getBUnitNo());
-        boardDto.setBIsFile(board.isBIsFile());
-
-        return boardDto;
+    public BoardDto(Long bNo, String bName, int bPageNo, int bUnitNo,
+                    boolean bIsFile, List<PostDTO> posts) {
+        this.bNo = bNo;
+        this.bName = bName;
+        this.bPageNo = bPageNo;
+        this.bUnitNo = bUnitNo;
+        this.bIsFile = bIsFile;
+        this.posts = posts;
     }
 
+    private List<PostDTO> posts;
+
+    public static BoardDto fromEntity(Board board) {
+        return new BoardDto(
+                board.getBNo(),
+                board.getBName(),
+                board.getBPageNo(),
+                board.getBUnitNo(),
+                board.isBIsFile(),
+                board.getPosts().stream().map(PostDTO::of).collect(Collectors.toList())
+        );
+    }
 
 }
