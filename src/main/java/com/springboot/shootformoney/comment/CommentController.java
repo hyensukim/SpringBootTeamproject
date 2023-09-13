@@ -1,11 +1,14 @@
 package com.springboot.shootformoney.comment;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @RestController
@@ -14,9 +17,12 @@ public class CommentController {
 
     private final CommentService commentService;
 
+    @Autowired
     public CommentController(CommentService commentService) {
         this.commentService = commentService;
     }
+
+
 
     @PostMapping
     public ResponseEntity<CommentResponseDto> createComment(@RequestBody CommentCreateDto dto){
