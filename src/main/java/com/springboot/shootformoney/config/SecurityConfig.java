@@ -41,7 +41,7 @@ public class SecurityConfig {
                     session.invalidate();//세션 삭제
                 })//로그아웃 처리
                 .logoutSuccessHandler((req,resp,authentication)->{
-                    resp.sendRedirect("/login");
+                    resp.sendRedirect("/member/login");
                 })//로그아웃 성공 후 처리
         );
 

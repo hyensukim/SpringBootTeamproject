@@ -58,10 +58,11 @@ public class SignUpValidator implements Validator, PhoneFormValidator, PwFormVal
         if(mPhone != null && !mPhone.isBlank() && checkForm(mPhone)){
             if(memberRepository.findBymPhone(mPhone) != null){
                 errors.rejectValue("mPhone","","전화 번호 중복");
-            }else{
-                mPhone = mPhone.replaceAll("\\D", "");
-                signUpForm.setMPhone(mPhone);
             }
+
+            mPhone = mPhone.replaceAll("\\D", "");
+            signUpForm.setMPhone(mPhone);
+
         }else{
             errors.rejectValue("mPhone","","전화 번호 양식이 잘못되었습니다.");
         }
