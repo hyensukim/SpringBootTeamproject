@@ -22,7 +22,7 @@ public class ConfigController {
     private String code = "siteConfig";
 
     @GetMapping
-    public String configGet(Model model) {
+    public String getConfig(Model model) {
         commonProcess(model);
         ConfigForm configForm = infoService.get(code, ConfigForm.class);
 
@@ -32,7 +32,7 @@ public class ConfigController {
     }
 
     @PostMapping
-    public String configPost(ConfigForm configForm, Model model) {
+    public String postConfig(ConfigForm configForm, Model model) {
         commonProcess(model);
         saveService.configSave(code, configForm);
         model.addAttribute("message", "설정 저장 완료");
@@ -42,6 +42,7 @@ public class ConfigController {
     private void commonProcess(Model model) {
         String title = "사이트 설정";
         String menuCode = "config";
+
         model.addAttribute("pageTitle", title); // 텝 이름 설정
         model.addAttribute("title", title); // 사이트 내 title 이름 설정
         model.addAttribute("menuCode", menuCode); // 프론트 - 네비게이션 바 구현시, 선택된 메뉴 on 표시 용도
