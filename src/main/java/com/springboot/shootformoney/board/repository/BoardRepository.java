@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BoardRepository extends JpaRepository<Board, String> {
 
-    Board findBybNo(Long bNo); // 게시글 bNo 조회
+    Board findBybNo(Long bNo); // 게시판 bNo 조회
+
+    Board findBybName(String bName); // 게시판 이름 조회
 
 }
