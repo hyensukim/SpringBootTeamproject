@@ -31,7 +31,7 @@ public class PageHandler {
         doPaging(totalCnt, sc);
     }
 
-    private void doPaging(int totalCnt, SearchCondition sc) {
+    private void doPaging(int totalCnt, SearchCondition sc) { //주어진 조건에 따라 페이징을 처리하는 메서드
         this.totalPage = totalCnt / sc.getPageSize() + (totalCnt % sc.getPageSize()==0? 0:1);
         this.sc.setPage(Math.min(sc.getPage(), totalPage));  // page가 totalPage보다 크지 않게
         this.beginPage = (this.sc.getPage() -1) / NAV_SIZE * NAV_SIZE + 1; // 11 -> 11, 10 -> 1, 15->11. 따로 떼어내서 테스트
@@ -44,7 +44,7 @@ public class PageHandler {
         return getQueryString(this.sc.getPage());
     }
 
-    public String getQueryString(Integer page) {
+    public String getQueryString(Integer page) { //현재 설정된 검색 조건과 함께 사용할 수 있는 쿼리 스트링을 생성해 반환하며, 이는 URL 생성 시 유용하게 사용
         // ?page=10&pageSize=10&option=A&keyword=title
         return UriComponentsBuilder.newInstance()
                 .queryParam("page",     page)

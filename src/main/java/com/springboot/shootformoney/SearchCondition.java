@@ -5,11 +5,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 import static java.lang.Math.*;
 import static java.util.Objects.requireNonNullElse;
 
-public class SearchCondition {
-    private Integer page = 1;
-    private Integer pageSize = DEFAULT_PAGE_SIZE;
-    private String  option = "";
-    private String  keyword = "";
+public class SearchCondition { //페이지네이션에 필요한 조건들을 관리하는 클래스
+    private Integer page = 1; //현재 페이지 번호
+    private Integer pageSize = DEFAULT_PAGE_SIZE; //페이지 크기
+    private String  option = ""; //검색 옵션
+    private String  keyword = ""; //검색 키워드
 //    private Integer  offset;
 
     public static final int MIN_PAGE_SIZE = 5;
