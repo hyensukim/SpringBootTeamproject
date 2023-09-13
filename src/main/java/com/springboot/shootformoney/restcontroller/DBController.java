@@ -7,6 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/*
+* DB에 경기를 저장하는 PostMapping을 담당하는 Controller.
+* Author: Hyedokal(https://www.github.com/Hyedokal)
+*/
 @RestController
 public class DBController {
     private final MatchService matchService;
@@ -19,6 +23,16 @@ public class DBController {
         try{
             matchService.saveAllMatchesToDB();
             return new ResponseEntity<>("All matches saved successfully", HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/updateGames")
+    public ResponseEntity<String> updateAllEndedGames() {
+        try{
+            matchService.updateAllEndedGames();
+            return new ResponseEntity<>("All matches updated successfully", HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -1,15 +1,20 @@
 package com.springboot.shootformoney.restcontroller;
 
-import com.springboot.shootformoney.game.dto.MatchDto;
+import com.springboot.shootformoney.game.entity.Game;
 import com.springboot.shootformoney.game.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
+/*
+* 경기 정보를 Get하는 Controller.
+* Author: Hyedokal(https://www.github.com/Hyedokal)
+*/
 @RestController
+@RequestMapping("/list")
 public class MatchController {
 
     private final MatchService matchService;
@@ -18,30 +23,69 @@ public class MatchController {
     public MatchController(MatchService matchService){
         this.matchService = matchService;
     }
-    @GetMapping("/epl")
+    @GetMapping("/unstarted/epl")
     @ResponseBody
-    public MatchDto plMatches(){
+    public List<Game> unstartedPLMatches(){
 
-        return matchService.getPLMatches();
+        return matchService.getUnstartedPLMatches();
     }
 
-    @GetMapping("/laliga")
+    @GetMapping("/unstarted/laliga")
     @ResponseBody
-    public MatchDto pdMatches(){
+    public List<Game> unstartedPDMatches(){
 
-        return matchService.getPDMatches();
+        return matchService.getUnstartedPDMatches();
     }
-    @GetMapping("/bundes")
+    @GetMapping("/unstarted/bundes")
     @ResponseBody
-    public MatchDto bl1Matches(){
+    public List<Game> unstartedBL1Matches(){
 
-        return matchService.getBL1Matches();
+        return matchService.getUnstartedBL1Matches();
     }
-    @GetMapping("/entirelist")
+    @GetMapping("/unstarted/entirelist")
     @ResponseBody
-    public List<MatchDto> everyMatches(){
+    public List<Game> everyUnstartedMatches(){
 
-        return matchService.getAllMatches();
+        return matchService.getAllUnstartedMatches();
     }
 
+    @GetMapping("/finished/epl")
+    @ResponseBody
+    public List<Game> finishedPLMatches(){
+
+        return matchService.getFinishedPLMatches();
+    }
+
+    @GetMapping("/finished/laliga")
+    @ResponseBody
+    public List<Game> finishedPDMatches(){
+
+        return matchService.getFinishedPDMatches();
+    }
+
+    @GetMapping("/finished/bundes")
+    @ResponseBody
+    public List<Game> finishedBL1Matches(){
+
+        return matchService.getFinishedBL1Matches();
+    }
+
+    @GetMapping("/finished/entirelist")
+    @ResponseBody
+    public List<Game> everyFinishedMatches(){
+
+        return matchService.getAllFinishedMatches();
+    }
+
+    @GetMapping("/{matchId}")
+    public ResponseEntity<Game> getGameByMatchId(@PathVariable Integer matchId) {
+        Optional<Game> game = matchService.getGameByMatchId(matchId);
+
+        if(game.isPresent()) {
+            return ResponseEntity.ok(game.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
 }

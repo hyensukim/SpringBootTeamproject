@@ -9,6 +9,9 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class Match {
+    @JsonProperty("id")
+    private Integer matchId;
+
     @JsonProperty("competition")
     private Competition competition;
 

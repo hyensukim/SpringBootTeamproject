@@ -16,12 +16,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
+@Getter
+@Setter
 public class Game {
 
     //PK 설정
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long g_no;
+
+    //API에서 제공하는 경기마다의 고유한 ID. (table update를 위해 추가)
+    @Column(name = "match_id", nullable = false)
+    private Integer matchId;
+
     @Column(name = "g_league", nullable = false)
     private String gLeague;
     @Column(name="g_home_team", nullable = false)
@@ -35,20 +42,26 @@ public class Game {
 
     //end time은 경기마다 다르므로 굳이 저장하지 않을 예정
 
-    @Transient //homeScore, awayScore의 값을 기반으로 계산하여 사용한다.
     @Enumerated(EnumType.STRING)
     @Column(name = "g_Result")
-    private Result result;
+    private Result result = Result.NN; //필드 선언 시 디폴트 값으로 초기화.
 
-    public Result getResult() {
+
+    /*
+    * Entity가 저장되거나 업데이트될 때마다 호출되어
+    * gHomeScore와 gAwayScore를 비교하고 그 결과에 따라 result 값을 설정한다.
+     */
+    @PrePersist
+    @PreUpdate
+    public void calcResult() {
         if(gHomeScore == null || gAwayScore == null){
-            return null;
+            this.result = Result.NN;
         } else if(gHomeScore > gAwayScore){
-            return Result.WIN;
+            this.result = Result.WIN;
         } else if(gHomeScore.equals(gAwayScore)){
-            return Result.DRAW;
+            this.result = Result.DRAW;
         } else{
-            return Result.LOSE;
+            this.result = Result.LOSE;
         }
     }
 
