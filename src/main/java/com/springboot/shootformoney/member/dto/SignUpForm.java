@@ -1,38 +1,34 @@
 package com.springboot.shootformoney.member.dto;
 
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+    import jakarta.validation.constraints.*;
+    import lombok.Data;
 
-@Data
-public class SignUpForm {
+    @Data
+    public class SignUpForm {
 
-    @NotBlank
-    @Min(4) @Max(16)
-    private String mId;
-    
-    @NotBlank
-    @Min(8) @Max(16)
-    private String mPassword;
+        @NotBlank
+        @Size(min=4, max=16)
+        private String mId;
 
-    @NotBlank
-    private String mPasswordCheck; // 비밀번호 확인 
+        @NotBlank
+        @Size(min=8, max=16)
+        private String mPassword;
 
-    @NotBlank
-    @Min(2) @Max(20)
-    private String mName;
+        @NotBlank
+        private String mPasswordCheck; // 비밀번호 확인
 
-    @NotBlank
-    @Max(11)
-    private String mPhone;
+        @NotBlank
+        @Size(min=2, max=20)
+        private String mName;
 
-    @Email
-    private String mEmail;
+        @NotBlank
+        private String mPhone;
 
-    @NotBlank
-    @Min(4) @Max(16)
-    private String mNickName;
-}
+        @Email
+        private String mEmail;
+
+        @NotBlank
+        @Size(min=4, max=16)
+        private String mNickName;
+    }

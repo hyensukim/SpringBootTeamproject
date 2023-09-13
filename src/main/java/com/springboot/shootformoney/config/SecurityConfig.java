@@ -5,6 +5,7 @@
 //import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 //import org.springframework.security.web.SecurityFilterChain;
 //
+//
 //@Configuration
 //public class SecurityConfig {
 //
@@ -14,9 +15,10 @@
 //                .loginPage("member/login")
 //                .usernameParameter("mId")
 //                .passwordParameter("mPassword")
+//                .successHandler()
+//                .failureForwardUrl()
 //        );
 //
 //        return http.build();
 //    }
-//
 //}

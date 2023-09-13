@@ -7,7 +7,7 @@ public interface PwFormValidator {
 
     default boolean checkForm_alphabet(String mPassword){
 
-        String regex = "[a-z|A-Z]";
+        String regex = "[a-z|A-Z]+";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(mPassword);
 
@@ -16,7 +16,7 @@ public interface PwFormValidator {
 
     default boolean checkForm_number(String mPassword){
 
-        String regex = "[0-9]";
+        String regex = "[0-9]+";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(mPassword);
 
@@ -25,7 +25,7 @@ public interface PwFormValidator {
 
     default boolean checkForm_special(String mPassword){
 
-        String regex = "[!@#$%^&*()_+\\-=]";
+        String regex = "[!@#$%^&*()_+\\-=]+";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(mPassword);
 

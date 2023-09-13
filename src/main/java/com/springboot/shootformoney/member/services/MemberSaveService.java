@@ -19,8 +19,7 @@ public class MemberSaveService {
     /**
      * 저장 여부 확인
      */
-    public Member save(SignUpForm signUpForm) throws InvalidPropertiesFormatException{
-        if(signUpForm == null) {throw new InvalidPropertiesFormatException("signUpForm 객체 null");}
+    public Member save(SignUpForm signUpForm){
 
         String mId = signUpForm.getMId();
         String mPw = signUpForm.getMPassword();

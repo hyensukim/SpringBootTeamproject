@@ -40,42 +40,42 @@ public class SignUpValidator implements Validator, PhoneFormValidator, PwFormVal
         String mPhone = signUpForm.getMPhone();
 
         // 아이디 중복 체크
-        if(!mId.isBlank() && memberRepository.findBymId(mId) != null){
-            errors.rejectValue("mId","dupId","아이디 중복");
+        if(mId != null && !mId.isBlank() && memberRepository.findBymId(mId) != null){
+            errors.rejectValue("mId","","아이디 중복");
         }
 
         // 닉네임 중복 체크
-        if(!mNickName.isBlank() && memberRepository.findBymNickName(mNickName) != null){
-            errors.rejectValue("mNickName","dupNickName","닉네임 중복");
+        if(mNickName != null && !mNickName.isBlank() && memberRepository.findBymNickName(mNickName) != null){
+            errors.rejectValue("mNickName","","닉네임 중복");
         }
 
         // 이메일 중복 체크
-        if(!mEmail.isBlank() && memberRepository.findBymEmail(mEmail) != null){
-            errors.rejectValue("mEmail","dupEmail","이메일 중복");
+        if(mEmail != null && !mEmail.isBlank() && memberRepository.findBymEmail(mEmail) != null){
+            errors.rejectValue("mEmail","","이메일 중복");
         }
 
         // 전화 번호 양식 확인 및 중복 체크
-        if(!mPhone.isBlank() && checkForm(mPhone)){
+        if(mPhone != null && !mPhone.isBlank() && checkForm(mPhone)){
             if(memberRepository.findBymPhone(mPhone) != null){
-                errors.rejectValue("mPhone","dupPhone","전화 번호 중복");
+                errors.rejectValue("mPhone","","전화 번호 중복");
             }else{
                 mPhone = mPhone.replaceAll("\\D", "");
                 signUpForm.setMPhone(mPhone);
             }
         }else{
-            errors.rejectValue("mPhone","wrongForm_phone","전화 번호 양식이 잘못됨");
+            errors.rejectValue("mPhone","","전화 번호 양식이 잘못됨");
         }
 
         // 비밀번호 양식 체크
-        if(!mPw.isBlank() && !mPwCheck.isBlank()){
+        if( mPw != null && !mPw.isBlank() && mPwCheck != null && !mPwCheck.isBlank()){
             // 비밀번호와 비밀번호 확인 일치여부 확인
             if(!mPw.equals(mPwCheck)){
-                errors.rejectValue("mPasswordCheck","checkPw","비밀번호와 확인이 일치하지 않음");
+                errors.rejectValue("mPasswordCheck","","비밀번호와 확인이 일치하지 않음");
             }
 
             // 비밀번호 양식 확인
             if(!checkForm_number(mPw) || !checkForm_alphabet(mPw) || !checkForm_special(mPw)){
-                errors.rejectValue("mPassword","wrongForm_password","비밀번호 양식이 잘못됨");
+                errors.rejectValue("mPassword","","비밀번호 양식이 잘못됨");
             }
         }
     }
