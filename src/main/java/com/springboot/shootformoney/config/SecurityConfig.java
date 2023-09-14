@@ -10,8 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import java.io.IOException;
-
 import static org.springframework.security.config.Customizer.withDefaults;
 
 
@@ -24,33 +22,31 @@ public class SecurityConfig {
         /**
          * 로그인 및 로그아웃 처리
          */
-        try {
-            http.csrf(csrf -> csrf.ignoringRequestMatchers(
-                            "/v3/api-docs/**",
-                            "/swagger-ui/**",
-                            "/swagger-resources/**"))
-                    .cors(withDefaults())
-                    .formLogin(f -> f
-                            .loginPage("/member/login")
-                            .usernameParameter("mId")
-                            .passwordParameter("mPassword")
-                            .successHandler(new LoginSuccessHandler())
-                            .failureHandler(new LoginFailureHandler())
-                    ).logout(f -> f
-                            .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 로그아웃 처리 url
-                            .logoutSuccessUrl("/member/login")// 로그아웃 성공 후 이동 페이지
-                            .deleteCookies("JSESSIONID", "saveId")// 로그아웃 이후 쿠키 삭제
-                            .addLogoutHandler((req, resp, authentication) -> {
-                                HttpSession session = req.getSession();
-                                session.invalidate();//세션 삭제
-                            })//로그아웃 처리
-                            .logoutSuccessHandler((req, resp, authentication) -> {
-                                resp.sendRedirect("/member/login");
-                            })//로그아웃 성공 후 처리
-                    );
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+
+        http.csrf(csrf -> csrf.ignoringRequestMatchers(
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-resources/**"))
+                .cors(withDefaults())
+                .formLogin(f -> f
+                        .loginPage("/member/login")
+                        .usernameParameter("mId")
+                        .passwordParameter("mPassword")
+                        .successHandler(new LoginSuccessHandler())
+                        .failureHandler(new LoginFailureHandler())
+                ).logout(f -> f
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 로그아웃 처리 url
+                        .logoutSuccessUrl("/member/login")// 로그아웃 성공 후 이동 페이지
+                        .deleteCookies("JSESSIONID", "saveId")// 로그아웃 이후 쿠키 삭제
+                        .addLogoutHandler((req, resp, authentication) -> {
+                            HttpSession session = req.getSession();
+                            session.invalidate();//세션 삭제
+                        })//로그아웃 처리
+                        .logoutSuccessHandler((req, resp, authentication) -> {
+                            resp.sendRedirect("/member/login");
+                        })//로그아웃 성공 후 처리
+                );
+
 
         /**
          * 권한 설정

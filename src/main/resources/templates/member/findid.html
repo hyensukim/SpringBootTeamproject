@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FindId</title>
+</head>
+<body>
+    <form th:action="@{/member/findid}" th:object="${findIdForm}" method="post">
+        <div class="error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div></div>
+        <div class="form-group">
+            <label for="mName">NAME:</label>
+            <input type="text" id="mName" th:field="*{mName}" class="form-control"/>
+            <span class="error" th:if="${#fields.hasErrors('mName')}" th:errors="*{mName}"></span>
+        </div>
+        <div class="form-group">
+            <label for="mEmail">EMAIL:</label>
+            <input type="text" id="mEmail" th:field="*{mEmail}" class="form-control"/>
+            <span class="error" th:if="${#fields.hasErrors('mEmail')}" th:errors="*{mEmail}"></span>
+        </div>
+        <button type="submit">FIND ID</button>
+    </form>
+</body>
+</html>
