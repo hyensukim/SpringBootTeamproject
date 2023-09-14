@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login Form</title>
+</head>
+<body>
+
+<form th:action="@{/member/login}" th:object="${loginForm}" method="post">
+    <div class="form-group">
+        <label for="mId">ID:</label>
+        <input type="text" id="mId" th:field="*{mId}" class="form-control"/>
+
+    </div>
+
+    <div class="form-group">
+        <label for="mPassword">Password:</label>
+        <input type="password" id="mPassword" th:field="*{mPassword}" class="form-control"/>
+    </div>
+
+    <div class='form-group'>
+        <input type='checkbox' id='saveId' th:field='*{saveId}'/>
+        <label for='saveId'>아이디 저장</label>
+    </div>
+
+    <button type='submit'>Login</button>
+</form>
+
+</body>
+</html>
