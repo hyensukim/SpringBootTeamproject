@@ -1,0 +1,429 @@
+[2023-09-11 19:16:12.889] [INFO ] [background-preinit] org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 8.0.1.Final
+[2023-09-11 19:16:12.947] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Starting ShootformoneyApplication using Java 17.0.7 with PID 5888 (C:\ShootForMoney\build\classes\java\main started by playdata in C:\ShootForMoney)
+[2023-09-11 19:16:12.948] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication No active profile set, falling back to 1 default profile: "default"
+[2023-09-11 19:16:12.987] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2023-09-11 19:16:12.987] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2023-09-11 19:16:13.522] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-09-11 19:16:13.561] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 35 ms. Found 1 JPA repository interfaces.
+[2023-09-11 19:16:14.016] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8080 (http)
+[2023-09-11 19:16:14.022] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 19:16:14.023] [INFO ] [restartedMain] org.apache.catalina.core.StandardService Starting service [Tomcat]
+[2023-09-11 19:16:14.023] [INFO ] [restartedMain] org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/10.1.12]
+[2023-09-11 19:16:14.066] [INFO ] [restartedMain] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+[2023-09-11 19:16:14.066] [INFO ] [restartedMain] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 1078 ms
+[2023-09-11 19:16:14.186] [INFO ] [restartedMain] org.hibernate.jpa.internal.util.LogHelper HHH000204: Processing PersistenceUnitInfo [name: default]
+[2023-09-11 19:16:14.220] [INFO ] [restartedMain] org.hibernate.Version HHH000412: Hibernate ORM core version 6.2.7.Final
+[2023-09-11 19:16:14.222] [INFO ] [restartedMain] org.hibernate.cfg.Environment HHH000406: Using bytecode reflection optimizer
+[2023-09-11 19:16:14.333] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 19:16:14.485] [INFO ] [restartedMain] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo No LoadTimeWeaver setup: ignoring JPA class transformer
+[2023-09-11 19:16:14.497] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Starting...
+[2023-09-11 19:16:14.704] [INFO ] [restartedMain] com.zaxxer.hikari.pool.HikariPool HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6a6d55d7
+[2023-09-11 19:16:14.705] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Start completed.
+[2023-09-11 19:16:14.739] [WARN ] [restartedMain] org.hibernate.orm.deprecation HHH90000026: MySQL57Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+[2023-09-11 19:16:14.880] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 19:16:15.412] [INFO ] [restartedMain] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2023-09-11 19:16:15.483] [INFO ] [restartedMain] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 19:16:15.719] [WARN ] [restartedMain] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2023-09-11 19:16:15.973] [WARN ] [restartedMain] org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration 
+
+Using generated security password: 506cef7f-5204-4959-b411-206246439f4a
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+[2023-09-11 19:16:16.054] [INFO ] [restartedMain] org.springframework.security.web.DefaultSecurityFilterChain Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5028df55, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1565b09f, org.springframework.security.web.context.SecurityContextHolderFilter@7d7f2d1a, org.springframework.security.web.header.HeaderWriterFilter@5828b68b, org.springframework.security.web.csrf.CsrfFilter@4811519a, org.springframework.security.web.authentication.logout.LogoutFilter@3bd32d49, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@493105fc, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@f02722, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@3fc07548, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@4ee16d32, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1dc3a6ea, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4f07a725, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@686b4486, org.springframework.security.web.access.ExceptionTranslationFilter@b4aef4c, org.springframework.security.web.access.intercept.AuthorizationFilter@28594994]
+[2023-09-11 19:16:16.089] [INFO ] [restartedMain] org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+[2023-09-11 19:16:16.102] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 19:16:16.119] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8080 (http) with context path ''
+[2023-09-11 19:16:16.126] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Started ShootformoneyApplication in 3.758 seconds (process running for 4.55)
+[2023-09-11 19:23:37.132] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2023-09-11 19:23:37.132] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+[2023-09-11 19:23:37.133] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Completed initialization in 1 ms
+[2023-09-11 19:28:55.173] [INFO ] [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 19:28:55.175] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown initiated...
+[2023-09-11 19:28:55.184] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown completed.
+[2023-09-11 20:10:33.401] [INFO ] [background-preinit] org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 8.0.1.Final
+[2023-09-11 20:10:33.442] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Starting ShootformoneyApplication using Java 17.0.7 with PID 2280 (C:\ShootForMoney\build\classes\java\main started by playdata in C:\ShootForMoney)
+[2023-09-11 20:10:33.443] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication No active profile set, falling back to 1 default profile: "default"
+[2023-09-11 20:10:33.490] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2023-09-11 20:10:33.490] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2023-09-11 20:10:34.054] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-09-11 20:10:34.095] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 35 ms. Found 1 JPA repository interfaces.
+[2023-09-11 20:10:34.543] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8080 (http)
+[2023-09-11 20:10:34.550] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:10:34.552] [INFO ] [restartedMain] org.apache.catalina.core.StandardService Starting service [Tomcat]
+[2023-09-11 20:10:34.552] [INFO ] [restartedMain] org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/10.1.12]
+[2023-09-11 20:10:34.598] [INFO ] [restartedMain] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+[2023-09-11 20:10:34.598] [INFO ] [restartedMain] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 1108 ms
+[2023-09-11 20:10:34.727] [INFO ] [restartedMain] org.hibernate.jpa.internal.util.LogHelper HHH000204: Processing PersistenceUnitInfo [name: default]
+[2023-09-11 20:10:34.768] [INFO ] [restartedMain] org.hibernate.Version HHH000412: Hibernate ORM core version 6.2.7.Final
+[2023-09-11 20:10:34.770] [INFO ] [restartedMain] org.hibernate.cfg.Environment HHH000406: Using bytecode reflection optimizer
+[2023-09-11 20:10:34.881] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:10:34.992] [INFO ] [restartedMain] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo No LoadTimeWeaver setup: ignoring JPA class transformer
+[2023-09-11 20:10:35.004] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Starting...
+[2023-09-11 20:10:35.214] [INFO ] [restartedMain] com.zaxxer.hikari.pool.HikariPool HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@72467543
+[2023-09-11 20:10:35.216] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Start completed.
+[2023-09-11 20:10:35.259] [WARN ] [restartedMain] org.hibernate.orm.deprecation HHH90000026: MySQL57Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+[2023-09-11 20:10:35.412] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:10:35.912] [INFO ] [restartedMain] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2023-09-11 20:10:35.994] [INFO ] [restartedMain] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:10:36.212] [WARN ] [restartedMain] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2023-09-11 20:10:36.459] [WARN ] [restartedMain] org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration 
+
+Using generated security password: 8f77a7e1-bd0f-455a-94ec-3a709cac2425
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+[2023-09-11 20:10:36.533] [INFO ] [restartedMain] org.springframework.security.web.DefaultSecurityFilterChain Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@34de57bc, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6be0afcc, org.springframework.security.web.context.SecurityContextHolderFilter@48424b9e, org.springframework.security.web.header.HeaderWriterFilter@79f76e4f, org.springframework.security.web.csrf.CsrfFilter@8ef2ce, org.springframework.security.web.authentication.logout.LogoutFilter@35371621, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@2fb8d5b9, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@723289e7, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@38e5d07c, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@e9a3f74, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@236f4e36, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1cc45879, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@66a84665, org.springframework.security.web.access.ExceptionTranslationFilter@3a7b2c4d, org.springframework.security.web.access.intercept.AuthorizationFilter@4df00c6a]
+[2023-09-11 20:10:36.567] [INFO ] [restartedMain] org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+[2023-09-11 20:10:36.580] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:10:36.594] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8080 (http) with context path ''
+[2023-09-11 20:10:36.601] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Started ShootformoneyApplication in 3.584 seconds (process running for 4.081)
+[2023-09-11 20:15:45.683] [INFO ] [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:15:45.685] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown initiated...
+[2023-09-11 20:15:45.691] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown completed.
+[2023-09-11 20:36:04.632] [INFO ] [background-preinit] org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 8.0.1.Final
+[2023-09-11 20:36:04.680] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Starting ShootformoneyApplication using Java 17.0.7 with PID 9900 (C:\ShootForMoney\build\classes\java\main started by playdata in C:\ShootForMoney)
+[2023-09-11 20:36:04.681] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication No active profile set, falling back to 1 default profile: "default"
+[2023-09-11 20:36:04.723] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2023-09-11 20:36:04.723] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2023-09-11 20:36:05.269] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-09-11 20:36:05.306] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 33 ms. Found 1 JPA repository interfaces.
+[2023-09-11 20:36:05.754] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8080 (http)
+[2023-09-11 20:36:05.760] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:36:05.762] [INFO ] [restartedMain] org.apache.catalina.core.StandardService Starting service [Tomcat]
+[2023-09-11 20:36:05.762] [INFO ] [restartedMain] org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/10.1.12]
+[2023-09-11 20:36:05.805] [INFO ] [restartedMain] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+[2023-09-11 20:36:05.806] [INFO ] [restartedMain] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 1083 ms
+[2023-09-11 20:36:05.930] [INFO ] [restartedMain] org.hibernate.jpa.internal.util.LogHelper HHH000204: Processing PersistenceUnitInfo [name: default]
+[2023-09-11 20:36:05.968] [INFO ] [restartedMain] org.hibernate.Version HHH000412: Hibernate ORM core version 6.2.7.Final
+[2023-09-11 20:36:05.970] [INFO ] [restartedMain] org.hibernate.cfg.Environment HHH000406: Using bytecode reflection optimizer
+[2023-09-11 20:36:06.067] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:36:06.161] [INFO ] [restartedMain] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo No LoadTimeWeaver setup: ignoring JPA class transformer
+[2023-09-11 20:36:06.175] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Starting...
+[2023-09-11 20:36:06.381] [INFO ] [restartedMain] com.zaxxer.hikari.pool.HikariPool HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@564695b7
+[2023-09-11 20:36:06.382] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Start completed.
+[2023-09-11 20:36:06.423] [WARN ] [restartedMain] org.hibernate.orm.deprecation HHH90000026: MySQL57Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+[2023-09-11 20:36:06.574] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:36:07.089] [INFO ] [restartedMain] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2023-09-11 20:36:07.175] [INFO ] [restartedMain] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:36:07.396] [WARN ] [restartedMain] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2023-09-11 20:36:07.652] [WARN ] [restartedMain] org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration 
+
+Using generated security password: ccd3440a-bf1f-406d-bdca-a045ce65e30b
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+[2023-09-11 20:36:07.729] [INFO ] [restartedMain] org.springframework.security.web.DefaultSecurityFilterChain Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@257b51b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@560c0a69, org.springframework.security.web.context.SecurityContextHolderFilter@566cbd49, org.springframework.security.web.header.HeaderWriterFilter@56955c71, org.springframework.security.web.csrf.CsrfFilter@2dea4a75, org.springframework.security.web.authentication.logout.LogoutFilter@53011279, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@4e5e76f2, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@3797456d, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@22aa98a2, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@b8bf088, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6cf54485, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7cf7e22f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2f0b77f9, org.springframework.security.web.access.ExceptionTranslationFilter@3912a180, org.springframework.security.web.access.intercept.AuthorizationFilter@3f85c5e0]
+[2023-09-11 20:36:07.763] [INFO ] [restartedMain] org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+[2023-09-11 20:36:07.777] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:36:07.792] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8080 (http) with context path ''
+[2023-09-11 20:36:07.800] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Started ShootformoneyApplication in 3.524 seconds (process running for 3.969)
+[2023-09-11 20:38:21.004] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2023-09-11 20:38:21.005] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+[2023-09-11 20:38:21.006] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Completed initialization in 1 ms
+[2023-09-11 20:40:15.597] [INFO ] [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:40:15.600] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown initiated...
+[2023-09-11 20:40:15.606] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown completed.
+[2023-09-11 20:40:17.702] [INFO ] [background-preinit] org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 8.0.1.Final
+[2023-09-11 20:40:17.735] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Starting ShootformoneyApplication using Java 17.0.7 with PID 1252 (C:\ShootForMoney\build\classes\java\main started by playdata in C:\ShootForMoney)
+[2023-09-11 20:40:17.735] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication No active profile set, falling back to 1 default profile: "default"
+[2023-09-11 20:40:17.777] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2023-09-11 20:40:17.777] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2023-09-11 20:40:18.306] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-09-11 20:40:18.344] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 33 ms. Found 1 JPA repository interfaces.
+[2023-09-11 20:40:18.828] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8080 (http)
+[2023-09-11 20:40:18.834] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:40:18.835] [INFO ] [restartedMain] org.apache.catalina.core.StandardService Starting service [Tomcat]
+[2023-09-11 20:40:18.836] [INFO ] [restartedMain] org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/10.1.12]
+[2023-09-11 20:40:18.880] [INFO ] [restartedMain] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+[2023-09-11 20:40:18.880] [INFO ] [restartedMain] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 1102 ms
+[2023-09-11 20:40:19.001] [INFO ] [restartedMain] org.hibernate.jpa.internal.util.LogHelper HHH000204: Processing PersistenceUnitInfo [name: default]
+[2023-09-11 20:40:19.039] [INFO ] [restartedMain] org.hibernate.Version HHH000412: Hibernate ORM core version 6.2.7.Final
+[2023-09-11 20:40:19.041] [INFO ] [restartedMain] org.hibernate.cfg.Environment HHH000406: Using bytecode reflection optimizer
+[2023-09-11 20:40:19.150] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:40:19.250] [INFO ] [restartedMain] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo No LoadTimeWeaver setup: ignoring JPA class transformer
+[2023-09-11 20:40:19.264] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Starting...
+[2023-09-11 20:40:19.473] [INFO ] [restartedMain] com.zaxxer.hikari.pool.HikariPool HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@bb2f99d
+[2023-09-11 20:40:19.475] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Start completed.
+[2023-09-11 20:40:19.507] [WARN ] [restartedMain] org.hibernate.orm.deprecation HHH90000026: MySQL57Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+[2023-09-11 20:40:19.665] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:40:20.168] [INFO ] [restartedMain] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2023-09-11 20:40:20.238] [INFO ] [restartedMain] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:40:20.459] [WARN ] [restartedMain] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2023-09-11 20:40:20.706] [WARN ] [restartedMain] org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration 
+
+Using generated security password: ffe1fd14-eda8-4c33-9f25-2ad03181ac50
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+[2023-09-11 20:40:20.780] [INFO ] [restartedMain] org.springframework.security.web.DefaultSecurityFilterChain Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3190968d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3619c798, org.springframework.security.web.context.SecurityContextHolderFilter@6914bb3b, org.springframework.security.web.header.HeaderWriterFilter@7c6ad122, org.springframework.security.web.csrf.CsrfFilter@684aec0e, org.springframework.security.web.authentication.logout.LogoutFilter@380e679a, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7955acc3, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@1d3bea03, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@185ae2e7, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@ec129fe, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@677c3d40, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@473dcbce, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6fb4c68c, org.springframework.security.web.access.ExceptionTranslationFilter@6885d4e2, org.springframework.security.web.access.intercept.AuthorizationFilter@33c229c8]
+[2023-09-11 20:40:20.816] [INFO ] [restartedMain] org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+[2023-09-11 20:40:20.829] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:40:20.843] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8080 (http) with context path ''
+[2023-09-11 20:40:20.850] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Started ShootformoneyApplication in 3.51 seconds (process running for 3.942)
+[2023-09-11 20:40:24.563] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2023-09-11 20:40:24.563] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+[2023-09-11 20:40:24.565] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Completed initialization in 2 ms
+[2023-09-11 20:40:44.212] [INFO ] [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:40:44.214] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown initiated...
+[2023-09-11 20:40:44.221] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown completed.
+[2023-09-11 20:40:46.027] [INFO ] [background-preinit] org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 8.0.1.Final
+[2023-09-11 20:40:46.070] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Starting ShootformoneyApplication using Java 17.0.7 with PID 14476 (C:\ShootForMoney\build\classes\java\main started by playdata in C:\ShootForMoney)
+[2023-09-11 20:40:46.071] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication No active profile set, falling back to 1 default profile: "default"
+[2023-09-11 20:40:46.104] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2023-09-11 20:40:46.104] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2023-09-11 20:40:46.589] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-09-11 20:40:46.625] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 32 ms. Found 1 JPA repository interfaces.
+[2023-09-11 20:40:47.035] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8080 (http)
+[2023-09-11 20:40:47.041] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:40:47.043] [INFO ] [restartedMain] org.apache.catalina.core.StandardService Starting service [Tomcat]
+[2023-09-11 20:40:47.043] [INFO ] [restartedMain] org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/10.1.12]
+[2023-09-11 20:40:47.089] [INFO ] [restartedMain] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+[2023-09-11 20:40:47.090] [INFO ] [restartedMain] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 985 ms
+[2023-09-11 20:40:47.195] [INFO ] [restartedMain] org.hibernate.jpa.internal.util.LogHelper HHH000204: Processing PersistenceUnitInfo [name: default]
+[2023-09-11 20:40:47.229] [INFO ] [restartedMain] org.hibernate.Version HHH000412: Hibernate ORM core version 6.2.7.Final
+[2023-09-11 20:40:47.231] [INFO ] [restartedMain] org.hibernate.cfg.Environment HHH000406: Using bytecode reflection optimizer
+[2023-09-11 20:40:47.350] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:40:47.446] [INFO ] [restartedMain] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo No LoadTimeWeaver setup: ignoring JPA class transformer
+[2023-09-11 20:40:47.459] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Starting...
+[2023-09-11 20:40:47.662] [INFO ] [restartedMain] com.zaxxer.hikari.pool.HikariPool HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5bac07fa
+[2023-09-11 20:40:47.664] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Start completed.
+[2023-09-11 20:40:47.697] [WARN ] [restartedMain] org.hibernate.orm.deprecation HHH90000026: MySQL57Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+[2023-09-11 20:40:47.837] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:40:48.333] [INFO ] [restartedMain] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2023-09-11 20:40:48.390] [INFO ] [restartedMain] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:40:48.603] [WARN ] [restartedMain] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2023-09-11 20:40:48.821] [INFO ] [restartedMain] org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+[2023-09-11 20:40:48.834] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:40:48.854] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8080 (http) with context path ''
+[2023-09-11 20:40:48.861] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Started ShootformoneyApplication in 3.194 seconds (process running for 3.751)
+[2023-09-11 20:40:55.442] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2023-09-11 20:40:55.442] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+[2023-09-11 20:40:55.443] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Completed initialization in 1 ms
+[2023-09-11 20:42:36.406] [INFO ] [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:42:36.408] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown initiated...
+[2023-09-11 20:42:36.414] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown completed.
+[2023-09-11 20:42:38.860] [INFO ] [background-preinit] org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 8.0.1.Final
+[2023-09-11 20:42:38.902] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Starting ShootformoneyApplication using Java 17.0.7 with PID 1456 (C:\ShootForMoney\build\classes\java\main started by playdata in C:\ShootForMoney)
+[2023-09-11 20:42:38.903] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication No active profile set, falling back to 1 default profile: "default"
+[2023-09-11 20:42:38.949] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2023-09-11 20:42:38.949] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2023-09-11 20:42:39.463] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-09-11 20:42:39.504] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 36 ms. Found 1 JPA repository interfaces.
+[2023-09-11 20:42:39.909] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8080 (http)
+[2023-09-11 20:42:39.915] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:42:39.917] [INFO ] [restartedMain] org.apache.catalina.core.StandardService Starting service [Tomcat]
+[2023-09-11 20:42:39.917] [INFO ] [restartedMain] org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/10.1.12]
+[2023-09-11 20:42:39.957] [INFO ] [restartedMain] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+[2023-09-11 20:42:39.958] [INFO ] [restartedMain] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 1009 ms
+[2023-09-11 20:42:40.063] [INFO ] [restartedMain] org.hibernate.jpa.internal.util.LogHelper HHH000204: Processing PersistenceUnitInfo [name: default]
+[2023-09-11 20:42:40.096] [INFO ] [restartedMain] org.hibernate.Version HHH000412: Hibernate ORM core version 6.2.7.Final
+[2023-09-11 20:42:40.098] [INFO ] [restartedMain] org.hibernate.cfg.Environment HHH000406: Using bytecode reflection optimizer
+[2023-09-11 20:42:40.212] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:42:40.312] [INFO ] [restartedMain] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo No LoadTimeWeaver setup: ignoring JPA class transformer
+[2023-09-11 20:42:40.325] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Starting...
+[2023-09-11 20:42:40.523] [INFO ] [restartedMain] com.zaxxer.hikari.pool.HikariPool HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@743ac4a6
+[2023-09-11 20:42:40.525] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Start completed.
+[2023-09-11 20:42:40.556] [WARN ] [restartedMain] org.hibernate.orm.deprecation HHH90000026: MySQL57Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+[2023-09-11 20:42:40.729] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:42:41.233] [INFO ] [restartedMain] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2023-09-11 20:42:41.298] [INFO ] [restartedMain] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:42:41.517] [WARN ] [restartedMain] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2023-09-11 20:42:41.741] [INFO ] [restartedMain] org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+[2023-09-11 20:42:41.756] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:42:41.769] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8080 (http) with context path ''
+[2023-09-11 20:42:41.777] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Started ShootformoneyApplication in 3.287 seconds (process running for 3.754)
+[2023-09-11 20:42:48.191] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2023-09-11 20:42:48.191] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+[2023-09-11 20:42:48.192] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Completed initialization in 1 ms
+[2023-09-11 20:44:29.159] [INFO ] [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:44:29.161] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown initiated...
+[2023-09-11 20:44:29.167] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown completed.
+[2023-09-11 20:44:31.587] [INFO ] [background-preinit] org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 8.0.1.Final
+[2023-09-11 20:44:31.620] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Starting ShootformoneyApplication using Java 17.0.7 with PID 2700 (C:\ShootForMoney\build\classes\java\main started by playdata in C:\ShootForMoney)
+[2023-09-11 20:44:31.621] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication No active profile set, falling back to 1 default profile: "default"
+[2023-09-11 20:44:31.661] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2023-09-11 20:44:31.662] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2023-09-11 20:44:32.179] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-09-11 20:44:32.217] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 33 ms. Found 1 JPA repository interfaces.
+[2023-09-11 20:44:32.626] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8080 (http)
+[2023-09-11 20:44:32.632] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:44:32.634] [INFO ] [restartedMain] org.apache.catalina.core.StandardService Starting service [Tomcat]
+[2023-09-11 20:44:32.634] [INFO ] [restartedMain] org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/10.1.12]
+[2023-09-11 20:44:32.680] [INFO ] [restartedMain] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+[2023-09-11 20:44:32.681] [INFO ] [restartedMain] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 1019 ms
+[2023-09-11 20:44:32.789] [INFO ] [restartedMain] org.hibernate.jpa.internal.util.LogHelper HHH000204: Processing PersistenceUnitInfo [name: default]
+[2023-09-11 20:44:32.821] [INFO ] [restartedMain] org.hibernate.Version HHH000412: Hibernate ORM core version 6.2.7.Final
+[2023-09-11 20:44:32.822] [INFO ] [restartedMain] org.hibernate.cfg.Environment HHH000406: Using bytecode reflection optimizer
+[2023-09-11 20:44:32.933] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:44:33.034] [INFO ] [restartedMain] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo No LoadTimeWeaver setup: ignoring JPA class transformer
+[2023-09-11 20:44:33.048] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Starting...
+[2023-09-11 20:44:33.256] [INFO ] [restartedMain] com.zaxxer.hikari.pool.HikariPool HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@42f55e41
+[2023-09-11 20:44:33.258] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Start completed.
+[2023-09-11 20:44:33.291] [WARN ] [restartedMain] org.hibernate.orm.deprecation HHH90000026: MySQL57Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+[2023-09-11 20:44:33.434] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:44:33.930] [INFO ] [restartedMain] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2023-09-11 20:44:33.990] [INFO ] [restartedMain] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:44:34.206] [WARN ] [restartedMain] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2023-09-11 20:44:34.439] [INFO ] [restartedMain] org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+[2023-09-11 20:44:34.453] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:44:34.471] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8080 (http) with context path ''
+[2023-09-11 20:44:34.477] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Started ShootformoneyApplication in 3.242 seconds (process running for 3.702)
+[2023-09-11 20:44:37.610] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2023-09-11 20:44:37.610] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+[2023-09-11 20:44:37.612] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Completed initialization in 0 ms
+[2023-09-11 20:47:44.678] [INFO ] [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:47:44.680] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown initiated...
+[2023-09-11 20:47:44.686] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown completed.
+[2023-09-11 20:47:47.040] [INFO ] [background-preinit] org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 8.0.1.Final
+[2023-09-11 20:47:47.077] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Starting ShootformoneyApplication using Java 17.0.7 with PID 13208 (C:\ShootForMoney\build\classes\java\main started by playdata in C:\ShootForMoney)
+[2023-09-11 20:47:47.078] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication No active profile set, falling back to 1 default profile: "default"
+[2023-09-11 20:47:47.123] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2023-09-11 20:47:47.123] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2023-09-11 20:47:47.627] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-09-11 20:47:47.664] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 32 ms. Found 1 JPA repository interfaces.
+[2023-09-11 20:47:48.085] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8080 (http)
+[2023-09-11 20:47:48.091] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:47:48.093] [INFO ] [restartedMain] org.apache.catalina.core.StandardService Starting service [Tomcat]
+[2023-09-11 20:47:48.093] [INFO ] [restartedMain] org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/10.1.12]
+[2023-09-11 20:47:48.146] [INFO ] [restartedMain] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+[2023-09-11 20:47:48.146] [INFO ] [restartedMain] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 1022 ms
+[2023-09-11 20:47:48.256] [INFO ] [restartedMain] org.hibernate.jpa.internal.util.LogHelper HHH000204: Processing PersistenceUnitInfo [name: default]
+[2023-09-11 20:47:48.291] [INFO ] [restartedMain] org.hibernate.Version HHH000412: Hibernate ORM core version 6.2.7.Final
+[2023-09-11 20:47:48.293] [INFO ] [restartedMain] org.hibernate.cfg.Environment HHH000406: Using bytecode reflection optimizer
+[2023-09-11 20:47:48.412] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:47:48.510] [INFO ] [restartedMain] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo No LoadTimeWeaver setup: ignoring JPA class transformer
+[2023-09-11 20:47:48.523] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Starting...
+[2023-09-11 20:47:48.733] [INFO ] [restartedMain] com.zaxxer.hikari.pool.HikariPool HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@25c6caf1
+[2023-09-11 20:47:48.736] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Start completed.
+[2023-09-11 20:47:48.767] [WARN ] [restartedMain] org.hibernate.orm.deprecation HHH90000026: MySQL57Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+[2023-09-11 20:47:48.906] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:47:49.389] [INFO ] [restartedMain] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2023-09-11 20:47:49.453] [INFO ] [restartedMain] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:47:49.664] [WARN ] [restartedMain] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2023-09-11 20:47:49.888] [INFO ] [restartedMain] org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+[2023-09-11 20:47:49.904] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:47:49.918] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8080 (http) with context path ''
+[2023-09-11 20:47:49.926] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Started ShootformoneyApplication in 3.243 seconds (process running for 3.685)
+[2023-09-11 20:47:58.875] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2023-09-11 20:47:58.875] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+[2023-09-11 20:47:58.876] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Completed initialization in 1 ms
+[2023-09-11 20:47:58.906] [WARN ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'siteTitle' for method parameter type String is not present]
+[2023-09-11 20:50:58.990] [INFO ] [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:50:58.993] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown initiated...
+[2023-09-11 20:50:58.999] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown completed.
+[2023-09-11 20:51:01.305] [INFO ] [background-preinit] org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 8.0.1.Final
+[2023-09-11 20:51:01.338] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Starting ShootformoneyApplication using Java 17.0.7 with PID 14704 (C:\ShootForMoney\build\classes\java\main started by playdata in C:\ShootForMoney)
+[2023-09-11 20:51:01.339] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication No active profile set, falling back to 1 default profile: "default"
+[2023-09-11 20:51:01.380] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2023-09-11 20:51:01.380] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2023-09-11 20:51:01.893] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-09-11 20:51:01.932] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 34 ms. Found 1 JPA repository interfaces.
+[2023-09-11 20:51:02.353] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8080 (http)
+[2023-09-11 20:51:02.359] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:51:02.360] [INFO ] [restartedMain] org.apache.catalina.core.StandardService Starting service [Tomcat]
+[2023-09-11 20:51:02.361] [INFO ] [restartedMain] org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/10.1.12]
+[2023-09-11 20:51:02.400] [INFO ] [restartedMain] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+[2023-09-11 20:51:02.401] [INFO ] [restartedMain] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 1019 ms
+[2023-09-11 20:51:02.505] [INFO ] [restartedMain] org.hibernate.jpa.internal.util.LogHelper HHH000204: Processing PersistenceUnitInfo [name: default]
+[2023-09-11 20:51:02.537] [INFO ] [restartedMain] org.hibernate.Version HHH000412: Hibernate ORM core version 6.2.7.Final
+[2023-09-11 20:51:02.538] [INFO ] [restartedMain] org.hibernate.cfg.Environment HHH000406: Using bytecode reflection optimizer
+[2023-09-11 20:51:02.649] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:51:02.745] [INFO ] [restartedMain] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo No LoadTimeWeaver setup: ignoring JPA class transformer
+[2023-09-11 20:51:02.757] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Starting...
+[2023-09-11 20:51:02.957] [INFO ] [restartedMain] com.zaxxer.hikari.pool.HikariPool HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2f9fd54f
+[2023-09-11 20:51:02.958] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Start completed.
+[2023-09-11 20:51:02.990] [WARN ] [restartedMain] org.hibernate.orm.deprecation HHH90000026: MySQL57Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+[2023-09-11 20:51:03.126] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:51:03.613] [INFO ] [restartedMain] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2023-09-11 20:51:03.663] [INFO ] [restartedMain] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:51:03.868] [WARN ] [restartedMain] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2023-09-11 20:51:04.086] [INFO ] [restartedMain] org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+[2023-09-11 20:51:04.100] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:51:04.114] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8080 (http) with context path ''
+[2023-09-11 20:51:04.121] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Started ShootformoneyApplication in 3.166 seconds (process running for 3.622)
+[2023-09-11 20:51:11.903] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2023-09-11 20:51:11.904] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+[2023-09-11 20:51:11.906] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Completed initialization in 2 ms
+[2023-09-11 20:51:11.960] [WARN ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'configForm' for method parameter type ConfigForm is not present]
+[2023-09-11 20:51:35.502] [INFO ] [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:51:35.504] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown initiated...
+[2023-09-11 20:51:35.509] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown completed.
+[2023-09-11 20:51:37.789] [INFO ] [background-preinit] org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 8.0.1.Final
+[2023-09-11 20:51:37.825] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Starting ShootformoneyApplication using Java 17.0.7 with PID 15620 (C:\ShootForMoney\build\classes\java\main started by playdata in C:\ShootForMoney)
+[2023-09-11 20:51:37.826] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication No active profile set, falling back to 1 default profile: "default"
+[2023-09-11 20:51:37.868] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2023-09-11 20:51:37.869] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2023-09-11 20:51:38.396] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-09-11 20:51:38.440] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 38 ms. Found 1 JPA repository interfaces.
+[2023-09-11 20:51:38.868] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8080 (http)
+[2023-09-11 20:51:38.874] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:51:38.876] [INFO ] [restartedMain] org.apache.catalina.core.StandardService Starting service [Tomcat]
+[2023-09-11 20:51:38.876] [INFO ] [restartedMain] org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/10.1.12]
+[2023-09-11 20:51:38.921] [INFO ] [restartedMain] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+[2023-09-11 20:51:38.921] [INFO ] [restartedMain] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 1052 ms
+[2023-09-11 20:51:39.037] [INFO ] [restartedMain] org.hibernate.jpa.internal.util.LogHelper HHH000204: Processing PersistenceUnitInfo [name: default]
+[2023-09-11 20:51:39.075] [INFO ] [restartedMain] org.hibernate.Version HHH000412: Hibernate ORM core version 6.2.7.Final
+[2023-09-11 20:51:39.078] [INFO ] [restartedMain] org.hibernate.cfg.Environment HHH000406: Using bytecode reflection optimizer
+[2023-09-11 20:51:39.191] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:51:39.299] [INFO ] [restartedMain] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo No LoadTimeWeaver setup: ignoring JPA class transformer
+[2023-09-11 20:51:39.313] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Starting...
+[2023-09-11 20:51:39.532] [INFO ] [restartedMain] com.zaxxer.hikari.pool.HikariPool HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@460ef8d2
+[2023-09-11 20:51:39.534] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Start completed.
+[2023-09-11 20:51:39.568] [WARN ] [restartedMain] org.hibernate.orm.deprecation HHH90000026: MySQL57Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+[2023-09-11 20:51:39.723] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:51:40.216] [INFO ] [restartedMain] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2023-09-11 20:51:40.272] [INFO ] [restartedMain] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:51:40.488] [WARN ] [restartedMain] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2023-09-11 20:51:40.715] [INFO ] [restartedMain] org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+[2023-09-11 20:51:40.730] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:51:40.743] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8080 (http) with context path ''
+[2023-09-11 20:51:40.751] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Started ShootformoneyApplication in 3.311 seconds (process running for 3.769)
+[2023-09-11 20:51:44.743] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2023-09-11 20:51:44.743] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+[2023-09-11 20:51:44.744] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Completed initialization in 1 ms
+[2023-09-11 20:52:17.270] [INFO ] [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:52:17.272] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown initiated...
+[2023-09-11 20:52:17.277] [INFO ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown completed.
+[2023-09-11 20:52:19.562] [INFO ] [background-preinit] org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 8.0.1.Final
+[2023-09-11 20:52:19.592] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Starting ShootformoneyApplication using Java 17.0.7 with PID 18596 (C:\ShootForMoney\build\classes\java\main started by playdata in C:\ShootForMoney)
+[2023-09-11 20:52:19.592] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication No active profile set, falling back to 1 default profile: "default"
+[2023-09-11 20:52:19.628] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2023-09-11 20:52:19.630] [INFO ] [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2023-09-11 20:52:20.152] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-09-11 20:52:20.191] [INFO ] [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 34 ms. Found 1 JPA repository interfaces.
+[2023-09-11 20:52:20.592] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8080 (http)
+[2023-09-11 20:52:20.598] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:52:20.600] [INFO ] [restartedMain] org.apache.catalina.core.StandardService Starting service [Tomcat]
+[2023-09-11 20:52:20.600] [INFO ] [restartedMain] org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/10.1.12]
+[2023-09-11 20:52:20.653] [INFO ] [restartedMain] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+[2023-09-11 20:52:20.653] [INFO ] [restartedMain] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 1023 ms
+[2023-09-11 20:52:20.759] [INFO ] [restartedMain] org.hibernate.jpa.internal.util.LogHelper HHH000204: Processing PersistenceUnitInfo [name: default]
+[2023-09-11 20:52:20.790] [INFO ] [restartedMain] org.hibernate.Version HHH000412: Hibernate ORM core version 6.2.7.Final
+[2023-09-11 20:52:20.792] [INFO ] [restartedMain] org.hibernate.cfg.Environment HHH000406: Using bytecode reflection optimizer
+[2023-09-11 20:52:20.910] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:52:21.009] [INFO ] [restartedMain] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo No LoadTimeWeaver setup: ignoring JPA class transformer
+[2023-09-11 20:52:21.022] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Starting...
+[2023-09-11 20:52:21.227] [INFO ] [restartedMain] com.zaxxer.hikari.pool.HikariPool HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6959c474
+[2023-09-11 20:52:21.229] [INFO ] [restartedMain] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Start completed.
+[2023-09-11 20:52:21.261] [WARN ] [restartedMain] org.hibernate.orm.deprecation HHH90000026: MySQL57Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+[2023-09-11 20:52:21.406] [INFO ] [restartedMain] org.hibernate.bytecode.internal.BytecodeProviderInitiator HHH000021: Bytecode provider name : bytebuddy
+[2023-09-11 20:52:21.888] [INFO ] [restartedMain] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2023-09-11 20:52:21.948] [INFO ] [restartedMain] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 20:52:22.158] [WARN ] [restartedMain] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2023-09-11 20:52:22.382] [INFO ] [restartedMain] org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+[2023-09-11 20:52:22.397] [INFO ] [restartedMain] org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 20:52:22.410] [INFO ] [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8080 (http) with context path ''
+[2023-09-11 20:52:22.417] [INFO ] [restartedMain] com.springboot.shootformoney.ShootformoneyApplication Started ShootformoneyApplication in 3.192 seconds (process running for 3.631)
+[2023-09-11 20:52:28.171] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2023-09-11 20:52:28.171] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+[2023-09-11 20:52:28.172] [INFO ] [http-nio-127.0.0.1-8080-exec-1] org.springframework.web.servlet.DispatcherServlet Completed initialization in 1 ms
+[2023-09-11 21:02:25.212] [INFO ] [File Watcher] org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener Restarting due to 3 class path changes (0 additions, 2 deletions, 1 modification)
+[2023-09-11 21:02:25.216] [INFO ] [Thread-5] org.apache.coyote.http11.Http11NioProtocol Pausing ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 21:02:25.217] [INFO ] [Thread-5] org.apache.catalina.core.StandardService Stopping service [Tomcat]
+[2023-09-11 21:02:25.218] [INFO ] [Thread-5] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Destroying Spring FrameworkServlet 'dispatcherServlet'
+[2023-09-11 21:02:25.220] [INFO ] [Thread-5] org.apache.coyote.http11.Http11NioProtocol Stopping ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 21:02:25.222] [INFO ] [Thread-5] org.apache.coyote.http11.Http11NioProtocol Destroying ProtocolHandler ["http-nio-127.0.0.1-8080"]
+[2023-09-11 21:02:25.224] [INFO ] [Thread-5] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-09-11 21:02:25.227] [INFO ] [Thread-5] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown initiated...
+[2023-09-11 21:02:25.234] [INFO ] [Thread-5] com.zaxxer.hikari.HikariDataSource HikariPool-1 - Shutdown completed.

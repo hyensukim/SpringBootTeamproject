@@ -1,11 +1,16 @@
 package com.springboot.shootformoney.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springboot.shootformoney.common.BaseEntity;
 import com.springboot.shootformoney.member.enum_.Grade;
 import com.springboot.shootformoney.member.enum_.Role;
+import com.springboot.shootformoney.post.Post;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -51,4 +56,10 @@ public class Member extends BaseEntity{
 
     @Column(name = "m_level",nullable = false)
     private Integer mLevel = 1;
+
+    // 변경사항
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @JsonIgnore // 클라이언트로부터 게시판 정보만 받고 게시물 정보는 따로 처리하려는 경우에 유용
+//    @OneToMany(mappedBy = "parent")
+    private List<Post> posts = new ArrayList<>();
 }
