@@ -21,29 +21,16 @@ import java.util.stream.Collectors;
 public class BoardController {
 
     private final BoardService boardService;
-
-//    // 게시판 조회
-//    @GetMapping("/list")
-//    public List<BoardDto> getAllBoards() {
-//        List<Board> boards = boardService.findAllBoards();
-//
-//        // Entity 리스트를 Dto 리스트로 변환
-//        List<BoardDto> boardDtos = boards.stream()
-//                .map(BoardDto::fromEntity)
-//                .collect(Collectors.toList());
-//
-//        return boardDtos;
-//    }
-
+    
+    // 게시파 전체 조회
     @GetMapping("/")
-    public ResponseEntity<Page<Board>> getBoards(
-            @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "10") int size){
-
-        PageRequest pageRequest = PageRequest.of(page, size);
-        return ResponseEntity.ok(boardService.findAllBoards(pageRequest));
+    public ResponseEntity<List<BoardDto>> getAllBoards() {
+        List<BoardDto> boardDtos = boardService.getAllBoards();
+        return ResponseEntity.ok(boardDtos);
     }
 
+
+    // 게시판 생성
     @PostMapping("/")
     public ResponseEntity<?> createBoard(@RequestBody BoardDto newBoardDto) {
         Board newBoard = new Board();
@@ -60,6 +47,21 @@ public class BoardController {
         }
     }
 
+    // 게시판 수정 - 이름, 파일 첨부 여부
+    @PutMapping("/{bNo}/name")
+    public ResponseEntity<Void> updateBoardInfo(
+            @PathVariable Long bNo,
+            @RequestParam("newBName") String newBName,
+            @RequestParam("newBIsFile") boolean newBIsFile) {
+        try {
+            boardService.updateBoardInfo(bNo, newBName, newBIsFile);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // 게시판 삭제
     @DeleteMapping("/{bNo}")
     public ResponseEntity<Void> deleteBoard(@PathVariable Long bNo) {
         boardService.deleteBoard(bNo);

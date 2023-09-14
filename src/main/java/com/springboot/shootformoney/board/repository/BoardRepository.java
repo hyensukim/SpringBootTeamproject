@@ -9,6 +9,9 @@ public interface BoardRepository extends JpaRepository<Board, String> {
 
     Board findBybName(String bName); // 게시판 제목별 조회
 
+    boolean existsBybName(String bName); // 게시판 이름 중복 여부 판단
+
+
 
 
 }
