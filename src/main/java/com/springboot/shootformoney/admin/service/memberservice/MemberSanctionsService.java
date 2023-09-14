@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberSanctionsService {
 
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     // 회원 삭제
     @Transactional
