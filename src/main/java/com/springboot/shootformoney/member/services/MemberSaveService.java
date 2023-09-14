@@ -6,7 +6,7 @@ import com.springboot.shootformoney.member.enum_.Grade;
 import com.springboot.shootformoney.member.enum_.Role;
 import com.springboot.shootformoney.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.InvalidPropertiesFormatException;
@@ -16,7 +16,7 @@ import java.util.InvalidPropertiesFormatException;
 public class MemberSaveService {
 
     private final MemberRepository memberRepository;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
 
     /**
      * 저장 여부 확인
@@ -42,7 +42,7 @@ public class MemberSaveService {
                 .mLevel(1)
                 .build();
 
-        member.setMPassword(passwordEncoder.encode(member.getMPassword()));
+//        member.setMPassword(passwordEncoder.encode(member.getMPassword()));
 
         return memberRepository.saveAndFlush(member);
     }

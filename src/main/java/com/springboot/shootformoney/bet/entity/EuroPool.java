@@ -1,5 +1,6 @@
-package com.springboot.shootformoney.game.entity;
+package com.springboot.shootformoney.bet.entity;
 
+import com.springboot.shootformoney.game.entity.Game;
 import jakarta.persistence.*;
 
 /*

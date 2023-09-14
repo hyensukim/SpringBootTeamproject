@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 
 /*
-* 경기 관련 데이터 조회 구현 클래스
+* 경기 관련 데이터 조회 및 저장 구현 클래스
 * Author : Hyedokal (https://www.github.com/Hyedokal)
 */
 
@@ -44,10 +44,9 @@ public class MatchService {
 
     //기간 내의 모든 EPL 경기를 API에서 조회하는 메서드.
     public MatchDto getPLMatches() {
-        LocalDate today = LocalDate.now();
-        LocalDate dateFrom = today.minusDays(7);
-        //접속일 기준 이전 7일/이후 7일까지의 데이터 조회.
-        LocalDate dateTo = today.plusDays(7);
+        LocalDate dateFrom = LocalDate.now();
+        //접속일 기준 이후 10일까지의 데이터 조회.
+        LocalDate dateTo = dateFrom.plusDays(10);
 
         URI uri = UriComponentsBuilder
                 .fromUriString(baseUrl)
@@ -72,10 +71,9 @@ public class MatchService {
 
     //기간 내의 모든 라리가 경기를 API에서 조회하는 메서드.
     public MatchDto getPDMatches() {
-        LocalDate today = LocalDate.now();
-        LocalDate dateFrom = today.minusDays(7);
-        //접속일 기준 이전 7일/이후 7일까지의 데이터 조회.
-        LocalDate dateTo = today.plusDays(7);
+        LocalDate dateFrom = LocalDate.now();
+        //접속일 기준 이후 10일까지의 데이터 조회.
+        LocalDate dateTo = dateFrom.plusDays(10);
 
         URI uri = UriComponentsBuilder
                 .fromUriString(baseUrl)
@@ -100,10 +98,9 @@ public class MatchService {
 
     //기간 내의 모든 분데스리가 경기를 API에서 조회하는 메서드.
     public MatchDto getBL1Matches() {
-        LocalDate today = LocalDate.now();
-        LocalDate dateFrom = today.minusDays(7);
-        //접속일 기준 이전 7일/이후 7일까지의 데이터 조회.
-        LocalDate dateTo = today.plusDays(7);
+        LocalDate dateFrom = LocalDate.now();
+        //접속일 기준 이후 10일까지의 데이터 조회.
+        LocalDate dateTo = dateFrom.plusDays(10);
 
         URI uri = UriComponentsBuilder
                 .fromUriString(baseUrl)
@@ -153,7 +150,12 @@ public class MatchService {
         List<Game> games = convertToEntity(plMatches.getMatches());
         games.addAll(convertToEntity(pdMatches.getMatches()));
         games.addAll(convertToEntity(bl1Matches.getMatches()));
-        gameRepository.saveAll(games);
+        for(Game game : games){
+            //중복체크 후 저장
+            if(!gameRepository.existsByMatchId(game.getMatchId())){
+                gameRepository.save(game);
+            }
+        }
     }
 
     //외부 API에서 JSON 형식으로 받아 온 데이터를 DB에 저장할 수 있는 List<Game>으로 변환하는 메서드.
@@ -173,7 +175,7 @@ public class MatchService {
     }
 
 
-    //경기결과가 나온 경기들의 스코어를 update해 주는 메서드.
+    //경기결과가 나온 경기들의 스코어를 update해 주는 메서드. 경기 시작 후 6시간 뒤에 이루어짐.
     @Transactional
     public void updateAllEndedGames() {
         List<Game> allGames = gameRepository.findAll();
@@ -183,7 +185,7 @@ public class MatchService {
 
         for (Game game : allGames) {
             ZonedDateTime gameDate = ZonedDateTime.parse(game.getGStartTime(), DateTimeFormatter.ISO_ZONED_DATE_TIME);
-            gameDate = gameDate.plusHours(15); // 15시간 뒤(시차 9시간 + 경기시간 2시간 + API반영시간 4시간)
+            gameDate = gameDate.plusHours(15); // 15시간 뒤(시차 9시간 + 경기시간 2시간 + API반영시간 ( (4?)시간 )
             LocalDateTime localGameDate = gameDate.toLocalDateTime();
 
             if (localGameDate.isBefore(now) || localGameDate.isEqual(now)) { // 경기가 끝나면...
@@ -194,9 +196,6 @@ public class MatchService {
                     game.setGHomeScore(scoreDto.getFullTime().getHome());
                     game.setGAwayScore(scoreDto.getFullTime().getAway());
 
-                    // 영속성 컨텍스트에서 관리되는 엔티티의 상태가 변경되었으므로,
-                    // 트랜잭션 커밋 시점에 JPA가 이를 감지하여 DB에 UPDATE 쿼리를 자동으로 실행합니다.
-                    // 따라서 별도의 save() 호출 없이도 DB 값이 업데이트됩니다.
                 }
             }
         }

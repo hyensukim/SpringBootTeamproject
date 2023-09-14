@@ -10,8 +10,9 @@ import java.util.Optional;
 
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
-    List<Game> findBygLeague(String gLeague);
     Optional<Game> findByMatchId(Integer matchId);
+
+    Boolean existsByMatchId(Integer matchId);
 
     @Query("SELECT g FROM Game g WHERE g.result = 'NN'")
     List<Game> findAllUnstartedMatches();

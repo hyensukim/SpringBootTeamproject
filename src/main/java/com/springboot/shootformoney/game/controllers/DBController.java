@@ -1,4 +1,4 @@
-package com.springboot.shootformoney.restcontroller;
+package com.springboot.shootformoney.game.controllers;
 
 import com.springboot.shootformoney.game.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;

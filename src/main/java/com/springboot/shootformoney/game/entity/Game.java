@@ -26,7 +26,7 @@ public class Game {
     private Long g_no;
 
     //API에서 제공하는 경기마다의 고유한 ID. (table update를 위해 추가)
-    @Column(name = "match_id", nullable = false)
+    @Column(name = "match_id", nullable = false, unique = true)
     private Integer matchId;
 
     @Column(name = "g_league", nullable = false)
