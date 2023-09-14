@@ -1,5 +1,6 @@
 package com.springboot.shootformoney.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,27 +55,27 @@ public class SecurityConfig {
         /**
          * 권한 설정
          */
-//        http.authorizeHttpRequests(f->f
-//                .requestMatchers("/mypage/**").authenticated() // 회원 전용
-//                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")// 관리자 전용\
-//                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
-//                .anyRequest().permitAll()
-//        );
+        http.authorizeHttpRequests(f->f
+                .requestMatchers("/mypage/**").authenticated() // 회원 전용
+                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")// 관리자 전용\
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                .anyRequest().permitAll()
+        );
 
         /**
          * 인증 관련 예외 처리
          */
-//        http.exceptionHandling(f->f
-//                .authenticationEntryPoint((req,resp,e)->{
-//                    String uri =req.getRequestURI();
-//                    if(uri.contains("/admin")){
-//                        resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "NOT AUTHORIZED");
-//                    }else{
-//                        String redirectUrl =req.getContextPath() + "/member/login";
-//                        resp.sendRedirect(redirectUrl);
-//                    }
-//                })
-//        );
+        http.exceptionHandling(f->f
+                .authenticationEntryPoint((req,resp,e)->{
+                    String uri =req.getRequestURI();
+                    if(uri.contains("/admin")){
+                        resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "NOT AUTHORIZED");
+                    }else{
+                        String redirectUrl =req.getContextPath() + "/member/login";
+                        resp.sendRedirect(redirectUrl);
+                    }
+                })
+        );
 
         return http.build();
     }
