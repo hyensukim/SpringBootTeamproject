@@ -8,6 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter @Setter
 @Table(name = "comments")
 public class Comment {
 

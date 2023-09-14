@@ -43,7 +43,7 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CommentResponseDto> getOne(@PathVariable Integer id) {
+    public ResponseEntity<CommentResponseDto> getOne(@PathVariable Long id) {
         Optional<Comment> optional = commentService.getCommentById(id);
 
         if (!optional.isPresent()) {
@@ -56,7 +56,7 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateOne(@PathVariable Integer id, @RequestBody CommentUpdateDto dto) {
+    public ResponseEntity<Void> updateOne(@PathVariable Long id, @RequestBody CommentUpdateDto dto) {
         try{
             commentService.updateComment(id,dto);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -66,7 +66,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOne(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteOne(@PathVariable Long id) {
         try{
             commentService.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
