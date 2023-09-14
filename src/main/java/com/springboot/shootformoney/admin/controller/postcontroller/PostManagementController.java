@@ -1,7 +1,9 @@
 package com.springboot.shootformoney.admin.controller.postcontroller;
 
 import com.springboot.shootformoney.admin.service.postservice.PostAdminService;
+import com.springboot.shootformoney.post.Post;
 import com.springboot.shootformoney.post.PostDTO;
+import com.springboot.shootformoney.post.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,17 +24,40 @@ public class PostManagementController {
     @Autowired
     private PostAdminService postAdminService;
 
+    @Autowired
+    private PostService postService;
+
     // 모든 게시물 조회
     @GetMapping("/")
     public ResponseEntity<List<PostDTO>> getAllPosts() {
         return new ResponseEntity<>(postAdminService.findAllPosts(), HttpStatus.OK);
     }
 
-    // 게시판 이름별 모든 게시물 조회
-    @GetMapping("/boards/{bName}")
-    public ResponseEntity<List<PostDTO>> getPostsByCategory(@PathVariable String bName) {
+    // 게시판 제목별 모든 게시물 조회
+    @GetMapping("/boardSearch/{bName}")
+    public ResponseEntity<List<PostDTO>> getPostsByBoard(@PathVariable String bName) {
         return new ResponseEntity<>(postAdminService.findPostsByBoardName(bName), HttpStatus.OK);
     }
+
+    // 단일 게시글 조회
+    @GetMapping("/postSearch/{pNo}")
+    public ResponseEntity<Post> getOnePosts(@PathVariable Long pNo) {
+        Post post = postService.findPost(pNo);
+        return ResponseEntity.ok(post);
+    }
+
+    // 게시글 제목으로 찾기
+    @GetMapping("/titleSearch/{pTitle}")
+    public ResponseEntity<List<Post>> getPostsByTitle(@PathVariable String pTitle) {
+        List<Post> posts = postService.findPostsByTitle(pTitle);
+        return ResponseEntity.ok(posts);
+    }
+
+//    // 회원 닉네임별 모든 게시물 조회
+//    @GetMapping("/nicknameSearch/{mNickname}")
+//    public ResponseEntity<List<PostDTO>> getPostsByMemberNickname(@PathVariable String mNickname) {
+//        return new ResponseEntity<>(postAdminService.findPostsByMemberNickname(mNickname), HttpStatus.OK);
+//    }
 
     // 게시글 삭제
     @DeleteMapping("/{pNo}")

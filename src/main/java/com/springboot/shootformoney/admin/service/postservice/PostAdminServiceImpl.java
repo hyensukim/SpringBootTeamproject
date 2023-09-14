@@ -1,5 +1,6 @@
 package com.springboot.shootformoney.admin.service.postservice;
 
+import com.springboot.shootformoney.member.repository.MemberRepository;
 import com.springboot.shootformoney.post.Post;
 import com.springboot.shootformoney.post.PostDTO;
 import com.springboot.shootformoney.post.PostRepository;
@@ -15,6 +16,9 @@ public class PostAdminServiceImpl implements PostAdminService {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
 
     // 게시글 전체 조회
     @Override
@@ -42,6 +46,15 @@ public class PostAdminServiceImpl implements PostAdminService {
         } else {
             throw new IllegalArgumentException("해당 번호의 게시글이 존재하지 않습니다: " + pNo);
         }
+    }
+    
+    // 회원 닉네임 조회
+    @Override
+    public List<PostDTO> findPostsByMemberNickname(String mNickname){
+        return postRepository.findByMember_MNickName(mNickname).stream()
+                .map(PostDTO::of)
+                .collect(Collectors.toList());
+
     }
 
 }
