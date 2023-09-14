@@ -51,6 +51,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(f->f
                 .requestMatchers("/mypage/**").authenticated() // 회원 전용
                 .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")// 관리자 전용\
+//                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                 .anyRequest().permitAll()
         );
 
