@@ -22,15 +22,15 @@ public class PostDTO {
     @Size(min = 1, max = 3000, message = "게시글 글자수 제한 오류")
     private String pContent;
 
-    // 추가: Post Entity 객체를 받아서 PostDto 객체로 변환하는 기능
     public static PostDTO of(Post post) {
-        PostDTO postDto = new PostDTO();
-        postDto.setPNo(post.getPNo());
-        postDto.setBNo(post.getBNo());
-        postDto.setBName(post.getBName());
-        postDto.setPTitle(post.getPTitle());
-        postDto.setPContent(post.getPContent());
+        PostDTO dto = new PostDTO();
 
-        return postDto;
+        dto.setPNo(post.getPNo());
+        dto.setBNo(post.getBoard().getBNo()); // 게시판 번호 설정. Board 필드가 없다면 이 부분 수정 필요.
+        dto.setBName(post.getBoard().getBName()); // 게시판 이름 설정. Board 필드가 없다면 이 부분 수정 필요.
+        dto.setPTitle(post.getPTitle());
+        dto.setPContent(post.getPContent());
+
+        return dto;
     }
 }

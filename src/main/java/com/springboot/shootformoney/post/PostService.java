@@ -1,7 +1,6 @@
 package com.springboot.shootformoney.post;
 
 
-
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +38,7 @@ public class PostService {
 
         return post.getPNo();
     }
+
     //삭제
     @Transactional
     public void deletePost(Long pNo) {
@@ -65,15 +65,16 @@ public class PostService {
 
     //전체 조회
     public List<Post> findAllPosts() {
-        return postRepository.findAll();
+        return 	postRepository.findAll();
     }
 
     //단일 조회
+    @Transactional
     public Post findPost(Long pNo) {
-        Post post = postRepository.findOne(pNo);
+        Post 	post = 	postRepository.findOne(pNo);
         if (post != null) {
             post.incrementViewCount();
-            return post;
+            return 	post;
         } else {
             throw new IllegalArgumentException("해당 아이디의 게시물이 존재하지 않습니다.");
         }
@@ -83,7 +84,6 @@ public class PostService {
     public List<Post> findPostsByTitle(String pTitle) {
         return postRepository.findByTitle(pTitle);
     }
-
 
 
 }

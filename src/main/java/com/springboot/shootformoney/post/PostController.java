@@ -1,9 +1,11 @@
 package com.springboot.shootformoney.post;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -16,23 +18,23 @@ public class PostController {
 
     //게시글 생성
     @PostMapping("/")
-    public ResponseEntity<Long> createPost(@RequestBody PostDTO postDto) {
+    public ResponseEntity<Long> createPost(@Valid @RequestBody PostDTO postDto) {
         Long id = postService.savePost(postDto);
-        return ResponseEntity.ok(id);
+        return ResponseEntity.created(URI.create("/posts/" + id)).body(id);
     }
 
     //삭제
     @DeleteMapping("/{pNo}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
-        postService.deletePost(id);
+    public ResponseEntity<Void> deletePost(@PathVariable Long pNo) {
+        postService.deletePost(pNo);
         return ResponseEntity.noContent().build();
     }
 
     // 게시글 수정
     @PutMapping("/{pNo}")
-    public ResponseEntity<Void> updatePost(@PathVariable Long id, @RequestBody PostDTO updatedPost) {
-        postService.updatePost(id, updatedPost.getPTitle(), updatedPost.getPContent());
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> updatePost(@PathVariable Long pNo, @Valid @RequestBody 	PostDTO updatedPost) {
+        postService.updatePost(pNo, updatedPost.getPTitle(), updatedPost.getPContent());
+        return 	ResponseEntity.noContent().build();
     }
 
     // 전체 게시글 조회
@@ -44,15 +46,15 @@ public class PostController {
 
     // 단일 게시글 조회
     @GetMapping("/{pNo}")
-    public ResponseEntity<Post> getOnePosts(@PathVariable Long id) {
-        Post post = postService.findPost(id);
+    public ResponseEntity<Post> getOnePosts(@PathVariable Long pNo) {
+        Post post = postService.findPost(pNo);
         return ResponseEntity.ok(post);
     }
 
     //제목으로 찾기
-    @GetMapping("/title/{pTitle}")
-    public ResponseEntity<List<Post>> getPostsByTitle(@PathVariable String title) {
-        List<Post> posts = postService.findPostsByTitle(title);
+    @GetMapping("/tTitle/{pTitle}")
+    public ResponseEntity<List<Post>> getPostsByTitle(@PathVariable String pTitle) {
+        List<Post> posts = postService.findPostsByTitle(pTitle);
         return ResponseEntity.ok(posts);
     }
 

@@ -1,7 +1,9 @@
 package com.springboot.shootformoney.post;
 
+
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.common.BaseEntity;
+import com.springboot.shootformoney.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,13 +34,13 @@ public class Post extends BaseEntity {
 
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bNo")
     private Board board;
 
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "member_id")
-    //private MemberEntity member;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Builder
     public Post(String title, String content) {
@@ -67,19 +69,27 @@ public class Post extends BaseEntity {
         }
     }
 
+//    public Long getBNo() {
+//        return this.board.getBNo();
+//    }
+
     public Long getBNo() {
-        return this.board.getBNo();
+        return this.board == null ? null : this.board.getBNo();
     }
+
+//    public String getBName() {
+//        return this.board.getBName();
+//    }
 
     public String getBName() {
-        return this.board.getBName();
+        return this.board == null ? null : this.board.getBName();
     }
 
-    //  public void setMember(MemberEntity member) {
-    //    this.member= member;
-     //   if (!member.getPosts().contains(this)) {
-     //       member.getPosts().add(this);
-    //   }
-  //    }
+      public void setMember(Member member) {
+        this.member= member;
+        if (!member.getPosts().contains(this)) {
+            member.getPosts().add(this);
+       }
+      }
 
 }
