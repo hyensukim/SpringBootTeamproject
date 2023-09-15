@@ -2,39 +2,62 @@ package com.springboot.shootformoney.file;
 
 import com.springboot.shootformoney.file.File;
 import com.springboot.shootformoney.file.FileService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @RestController
-@RequestMapping("/api/files")
+@RequestMapping("/files")
 public class FileController {
 
     private final FileService fileService;
-    private final PostRepository postRepository; // 게시글 Repository
 
-    public FileController(FileService fileService, PostRepository postRepository) {
-        this.fileService= fileService;
-        this.postRepository= postRepository;
+    @Autowired
+    public FileController(FileService fileService) {
+        this.fileService = fileService;
     }
 
-    @PostMapping("/upload/{postingId}")
-    public ResponseEntity<String> uploadFile(@PathVariable("postingId") Integer pno,
-                                             @RequestParam("file") MultipartFile multipartFile) {
+    @PostMapping("/upload")
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, Post post) {
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body("No file selected");
+        }
+
         try {
-            Optional<Post> optionalPosting= postRepository.findById(pno);
-            if (!optionalPosting.isPresent()) {
-                return new ResponseEntity<>("게시글을 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
+            File uploadedFile = fileService.saveFile(file, post);
+            return ResponseEntity.ok().body("File uploaded successfully: " + uploadedFile.getFName());
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload the file: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/download/{fileId}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable Integer fileId) {
+        if (fileId == null || fileId <= 0) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        try {
+            Resource resource = fileService.loadAsResource(fileId);
+
+            if(resource == null){
+                throw new Exception("Could not find the file!");
             }
 
-            Post post = optionalPosting.get();
+            String fileName = resource.getFilename();
 
-            File uploadedFile= fileService.uploadFile(multipartFile, post);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                    .body(resource);
 
-            return new ResponseEntity<>(uploadedFile.getFNo().toString(), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 }
