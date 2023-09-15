@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="utf-8">
     <link th:href="@{../static/css/css.css}"
@@ -7,6 +8,8 @@
     <title>게시판 리스트</title>
 </head>
 <body>
+
+<div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
 
 <div class="board_wrap">
     <div class="board_title">
@@ -61,6 +64,8 @@
         </div>
     </div>
 </div>
+
+<footer th:replace="~{footer :: footerFragment}"></footer>
 
 </body>
 </html>
