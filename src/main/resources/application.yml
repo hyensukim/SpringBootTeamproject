@@ -29,5 +29,23 @@ spring:
   mvc:
     static-path-pattern: /static/**
 
+  # mail 설정
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: crazymin180@gmail.com
+    password: zumb zjje zocn cdmb
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+custom:
+  siteName: shootformoney
+  siteMainUri: http://localhost:8080
+  emailFrom: test@localhost
+  emailFromName: admin
+
 logging.level:
   org.hibernate.SQL: debug

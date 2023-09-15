@@ -11,7 +11,7 @@ import java.util.List;
  관리자 - 회원 조회 서비스
  */
 
-@Service
+@Service("adminMemberInfoService")
 public class MemberInfoService {
 
     private MemberRepository memberRepository;

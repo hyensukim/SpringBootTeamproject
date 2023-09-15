@@ -30,9 +30,6 @@ public class MemberSaveService {
         String mEmail = signUpForm.getMEmail();
         String mNickName = signUpForm.getMNickName();
 
-        // 테스트용
-        mPhone = mPhone.replaceAll("\\D","");
-
         Member member = Member.builder()
                 .mId(mId)
                 .mPassword(mPw)

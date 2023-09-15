@@ -5,7 +5,11 @@ import lombok.Data;
 
 @Entity @Data
 public class Euro {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long eNo;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="mNo")
     private Member member;

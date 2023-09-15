@@ -7,12 +7,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @Builder @NoArgsConstructor @AllArgsConstructor
-public class FindIdForm {
+@Data @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class FindPwForm {
 
-    @NotBlank(message = "이름을 입력하세요.")
-    private String mName;
-    @NotBlank(message = "이메일을 입력하세요.")
+    @NotBlank(message="가입 시 등록한 아이디를 입력하세요.")
+    private String mId;
+
+    @NotBlank(message="가입 시 등록한 이메일을 입력하세요.")
     @Email(message="이메일 양식으로 입력하세요.")
     private String mEmail;
 
