@@ -1,6 +1,5 @@
 package com.springboot.shootformoney.chatting;
 
-import com.springboot.shootformoney.comment.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
