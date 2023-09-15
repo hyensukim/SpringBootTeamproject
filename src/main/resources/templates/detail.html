@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <link th:href="@{../static/css/css.css}"
+        href="../static/css/css.css" rel="stylesheet">
+  <title>글 상세</title>
+
+  <style>
+    input {
+      border: none;
+    }
+  </style>
+</head>
+  <body>
+    <div class="board_wrap">
+
+      <div class="board_title">
+        <h2 th:text="#{}">글 상세</h2>
+      </div>
+
+      <!-- 추가 if 조건식 변수 맞으면 저장완료 -->
+      <!--<h2 th:if="${}" th:text="'저장 완료'"></h2>-->
+      <div class="board_view_wrap">
+        <div class="board_view">
+
+          <div class="title" th:text="${#}">
+            <label for="boardSubject" th:text="#{}">제목 : </label>
+            <input type="text" id="boardSubject" name="boardSubject" class="form-control" value="제목" th:value="${}" readonly>
+          </div>
+
+          <div class="info">
+            <dl>
+              <dt>
+                <label for="boardId" th:text="#{}">글 ID : </label>
+              </dt>
+              <dd>
+                <input type="text" id="boardId" name="boardId" class="form-control" value="1" th:value="${}" readonly>
+              </dd>
+            </dl>
+            <dl>
+              <dt>
+                <label for="name" th:text="#{}">작성자 : </label>
+              </dt>
+              <dd>
+                <input type="text" id="name" name="name" class="form-control" value="작성자" th:value="${}" readonly>
+              </dd>
+            </dl>
+            <dl>
+              <dt>
+                <label for="regdate" th:text="#{}">등록일</label>
+              </dt>
+              <dd>
+                <input type="text" id="regdate" name="regdate" class="form-control" value="10" th:value="${}" readonly>
+              </dd>
+            </dl>
+            <dl>
+              <dt>
+                <label for="viewcnt" th:text="#{}">조회수 : </label>
+              </dt>
+              <dd>
+                <input type="text" id="viewcnt" name="viewcnt" class="form-control" value="10" th:value="${}" readonly>
+              </dd>
+            </dl>
+          </div>
+
+          <!-- 가능하면 라벨 숨기기 -->
+          <div class="cont">
+            <label for="contents" th:text="#{}"></label>
+            <input type="text" id="contents" name="contents" class="form-control" value="10" th:value="${}" readonly>
+          </div>
+
+          <hr class="my-4">
+
+          <div class="bt_wrap">
+            <a href="board.html" th:href="@{#}" th:text="${}">글 목록</a>
+            <a href="updateForm.html" th:href="@{#}" th:text="${}">글 수정</a>
+            <a th:href="@{#}" th:text="${}">글 삭제</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
