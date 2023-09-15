@@ -13,14 +13,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-//@RequestMapping("/admin/member") // API TEST를 위해 주석 처리
+@RestController
+//@Controller
+@RequestMapping("/admin/member") // API TEST를 위해 주석 처리
 @RequiredArgsConstructor
 public class MemberManagementController {
 
-    private final MemberRoleChangeService memberRoleChangeService;
+    private final MemberRoleChangeService memberRoleChangeService; // 회원 조회
     private final MemberInfoService memberInfoService;
-    private final MemberSanctionsService memberSanctionsService;
+    private final MemberSanctionsService memberSanctionsService; // 회원 탈퇴(제재)
 
     // 전체 회원 조회
     @GetMapping("/")

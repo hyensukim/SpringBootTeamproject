@@ -5,38 +5,39 @@ import com.springboot.shootformoney.admin.service.ConfigInfoService;
 import com.springboot.shootformoney.admin.service.ConfigSaveService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Log
-@Controller
-//@RequestMapping("/admin/config")
+//@Controller
+@RequestMapping("/admin/config")
 @RequiredArgsConstructor
+@RestController
 public class ConfigController {
 
     private final ConfigSaveService saveService;
     private final ConfigInfoService infoService;
     private String code = "siteConfig";
 
-    @GetMapping
-    public String getConfig(Model model) {
+    @GetMapping("/")
+    public ResponseEntity<ConfigForm> configGet(Model model) {
         commonProcess(model);
         ConfigForm configForm = infoService.get(code, ConfigForm.class);
 
         // configForm -> null = 새로운 configForm, null != 이전의 configForm
-        model.addAttribute("configForm", configForm == null ? new ConfigForm() : configForm);
-        return "admin/config";
+        return ResponseEntity.ok(configForm == null ? new ConfigForm() : configForm);
     }
 
-    @PostMapping
-    public String postConfig(ConfigForm configForm, Model model) {
+    @PostMapping("/update/configForm")
+    public ResponseEntity<ConfigForm> configPost(@RequestBody ConfigForm configForm, Model model) {
+        //json 형식의 데이터 처리를 위해 @RequestBody 사용
         commonProcess(model);
         saveService.configSave(code, configForm);
         model.addAttribute("message", "설정 저장 완료");
-        return "admin/config";
+
+        return ResponseEntity.ok(configForm);
     }
 
     private void commonProcess(Model model) {

@@ -48,7 +48,7 @@ public class BoardController {
     }
 
     // 게시판 수정 - 이름, 파일 첨부 여부
-    @PutMapping("/{bNo}/name")
+    @PutMapping("/{bNo}/update")
     public ResponseEntity<Void> updateBoardInfo(
             @PathVariable Long bNo,
             @RequestParam("newBName") String newBName,
