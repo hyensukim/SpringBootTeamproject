@@ -1,6 +1,8 @@
 package com.springboot.shootformoney.board.repository;
 
 import com.springboot.shootformoney.board.entity.Board;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BoardRepository extends JpaRepository<Board, String> {
@@ -10,6 +12,10 @@ public interface BoardRepository extends JpaRepository<Board, String> {
     Board findBybName(String bName); // 게시판 제목별 조회
 
     boolean existsBybName(String bName); // 게시판 이름 중복 여부 판단
+
+//    Page<Board> findByBNo(Long bNo, Pageable pageable);
+    int countBybNo(Long bNo);
+
 
 
 
