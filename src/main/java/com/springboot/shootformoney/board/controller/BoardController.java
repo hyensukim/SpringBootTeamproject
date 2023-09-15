@@ -49,7 +49,7 @@ public class BoardController {
     }
 
     // 게시판 수정 - 이름, 파일 첨부 여부, 게시판 게시글 수, 게시판 페이지 수
-    @PutMapping("/{bNo}/update")
+    @PutMapping("/update/{bNo}")
     public ResponseEntity<Void> updateBoardInfo(
             @PathVariable Long bNo, // 게시판 번호로 조회
             @RequestParam("newBName") String newBName,  // 게시판 이름
@@ -73,12 +73,12 @@ public class BoardController {
 
 
     // 페이징 처리
-    @GetMapping("/{bN}")
-    public ResponseEntity<PageHandler> getBoards(@PathVariable Long bN,
+    @GetMapping("/paging/{bNo}")
+    public ResponseEntity<PageHandler> getBoards(@PathVariable Long bNo,
                                                  @RequestParam(defaultValue = "1") int bPageNo,
                                                  @RequestParam(defaultValue = "10") int bUnitNo) {
 
-        return ResponseEntity.ok(boardService.getBoardsWithPaging(bN, bPageNo, bUnitNo));
+        return ResponseEntity.ok(boardService.getBoardsWithPaging(bNo, bPageNo, bUnitNo));
     }
 
 //    @GetMapping("/boards/{bNo}")
