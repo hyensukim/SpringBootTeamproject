@@ -8,6 +8,9 @@ import lombok.Getter;
 @Getter
 public class Euro {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long eNo;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="mNo")
     private Member member;

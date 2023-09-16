@@ -47,4 +47,7 @@ public class Bet {
     //최종 배당률 칼럼은 일단 모두 만들어 보고 넣을지 말지 생각.
     @Column(name = "bt_ratio")
     private Double btRatio = 1.0; //기본값 설정(경기 결과 나오면 update)
+
+    @Column(name = "bt_end_paid")
+    private Byte endPaid = 0;    //0은 false(아직 정산 후 지급 안 됨.), 1은 true(정산 후 지급됨)를 뜻한다.
 }

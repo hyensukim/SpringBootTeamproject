@@ -23,7 +23,7 @@ public class Game {
     //PK 설정
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long g_no;
+    private Long gNo;
 
     //API에서 제공하는 경기마다의 고유한 ID. (table update를 위해 추가)
     @Column(name = "match_id", nullable = false, unique = true)

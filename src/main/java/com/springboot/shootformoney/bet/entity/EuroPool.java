@@ -2,6 +2,9 @@ package com.springboot.shootformoney.bet.entity;
 
 import com.springboot.shootformoney.game.entity.Game;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /*
 * 각 경기별 걸린 유로 합을 실시간으로 update하여 저장하는 엔터티.
@@ -9,6 +12,7 @@ import jakarta.persistence.*;
 */
 @Entity
 @Table(name = "euroPool")
+@Data
 public class EuroPool {
 
     @Id
