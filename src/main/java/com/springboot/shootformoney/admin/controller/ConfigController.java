@@ -11,33 +11,53 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Log
-//@Controller
+@Controller
 @RequestMapping("/admin/config")
 @RequiredArgsConstructor
-@RestController
+//@RestController
 public class ConfigController {
 
     private final ConfigSaveService saveService;
     private final ConfigInfoService infoService;
     private String code = "siteConfig";
 
+//    @GetMapping("/")
+//    public ResponseEntity<ConfigForm> configGet(Model model) {
+//        commonProcess(model);
+//        ConfigForm configForm = infoService.get(code, ConfigForm.class);
+//
+//        // configForm -> null = 새로운 configForm, null != 이전의 configForm
+//        return ResponseEntity.ok(configForm == null ? new ConfigForm() : configForm);
+//    }
+//
+//    @PostMapping("/update/configForm")
+//    public ResponseEntity<ConfigForm> configPost(@RequestBody ConfigForm configForm, Model model) {
+//        //json 형식의 데이터 처리를 위해 @RequestBody 사용
+//        commonProcess(model);
+//        saveService.configSave(code, configForm);
+//        model.addAttribute("message", "설정 저장 완료");
+//
+//        return ResponseEntity.ok(configForm);
+//    }
+
     @GetMapping("/")
-    public ResponseEntity<ConfigForm> configGet(Model model) {
+    public String configGet(Model model) {
         commonProcess(model);
         ConfigForm configForm = infoService.get(code, ConfigForm.class);
 
         // configForm -> null = 새로운 configForm, null != 이전의 configForm
-        return ResponseEntity.ok(configForm == null ? new ConfigForm() : configForm);
+        model.addAttribute("configForm", (configForm == null ? new ConfigForm() : configForm));
+
+        return "config";
     }
 
     @PostMapping("/update/configForm")
-    public ResponseEntity<ConfigForm> configPost(@RequestBody ConfigForm configForm, Model model) {
-        //json 형식의 데이터 처리를 위해 @RequestBody 사용
+    public String configPost(@ModelAttribute("configForm") ConfigForm configForm, Model model) {
         commonProcess(model);
         saveService.configSave(code, configForm);
         model.addAttribute("message", "설정 저장 완료");
 
-        return ResponseEntity.ok(configForm);
+        return "redirect:/admin/config/";
     }
 
     private void commonProcess(Model model) {
