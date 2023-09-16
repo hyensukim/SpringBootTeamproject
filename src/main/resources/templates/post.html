@@ -8,9 +8,11 @@
     <title>게시판 리스트</title>
 </head>
 <body>
-
+<!-- 네비게이션 바 -->
 <div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
 
+
+<!-- 게시판 -->
 <div class="board_wrap">
     <div class="board_title">
         <h2 th:text="#{}">게시판 이름</h2>
@@ -65,6 +67,7 @@
     </div>
 </div>
 
+<!-- 푸터 -->
 <footer th:replace="~{footer :: footerFragment}"></footer>
 
 </body>
