@@ -2,8 +2,10 @@ package com.springboot.shootformoney.member.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 
 @Entity @Data
+@Getter
 public class Euro {
 
     @Id
