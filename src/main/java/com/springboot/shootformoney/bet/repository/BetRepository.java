@@ -16,4 +16,8 @@ public interface BetRepository extends JpaRepository<Bet, Long> {
     //회원번호로 배팅내역 조회하기.
     @Query("SELECT b FROM Bet b WHERE b.member.mNo = :mNo ORDER BY b.btTime DESC")
     List<Bet> findBymNo(@Param("mNo") Long mNo);
+
+    //배팅 적중한 사람 조회하기.(중복 체크 포함)
+    @Query("SELECT b FROM Bet b WHERE b.game.result = b.expect AND b.endPaid = 0")
+    List<Bet> findByResultAndExpect();
 }

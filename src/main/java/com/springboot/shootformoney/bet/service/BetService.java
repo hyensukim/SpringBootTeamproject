@@ -6,7 +6,9 @@ import com.springboot.shootformoney.bet.repository.EuroPoolRepository;
 import com.springboot.shootformoney.game.dto.data.Result;
 import com.springboot.shootformoney.game.entity.Game;
 import com.springboot.shootformoney.game.repository.GameRepository;
+import com.springboot.shootformoney.member.entity.Euro;
 import com.springboot.shootformoney.member.entity.Member;
+import com.springboot.shootformoney.member.repository.EuroRepository;
 import com.springboot.shootformoney.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,10 @@ public class BetService {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private EuroRepository euroRepository;
+
+
     //고객이 배팅하면, Bet 테이블에 기록을 저장하는 메서드
     @Transactional
     public Bet bet(Long gNo, String expect, Integer euro) {
@@ -57,7 +63,8 @@ public class BetService {
         return betRepository.save(bet);
     }
 
-    //올인 배팅 메서드 프론트에서 '올인'버튼을 클릭하면 자동으로 input 칸에 최고 배팅금이 들어오도록 하기.(프론트가 담당)
+    //올인 배팅 메서드 프론트에서 '올인'버튼을 클릭하면 자동으로 input 칸에 최고 배팅금이 들어오도록 하기.
+    //프론트에서 버튼누를 때 구현해야 할 것 같음. 나중에 필요없으면 메서드 지울예정. 예성이 화이팅 ^^!!! <3 <3
 //    @Transactional
 //    public String betAllIn(Long gNo, String expect){
 ////        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -115,12 +122,36 @@ public class BetService {
 
     //경기결과가 나오면 지급금을 지급하는 메서드.
     @Transactional
-    public void dividend(Long gNo, Integer bettedEuro){
-        //끝난 경기들 가져오기.
-        List<Game> finishedGames = gameRepository.findAllFinishedMatches();
+    public String dividend(){
+        try {
+            //끝난 경기들 가져오기.
+            List<Game> finishedGames = gameRepository.findAllFinishedMatches();
 
-        for(Game game : finishedGames){
+            for (Game game : finishedGames) {
+                List<Bet> wonBets = betRepository.findByResultAndExpect();
+                for (Bet bet : wonBets) {
+                    Member member = bet.getMember();
+                    //Double fee = member.getFee(); -> 수수료를 조회하는 부분을 만들자...
 
+                    //현재 사용자의 유로 보유량 조회.
+                    Integer originalValue = euroRepository.findBymNo(member.getMNo()).getValue();
+                    //배당금 = 배팅금 * 배당률 - 배팅금 (만 단위)
+                    double prizeValue = (bet.getBtMoney() * bet.getBtRatio()) - bet.getBtMoney();
+                    //지급금 = 배당금 * (1 - 수수료) + 배팅금
+                    Integer addValue = (int) (((prizeValue * (1 - (bet.getMember().getGrade().getFee()))
+                                                + bet.getBtMoney()) * 10000));
+
+                    //Euro 보유량 업데이트.
+                    Euro euroAccount = euroRepository.findBymNo(member.getMNo());
+                    euroAccount.setValue(originalValue + addValue);
+
+                    //Bet엔터티의 중복검사부분 업데이트
+                    bet.setEndPaid((byte) 1);
+                }
+            }
+        } catch (Exception e){
+            return "오류가 발생했습니다.";
         }
+    return "정산 완료";
     }
 }

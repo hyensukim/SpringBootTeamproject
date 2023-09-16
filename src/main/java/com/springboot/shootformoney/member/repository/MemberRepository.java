@@ -16,4 +16,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("SELECT m FROM Member m WHERE m.mId = :mId AND m.mEmail = :mEmail ")
     Member findBymIdAndmEmail(String mId, String mEmail); // 아이디 + 이메일로 조회
 
+
 }   

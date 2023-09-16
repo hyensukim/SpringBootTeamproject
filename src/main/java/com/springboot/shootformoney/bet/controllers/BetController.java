@@ -82,4 +82,11 @@ public class BetController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    //정산 메서드. dividend() 메서드 사용.
+    @PostMapping("/dividend")
+    public ResponseEntity<Void> calculateDividend() {
+        betService.dividend();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
