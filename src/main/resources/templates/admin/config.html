@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <section layout:fragment="content">
+        <h1 th:text="${title}"></h1>
+
+        <th:block th:replace="~{admin/commons/_message::message}"></th:block>
+
+        <form name="frmSave" method="post" th:action="@{/admin/config}" autocomplete="off" th:object="${configForm}">
+            <table class="table-cols">
+                <tr>
+                    <th><label for="siteTitle">사이트 제목</label></th>
+                    <td>
+                        <input type="text" id="siteTitle" name="siteTitle" th:field="*{siteTitle}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>사이트 설명</th>
+                    <td>
+                        <textarea name="siteDescription" th:field="*{siteDescription}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>CSS,JS 버전</th>
+                    <td>
+                        <input type="number" name="cssJsVersion" th:field="*{cssJsVersion}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>사이트 규칙</th>
+                    <td>
+                        <textarea name="joinTerms" th:field="*{siteRule}"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <div class="btns">
+                <button type="reset">다시입력</button>
+                <button type="submit">저장하기</button>
+            </div>
+        </form>
+    </section>
+</body>
+</html>
