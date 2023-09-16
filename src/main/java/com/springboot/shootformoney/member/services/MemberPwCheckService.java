@@ -12,7 +12,7 @@ public class MemberPwCheckService {
     private final MemberUtil memberUtil;
 
     public boolean check(String mPassword){
-        String getPw = memberUtil.getMember().getMPassword();
+        String getPw = memberUtil.getMember().getMPassword();//로그인한 회원 비번
         boolean matched = passwordEncoder.matches(mPassword,getPw);
 
         if(!matched){

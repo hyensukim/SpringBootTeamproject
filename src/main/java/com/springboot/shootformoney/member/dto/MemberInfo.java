@@ -18,6 +18,7 @@ public class MemberInfo implements UserDetails {
     private String mId;
     private String mPassword;
     private String mName;
+    private String mNickName;
     private String mEmail;
     private String mPhone;
     private Grade grade;

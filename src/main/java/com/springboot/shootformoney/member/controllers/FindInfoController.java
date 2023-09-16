@@ -83,7 +83,7 @@ public class FindInfoController {
                 }
             }
             script = String.format("Swal.fire('등록 되지 않은 회원입니다.','','error')" +
-                    ".then(function(){location.href='/member/findpw';})");
+                    ".then(function(){history.back();})");
             model.addAttribute("script", script);
             return "script/sweet";
         }

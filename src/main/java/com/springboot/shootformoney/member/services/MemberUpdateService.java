@@ -13,11 +13,25 @@ public class MemberUpdateService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public void updatePw(long memberNo, String memberPw){
-        Member member = memberRepository.findById(memberNo).get();
+    public void update(long mNo, String mPassword, String mEmail, String mPhone){
+        Member member = memberRepository.findById(mNo).get();
 
-        member.setMPassword(passwordEncoder.encode(memberPw));
+        if(mPassword != null && !mPassword.isBlank()) {
+            member.setMPassword(passwordEncoder.encode(mPassword));
+        }
+
+        if(mEmail != null && !mEmail.isBlank()){
+            member.setMEmail(mEmail);
+        }
+
+        if(mPhone != null && !mPhone.isBlank()){
+            member.setMPhone(mPhone);
+        }
 
         memberRepository.saveAndFlush(member);
+    }
+
+    public void updatePw(long mNo, String mPw){
+        update(mNo,mPw,null,null);
     }
 }

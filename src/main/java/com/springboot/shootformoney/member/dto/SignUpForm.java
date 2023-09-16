@@ -1,10 +1,15 @@
 package com.springboot.shootformoney.member.dto;
 
 
+    import com.springboot.shootformoney.member.enum_.Grade;
+    import com.springboot.shootformoney.member.enum_.Role;
     import jakarta.validation.constraints.*;
+    import lombok.AllArgsConstructor;
+    import lombok.Builder;
     import lombok.Data;
+    import lombok.NoArgsConstructor;
 
-    @Data
+@Data @Builder @AllArgsConstructor @NoArgsConstructor
     public class SignUpForm {
 
         @NotBlank(message = "아이디를 입력해주세요.")
@@ -31,4 +36,8 @@ package com.springboot.shootformoney.member.dto;
         @NotBlank(message = "별명을 입력해주세요.")
         @Size(min=4, max=16, message="최소 4자 최대 16자로 입력해주세요.")
         private String mNickName;
+
+        private Grade grade;
+        private Integer level;
+        private Role role;
     }
