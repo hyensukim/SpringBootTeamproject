@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{../static/css/css.css}"
+          href="../static/css/css.css" rel="stylesheet">
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+    <title>글 작성</title>
+    <style>
+        .title {
+            border-bottom: 1px solid #999;
+        }
+        <!-- ckEditor 넓이, 높이 조절 -->
+        .ck.ck-editor {
+            max-width: 500px;
+        }
+        .ck-editor__editable {
+            min-height: 300px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="board_wrap">
+        <div class="board_title">
+            <h2 th:text="#{}">글 작성</h2>
+        </div>
+
+        <form action="#" th:action th:object="${#}" method="POST">
+            <div class="board_write_wrap">
+                <div class="board_write">
+                    <div class="title">
+                        <dl>
+                            <dt>
+                                <label for="subject" th:text="#{}">제목</label>
+                            </dt>
+                            <dd>
+                                <input type="text" id="subject" th:field="*{#}" class="form-control" placeholder="제목을 입력하세요.">
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="cont", id="classic">
+                        <label for="contents" th:text="#{}"></label>
+                        <textarea cols="150" rows="10" id="contents" th:field="*{#}" class="form-control" placeholder="내용을 입력하세요."></textarea>
+                    </div>
+                    <form method="POST" action="#" th:action="@{/upload}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="file"></label>
+                            <input type="file" id="file" name="file" class="form-control-file"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="bt_wrap">
+                    <a href="post.html" th:href="@{#}" th:text="${#}">등록</a>
+                    <a href="post.html" th:href="@{#}" th:text="${#}">취소</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- ckEditor 에러 처리 메서드 -->
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#classic' ))
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+</body>
+</html>

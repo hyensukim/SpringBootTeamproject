@@ -1,11 +1,12 @@
 package com.springboot.shootformoney.board.controller;
 
+import com.springboot.shootformoney.PageHandler;
 import com.springboot.shootformoney.board.dto.BoardDto;
 import com.springboot.shootformoney.board.service.BoardService;
 import com.springboot.shootformoney.board.entity.Board;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+//import org.springframework.data.domain.Page;
+//import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -47,14 +48,16 @@ public class BoardController {
         }
     }
 
-    // 게시판 수정 - 이름, 파일 첨부 여부
-    @PutMapping("/{bNo}/name")
+    // 게시판 수정 - 이름, 파일 첨부 여부, 게시판 게시글 수, 게시판 페이지 수
+    @PutMapping("/update/{bNo}")
     public ResponseEntity<Void> updateBoardInfo(
-            @PathVariable Long bNo,
-            @RequestParam("newBName") String newBName,
-            @RequestParam("newBIsFile") boolean newBIsFile) {
+            @PathVariable Long bNo, // 게시판 번호로 조회
+            @RequestParam("newBName") String newBName,  // 게시판 이름
+            @RequestParam("newBIsFile") boolean newBIsFile, // 게시판 파일 첨부 여부
+            @RequestParam("newBUnitNo") int newBUnitNo, // 게시판 게시글 수
+            @RequestParam("newBPageNo") int newBPageNo) { // 게시판 페이지 수
         try {
-            boardService.updateBoardInfo(bNo, newBName, newBIsFile);
+            boardService.updateBoardInfo(bNo, newBName, newBIsFile, newBUnitNo, newBPageNo);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
@@ -67,4 +70,22 @@ public class BoardController {
         boardService.deleteBoard(bNo);
         return ResponseEntity.noContent().build();
     }
+
+
+    // 페이징 처리
+    @GetMapping("/paging/{bNo}")
+    public ResponseEntity<PageHandler> getBoards(@PathVariable Long bNo,
+                                                 @RequestParam(defaultValue = "1") int bPageNo,
+                                                 @RequestParam(defaultValue = "10") int bUnitNo) {
+
+        return ResponseEntity.ok(boardService.getBoardsWithPaging(bNo, bPageNo, bUnitNo));
+    }
+
+//    @GetMapping("/boards/{bNo}")
+//    public ResponseEntity<Page<BoardDto>> getBoards(@PathVariable Long bNo,
+//                                                    @RequestParam(defaultValue = "1") int bPageNo,
+//                                                    @RequestParam(defaultValue = "10") int bUnitNo) {
+//
+//        return ResponseEntity.ok(boardService.getBoardWithPaging(bNo, bPageNo, bUnitNo));
+//    }
 }
