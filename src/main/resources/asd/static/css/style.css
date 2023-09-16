@@ -162,16 +162,6 @@ a {
     font-size: 2rem;
 }
 
-.board_view label{
-
-}
-
-.board_view #boardSubject{
-    display: inline;
-    width: 91%;
-    border:0 solid black
-}
-
 .board_view .info {
     padding: 15px;
     border-bottom: 1px solid #999;
@@ -209,8 +199,7 @@ a {
     font-size: 1.4rem;
 }
 
-.board_view .info input {
-    border:0 solid black;
+.board_view .info dl dt {
 
 }
 
@@ -224,10 +213,6 @@ a {
     border-bottom: 1px solid #000;
     line-height: 160%;
     font-size: 1.4rem;
-}
-
-.board_view .cont input{
-    border:0 solid black;
 }
 
 .board_write {
@@ -302,3 +287,56 @@ a {
     margin-top: 10px;
 }
 
+
+
+header{
+    margin-top: 80px;
+}
+
+body{
+    margin:0;
+}
+
+.nav-container{
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color:black;
+    list-style-type: none;
+    position: fixed;
+    top: 0;
+}
+
+.nav-item{
+    margin-top: 5px;
+    margin-left: 20px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.nav-item a {
+    font-size: 15px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}
+
+.nav-item:hover{
+    background-color: grey;
+}
+
+.logo{
+    margin-left: 20px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.logo a {
+    font-size: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}

@@ -162,16 +162,6 @@ a {
     font-size: 2rem;
 }
 
-.board_view label{
-
-}
-
-.board_view #boardSubject{
-    display: inline;
-    width: 91%;
-    border:0 solid black
-}
-
 .board_view .info {
     padding: 15px;
     border-bottom: 1px solid #999;
@@ -209,8 +199,7 @@ a {
     font-size: 1.4rem;
 }
 
-.board_view .info input {
-    border:0 solid black;
+.board_view .info dl dt {
 
 }
 
@@ -224,10 +213,6 @@ a {
     border-bottom: 1px solid #000;
     line-height: 160%;
     font-size: 1.4rem;
-}
-
-.board_view .cont input{
-    border:0 solid black;
 }
 
 .board_write {
@@ -297,8 +282,3 @@ a {
     border: 0;
     resize: vertical;
 }
-
-.form-group {
-    margin-top: 10px;
-}
-
