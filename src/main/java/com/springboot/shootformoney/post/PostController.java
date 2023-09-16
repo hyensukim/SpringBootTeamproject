@@ -3,6 +3,7 @@ package com.springboot.shootformoney.post;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -15,6 +16,13 @@ public class PostController {
 
     private final PostService postService;
 
+    @GetMapping("/")
+    public String getAllPosts(Model model) {
+        List<Post> posts = postService.findAllPosts();
+        model.addAttribute("posts", posts);
+        model.addAttribute("pageTitle", "게시글 관리");
+        return "post";  // Thymeleaf 템플릿 이름
+    }
 
     //게시글 생성
     @PostMapping("/")
