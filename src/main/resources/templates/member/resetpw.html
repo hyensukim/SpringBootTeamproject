@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>ResetPw</title>
-</head>
-<body>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<main layout:fragment="common">
 <form th:action="@{/member/resetpw}" th:object="${signUpForm}" method="post">
     <div class="error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div></div>
     <div class="form-group">
@@ -19,5 +18,5 @@
     </div>
     <button type="submit">RESET PW</button>
 </form>
-</body>
+</main>
 </html>

@@ -1,5 +1,7 @@
 package com.springboot.shootformoney.comment;
 
+import com.springboot.shootformoney.member.entity.Member;
+import com.springboot.shootformoney.post.Post;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

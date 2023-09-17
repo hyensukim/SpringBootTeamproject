@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<aside th:replace="~{member/mypage::mypage}"></aside>
+<main layout:fragment="common">
+    <div class="frmMyPost">
+        <form method="get" name="frmMyPost">
+            <h1>작성한 게시글</h1>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>글번호</th>
+                            <th>제목</th>
+                            <th>작성일</th>
+                            <th>조회수</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="post : ${postList}" th:object="${post}">
+                            <td class="list_num" th:text="*{pNo}"></td>
+                            <td class="list_subject">
+                                <a th:href="@{/posts/{pNo}(pNo = *{pNo})}">
+                                    [[*{pTitle}]]
+                                </a>
+                            </td>
+                            <td class="list_num" th:text='*{#dates.format(createdAt,'yyyy.MM.dd')}"></td>
+                            <td class="list_num" th:text="*{view}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <th:block class="myPostPg" th:each="page : ${#numbers.sequence(startPage, endPage)}" >
+                    <li class='page' th:classappend="on">
+                        <a th:if="${page != nowPage}"
+                           th:href="@{/member/mypage/mypost/{mNo}?page={page}(mNo=*{mNo}, page=${page})}"
+                           th:text="${page}">
+                        </a>
+                        <strong th:if="${page == nowPage}" th:text="${page}"></strong>
+                    </li>
+                </th:block>
+            </div>
+        </form>
+    </div>
+</main>
+</html>
