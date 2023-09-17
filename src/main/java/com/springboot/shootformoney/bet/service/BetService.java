@@ -1,6 +1,7 @@
 package com.springboot.shootformoney.bet.service;
 
 import com.springboot.shootformoney.bet.entity.Bet;
+import com.springboot.shootformoney.bet.entity.EuroPool;
 import com.springboot.shootformoney.bet.repository.BetRepository;
 import com.springboot.shootformoney.bet.repository.EuroPoolRepository;
 import com.springboot.shootformoney.game.dto.data.Result;
@@ -120,6 +121,39 @@ public class BetService {
 //        return betRepository.findBymNo(mNo);
 //    }
 
+    //경기결과가 나오면 배당률을 계산해서 모든 배팅률이 업데이트되지 않은 배팅내역에 배당률을 집어넣는다.
+    @Transactional
+    public String calcBtRatio(){
+        try{
+            List<Game> finishedMatches = gameRepository.findAllFinishedMatches();
+            for(Game game : finishedMatches) {
+                EuroPool targetEuroPool = euroPoolRepository.findByGame_gNo(game.getGNo());
+                //걸린 유로의 총합.
+                double euroSum = (double) targetEuroPool.getWinEuro() + targetEuroPool.getDrawEuro()
+                        + targetEuroPool.getLoseEuro();
+                //각 결과별 배당률.
+                double winBtRatio = Math.round((euroSum / targetEuroPool.getWinEuro()) * 100.0) / 100.0;
+                double drawBtRatio = Math.round((euroSum / targetEuroPool.getDrawEuro()) * 100.0) / 100.0;
+                double loseBtRatio = Math.round((euroSum / targetEuroPool.getLoseEuro()) * 100.0) / 100.0;
+
+                List<Bet> bets = betRepository.findAllByGame_gNo(game.getGNo());
+                for (Bet bet : bets) {
+                    if (bet.getExpect() == Result.WIN) {
+                        bet.setBtRatio(winBtRatio);
+                    } else if (bet.getExpect() == Result.DRAW) {
+                        bet.setBtRatio(drawBtRatio);
+                    } else if(bet.getExpect() == Result.LOSE) {
+                        bet.setBtRatio(loseBtRatio);
+                    }
+                }
+                return "배당률 DB 저장 성공";
+            }
+        } catch (RuntimeException e){
+            return "배당률 저장 중 오류가 발생했습니다";
+        }
+        return "";
+    }
+
     //경기결과가 나오면 지급금을 지급하는 메서드.
     @Transactional
     public String dividend(){
@@ -128,7 +162,7 @@ public class BetService {
             List<Game> finishedGames = gameRepository.findAllFinishedMatches();
 
             for (Game game : finishedGames) {
-                List<Bet> wonBets = betRepository.findByResultAndExpect();
+                List<Bet> wonBets = betRepository.findByResultAndExpect(game);
                 for (Bet bet : wonBets) {
                     Member member = bet.getMember();
                     //Double fee = member.getFee(); -> 수수료를 조회하는 부분을 만들자...
