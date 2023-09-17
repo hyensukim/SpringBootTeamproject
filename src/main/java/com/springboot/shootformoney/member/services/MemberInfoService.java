@@ -41,6 +41,7 @@ public class MemberInfoService implements UserDetailsService {
                 .role(member.getRole())
                 .grade(member.getGrade())
                 .level(member.getMLevel())
+                .loginData(member.getLoginData())
                 .authorities(authorities)
                 .build();
     }

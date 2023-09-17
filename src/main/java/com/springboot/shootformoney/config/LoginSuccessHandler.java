@@ -1,6 +1,7 @@
 package com.springboot.shootformoney.config;
 
 import com.springboot.shootformoney.member.dto.MemberInfo;
+import com.springboot.shootformoney.member.entity.LoginData;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
@@ -35,6 +37,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         session.removeAttribute("loginGlobal");
 
         MemberInfo memberInfo = (MemberInfo)authentication.getPrincipal(); // getPrincipal() UserDetails를 구현한 객체 반환.
+        LoginData loginData = new LoginData();
+        loginData.setLoginDate(LocalDateTime.now());
+        memberInfo.setLoginData(loginData);
         session.setAttribute("memberInfo",memberInfo); // 로그인한 회원 정보 세션에 저장.
 
         // 쿠키 기능 구현 - S

@@ -1,5 +1,6 @@
 package com.springboot.shootformoney.member.dto;
 
+import com.springboot.shootformoney.member.entity.LoginData;
 import com.springboot.shootformoney.member.enum_.Grade;
 import com.springboot.shootformoney.member.enum_.Role;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class MemberInfo implements UserDetails {
     private String mPhone;
     private Grade grade;
     private Integer level;
+    private LoginData loginData;
     private Role role;
 //    private
 
