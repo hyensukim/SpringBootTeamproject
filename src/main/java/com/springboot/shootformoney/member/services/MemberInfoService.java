@@ -18,6 +18,7 @@ import java.util.List;
 public class MemberInfoService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
+    private final DailyRewardService dailyRewardService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

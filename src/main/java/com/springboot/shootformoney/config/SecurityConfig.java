@@ -1,5 +1,7 @@
 package com.springboot.shootformoney.config;
 
+import com.springboot.shootformoney.member.repository.EuroRepository;
+import com.springboot.shootformoney.member.services.DailyRewardService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.context.annotation.Bean;

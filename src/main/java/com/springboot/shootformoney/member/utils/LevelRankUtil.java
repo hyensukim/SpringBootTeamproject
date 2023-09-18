@@ -4,9 +4,12 @@ import com.springboot.shootformoney.bet.entity.Bet;
 import com.springboot.shootformoney.bet.repository.BetRepository;
 import com.springboot.shootformoney.member.entity.Euro;
 import com.springboot.shootformoney.member.entity.Member;
+import com.springboot.shootformoney.member.enum_.Grade;
+import com.springboot.shootformoney.member.exceptions.EuroNotExistException;
 import com.springboot.shootformoney.member.exceptions.MemberNotExistException;
 import com.springboot.shootformoney.member.repository.EuroRepository;
 import com.springboot.shootformoney.member.repository.MemberRepository;
+import jakarta.transaction.NotSupportedException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,14 +18,14 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class RankUtil {
+public class LevelRankUtil {
 
     private final BetRepository betRepository;
     private final MemberRepository memberRepository;
     private final EuroRepository euroRepository;
 
     // 회원에 누적 배팅 금액 설정(배팅 누적액 - 랭킹에 반영)
-    public Member setStack(Long mNo){
+    public Member getMemberWithStack(Long mNo){
         List<Bet> bets = betRepository.findBymNo(mNo);
         Long sum = 0L;
         for(Bet b : bets){
@@ -41,18 +44,45 @@ public class RankUtil {
     */
     @Transactional
     public void levelUp(Long mNo){
-        Member member = setStack(mNo);
+        Member member = memberRepository.findById(mNo).orElseThrow(MemberNotExistException::new);
         Integer level = member.getMLevel();
+
         Euro euro = euroRepository.findBymNo(mNo);
+        if(euro == null){
+            throw new EuroNotExistException();
+        }
+
         Integer value = euro.getValue();
-        Integer levelUpScore = (2000 + (250 * level) * (level-1))*10000;
+        Integer levelUpScore = (2000 + 50 * level * (level-1))*10000; // 100
 
         if(value >= levelUpScore){
+            // 레벨업
             member.setMLevel(level+1);
             memberRepository.save(member);
 
-            euro.setValue(100 * 100000);
+            // 회원 포인트 100만 포인트로 리셋.
+            euro.setValue(100 * 10000);
             euroRepository.save(euro);
+        }
+    }
+
+    public void gradeUp(Long mNo){
+        Member member = getMemberWithStack(mNo);
+        if(member == null) {
+            throw new MemberNotExistException();
+        }
+        Long stack = member.getMStack();
+
+        if(stack >= 26000*10000){
+            member.setGrade(Grade.EUROPA);
+        }
+
+        if (stack >= 52000 * 10000) {
+            member.setGrade(Grade.CHAMPIONS);
+        }
+
+        if(member.getGrade() != Grade.CONFERENCE) {
+            memberRepository.saveAndFlush(member);
         }
     }
 }
