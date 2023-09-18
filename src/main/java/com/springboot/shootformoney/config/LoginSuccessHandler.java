@@ -1,15 +1,24 @@
 package com.springboot.shootformoney.config;
 
 import com.springboot.shootformoney.member.dto.MemberInfo;
+import com.springboot.shootformoney.member.entity.LoginData;
+import com.springboot.shootformoney.member.services.DailyRewardService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+
 
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
@@ -35,7 +44,14 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         session.removeAttribute("loginGlobal");
 
         MemberInfo memberInfo = (MemberInfo)authentication.getPrincipal(); // getPrincipal() UserDetails를 구현한 객체 반환.
-        session.setAttribute("memberInfo",memberInfo); // 로그인한 회원 정보 세션에 저장.
+
+        // 회원 로그인 시간 저장.
+        LoginData loginData = new LoginData();
+        loginData.setLoginDate(LocalDateTime.now());
+        memberInfo.setLoginData(loginData);
+
+        // 로그인한 회원 정보 세션에 저장.
+        session.setAttribute("memberInfo",memberInfo);
 
         // 쿠키 기능 구현 - S
         Cookie cookie = new Cookie("saveId",request.getParameter("mId"));
@@ -46,6 +62,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         }
         response.addCookie(cookie);
         // 쿠키 기능 구현 - E
+
+
 
         String url = request.getContextPath() + "/";
         response.sendRedirect(url); // 로그인 성공 시, 메인 페이지로 이동

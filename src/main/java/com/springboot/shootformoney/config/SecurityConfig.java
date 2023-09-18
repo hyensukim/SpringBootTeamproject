@@ -1,10 +1,13 @@
 package com.springboot.shootformoney.config;
 
+import com.springboot.shootformoney.member.repository.EuroRepository;
+import com.springboot.shootformoney.member.services.DailyRewardService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -23,36 +26,30 @@ public class SecurityConfig {
          * 로그인 및 로그아웃 처리
          */
 
-        http.csrf(csrf -> csrf.ignoringRequestMatchers(
-                        "/v3/api-docs/**",
-                        "/swagger-ui/**",
-                        "/swagger-resources/**"))
-                .cors(withDefaults())
-                .formLogin(f -> f
-                        .loginPage("/member/login")
-                        .usernameParameter("mId")
-                        .passwordParameter("mPassword")
-                        .successHandler(new LoginSuccessHandler())
-                        .failureHandler(new LoginFailureHandler())
-                ).logout(f -> f
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 로그아웃 처리 url
-                        .logoutSuccessUrl("/member/login")// 로그아웃 성공 후 이동 페이지
-                        .deleteCookies("JSESSIONID", "saveId")// 로그아웃 이후 쿠키 삭제
-                        .addLogoutHandler((req, resp, authentication) -> {
-                            HttpSession session = req.getSession();
-                            session.invalidate();//세션 삭제
-                        })//로그아웃 처리
-                        .logoutSuccessHandler((req, resp, authentication) -> {
-                            resp.sendRedirect("/member/login");
-                        })//로그아웃 성공 후 처리
-                );
-
+        http.formLogin(f -> f
+            .loginPage("/member/login")
+            .usernameParameter("mId")
+            .passwordParameter("mPassword")
+            .successHandler(new LoginSuccessHandler())
+            .failureHandler(new LoginFailureHandler())
+            ).logout(f -> f
+            .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 로그아웃 처리 url
+            .logoutSuccessUrl("/member/login")// 로그아웃 성공 후 이동 페이지
+            .deleteCookies("JSESSIONID", "saveId")// 로그아웃 이후 쿠키 삭제
+            .addLogoutHandler((req, resp, authentication) -> {
+                HttpSession session = req.getSession();
+                session.invalidate();//세션 삭제
+            })//로그아웃 처리
+            .logoutSuccessHandler((req, resp, authentication) -> {
+                resp.sendRedirect("/member/login");
+            })//로그아웃 성공 후 처리
+        );
 
         /**
          * 권한 설정
          */
         http.authorizeHttpRequests(f->f
-                .requestMatchers("/mypage/**").authenticated() // 회원 전용
+//                .requestMatchers("/mypage/**").authenticated() // 회원 전용
 //                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")// 관리자 전용\
                 .anyRequest().permitAll()
         );
@@ -71,6 +68,14 @@ public class SecurityConfig {
                     }
                 })
         );
+
+        http.csrf(csrf->csrf
+                .ignoringRequestMatchers(new AntPathRequestMatcher("/member/resetpw/**"))
+                .ignoringRequestMatchers(new AntPathRequestMatcher("/admin/member/**"))
+                .ignoringRequestMatchers(new AntPathRequestMatcher("/member/mypage/**"))
+        );
+
+        http.headers(f->f.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
 
         return http.build();
     }

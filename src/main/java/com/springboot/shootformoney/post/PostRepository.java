@@ -5,6 +5,8 @@ import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
 import com.springboot.shootformoney.member.entity.Member;
 import jakarta.persistence.EntityManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import lombok.RequiredArgsConstructor;
 
@@ -79,12 +81,10 @@ public class PostRepository {
                 .getResultList();
     }
 
-  //  public List<Post> findByMemberId(String memberId) {
-  //      return em.createQuery("select p from Post p where p.member.mId = :memberId", Post.class)
-  //              .setParameter("memberId", memberId)
-  //              .getResultList();
-  //  }
-
-
+    public List<Post> findByMemberNo(Long mNo) {
+        return em.createQuery("select p from Post p where p.member.mNo = :mNo", Post.class)
+                .setParameter("mNo", mNo)
+                .getResultList();
+    }
 
 }

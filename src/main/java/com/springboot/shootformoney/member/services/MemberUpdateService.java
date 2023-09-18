@@ -13,18 +13,15 @@ public class MemberUpdateService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public void update(long mNo, String mPassword, String mEmail, String mPhone){
+    public void update(long mNo, String mPassword, String mPhone){
         Member member = memberRepository.findById(mNo).get();
 
         if(mPassword != null && !mPassword.isBlank()) {
             member.setMPassword(passwordEncoder.encode(mPassword));
         }
 
-        if(mEmail != null && !mEmail.isBlank()){
-            member.setMEmail(mEmail);
-        }
-
         if(mPhone != null && !mPhone.isBlank()){
+            mPhone = mPhone.replaceAll("\\D","");
             member.setMPhone(mPhone);
         }
 
@@ -32,6 +29,6 @@ public class MemberUpdateService {
     }
 
     public void updatePw(long mNo, String mPw){
-        update(mNo,mPw,null,null);
+        update(mNo,mPw,null);
     }
 }

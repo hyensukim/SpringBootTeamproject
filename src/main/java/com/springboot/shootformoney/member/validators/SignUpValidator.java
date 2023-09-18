@@ -10,7 +10,7 @@ import org.springframework.validation.Validator;
 
 @Component
 @RequiredArgsConstructor
-public class SignUpValidator implements Validator, PhoneFormValidator, PwFormValidator {
+public class SignUpValidator implements Validator, PhoneFormValidator, PwFormValidator, NameFormValidator {
 
     private final MemberRepository memberRepository;
 
@@ -54,8 +54,13 @@ public class SignUpValidator implements Validator, PhoneFormValidator, PwFormVal
             errors.rejectValue("mEmail","","이메일 중복");
         }
 
+        //회원명 체크
+        if(mName != null && !mName.isBlank() && !checkName(mName)){
+            errors.rejectValue("mName","","이름은 한글로 입력하세요");
+        }
+
         // 전화 번호 양식 확인 및 중복 체크
-        if(mPhone != null && !mPhone.isBlank() && checkForm(mPhone)){
+        if(mPhone != null && !mPhone.isBlank() && checkMobile(mPhone)){
             if(memberRepository.findBymPhone(mPhone) != null){
                 errors.rejectValue("mPhone","","전화 번호 중복");
             }
@@ -64,7 +69,7 @@ public class SignUpValidator implements Validator, PhoneFormValidator, PwFormVal
             signUpForm.setMPhone(mPhone);
 
         }else{
-            errors.rejectValue("mPhone","","전화 번호 양식이 잘못되었습니다.");
+            errors.rejectValue("mPhone","","전화 번호 양식이 잘못 되었습니다.");
         }
 
         // 비밀번호 양식 체크

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns:th="http://www.thymeleaf.org">
+<aside th:fragment="mypage">
+    <div>
+        <a th:href="@{/member/mypage/info/{mNo}(mNo=${mNo})}">회원 정보</a>
+        <a th:href="@{/member/mypage/mypost/{mNo}(mNo=${mNo})}">작성한 게시글</a>
+        <a th:href="@{/member/mypage/mybet/{mNo}(mNo=${mNo})}">배팅 내역</a>
+    </div>
+</aside>
+</html>

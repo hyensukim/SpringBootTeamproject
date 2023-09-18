@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"
-    xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>mypage_info</title>
-</head>
-<body>
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<aside th:replace="~{member/mypage::mypage}"></aside>
+<main layout:fragment="common">
     <h2>회원 정보</h2>
     <form method="post" name="frmMyPage" th:object="${signUpForm}" autocomplete="off">
         <dl>
@@ -30,6 +29,13 @@
         </dl>
 
         <dl>
+            <dt>EMAIL : </dt>
+            <dd>
+                <input type="text" name="mEmail" th:value="*{mEmail}" readonly>
+            </dd>
+        </dl>
+
+        <dl>
             <dt>GRADE : </dt>
             <dd>
                 <input type="text" name="grade" th:value="*{grade}" readonly>
@@ -46,14 +52,14 @@
         <dl>
             <dt>PASSWORD : </dt>
             <dd>
-                <input type="password" name="mPassword" th:field="*{mPassword}">
+                <input style=" background-color: #dedede;" type="password" name="mPassword" th:value="*{mPassword}">
                 <span class="error" th:each="err : ${#fields.errors('mPassword')}" th:text="${err}"></span>
             </dd>
         </dl>
         <dl>
             <dt>PASSWORD CHECK : </dt>
             <dd>
-                <input type="password" name="mPasswordCheck" th:value="*{mPasswordCheck}">
+                <input style=" background-color: #dedede;" type="password" name="mPasswordCheck" th:value="*{mPasswordCheck}">
                 <span class="error" th:each="err : ${#fields.errors('mPasswordCheck')}" th:text="${err}"></span>
             </dd>
         </dl>
@@ -61,21 +67,14 @@
         <dl>
             <dt>PHONE : </dt>
             <dd>
-                <input type="text" name="mPhone" th:field="*{mPhone}" >
+                <input style=" background-color: #dedede;" type="text" name="mPhone" th:value="*{mPhone}" >
                 <span class="error" th:each="err : ${#fields.errors('mPhone')}" th:text="${err}"></span>
-            </dd>
-        </dl>
-        <dl>
-            <dt>EMAIL : </dt>
-            <dd>
-                <input type="text" name="mEmail" th:field="*{mMail}">
-                <span class="error" th:each="err : ${#fields.errors('mEmail')}" th:text="${err}"></span>
             </dd>
         </dl>
         <div>
             <button type="submit">수정하기</button>
-            <a th:href="@{/member/mypage/delete/{mNo}(mNo=*{mNo})}"></a>
+            <a th:href="@{/member/mypage/deletepw/{mNo}(mNo = ${mNo})}">회원 탈퇴</a>
         </div>
     </form>
-</body>
+</main>
 </html>

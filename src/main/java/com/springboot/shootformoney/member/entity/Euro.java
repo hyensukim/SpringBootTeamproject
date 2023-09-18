@@ -17,5 +17,5 @@ public class Euro {
     private Member member;
 
     @Column(nullable = false)
-    private Integer value;
+    private Integer value = 100 * 10000;
 }

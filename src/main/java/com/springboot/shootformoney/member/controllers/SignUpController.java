@@ -34,11 +34,6 @@ public class SignUpController {
         signUpValidator.validate(signUpForm,errors);
 
         if(errors.hasErrors()){
-//            List<FieldError> list = errors.getFieldErrors();
-//            StringBuilder sb = new StringBuilder();
-//            for(FieldError f : list) sb.append(f.toString()).append("\n");
-//
-//            System.out.println(sb);
             return "member/signup";
         }
 

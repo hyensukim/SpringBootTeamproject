@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public interface PhoneFormValidator {
-    default boolean checkForm(String mPhone){
+    default boolean checkMobile(String mPhone){
 
         mPhone = mPhone.replaceAll("\\D","");
 
