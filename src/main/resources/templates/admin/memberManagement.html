@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<!--<html leng="ko"-->
-<!--        xmlns:th="http://www.thymeleaf.org">-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
@@ -27,10 +25,9 @@
     </tr>
     </thead>
 
-    <!-- 서버에서 제공하는 회원 목록을 반복하여 표시합니다 -->
-    <!-- 각 회원에 대해 ID, 이름 등의 정보와 삭제 버튼을 표시합니다 -->
+    <!-- 서버에서 제공하는 회원 목록을 반복하여 표시 -->
+    <!-- 각 회원에 대해 ID, 이름 등의 정보와 삭제 버튼 -->
     <tr th:each="member : ${members}">
-        <!-- 적절한 필드들로 채워주십시오. 예)-->
         <td th:text="${member.mNo}"></td>
         <td th:text="${member.mId}"></td>
         <td th:text="${member.mPassword}"></td>
@@ -65,13 +62,27 @@
 
 </table>
 
-    <!-- Search Form -->
-    <form th:action="@{/admin/memberList/search}" method="get">
-        <input type="text" name="mId" placeholder="ID 입력">
+    <form th:action="@{/admin/member/memberList/search}" method="get">
+        <!-- Search Category -->
+        <select name="category">
+            <option value="mNo">회원번호</option>
+            <option value="mId">ID</option>
+            <option value="mName">이름</option>
+            <option value="mNickName">별명</option>
+            <option value="grade">등급</option>
+            <option value="mLevel">레벨</option>
+            <option value="role">권한</option>
+            <!-- Add more options as needed -->
+        </select>
+
+        <!-- Search Query -->
+        <input type="text" name="query" placeholder="검색">
+
+        <!-- Submit Button -->
         <button type="submit">검색</button>
     </form>
 
-
+</main>
 
 <!--<script type='text/javascript'> ajax 이용 시 부드러운 URL 이동(사용자 불편함 최소)
     // Delete member when delete button is clicked

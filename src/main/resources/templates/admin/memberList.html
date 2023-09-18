@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<main layout:fragment="common">
+
+    <h2>회원 조회</h2>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>회원번호</th>
+            <th>ID</th>
+            <th>PW</th>
+            <th>이름</th>
+            <th>별명</th>
+            <th>이메일</th>
+            <th>핸드폰 번호</th>
+            <th>등급</th>
+            <th>Level</th>
+            <th>권한</th>
+            <th>제재</th>
+        </tr>
+        </thead>
+
+        <tbody th:each="member : ${members}">
+        <tr>
+            <td th:text="${member.mNo}"></td>
+            <td th:text="${member.mId}"></td>
+            <td th:text="${member.mPassword}"></td>
+            <td th:text="${member.mName}"></td>
+            <td th:text="${member.mNickName}"></td>
+            <td th:text="${member.mEmail}"></td>
+            <td th:text="${member.mPhone}"></td>
+            <td th:text="${member.grade}"></td>
+            <td th:text="${member.mLevel}"></td>
+            <td th:text="${member.role}"></td>
+
+            <td>
+                <!-- 비동기 방식s -->
+                <!-- 회원 제재 -->
+                <form th:action="@{'/admin/member/' + ${member.mId}}" method="post">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit">Delete</button>
+                </form>
+
+                <!-- 권한 변경 -->
+                <form th:action="@{'/admin/member/' + ${member.mId} + '/role'}" method="post">
+                    <input type="hidden" name="_method" value="put" />
+                    <!-- ADMIN / MEMBER 둘 중 하나만 선택 하도록 구현 -->
+                    <select name="newRole">
+                        <option value="MEMBER">MEMBER</option>
+                        <option value="ADMIN">ADMIN</option>
+                    </select>
+                    <button type="submit">Change Role</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+    <!-- Search Form -->
+    <form th:action="@{/admin/member/memberList/search}" method="get">
+    <input type="text" name="mId" placeholder="ID 입력">
+        <button type="submit">검색</button>
+        <a th:href="@{/admin/member/memberList/all}">전체보기</a>
+    </form>
+    <!-- 버튼 형식 -->
+<!--    <button onclick="location.href='/admin/member/memberList/all'">전체보기</button>-->
+</main>
