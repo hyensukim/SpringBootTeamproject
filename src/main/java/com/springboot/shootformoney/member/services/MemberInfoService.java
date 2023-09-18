@@ -18,6 +18,7 @@ import java.util.List;
 public class MemberInfoService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
+    private final DailyRewardService dailyRewardService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -35,9 +36,13 @@ public class MemberInfoService implements UserDetailsService {
                 .mId(member.getMId())
                 .mPassword(member.getMPassword())
                 .mName(member.getMName())
+                .mNickName(member.getMNickName())
                 .mEmail(member.getMEmail())
                 .mPhone(member.getMPhone())
                 .role(member.getRole())
+                .grade(member.getGrade())
+                .level(member.getMLevel())
+                .loginData(member.getLoginData())
                 .authorities(authorities)
                 .build();
     }

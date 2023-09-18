@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<aside th:replace="~{member/mypage::mypage}"></aside>
+<main layout:fragment="common">
+<div class="frmMyBet">
+    <form method="get" name="frmMyBet">
+        <h1>배팅 이력</h1>
+        <div>
+            <table>
+                <thead>
+                <tr>
+                    <th>배팅번호</th>
+                    <th>게임정보</th>
+                    <th>배팅금액</th>
+                    <th>배팅결과</th>
+                    <th>배팅시간</th>
+                    <th>배팅율</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+            <th:block class="myBetPg" th:each="page : ${#numbers.sequence(startPage, endPage)}" >
+                <li class='page' th:classappend="on">
+                    <a th:if="${page != nowPage}"
+                       th:href="@{/member/mypage/mybet/{mNo}?page={page}(mNo=*{mNo}, page=${page})}"
+                       th:text="${page}">
+                    </a>
+                    <strong th:if="${page == nowPage}" th:text="${page}"></strong>
+                </li>
+            </th:block>
+        </div>
+    </form>
+</div>
+</main>
+</html>

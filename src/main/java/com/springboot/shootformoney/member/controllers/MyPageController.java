@@ -1,18 +1,25 @@
 package com.springboot.shootformoney.member.controllers;
 
+import com.springboot.shootformoney.member.dto.BoardSearch;
 import com.springboot.shootformoney.member.dto.MemberInfo;
 import com.springboot.shootformoney.member.dto.SignUpForm;
 import com.springboot.shootformoney.member.services.MemberDeleteService;
+import com.springboot.shootformoney.member.services.MemberPostListService;
 import com.springboot.shootformoney.member.services.MemberPwCheckService;
 import com.springboot.shootformoney.member.services.MemberUpdateService;
 import com.springboot.shootformoney.member.utils.MemberUtil;
 import com.springboot.shootformoney.member.validators.SignUpValidator;
+import com.springboot.shootformoney.member.validators.UpdateValidator;
+import com.springboot.shootformoney.post.Post;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/member/mypage")
@@ -22,8 +29,10 @@ public class MyPageController {
     private final MemberUtil memberUtil;
     private final MemberPwCheckService memberPwCheckService;
     private final MemberUpdateService memberUpdateService;
-    private final SignUpValidator signUpValidator;
+    private final UpdateValidator updateValidator;
     private final MemberDeleteService memberDeleteService;
+    private final MemberPostListService memberPostListService;
+
 
     // 마이페이지 들어가기 전 비밀번호 확인
     @GetMapping("/checkpw")
@@ -56,7 +65,6 @@ public class MyPageController {
     // 마이페이지 - 회원 정보
     @GetMapping("/info/{mNo}")
     public String myPage(@PathVariable Long mNo, Model model){
-
         // 다른 회원이 마이페이지에 접근하는 것을 방지
         if(memberUtil.isLogin()){
             Long no = memberUtil.getMember().getMNo();
@@ -78,7 +86,7 @@ public class MyPageController {
                 .mPhone(memberInfo.getMPhone())
                 .mEmail(memberInfo.getMEmail())
                 .build();
-        model.addAttribute("signUpForm",new SignUpForm());
+        model.addAttribute("signUpForm",signUpForm);
         return "member/mypage/info";
     }
 
@@ -86,7 +94,7 @@ public class MyPageController {
     public String myPagePs(@PathVariable Long mNo, @ModelAttribute @Valid SignUpForm signUpForm,
                            Errors errors, Model model){
 
-        signUpValidator.validate(signUpForm,errors);
+        updateValidator.validate(signUpForm,errors);
 
         if(errors.hasErrors()){
             return "member/mypage/info";
@@ -94,8 +102,7 @@ public class MyPageController {
 
         String mPassword = signUpForm.getMPassword();
         String mPhone = signUpForm.getMPhone();
-        String mEmail = signUpForm.getMEmail();
-        memberUpdateService.update(mNo,mPassword,mPhone,mEmail);
+        memberUpdateService.update(mNo,mPassword,mPhone);
         String script = String.format("Swal.fire('수정 완료, 재로그인 시 수정된 정보가 반영됩니다. :D','success')" +
                 ".then(function(){history.back();})");
         model.addAttribute("script",script);
@@ -129,6 +136,25 @@ public class MyPageController {
             return "script/sweet";
         }
         return "redirect:/member/mypage/info/"+mNo;
+    }
+
+    // 마이페이지 - 작성한 게시글
+    @GetMapping("/mypost/{mNo}")
+    public String myPost(@PathVariable Long mNo, @ModelAttribute BoardSearch boardSearch
+            , Model model){
+        Page<Post> posts = memberPostListService.getsWithPages(boardSearch,mNo);
+        List<Post> postList = posts.getContent();
+
+        int nowPage = posts.getPageable().getPageNumber() +1;
+        int startPage = Math.max(nowPage-9,1);
+        int endPage = Math.min(nowPage+10,posts.getTotalPages());
+
+        model.addAttribute("postList", postList);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        return "member/mypage/mypost";
     }
     
 }

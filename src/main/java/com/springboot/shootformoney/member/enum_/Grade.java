@@ -1,6 +1,7 @@
 package com.springboot.shootformoney.member.enum_;
 
 public enum Grade {
+
     CONFERENCE(0.2),
     EUROPA(0.1),
     CHAMPIONS(0.05);

@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>FindPw</title>
-</head>
-<body>
-<form th:action="@{/member/findpw}"  th:object="${findPwForm}" method="post">
-    <div class="error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div></div>
-    <div class="form-group">
-        <label for="mId">ID:</label>
-        <input type="text" id="mId" th:field="*{mId}" class="form-control"/>
-        <span class="error" th:if="${#fields.hasErrors('mId')}" th:errors="*{mId}"></span>
-    </div>
-    <div class="form-group">
-        <label for="mEmail">EMAIL:</label>
-        <input type="text" id="mEmail" th:field="*{mEmail}" class="form-control"/>
-        <span class="error" th:if="${#fields.hasErrors('mEmail')}" th:errors="*{mEmail}"></span>
-    </div>
-    <p>* 임시 비밀번호가 등록된 이메일로 전송됩니다.</p>
-    <button type="submit">FIND PW</button>
-</form>
-</body>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<main layout:fragment="common">
+<div class="frmFindPw">
+    <form th:action="@{/member/findpw}"  th:object="${findPwForm}" method="post">
+        <div class="error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div></div>
+        <div class="form-group">
+            <label for="mId">ID:</label>
+            <input type="text" id="mId" th:field="*{mId}" class="form-control"/>
+            <span class="error" th:if="${#fields.hasErrors('mId')}" th:errors="*{mId}"></span>
+        </div>
+        <div class="form-group">
+            <label for="mEmail">EMAIL:</label>
+            <input type="text" id="mEmail" th:field="*{mEmail}" class="form-control"/>
+            <span class="error" th:if="${#fields.hasErrors('mEmail')}" th:errors="*{mEmail}"></span>
+        </div>
+        <p>* 임시 비밀번호가 등록된 이메일로 전송됩니다.</p>
+        <button type="submit">FIND PW</button>
+    </form>
+</div>
+</main>
 </html>

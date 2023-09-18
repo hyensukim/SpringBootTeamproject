@@ -57,9 +57,16 @@ public class Member extends BaseEntity{
     @Column(name = "m_level",nullable = false)
     private Integer mLevel = 1;
 
+    @Column(name = "m_stack")
+    private Long mStack = 0L;
+
     // 변경사항
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonIgnore // 클라이언트로부터 게시판 정보만 받고 게시물 정보는 따로 처리하려는 경우에 유용
 //    @OneToMany(mappedBy = "parent")
     private List<Post> posts = new ArrayList<>();
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="l_no")
+    private LoginData loginData;
 }

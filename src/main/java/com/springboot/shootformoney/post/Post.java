@@ -39,7 +39,7 @@ public class Post extends BaseEntity {
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "mNo")
     private Member member;
 
     @Builder
