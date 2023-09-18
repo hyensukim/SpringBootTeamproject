@@ -73,6 +73,8 @@ public class SecurityConfig {
                 .ignoringRequestMatchers(new AntPathRequestMatcher("/member/resetpw/**"))
                 .ignoringRequestMatchers(new AntPathRequestMatcher("/admin/member/**"))
                 .ignoringRequestMatchers(new AntPathRequestMatcher("/member/mypage/**"))
+//                .ignoringRequestMatchers(new AntPathRequestMatcher("https://api.football-data.org/v4"))
+//                .ignoringRequestMatchers(new AntPathRequestMatcher("/game/service/**"))
         );
 
         http.headers(f->f.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
