@@ -165,7 +165,7 @@ public class BetService {
                 List<Bet> wonBets = betRepository.findByResultAndExpect(game);
                 for (Bet bet : wonBets) {
                     Member member = bet.getMember();
-                    //Double fee = member.getFee(); -> 수수료를 조회하는 부분을 만들자...
+                    Double fee = member.getGrade().getFee();
 
                     //현재 사용자의 유로 보유량 조회.
                     Integer originalValue = euroRepository.findBymNo(member.getMNo()).getValue();

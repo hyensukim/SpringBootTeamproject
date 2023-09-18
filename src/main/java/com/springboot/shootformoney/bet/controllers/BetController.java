@@ -7,6 +7,7 @@ import com.springboot.shootformoney.bet.service.EuroPoolService;
 import com.springboot.shootformoney.bet.service.EuroService;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.MemberRepository;
+import com.springboot.shootformoney.member.utils.MemberUtil;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,15 +26,15 @@ public class BetController {
 
     private final EuroPoolService euroPoolService;
 
-//    private final MemberInfoService memberInfoService;
+    private final MemberUtil memberUtil;
 
     @Autowired
     public BetController(BetService betService, EuroService euroService,
-            EuroPoolService euroPoolService /* , MemberInfoService memberInfoService*/){
+            EuroPoolService euroPoolService, MemberUtil memberUtil){
         this.betService = betService;
         this.euroService = euroService;
         this.euroPoolService = euroPoolService;
-//        this.memberInfoService = memberInfoService;
+        this.memberUtil = memberUtil;
     }
 
     //배팅하는 메서드. Bet 엔티티에 배팅 정보를 추가하고, 보유금에서 배팅금만큼을 감산한다.
@@ -50,11 +51,9 @@ public class BetController {
             euroPoolService.collectEuro(bet);
 
             // 유저 정보 가져오기
-//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//            MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();  // 현재 로그인한 사용자의 정보를 가져옴
-//            Long mNo = memberInfo.getMNo();  // mNo 값을 읽어옴
+            Long mNo = memberUtil.getMember().getMNo();
             // 유로 보유량 감소 처리
-//            euroService.decreaseEuro(mNo, betDto.getBtMoney());
+            euroService.decreaseEuro(mNo, betDto.getBtMoney());
 
             return "redirect:/list/unstarted/entirelist";
         } catch (Exception e) {
@@ -75,11 +74,9 @@ public class BetController {
             euroPoolService.rollbackEuroPool(cancelBet);
 
             // 유저 정보 가져오기
-//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//            MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();  // 현재 로그인한 사용자의 정보를 가져옴
-//            Long mNo = memberInfo.getMNo();  // mNo 값을 읽어옴
+            Long mNo = memberUtil.getMember().getMNo();
             // 보유 유로 롤백 처리
-//            euroService.rollbackEuro(mNo, btNo);
+            euroService.rollbackEuro(mNo, btNo);
 
             return "redirect:/list/unstarted/entirelist";
         } catch (Exception e) {
@@ -87,14 +84,4 @@ public class BetController {
         }
     }
 
-    //정산 메서드. dividend() 메서드 사용.
-    //자동으로 하는 방법을 연구해 봐야 할듯.
-    @PostMapping("/dividend")
-    public ResponseEntity<Void> calculateDividend() {
-        //사용자별로 해당하는 배당률 계산.
-        betService.calcBtRatio();
-        //계산된 배당률을 통해 정산 실시.
-        betService.dividend();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

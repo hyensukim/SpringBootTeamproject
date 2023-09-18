@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /*
 * DB에 경기를 저장하는 PostMapping을 담당하는 Controller.
@@ -19,23 +18,4 @@ public class DBController {
     @Autowired
     public DBController(MatchService matchService){this.matchService = matchService;}
 
-    @PostMapping("/saveGames")
-    public ResponseEntity<String> saveAllData(){
-        try{
-            matchService.saveAllMatchesToDB();
-            return new ResponseEntity<>("All matches saved successfully", HttpStatus.OK);
-        }catch(Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PostMapping("/updateGames")
-    public ResponseEntity<String> updateAllEndedGames() {
-        try{
-            matchService.updateEndedPLGames();
-            return new ResponseEntity<>("All matches updated successfully", HttpStatus.OK);
-        }catch(Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 }

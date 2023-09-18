@@ -20,8 +20,8 @@ public class StartupRunner implements ApplicationRunner {
         //끝난 경기 저장
         matchService.updateAllEndedGames();
         // BetService의 메서드 실행
-        //betService.calcBtRatio();
-        //betService.dividend();
+        betService.calcBtRatio();
+        betService.dividend();
 
     }
 }
