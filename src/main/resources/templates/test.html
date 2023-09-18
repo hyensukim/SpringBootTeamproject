@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--<html lang="ko"-->
+<!--      xmlns:th="http://www.thymeleaf.org">-->
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+  <meta charset="utf-8">
+  <link th:href="@{../static/css/styles.css}"
+        href="../static/css/styles.css" rel="stylesheet">
+</head>
+
+<main layout:fragment="common">
+
+  <h1 th:text="${title}">Site Configuration</h1>
+
+  <!-- Display any message set in the model -->
+  <p th:text="${message}"></p>
+
+  <!-- Form for updating site configuration -->
+  <form name="frmSave" method="post" th:action="@{/admin/config}" autocomplete="off" th:object="${configForm}">
+    <table class="table-cols">
+      <tr>
+        <th><label for="siteTitle">사이트 제목:</label></th>
+        <td><input type="text" id="siteTitle" name="siteTitle" th:field="*{siteTitle}" /></td>
+      </tr>
+
+      <tr>
+        <th><label for="siteDescription">사이트 설명:</label></th>
+        <td><textarea id="siteDescription" name ="siteDescription" rows = "5" cols = "50"  th:field = "*{siteDescription}" ></textarea></td>
+      </tr>
+
+      <tr>
+        <th><label for="cssJsVersion">CSS & JS 버전:</label></th>
+        <td><input type="text" id="cssJsVersion" name="cssJsVersion" th:field= "*{cssJsVersion}" /></td>
+      </tr >
+
+      <tr >
+        <th><label for="siteRule"> 사이트 규칙 :</label></th>
+        <td><textarea id ="siteRule" name = "siteRule" rows = "5" cols = "50" th:field="*{siteRule}"></textarea></td>
+      </tr>
+
+    </table>
+
+    <!-- Buttons to reset and submit form -->
+    <div class = "btns">
+      <button type ="reset"> 다시 입력 </button>
+      <button type ="submit"> 저장하기 </button>
+    </div>
+
+  </form>
+</main>
+<!--</body>-->
+</html>
