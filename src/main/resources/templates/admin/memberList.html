@@ -7,7 +7,7 @@
 
     <h2>회원 조회</h2>
 
-    <table border="1">
+    <table class="table text-center">
         <thead>
         <tr>
             <th>회원번호</th>
@@ -40,7 +40,7 @@
             <td>
                 <!-- 비동기 방식s -->
                 <!-- 회원 제재 -->
-                <form th:action="@{'/admin/member/' + ${member.mId}}" method="post">
+                <form th:action="@{'/admin/member/' + ${member.mId}}" method="post" onsubmit="return confirm('해당 회원을 영구적으로 서비스에서 제외하시겠습니까?')">
                     <input type="hidden" name="_method" value="delete" />
                     <button type="submit">Delete</button>
                 </form>
@@ -58,15 +58,25 @@
             </td>
         </tr>
         </tbody>
-
     </table>
 
-    <!-- Search Form -->
+    <!-- 회원 조회 -->
     <form th:action="@{/admin/member/memberList/search}" method="get">
-    <input type="text" name="mId" placeholder="ID 입력">
+        <!-- Search Category -->
+        <select name="category">
+            <option value="mNo">회원번호</option>
+            <option value="mId">ID</option>
+            <option value="mName">이름</option>
+            <option value="mNickName">별명</option>
+            <option value="grade">등급</option>
+            <option value="mLevel">레벨</option>
+            <option value="role">권한</option>
+            <!-- Add more options as needed -->
+        </select>
+
+        <input type="text" name="query" placeholder="검색">
+
         <button type="submit">검색</button>
         <a th:href="@{/admin/member/memberList/all}">전체보기</a>
     </form>
-    <!-- 버튼 형식 -->
-<!--    <button onclick="location.href='/admin/member/memberList/all'">전체보기</button>-->
 </main>

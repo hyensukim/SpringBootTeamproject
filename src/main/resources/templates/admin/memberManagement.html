@@ -42,7 +42,7 @@
         <td>
             <!-- 비동기 방식s -->
             <!-- 회원 제재 -->
-            <form th:action="@{'/admin/member/' + ${member.mId}}" method="post">
+            <form th:action="@{'/admin/member/' + ${member.mId}}" method="post" onsubmit="return confirm('해당 회원을 영구적으로 서비스에서 제외하시겠습니까?')">
                 <input type="hidden" name="_method" value="delete" />
                 <button type="submit">Delete</button>
             </form>
@@ -104,3 +104,4 @@
         });
     });
 </script>-->
+</html>
