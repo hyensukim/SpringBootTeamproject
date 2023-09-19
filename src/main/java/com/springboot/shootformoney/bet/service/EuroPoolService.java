@@ -28,16 +28,17 @@ public class EuroPoolService {
     @Transactional
     public void addEuroPools() {
         List<Game> games = gameRepository.findAll();
-
         for (Game game : games) {
-            EuroPool euroPool = new EuroPool();
-            euroPool.setGame(game);
-            //default가 0으로 설정되어 있지만, 코드의 명확성과 ORM 동작방식으로 고려하여 명시적으로 초기화함.
-            euroPool.setWinEuro(0);
-            euroPool.setDrawEuro(0);
-            euroPool.setLoseEuro(0);
+            Long gNo = game.getGNo();
             //중복체크 후 저장
-            if(!euroPoolRepository.existsByGame_gNo(euroPool.getGame().getGNo())){
+            if(gNo != null && !euroPoolRepository.existsByGame_gNo(gNo)){
+                EuroPool euroPool = EuroPool.builder()
+                    .game(game)
+                    //default가 0으로 설정되어 있지만, 코드의 명확성과 ORM 동작방식으로 고려하여 명시적으로 초기화함.
+                    .winEuro(0)
+                    .drawEuro(0)
+                    .loseEuro(0)
+                    .build();
                 euroPoolRepository.save(euroPool);
             }
         }

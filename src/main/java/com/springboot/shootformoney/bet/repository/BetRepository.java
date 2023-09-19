@@ -19,8 +19,8 @@ public interface BetRepository extends JpaRepository<Bet, Long> {
     List<Bet> findBymNo(@Param("mNo") Long mNo);
 
     //배팅 적중한 사람 조회하기.(중복 체크 포함)
-    @Query("SELECT b FROM Bet b WHERE b.game.result = b.expect AND b.endPaid = 0")
-    List<Bet> findByResultAndExpect(Game game);
+    @Query("SELECT b FROM Bet b WHERE b.game = :game AND b.game.result = b.expect AND b.endPaid = 0")
+    List<Bet> findByResultAndExpect(@Param("game") Game game);
 
     //gNo로 배팅내역 조회하기.
 
