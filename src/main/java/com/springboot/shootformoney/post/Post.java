@@ -3,17 +3,15 @@ package com.springboot.shootformoney.post;
 
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.common.BaseEntity;
-import com.springboot.shootformoney.file.File;
 import com.springboot.shootformoney.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -44,9 +42,6 @@ public class Post extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval=true)
-    private List<File> files = new ArrayList<>();
-
     @Builder
     public Post(String title, String content) {
         this.pTitle = title;
@@ -74,10 +69,17 @@ public class Post extends BaseEntity {
         }
     }
 
+//    public Long getBNo() {
+//        return this.board.getBNo();
+//    }
 
     public Long getBNo() {
         return this.board == null ? null : this.board.getBNo();
     }
+
+//    public String getBName() {
+//        return this.board.getBName();
+//    }
 
     public String getBName() {
         return this.board == null ? null : this.board.getBName();
@@ -89,12 +91,5 @@ public class Post extends BaseEntity {
             member.getPosts().add(this);
        }
       }
-
-    public void addFile(File file) {
-        this.files.add(file);
-        if (file.getPost() != this) {
-            file.setPost(this);
-        }
-    }
 
 }
