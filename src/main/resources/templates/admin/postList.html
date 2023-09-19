@@ -6,12 +6,6 @@
 <main layout:fragment="common">
 
     <h2>게시판 조회</h2>
-    <a href="/admin/post/postList/">전체게시판</a>
-
-    <!-- 각각의 게시판 별로 조회 -->
-    <div th:each="board : ${boards}">
-        <a th:href="@{/admin/post/postList(bName=${board.bName})}" th:text="${board.bName}"></a>
-    </div>
 
     <table class="table text-center">
         <thead>
@@ -36,7 +30,6 @@
             <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
 
-
             <!-- 게시글 삭제 -->
             <td>
                 <form th:action="@{'/admin/post/' + ${post.pNo}}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
@@ -47,6 +40,8 @@
 
         </tr>
     </table>
+
+    <!-- 게시글 조회 -->
     <form th:action="@{/admin/post/postList/search}" method="get">
         <!-- Search Category -->
         <select name="category">
@@ -55,18 +50,14 @@
             <option value="mNickName">작성자 별명</option>
             <option value="bName">게시판</option>
             <option value="pTitle">제목</option>
-            <!-- Add more options as needed -->
         </select>
 
-        <!-- Search Query -->
         <input type="text" name="query" placeholder="검색">
 
-        <!-- Submit Button -->
         <button type="submit">검색</button>
-    </form>
+        <a th:href="@{/admin/post/postList/all}">전체보기</a>
+    </form>7
 
 
 </main>
 </html>
-
-
