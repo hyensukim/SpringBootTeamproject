@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <link th:href="@{../static/css/styles.css}"
+          href="../static/css/styles.css" rel="stylesheet">
     <link th:href="@{../static/css/css.css}"
           href="../static/css/css.css" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
@@ -20,6 +22,25 @@
     </style>
 </head>
 <body>
+<!-- 네비게이션 바 -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#!">Shoot for Money</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="post.html" th:href="@{#}">커뮤니티</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">경기 결과</a></li>
+                <li class="nav-item"><a class="nav-link" href="prediction.html" th:href="@{#}">승부 예측</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">로그인</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">마이페이지</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
     <div class="board_wrap">
         <div class="board_title">
             <h2 th:text="#{}">글 작성</h2>
