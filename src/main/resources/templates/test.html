@@ -1,55 +1,73 @@
 <!DOCTYPE html>
-<!--<html lang="ko"-->
-<!--      xmlns:th="http://www.thymeleaf.org">-->
+<meta charset="utf-8">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+<th:block layout:fragment="title">
+  <title>리스트 페이지</title>
+</th:block>
 
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main}">
-<head>
-  <meta charset="utf-8">
-  <link th:href="@{../static/css/styles.css}"
-        href="../static/css/styles.css" rel="stylesheet">
-</head>
+<th:block layout:fragment="content">
+  <div class="page_tits">
+    <h3>게시판 관리</h3>
+    <p class="path"><strong>현재 위치 :</strong> <span>게시판 관리</span> <span>리스트형</span> <span>리스트</span></p>
+  </div>
 
-<main layout:fragment="common">
+  <div class="content">
+    <section>
+      <!--/* 검색 */-->
+      <div class="search_box">
+        <form id="searchForm" onsubmit="return false;" autocomplete="off">
+          <div class="sch_group fl">
+            <select id="searchType" name="searchType" title="검색 유형 선택">
+              <option value="">전체 검색</option>
+              <option value="title">제목</option>
+              <option value="content">내용</option>
+              <option value="writer">작성자</option>
+            </select>
+            <input type="text" id="keyword" name="keyword" placeholder="키워드를 입력해 주세요." title="키워드 입력" />
+            <button type="button" class="bt_search" onclick="movePage(1);"><i class="fas fa-search"></i><span class="skip_info">검색</span></button>
+          </div>
+        </form>
+      </div>
 
-  <h1 th:text="${title}">Site Configuration</h1>
+      <!--/* 리스트 */-->
+      <table class="tb tb_col">
+        <colgroup>
+          <col style="width:50px;"/><col style="width:7.5%;"/><col style="width:auto;"/><col style="width:10%;"/><col style="width:15%;"/><col style="width:7.5%;"/>
+        </colgroup>
+        <thead>
+        <tr>
+          <th scope="col"><input type="checkbox"/></th>
+          <th scope="col">번호</th>
+          <th scope="col">제목</th>
+          <th scope="col">작성자</th>
+          <th scope="col">등록일</th>
+          <th scope="col">조회</th>
+        </tr>
+        </thead>
 
-  <!-- Display any message set in the model -->
-  <p th:text="${message}"></p>
+        <!--/* 리스트 데이터 렌더링 영역 */-->
+        <tbody id="list">
 
-  <!-- Form for updating site configuration -->
-  <form name="frmSave" method="post" th:action="@{/admin/config}" autocomplete="off" th:object="${configForm}">
-    <table class="table-cols">
-      <tr>
-        <th><label for="siteTitle">사이트 제목:</label></th>
-        <td><input type="text" id="siteTitle" name="siteTitle" th:field="*{siteTitle}" /></td>
-      </tr>
+        </tbody>
+      </table>
 
-      <tr>
-        <th><label for="siteDescription">사이트 설명:</label></th>
-        <td><textarea id="siteDescription" name ="siteDescription" rows = "5" cols = "50"  th:field = "*{siteDescription}" ></textarea></td>
-      </tr>
+      <!--/* 페이지네이션 렌더링 영역 */-->
+      <div class="paging">
 
-      <tr>
-        <th><label for="cssJsVersion">CSS & JS 버전:</label></th>
-        <td><input type="text" id="cssJsVersion" name="cssJsVersion" th:field= "*{cssJsVersion}" /></td>
-      </tr >
+      </div>
 
-      <tr >
-        <th><label for="siteRule"> 사이트 규칙 :</label></th>
-        <td><textarea id ="siteRule" name = "siteRule" rows = "5" cols = "50" th:field="*{siteRule}"></textarea></td>
-      </tr>
+      <!--/* 버튼 */-->
+      <p class="btn_set tr">
+        <a th:href="@{/post/write.do}" class="btns btn_st3 btn_mid">글쓰기</a>
+      </p>
+    </section>
+  </div> <!--/* .content */-->
+</th:block>
 
-    </table>
 
-    <!-- Buttons to reset and submit form -->
-    <div class = "btns">
-      <button type ="reset"> 다시 입력 </button>
-      <button type ="submit"> 저장하기 </button>
-    </div>
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
 
-  </form>
-</main>
-<!--</body>-->
+  </script>
+</th:block>
 </html>
