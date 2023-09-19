@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PostdsaService {
+public class PostFindService {
 
     private PostRepository postRepository;
 
     @Autowired
-    public PostdsaService(PostRepository postRepository) {
+    public PostFindService(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
 
