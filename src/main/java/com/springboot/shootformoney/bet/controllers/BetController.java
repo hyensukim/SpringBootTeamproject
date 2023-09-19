@@ -7,15 +7,18 @@ import com.springboot.shootformoney.bet.service.EuroPoolService;
 import com.springboot.shootformoney.bet.service.EuroService;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.MemberRepository;
+import com.springboot.shootformoney.member.utils.MemberUtil;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 //import com.springboot.shootformoney.member.dto.MemberInfo;
 
-@RestController
+@Controller
 @RequestMapping("/bet")
 public class BetController {
     private final BetService betService;
@@ -23,22 +26,23 @@ public class BetController {
 
     private final EuroPoolService euroPoolService;
 
-//    private final MemberInfoService memberInfoService;
+    private final MemberUtil memberUtil;
 
     @Autowired
     public BetController(BetService betService, EuroService euroService,
-            EuroPoolService euroPoolService /* , MemberInfoService memberInfoService*/){
+            EuroPoolService euroPoolService, MemberUtil memberUtil){
         this.betService = betService;
         this.euroService = euroService;
         this.euroPoolService = euroPoolService;
-//        this.memberInfoService = memberInfoService;
+        this.memberUtil = memberUtil;
     }
 
     //배팅하는 메서드. Bet 엔티티에 배팅 정보를 추가하고, 보유금에서 배팅금만큼을 감산한다.
     //마지막으로 배팅한 경기의 EuroPool에 해당 예측에 해당하는 배팅금 Pool 값을 증가시킨다.
     @PostMapping("/placebet")
     @Transactional
-    public ResponseEntity<String> placeBet(@RequestBody BetDto betDto) {
+    public String placeBet(BetDto betDto, Model model) {
+        model.addAttribute("pageTitle", "배팅 등록하기");
         try {
             // 배팅 정보 저장
             Bet bet = betService.bet(betDto.getGNo(), betDto.getExpect().toString(), betDto.getBtMoney());
@@ -47,22 +51,21 @@ public class BetController {
             euroPoolService.collectEuro(bet);
 
             // 유저 정보 가져오기
-//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//            MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();  // 현재 로그인한 사용자의 정보를 가져옴
-//            Long mNo = memberInfo.getMNo();  // mNo 값을 읽어옴
+            Long mNo = memberUtil.getMember().getMNo();
             // 유로 보유량 감소 처리
-//            euroService.decreaseEuro(mNo, betDto.getBtMoney());
+            euroService.decreaseEuro(mNo, betDto.getBtMoney());
 
-            return new ResponseEntity<>("배팅이 성공적으로 저장되었습니다.", HttpStatus.OK);
+            return "redirect:/list/unstarted/entirelist";
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return "배팅 등록 중 오류가 발생했습니다.";
         }
     }
 
     //배팅 취소 메서드. Bet엔터티에서 배팅 정보를 삭제하고, 보유금에 배팅금만큼 가산한다.
     @PostMapping("/cancelbet/{btNo}")
     @Transactional
-    public ResponseEntity<String> cancelBet(@PathVariable Long btNo) {
+    public String cancelBet(@PathVariable Long btNo, Model model) {
+        model.addAttribute("pageTitle", "배팅 취소하기");
         try {
             // 배팅 정보 삭제
             Bet cancelBet = betService.betCancel(btNo);
@@ -71,15 +74,14 @@ public class BetController {
             euroPoolService.rollbackEuroPool(cancelBet);
 
             // 유저 정보 가져오기
-//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//            MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();  // 현재 로그인한 사용자의 정보를 가져옴
-//            Long mNo = memberInfo.getMNo();  // mNo 값을 읽어옴
+            Long mNo = memberUtil.getMember().getMNo();
             // 보유 유로 롤백 처리
-//            euroService.rollbackEuro(mNo, btNo);
+            euroService.rollbackEuro(mNo, btNo);
 
-            return new ResponseEntity<>("Bet placed and Euro decreased successfully", HttpStatus.OK);
+            return "redirect:/list/unstarted/entirelist";
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return "배팅 취소 중 오류가 발생했습니다.";
         }
     }
+
 }

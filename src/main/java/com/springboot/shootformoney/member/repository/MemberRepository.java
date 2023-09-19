@@ -19,7 +19,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findBymEmailAndmName(String mEmail, String mName); // 이메일 + 이름으로 조회
     @Query("SELECT m FROM Member m WHERE m.mId = :mId AND m.mEmail = :mEmail ")
     Member findBymIdAndmEmail(String mId, String mEmail); // 아이디 + 이메일로 조회
-
     @Query("SELECT m FROM Member m ORDER BY m.mLevel DESC, m.mStack DESC")
     List<Member> findByMemberOrderBymLevelAAndMStack();
 }   

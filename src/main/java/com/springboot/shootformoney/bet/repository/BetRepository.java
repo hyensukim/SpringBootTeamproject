@@ -1,6 +1,7 @@
 package com.springboot.shootformoney.bet.repository;
 
 import com.springboot.shootformoney.bet.entity.Bet;
+import com.springboot.shootformoney.game.entity.Game;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,4 +17,14 @@ public interface BetRepository extends JpaRepository<Bet, Long> {
     //회원번호로 배팅내역 조회하기.
     @Query("SELECT b FROM Bet b WHERE b.member.mNo = :mNo ORDER BY b.btTime DESC")
     List<Bet> findBymNo(@Param("mNo") Long mNo);
+
+    //배팅 적중한 사람 조회하기.(중복 체크 포함)
+    @Query("SELECT b FROM Bet b WHERE b.game = :game AND b.game.result = b.expect AND b.endPaid = 0")
+    List<Bet> findByResultAndExpect(@Param("game") Game game);
+
+    //gNo로 배팅내역 조회하기.
+
+    @Query("SELECT b FROM Bet b WHERE b.game.gNo = :gNo")
+    List<Bet> findAllByGame_gNo(@Param("gNo") Long gNo);
+
 }

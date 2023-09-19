@@ -1,10 +1,12 @@
 package com.springboot.shootformoney.game.service;
 
 import com.springboot.shootformoney.game.dto.MatchDto;
+import com.springboot.shootformoney.game.dto.MatchesDto;
 import com.springboot.shootformoney.game.dto.ScoreDto;
 import com.springboot.shootformoney.game.dto.data.Match;
 import com.springboot.shootformoney.game.entity.Game;
 import com.springboot.shootformoney.game.repository.GameRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -17,8 +19,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +43,7 @@ public class MatchService {
     private GameRepository gameRepository;
 
     //기간 내의 모든 EPL 경기를 API에서 조회하는 메서드.
-    public MatchDto getPLMatches() {
+    public MatchesDto getPLMatches() {
         LocalDate dateFrom = LocalDate.now();
         //접속일 기준 이후 10일까지의 데이터 조회.
         LocalDate dateTo = dateFrom.plusDays(10);
@@ -63,14 +63,14 @@ public class MatchService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<MatchDto> responseEntity =
-                restTemplate.exchange(uri, HttpMethod.GET, entity, MatchDto.class);
+        ResponseEntity<MatchesDto> responseEntity =
+                restTemplate.exchange(uri, HttpMethod.GET, entity, MatchesDto.class);
 
         return responseEntity.getBody();
     }
 
     //기간 내의 모든 라리가 경기를 API에서 조회하는 메서드.
-    public MatchDto getPDMatches() {
+    public MatchesDto getPDMatches() {
         LocalDate dateFrom = LocalDate.now();
         //접속일 기준 이후 10일까지의 데이터 조회.
         LocalDate dateTo = dateFrom.plusDays(10);
@@ -90,14 +90,14 @@ public class MatchService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<MatchDto> responseEntity =
-                restTemplate.exchange(uri, HttpMethod.GET, entity, MatchDto.class);
+        ResponseEntity<MatchesDto> responseEntity =
+                restTemplate.exchange(uri, HttpMethod.GET, entity, MatchesDto.class);
 
         return responseEntity.getBody();
     }
 
     //기간 내의 모든 분데스리가 경기를 API에서 조회하는 메서드.
-    public MatchDto getBL1Matches() {
+    public MatchesDto getBL1Matches() {
         LocalDate dateFrom = LocalDate.now();
         //접속일 기준 이후 10일까지의 데이터 조회.
         LocalDate dateTo = dateFrom.plusDays(10);
@@ -117,26 +117,26 @@ public class MatchService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<MatchDto> responseEntity =
-                restTemplate.exchange(uri, HttpMethod.GET, entity, MatchDto.class);
+        ResponseEntity<MatchesDto> responseEntity =
+                restTemplate.exchange(uri, HttpMethod.GET, entity, MatchesDto.class);
 
         return responseEntity.getBody();
     }
 
     //기간 내의 모든 EPL/라리가/분데스리가 경기를 API에서 조회하는 메서드.
-    public List<MatchDto> getAllMatches() {
-        List<MatchDto> allMatches = new ArrayList<>();
+    public List<MatchesDto> getAllMatches() {
+        List<MatchesDto> allMatches = new ArrayList<>();
 
         // EPL 경기 정보 가져오기
-        MatchDto eplMatches = getPLMatches();
+        MatchesDto eplMatches = getPLMatches();
         allMatches.add(eplMatches);
 
         // 라리가 경기 정보 가져오기
-        MatchDto pdMatches = getPDMatches();
+        MatchesDto pdMatches = getPDMatches();
         allMatches.add(pdMatches);
 
         // 분데스리가 경기 정보 가져오기
-        MatchDto bl1matches= getBL1Matches();
+        MatchesDto bl1matches= getBL1Matches();
         allMatches.add(bl1matches);
 
         return allMatches;
@@ -144,9 +144,9 @@ public class MatchService {
 
     //외부 API에서 PL/라리가/분데스 경기 정보를 가져오고 DB에 저장하는 메서드.
     public void saveAllMatchesToDB(){
-        MatchDto plMatches = getPLMatches();
-        MatchDto pdMatches = getPDMatches();
-        MatchDto bl1Matches = getBL1Matches();
+        MatchesDto plMatches = getPLMatches();
+        MatchesDto pdMatches = getPDMatches();
+        MatchesDto bl1Matches = getBL1Matches();
         List<Game> games = convertToEntity(plMatches.getMatches());
         games.addAll(convertToEntity(pdMatches.getMatches()));
         games.addAll(convertToEntity(bl1Matches.getMatches()));
@@ -175,30 +175,89 @@ public class MatchService {
     }
 
 
-    //경기결과가 나온 경기들의 스코어를 update해 주는 메서드. 경기 시작 후 6시간 뒤에 이루어짐.
+    //경기결과가 나온 PL 경기들의 스코어를 update해 주는 메서드. 경기 시작 후 6시간 뒤에 이루어짐.
     @Transactional
-    public void updateAllEndedGames() {
+    public void updateEndedPLGames() {
         List<Game> allGames = gameRepository.findAll();
         LocalDateTime now = LocalDateTime.now(); // 현재 시스템 날짜
 
         RestTemplate restTemplate = new RestTemplate();
+        String apiUrl = baseUrl + "/competitions/2021/matches?status=FINISHED"; //종료된 PL경기를 API에서 검색.
+         //헤더 생성
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Auth-Token", apiKey);
 
-        for (Game game : allGames) {
-            ZonedDateTime gameDate = ZonedDateTime.parse(game.getGStartTime(), DateTimeFormatter.ISO_ZONED_DATE_TIME);
-            gameDate = gameDate.plusHours(15); // 15시간 뒤(시차 9시간 + 경기시간 2시간 + API반영시간 ( (4?)시간 )
-            LocalDateTime localGameDate = gameDate.toLocalDateTime();
-
-            if (localGameDate.isBefore(now) || localGameDate.isEqual(now)) { // 경기가 끝나면...
-                String apiUrl = baseUrl + "/matches/" + game.getMatchId();
-                ScoreDto scoreDto = restTemplate.getForObject(apiUrl, ScoreDto.class);
-
-                if(scoreDto != null){
-                    game.setGHomeScore(scoreDto.getFullTime().getHome());
-                    game.setGAwayScore(scoreDto.getFullTime().getAway());
-
+        //HttpEntity에 헤더 설정
+        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+        ResponseEntity<MatchesDto> response = restTemplate.exchange(apiUrl, HttpMethod.GET, entity, MatchesDto.class);
+        MatchesDto matchesDto = response.getBody();
+        for(Match match : matchesDto.getMatches()){
+            for(Game game : allGames) {
+                if (match.getMatchId().equals(game.getMatchId())) {
+                    game.setGHomeScore(match.getScore().getFullTime().getHome());
+                    game.setGAwayScore(match.getScore().getFullTime().getAway());
                 }
             }
         }
+    }
+
+    //경기결과가 나온 라리가 경기들의 스코어를 update해 주는 메서드. 경기 시작 후 6시간 뒤에 이루어짐.
+    @Transactional
+    public void updateEndedPDGames() {
+        List<Game> allGames = gameRepository.findAll();
+        LocalDateTime now = LocalDateTime.now(); // 현재 시스템 날짜
+
+        RestTemplate restTemplate = new RestTemplate();
+        String apiUrl = baseUrl + "/competitions/2014/matches?status=FINISHED"; //종료된 PL경기를 API에서 검색.
+        //헤더 생성
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Auth-Token", apiKey);
+
+        //HttpEntity에 헤더 설정
+        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+        ResponseEntity<MatchesDto> response = restTemplate.exchange(apiUrl, HttpMethod.GET, entity, MatchesDto.class);
+        MatchesDto matchesDto = response.getBody();
+        for(Match match : matchesDto.getMatches()){
+            for(Game game : allGames) {
+                if (match.getMatchId().equals(game.getMatchId())) {
+                    game.setGHomeScore(match.getScore().getFullTime().getHome());
+                    game.setGAwayScore(match.getScore().getFullTime().getAway());
+                }
+            }
+        }
+    }
+
+    //경기결과가 나온 분데스 경기들의 스코어를 update해 주는 메서드. 경기 시작 후 6시간 뒤에 이루어짐.
+    @Transactional
+    public void updateEndedBL1Games() {
+        List<Game> allGames = gameRepository.findAll();
+        LocalDateTime now = LocalDateTime.now(); // 현재 시스템 날짜
+
+        RestTemplate restTemplate = new RestTemplate();
+        String apiUrl = baseUrl + "/competitions/2002/matches?status=FINISHED"; //종료된 PL경기를 API에서 검색.
+        //헤더 생성
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Auth-Token", apiKey);
+
+        //HttpEntity에 헤더 설정
+        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+        ResponseEntity<MatchesDto> response = restTemplate.exchange(apiUrl, HttpMethod.GET, entity, MatchesDto.class);
+        MatchesDto matchesDto = response.getBody();
+        for(Match match : matchesDto.getMatches()){
+            for(Game game : allGames) {
+                if (match.getMatchId().equals(game.getMatchId())) {
+                    game.setGHomeScore(match.getScore().getFullTime().getHome());
+                    game.setGAwayScore(match.getScore().getFullTime().getAway());
+                }
+            }
+        }
+    }
+
+    @Transactional
+    public void updateAllEndedGames(){
+        updateEndedPLGames();
+        updateEndedPDGames();
+        updateEndedBL1Games();
     }
 
     //DB에 저장된 경기목록 중, 시작하지 않은 경기만 조회하는 메서드.
@@ -242,7 +301,7 @@ public class MatchService {
     }
 
     //경기 상세정보 조회하기 메서드(API에서 받아온 matchId로 조회)
-    public Optional<Game> getGameByMatchId(Integer matchId){
+    public Optional<Game> getGameInfo(Integer matchId){
         return gameRepository.findByMatchId(matchId);
     }
 }
