@@ -70,9 +70,9 @@
             </thead>
             <tbody>
                 <tr th:each="r,status : ${rank}" th:object="${r}">
-                    <td class="list_text" th:if="${r != null}" th:text="${status.index+1}"></td>
-                    <td class="list_text" th:if="${r != null}" th:text="*{mLevel}"></td>
-                    <td class="lsit_text" th:if="${r != null}" th:text="*{mNickName}"> </td>
+                    <td class="list_text" th:if="${r != null}" th:value="${status.index+1}"></td>
+                    <td class="list_text" th:if="${r != null}" th:value="*{mLevel}"></td>
+                    <td class="lsit_text" th:if="${r != null}" th:value="*{mNickName}"> </td>
                 </tr>
             </tbody>
         </table>

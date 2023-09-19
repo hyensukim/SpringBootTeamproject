@@ -110,13 +110,6 @@ public class BetService {
 
     }
 
-    //배팅내역 전체 조회 메서드
-//    public List<Bet> getMyAllBets(){
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Long mNo = ((MemberInfo) principal).getMNo();
-//        return betRepository.findBymNo(mNo);
-//    }
-
     //경기결과가 나오면 배당률을 계산해서 모든 배팅률이 업데이트되지 않은 배팅내역에 배당률을 집어넣는다.
     @Transactional
     public void calcBtRatio(){

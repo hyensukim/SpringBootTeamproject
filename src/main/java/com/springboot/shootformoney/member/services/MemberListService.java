@@ -1,6 +1,8 @@
 package com.springboot.shootformoney.member.services;
 
-import com.springboot.shootformoney.member.dto.BoardSearch;
+import com.springboot.shootformoney.bet.entity.Bet;
+import com.springboot.shootformoney.bet.repository.BetRepository;
+import com.springboot.shootformoney.member.dto.SearchInfo;
 import com.springboot.shootformoney.member.repository.Post2Repository;
 import com.springboot.shootformoney.post.Post;
 import com.springboot.shootformoney.post.PostRepository;
@@ -19,11 +21,12 @@ public class MemberListService {
 
     private final PostRepository postRepository;
     private final Post2Repository post2Repository;
+    private final BetRepository betRepository;
 
-    public Page<Post> getsWithPages(BoardSearch boardSearch, Long mNo){
+    public Page<Post> getsPostWithPages(SearchInfo searchInfo, Long mNo){
 
-        int page = boardSearch.getPage();
-        int pageSize = boardSearch.getPageSize();
+        int page = searchInfo.getPage();
+        int pageSize = searchInfo.getPageSize();
         List<Post> posts = postRepository.findByMemberNo(mNo);
 
         page = Math.max(page, 1);
@@ -36,4 +39,16 @@ public class MemberListService {
 
         return myPostList;
     }
+
+    public Page<Bet> getsBetWithPages(SearchInfo searchInfo, Long mNo){
+
+        int page = searchInfo.getPage();
+        int pageSize = searchInfo.getPageSize();
+        List<Bet> bets = betRepository.findBymNo(mNo);
+
+        page = Math.max(page, 1);
+        pageSize = pageSize < 1 ? 15 : pageSize;
+        return null;
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.springboot.shootformoney.member.controllers;
 
-import com.springboot.shootformoney.bet.repository.BetRepository;
-import com.springboot.shootformoney.member.dto.BoardSearch;
+import com.springboot.shootformoney.member.dto.SearchInfo;
 import com.springboot.shootformoney.member.dto.MemberInfo;
 import com.springboot.shootformoney.member.dto.SignUpForm;
 import com.springboot.shootformoney.member.services.MemberDeleteService;
@@ -148,11 +147,11 @@ public class MyPageController {
 
     // 마이페이지 - 작성한 게시글
     @GetMapping("/mypost/{mNo}")
-    public String myPost(@PathVariable Long mNo, @ModelAttribute BoardSearch boardSearch
+    public String myPost(@PathVariable Long mNo, @ModelAttribute SearchInfo boardSearch
             , Model model){
         model.addAttribute("pageTitle","마이페이지-작성한 게시글");
         try {
-            Page<Post> posts = memberListService.getsWithPages(boardSearch, mNo);
+            Page<Post> posts = memberListService.getsPostWithPages(boardSearch, mNo);
             List<Post> postList = posts.getContent();
 
             int nowPage = posts.getPageable().getPageNumber() + 1;

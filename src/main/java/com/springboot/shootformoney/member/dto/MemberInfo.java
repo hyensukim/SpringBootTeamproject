@@ -1,8 +1,10 @@
 package com.springboot.shootformoney.member.dto;
 
+import com.springboot.shootformoney.member.entity.Euro;
 import com.springboot.shootformoney.member.entity.LoginData;
 import com.springboot.shootformoney.member.enum_.Grade;
 import com.springboot.shootformoney.member.enum_.Role;
+import com.springboot.shootformoney.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class MemberInfo implements UserDetails {
@@ -25,6 +28,9 @@ public class MemberInfo implements UserDetails {
     private Grade grade;
     private Integer level;
     private LoginData loginData;
+    private Euro euro;
+    private Long mStack;
+    private List<Post> postList;
     private Role role;
 //    private
 

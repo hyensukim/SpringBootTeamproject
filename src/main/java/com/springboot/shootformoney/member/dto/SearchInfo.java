@@ -3,7 +3,7 @@ package com.springboot.shootformoney.member.dto;
 import lombok.Data;
 
 @Data
-public class BoardSearch {
+public class SearchInfo {
 
     private int page = 1;
 
