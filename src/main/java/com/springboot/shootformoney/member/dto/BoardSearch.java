@@ -7,6 +7,6 @@ public class BoardSearch {
 
     private int page = 1;
 
-    private int pageSize = 20;
+    private int pageSize = 15;
 
 }

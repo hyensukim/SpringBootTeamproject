@@ -1,6 +1,7 @@
 package com.springboot.shootformoney.member.services;
 
 import com.springboot.shootformoney.member.dto.SignUpForm;
+import com.springboot.shootformoney.member.entity.Euro;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.enum_.Grade;
 import com.springboot.shootformoney.member.enum_.Role;
@@ -39,6 +40,8 @@ public class MemberSaveService {
                 .grade(Grade.CONFERENCE)
                 .mLevel(1)
                 .build();
+
+        member.createEuro(); // 유로 생성 및 초기화
 
         member.setMPassword(passwordEncoder.encode(member.getMPassword()));
 

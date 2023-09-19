@@ -13,6 +13,10 @@ public class LoginData {
     @Column(name="l_no")
     private Long lNo;
 
+//    @OneToOne(fetch=FetchType.LAZY)
+//    @JoinColumn
+//    private Member member;
+
     private LocalDateTime loginDate;
 
     private LocalDateTime lastLoginDate;

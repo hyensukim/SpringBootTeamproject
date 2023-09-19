@@ -4,11 +4,10 @@ import com.springboot.shootformoney.member.dto.BoardSearch;
 import com.springboot.shootformoney.member.dto.MemberInfo;
 import com.springboot.shootformoney.member.dto.SignUpForm;
 import com.springboot.shootformoney.member.services.MemberDeleteService;
-import com.springboot.shootformoney.member.services.MemberPostListService;
+import com.springboot.shootformoney.member.services.MemberListService;
 import com.springboot.shootformoney.member.services.MemberPwCheckService;
 import com.springboot.shootformoney.member.services.MemberUpdateService;
 import com.springboot.shootformoney.member.utils.MemberUtil;
-import com.springboot.shootformoney.member.validators.SignUpValidator;
 import com.springboot.shootformoney.member.validators.UpdateValidator;
 import com.springboot.shootformoney.post.Post;
 import jakarta.validation.Valid;
@@ -31,13 +30,14 @@ public class MyPageController {
     private final MemberUpdateService memberUpdateService;
     private final UpdateValidator updateValidator;
     private final MemberDeleteService memberDeleteService;
-    private final MemberPostListService memberPostListService;
+    private final MemberListService memberListService;
 
 
     // 마이페이지 들어가기 전 비밀번호 확인
     @GetMapping("/checkpw")
     public String checkPw(Model model){
         model.addAttribute("memberInfo",new MemberInfo());
+        model.addAttribute("pageTitle","비밀번호 확인");
         return "member/mypage/checkpw";
     }
 
@@ -45,7 +45,7 @@ public class MyPageController {
     public String checkPw(MemberInfo memberInfo, Model model) {
         String mPassword = memberInfo.getMPassword();
         MemberInfo getMember = memberUtil.getMember();
-
+    
         if(getMember == null){
             return "redirect:/member/login";
         }
@@ -65,6 +65,7 @@ public class MyPageController {
     // 마이페이지 - 회원 정보
     @GetMapping("/info/{mNo}")
     public String myPage(@PathVariable Long mNo, Model model){
+        model.addAttribute("pageTitle","마이페이지-회원정보");
         // 다른 회원이 마이페이지에 접근하는 것을 방지
         if(memberUtil.isLogin()){
             Long no = memberUtil.getMember().getMNo();
@@ -118,6 +119,7 @@ public class MyPageController {
 
     @GetMapping("/deletepw/{mNo}")
     public String deleteconfirm(@PathVariable Long mNo, @ModelAttribute MemberInfo memberInfo, Model model) {
+        model.addAttribute("pageTitle","회원 탈퇴");
         return "member/mypage/checkpw";
     }
 
@@ -142,19 +144,31 @@ public class MyPageController {
     @GetMapping("/mypost/{mNo}")
     public String myPost(@PathVariable Long mNo, @ModelAttribute BoardSearch boardSearch
             , Model model){
-        Page<Post> posts = memberPostListService.getsWithPages(boardSearch,mNo);
-        List<Post> postList = posts.getContent();
+        model.addAttribute("pageTitle","마이페이지-작성한 게시글");
+        try {
+            Page<Post> posts = memberListService.getsWithPages(boardSearch, mNo);
+            List<Post> postList = posts.getContent();
 
-        int nowPage = posts.getPageable().getPageNumber() +1;
-        int startPage = Math.max(nowPage-9,1);
-        int endPage = Math.min(nowPage+10,posts.getTotalPages());
+            int nowPage = posts.getPageable().getPageNumber() + 1;
+            int startPage = Math.max(nowPage - 9, 1);
+            int endPage = Math.min(nowPage + 10, posts.getTotalPages());
 
-        model.addAttribute("postList", postList);
-        model.addAttribute("nowPage", nowPage);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-
+            model.addAttribute("postList", postList);
+            model.addAttribute("nowPage", nowPage);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+        }catch(Exception e){
+            String script = String.format("Swal.fire('%s','','error')" +
+                    ".then(function(){history.back();})",e.getMessage());
+        }
+        
         return "member/mypage/mypost";
     }
-    
+
+    @GetMapping("/mybet/{mNo}")
+    // 베팅 내역
+    public String myBet(@PathVariable Long mNo, Model model){
+        model.addAttribute("pageTitle","마이페이지-베팅 내역");
+        return "";
+    }
 }

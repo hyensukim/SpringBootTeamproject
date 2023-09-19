@@ -1,10 +1,6 @@
 package com.springboot.shootformoney.member.services;
 
-import com.springboot.shootformoney.PageHandler;
 import com.springboot.shootformoney.member.dto.BoardSearch;
-import com.springboot.shootformoney.member.entity.Member;
-import com.springboot.shootformoney.member.exceptions.MemberNotExistException;
-import com.springboot.shootformoney.member.repository.MemberRepository;
 import com.springboot.shootformoney.member.repository.Post2Repository;
 import com.springboot.shootformoney.post.Post;
 import com.springboot.shootformoney.post.PostRepository;
@@ -19,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class MemberPostListService {
+public class MemberListService {
 
     private final PostRepository postRepository;
     private final Post2Repository post2Repository;
@@ -31,7 +27,9 @@ public class MemberPostListService {
         List<Post> posts = postRepository.findByMemberNo(mNo);
 
         page = Math.max(page, 1);
-        pageSize = pageSize < 1 ? 20 : pageSize;
+        pageSize = pageSize < 1 ? 15 : pageSize;
+
+        if(posts == null){ throw new RuntimeException("회원이 작성한 게시글이 없습니다.");}
 
         Pageable pageable = PageRequest.of(page-1,pageSize,Sort.by(Sort.Order.desc("createdAt")));
         Page<Post> myPostList = post2Repository.findAll(pageable);
