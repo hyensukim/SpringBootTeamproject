@@ -301,7 +301,7 @@ public class MatchService {
     }
 
     //경기 상세정보 조회하기 메서드(API에서 받아온 matchId로 조회)
-    public Optional<Game> getGameByMatchId(Integer matchId){
+    public Optional<Game> getGameInfo(Integer matchId){
         return gameRepository.findByMatchId(matchId);
     }
 }

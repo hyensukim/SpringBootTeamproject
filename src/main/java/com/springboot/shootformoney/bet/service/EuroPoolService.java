@@ -3,13 +3,13 @@ package com.springboot.shootformoney.bet.service;
 import com.springboot.shootformoney.bet.entity.Bet;
 import com.springboot.shootformoney.bet.entity.EuroPool;
 import com.springboot.shootformoney.bet.repository.EuroPoolRepository;
-import com.springboot.shootformoney.game.dto.data.Result;
 import com.springboot.shootformoney.game.entity.Game;
 import com.springboot.shootformoney.game.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //경기마다 걸린 배팅금 데이터를 저장하는 EuroPool 엔터티의 비즈니스 로직을 담당하는 서비스 클래스.
@@ -17,11 +17,27 @@ import java.util.List;
 public class EuroPoolService {
     private final GameRepository gameRepository;
     private final EuroPoolRepository euroPoolRepository;
-
     @Autowired
     public EuroPoolService(GameRepository gameRepository, EuroPoolRepository euroPoolRepository) {
         this.gameRepository = gameRepository;
         this.euroPoolRepository = euroPoolRepository;
+    }
+
+    //실시간 배당률 정보를 프론트에 제공하기 위한 메서드이다.
+    public List<Double> calculateRate(Integer matchId) {
+
+        Game game = gameRepository.findByMatchId(matchId)
+                .orElseThrow(()->new RuntimeException("해당 경기 정보가 존재하지 않습니다."));
+        EuroPool euroPool = euroPoolRepository.findByGame_gNo(game.getGNo());
+        double totalEuro = (double) euroPool.getWinEuro() + euroPool.getDrawEuro() + euroPool.getLoseEuro();
+        double winRatio =  Math.round(totalEuro / (double) euroPool.getWinEuro() * 100) / 100.0;
+        double drawRatio =  Math.round(totalEuro / (double) euroPool.getDrawEuro() * 100) / 100.0;
+        double loseRatio =  Math.round(totalEuro / (double) euroPool.getLoseEuro() * 100) / 100.0;
+        List<Double> results = new ArrayList<>();
+        results.add(winRatio);
+        results.add(drawRatio);
+        results.add(loseRatio);
+        return results;
     }
 
     //Game 엔티티의 경기 정보를 받아 와서 미리 EuroPool 엔티티에 저장한다.

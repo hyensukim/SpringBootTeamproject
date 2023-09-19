@@ -1,5 +1,6 @@
 package com.springboot.shootformoney.game.controllers;
 
+import com.springboot.shootformoney.bet.service.EuroPoolService;
 import com.springboot.shootformoney.game.entity.Game;
 import com.springboot.shootformoney.game.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,12 @@ import java.util.Optional;
 public class MatchController {
 
     private final MatchService matchService;
+    private final EuroPoolService euroPoolService;
 
     @Autowired
-    public MatchController(MatchService matchService){
+    public MatchController(MatchService matchService, EuroPoolService euroPoolService){
         this.matchService = matchService;
+        this.euroPoolService = euroPoolService;
     }
     @GetMapping("/unstarted/epl")
     @ResponseBody
@@ -80,15 +83,15 @@ public class MatchController {
     }
 
     @GetMapping("/{matchId}")
-    public ResponseEntity<Game> getGameByMatchId(@PathVariable Integer matchId, Model model) {
+    public String getGameByMatchId(@PathVariable Integer matchId, Model model) {
         model.addAttribute("pageTitle", "경기 상세 정보");
-        Optional<Game> game = matchService.getGameByMatchId(matchId);
+        Optional<Game> game = matchService.getGameInfo(matchId);
+        List<Double> ratioes = euroPoolService.calculateRate(matchId);
+        model.addAttribute("winRatio", ratioes.get(0));
+        model.addAttribute("drawRatio", ratioes.get(1));
+        model.addAttribute("loseRatio", ratioes.get(2));
 
-        if(game.isPresent()) {
-            return ResponseEntity.ok(game.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-
+        return "/list/" + String.valueOf(matchId);
     }
+
 }
