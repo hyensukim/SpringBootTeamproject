@@ -37,7 +37,10 @@ package com.springboot.shootformoney.member.dto;
         @Size(min=4, max=16, message="최소 4자 최대 16자로 입력해주세요.")
         private String mNickName;
 
+        // Mypage 조회용
         private Grade grade;
+        
         private Integer level;
+        
         private Role role;
     }

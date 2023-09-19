@@ -66,7 +66,16 @@ public class Member extends BaseEntity{
 //    @OneToMany(mappedBy = "parent")
     private List<Post> posts = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="l_no")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="l_no", referencedColumnName = "l_No")
     private LoginData loginData;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "eNo", referencedColumnName = "eNo")
+    private Euro euro;
+
+    public void createEuro() {
+        this.euro = new Euro();
+        euro.setMember(this);  // 만약 양방향 매핑이라면 이 코드도 필요합니다.
+    }
 }

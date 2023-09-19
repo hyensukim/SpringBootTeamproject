@@ -46,9 +46,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         MemberInfo memberInfo = (MemberInfo)authentication.getPrincipal(); // getPrincipal() UserDetails를 구현한 객체 반환.
 
         // 회원 로그인 시간 저장.
-        LoginData loginData = new LoginData();
-        loginData.setLoginDate(LocalDateTime.now());
-        memberInfo.setLoginData(loginData);
+//        memberInfo.getLoginData().setLoginDate(LocalDateTime.now());
 
         // 로그인한 회원 정보 세션에 저장.
         session.setAttribute("memberInfo",memberInfo);
@@ -62,8 +60,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         }
         response.addCookie(cookie);
         // 쿠키 기능 구현 - E
-
-
 
         String url = request.getContextPath() + "/";
         response.sendRedirect(url); // 로그인 성공 시, 메인 페이지로 이동

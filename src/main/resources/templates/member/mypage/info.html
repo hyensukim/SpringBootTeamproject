@@ -2,8 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main}">
-<aside th:replace="~{member/mypage::mypage}"></aside>
+      layout:decorate="~{layouts/mypage/main}">
 <main layout:fragment="common">
     <h2>회원 정보</h2>
     <form method="post" name="frmMyPage" th:object="${signUpForm}" autocomplete="off">

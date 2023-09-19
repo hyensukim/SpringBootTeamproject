@@ -49,9 +49,10 @@ public class SecurityConfig {
          * 권한 설정
          */
         http.authorizeHttpRequests(f->f
-//                .requestMatchers("/mypage/**").authenticated() // 회원 전용
-//                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")// 관리자 전용\
-                .anyRequest().permitAll()
+                    .requestMatchers("/member/login").anonymous()
+                    .requestMatchers("/mypage/**").authenticated() // 회원 전용
+//                    .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")// 관리자 전용\
+                    .anyRequest().permitAll()
         );
 
         /**

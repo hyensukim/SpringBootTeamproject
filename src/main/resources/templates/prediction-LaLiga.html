@@ -39,20 +39,15 @@
             <article>
                 <!-- Post header-->
                 <header class="mb-4">
-                    <h1 class="fw-bolder mb-1">전체 리그 승부 예측</h1>
+                    <h1 class="fw-bolder mb-1">LaLiga 승부 예측</h1>
                 </header>
                 <!-- 모든 리그 최근 경기 화면 이미지는 임시용 api적용하기 전 삭제 -->
-                <form name="recentapi" method="post" th:action="@{#}" autocomplete="off" th:object="${#}">
+                <form name="api2" method="post" th:action="@{#}" autocomplete="off" th:object="${#}">
                     <a class="badge bg-secondary text-decoration-none link-light">최근 경기</a>
                     <figure class="mb-4">
                         <img class="recentapi rounded" src="../static/image/qq.png" alt="..." />
                     </figure>
                 </form>
-
-<!--                위에꺼 안되면 이거-->
-<!--                <div th:each="# : ${#}">-->
-<!--                    <p th:text="${#}"></p>-->
-<!--                </div>-->
 
             </article>
         </div>

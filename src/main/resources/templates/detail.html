@@ -16,19 +16,20 @@
   </style>
 </head>
   <body>
+  <!-- 네비게이션 바 -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="#!">Shoot for Money</a>
+      <a class="navbar-brand" href="index.html">Shoot for Money</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="#">커뮤니티</a></li>
-          <li class="nav-item"><a class="nav-link" href="#!">경기 결과</a></li>
-          <li class="nav-item"><a class="nav-link" href="#!">승부 예측</a></li>
-          <li class="nav-item"><a class="nav-link" href="#!">로그인</a></li>
-          <li class="nav-item"><a class="nav-link" href="#!">마이페이지</a></li>
+          <li class="nav-item"><a class="nav-link" href="post.html" th:href="@{#}">커뮤니티</a></li>
+          <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">경기 결과</a></li>
+          <li class="nav-item"><a class="nav-link" href="prediction.html" th:href="@{#}">승부 예측</a></li>
+          <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">로그인</a></li>
+          <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">마이페이지</a></li>
         </ul>
       </div>
     </div>
@@ -39,8 +40,6 @@
         <h2 th:text="#{}">글 상세</h2>
       </div>
 
-      <!-- 추가 if 조건식 변수 맞으면 저장완료 -->
-      <!--<h2 th:if="${}" th:text="'저장 완료'"></h2>-->
       <div class="board_view_wrap">
         <div class="board_view">
 
@@ -90,6 +89,42 @@
             <input type="text" id="contents" name="contents" class="form-control" value="글내용" th:value="${}" readonly>
           </div>
 
+          <!-- 댓글 -->
+          <section class="mb-5">
+            <div class="card bg-light">
+              <div class="card-body">
+                <!-- 댓글 폼-->
+                <form class="mb-4" th:action="@{#}" method="post">
+                  <textarea class="form-control" rows="3" placeholder="댓글을 입력하세요" th:field="${comment.text}"></textarea>
+                  <div class="bt_wrap">
+                    <a href="post.html" th:href="@{#}" th:text="${}">댓글 작성</a>
+                  </div>
+                </form>
+
+                <!-- 댓글 -->
+                  <div class="d-flex mb-4" th:each="comment : ${comments}">
+                    <!-- 댓글 임시로 넣어둠 -->
+                    <div class="flex-shrink-0"><img class="rounded-circle" src="#" alt="" th:src="${comment.author.levelIcon}" /></div>
+                    <div class="ms-3">
+                      <div class="fw-bold" th:text="${comment.author.nickname}">닉네임1</div>
+                      <p th:text="${comment.text}">댓글 12345</p>
+
+                    <!-- 답글 임시로 넣어둠 -->
+                      <div class="d-flex mt-4" th:each="reply : ${replies}">
+                        <div class="flex-shrink-0">
+                          <img class="rounded-circle" src="#" alt="" th:src="${reply.author.levelIcon}" />
+                        </div>
+                        <div class="ms-3">
+                          <div class="fw-bold" th:text="${reply.author.nickname}">닉네임2</div>
+                          <p th:text="${reply.text}">답글 12345</p>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <hr class="my-4">
 
           <div class="bt_wrap">
@@ -103,8 +138,7 @@
 
   <!-- 푸터 -->
   <!--<footer th:replace="~{footer :: footerFragment}"></footer>-->
-  <footer class="py-5 bg-dark" link th:href="@{../static/css/styles.css.css}"
-                                    href="../static/css/styles.css" rel="stylesheet">
+  <footer class="py-5 bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">2023 Ait - Betting Site Prj</p>
     </div>

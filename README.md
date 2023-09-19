@@ -21,8 +21,8 @@
 - Spring Boot framework
 - Gradle
 - Java
-- html, css, js
-- JSP
+- html, css, js, bootStrap
+- ThymeLeaf
 - JPA
 - GitHub
 - MySQL
@@ -30,7 +30,7 @@
 
 # 3. UserFlow 작성
 
-- Cliet가 웹 사이트 방문 시 flow chart 작성
+- Client 가 웹 사이트 방문 시 flow chart 작성
 
 ![userflow](https://raw.githubusercontent.com/hyensukim/SpringBootTeamproject/main/image/UserFlow.jpg)
 
@@ -119,14 +119,10 @@
 
 ### ✅ 마이페이지
 
-- 개인정보 조회 및 수정, 비밀번호, 회원탈퇴
+- 개인정보 조회 및 수정, 회원탈퇴 - 마이페이지 이동 전 비밀번호로 확인.
 - 배팅 내역 조회 (배팅 금액, 배팅 시간, 배당율, 경기 정보)
 - 본인이 작성한 게시글 조회(작성일, 작성자, 제목, 조회수)
 - 관리자에게 문의한 내용에 대한 관리자의 답변 목록 조회
-
-### ✅ 비밀번호 변경
-
-- 기존 비밀번호 확인 후 일치 시 비밀번호 변경 가능
 
 ## 🎇 게시글
 

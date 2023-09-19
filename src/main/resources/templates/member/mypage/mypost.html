@@ -2,8 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main}">
-<aside th:replace="~{member/mypage::mypage}"></aside>
+      layout:decorate="~{layouts/mypage/main}">
 <main layout:fragment="common">
     <div class="frmMyPost">
         <form method="get" name="frmMyPost">
@@ -26,7 +25,7 @@
                                     [[*{pTitle}]]
                                 </a>
                             </td>
-                            <td class="list_num" th:text='*{#dates.format(createdAt,'yyyy.MM.dd')}"></td>
+                            <td class="list_num" th:text="*{#temporals.format(createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>
                             <td class="list_num" th:text="*{view}"></td>
                         </tr>
                     </tbody>
