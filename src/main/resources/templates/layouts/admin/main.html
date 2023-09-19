@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/static/css/styles.css}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- 사이트 설정 값(siteTitle)과 특정 페이지 타이틀(pageTitle)을 적용 -->
+    <title th:text="${siteConfig['siteTitle']} + ' | ' + ${pageTitle}">기본 타이틀</title>
+
+    <style>
+        /* 테이블의 각 열에 세로 구분선을 추가하는 스타일 */
+        table {
+            border-collapse: separate; /* 테이블 셀 경계를 분리 */
+            border-spacing: 0 3px; /* 세로 간격 설정 (원하는 간격으로 조절) */
+        }
+
+        td, th {
+            border-bottom: 1px solid #dddddd; /* 각 셀의 하단 경계선 설정 */
+            padding: 3px; /* 셀 안의 내용과 경계선 사이의 간격 설정 */
+        }
+    </style>
+
+</head>
+<body>
+
+<!-- 헤더 -->
+<header th:replace='~{outlines/admin/header :: common}'></header>
+
+<!-- 네비게이션 바(헤더) -->
+<nav th:replace='~{outlines/admin/nav :: navFragment}'></nav>
+
+<!-- 메인-->
+<main layout:fragment='common'>
+    <table class="table text-center">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+        </tr>
+
+        <!-- 추가적인 리스트 항목을 원하는 만큼 추가할 수 있습니다. -->
+
+        </tbody>
+    </table>
+</main>
+
+<!-- 푸터 -->
+<footer th:replace='~{outlines/admin/footer :: common}'></footer>
+</body>
+</html>
