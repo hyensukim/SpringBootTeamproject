@@ -24,7 +24,7 @@ public class EuroPoolService {
     }
 
     //실시간 배당률 정보를 프론트에 제공하기 위한 메서드이다.
-    public List<Double> calculateRate(Integer matchId) {
+    public List<Double> calculateRatio(Integer matchId) {
 
         Game game = gameRepository.findByMatchId(matchId)
                 .orElseThrow(()->new RuntimeException("해당 경기 정보가 존재하지 않습니다."));

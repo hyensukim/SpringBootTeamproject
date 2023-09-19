@@ -11,6 +11,7 @@ import com.springboot.shootformoney.member.entity.Euro;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.EuroRepository;
 import com.springboot.shootformoney.member.repository.MemberRepository;
+import com.springboot.shootformoney.member.utils.MemberUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +28,7 @@ public class EuroService {
     private BetRepository betRepository;
 
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberUtil memberUtil;
 
     //유저가 배팅하면 유로 보유량을 배팅금만큼 감산하는 메서드.
     @Transactional
@@ -60,5 +61,9 @@ public class EuroService {
         currentEuro.setValue(updatedValue);  // 갱신된 금액으로 설정
 
         euroRepository.save(currentEuro);  // 변경된 정보 저장
+    }
+
+    public Integer getTotalEuro(Long mNo){
+        memberUtil.getEntity().g
     }
 }

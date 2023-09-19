@@ -43,22 +43,18 @@ public class BetController {
     @Transactional
     public String placeBet(BetDto betDto, Model model) {
         model.addAttribute("pageTitle", "배팅 등록하기");
-        try {
-            // 배팅 정보 저장
-            Bet bet = betService.bet(betDto.getGNo(), betDto.getExpect().toString(), betDto.getBtMoney());
+        //보유금 변수 프론트에 보냄.
 
-            // EuroPool에 배팅금 누적
-            euroPoolService.collectEuro(bet);
+        // 배팅 정보 저장
+        Bet bet = betService.bet(betDto.getGNo(), betDto.getExpect().toString(), betDto.getBtMoney());
+        // EuroPool에 배팅금 누적
+        euroPoolService.collectEuro(bet);
+        // 유저 정보 가져오기
+        Long mNo = memberUtil.getMember().getMNo();
+        // 유로 보유량 감소 처리
+        euroService.decreaseEuro(mNo, betDto.getBtMoney());
 
-            // 유저 정보 가져오기
-            Long mNo = memberUtil.getMember().getMNo();
-            // 유로 보유량 감소 처리
-            euroService.decreaseEuro(mNo, betDto.getBtMoney());
-
-            return "redirect:/list/unstarted/entirelist";
-        } catch (Exception e) {
-            return "배팅 등록 중 오류가 발생했습니다.";
-        }
+        return "redirect:/list/unstarted/entirelist";
     }
 
     //배팅 취소 메서드. Bet엔터티에서 배팅 정보를 삭제하고, 보유금에 배팅금만큼 가산한다.

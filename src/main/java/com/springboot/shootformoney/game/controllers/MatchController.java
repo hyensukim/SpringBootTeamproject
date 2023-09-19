@@ -30,68 +30,86 @@ public class MatchController {
     }
     @GetMapping("/unstarted/epl")
     @ResponseBody
-    public List<Game> unstartedPLMatches(Model model){
+    public String unstartedPLMatches(Model model){
         model.addAttribute("pageTitle", "EPL 경기 목록");
-        return matchService.getUnstartedPLMatches();
+        List<Game> unstartedPLMatches = matchService.getUnstartedPLMatches();
+        model.addAttribute("EPLgames", unstartedPLMatches);
+        return "prediction-EPL";
     }
 
     @GetMapping("/unstarted/laliga")
     @ResponseBody
-    public List<Game> unstartedPDMatches(Model model){
+    public String unstartedPDMatches(Model model){
         model.addAttribute("pageTitle", "라리가 경기 목록");
-        return matchService.getUnstartedPDMatches();
+        List<Game> unstartedPDMatches = matchService.getUnstartedPDMatches();
+        model.addAttribute("PDgames", unstartedPDMatches);
+        return "prediction-LaLiga";
     }
     @GetMapping("/unstarted/bundes")
     @ResponseBody
-    public List<Game> unstartedBL1Matches(Model model){
+    public String unstartedBL1Matches(Model model){
         model.addAttribute("pageTitle", "분데스 경기 목록");
-        return matchService.getUnstartedBL1Matches();
+        List<Game> unstartedBL1Matches = matchService.getUnstartedBL1Matches();
+        model.addAttribute("Bundesgames", unstartedBL1Matches);
+        return "prediction-Bundesliga";
     }
     @GetMapping("/unstarted/entirelist")
     @ResponseBody
-    public List<Game> everyUnstartedMatches(Model model){
+    public String everyUnstartedMatches(Model model){
         model.addAttribute("pageTitle", "전체 경기 목록");
-        return matchService.getAllUnstartedMatches();
+        List<Game> allUnstartedMatches = matchService.getAllUnstartedMatches();
+        model.addAttribute("Allgames", allUnstartedMatches);
+        return "prediction";
     }
 
     @GetMapping("/finished/epl")
     @ResponseBody
-    public List<Game> finishedPLMatches(Model model){
+    public String finishedPLMatches(Model model){
         model.addAttribute("pageTitle", "종료된 EPL 경기 목록");
-        return matchService.getFinishedPLMatches();
+        List<Game> finishedPLMatches = matchService.getFinishedPLMatches();
+        model.addAttribute("EPLgames", finishedPLMatches);
+        return "finished-EPL";
     }
 
     @GetMapping("/finished/laliga")
     @ResponseBody
-    public List<Game> finishedPDMatches(Model model){
+    public String finishedPDMatches(Model model){
         model.addAttribute("pageTitle", "종료된 라리가 경기 목록");
-        return matchService.getFinishedPDMatches();
+        List<Game> finishedPDMatches = matchService.getFinishedPDMatches();
+        model.addAttribute("PDgames", finishedPDMatches);
+        return "finished-LaLiga";
     }
 
     @GetMapping("/finished/bundes")
     @ResponseBody
-    public List<Game> finishedBL1Matches(Model model){
+    public String finishedBL1Matches(Model model){
         model.addAttribute("pageTitle", "종료된 분데스 경기 목록");
-        return matchService.getFinishedBL1Matches();
+        List<Game> finishedBL1Matches = matchService.getFinishedBL1Matches();
+        model.addAttribute("Bundesgames", finishedBL1Matches);
+        return "finished-Bundesliga";
     }
 
     @GetMapping("/finished/entirelist")
     @ResponseBody
-    public List<Game> everyFinishedMatches(Model model){
+    public String everyFinishedMatches(Model model){
         model.addAttribute("pageTitle", "종료된 경기 목록");
-        return matchService.getAllFinishedMatches();
+        List<Game> allFinishedMatches = matchService.getAllFinishedMatches();
+        model.addAttribute("Allgames", allFinishedMatches);
+        return "finished";
     }
 
     @GetMapping("/{matchId}")
     public String getGameByMatchId(@PathVariable Integer matchId, Model model) {
         model.addAttribute("pageTitle", "경기 상세 정보");
-        Optional<Game> game = matchService.getGameInfo(matchId);
-        List<Double> ratioes = euroPoolService.calculateRate(matchId);
-        model.addAttribute("winRatio", ratioes.get(0));
-        model.addAttribute("drawRatio", ratioes.get(1));
-        model.addAttribute("loseRatio", ratioes.get(2));
+        Game game = matchService.getGameInfo(matchId)
+                .orElseThrow(() -> new RuntimeException("잘못된 경기 정보 요청입니다."));
+        List<Double> ratios = euroPoolService.calculateRatio(matchId);
+        model.addAttribute("game", game);
+        model.addAttribute("winRatio", ratios.get(0));
+        model.addAttribute("drawRatio", ratios.get(1));
+        model.addAttribute("loseRatio", ratios.get(2));
 
-        return "/list/" + String.valueOf(matchId);
+        return "gameinfo";
     }
 
 }
