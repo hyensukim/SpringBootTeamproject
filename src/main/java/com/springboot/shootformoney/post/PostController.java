@@ -3,13 +3,14 @@ package com.springboot.shootformoney.post;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/posts")
 @RequiredArgsConstructor
 public class PostController {
@@ -20,16 +21,31 @@ public class PostController {
     public String getAllPosts(Model model) {
         List<Post> posts = postService.findAllPosts();
         model.addAttribute("posts", posts);
-        model.addAttribute("pageTitle", "게시글 관리");
-        return "post";  // Thymeleaf 템플릿 이름
+        return "post/list";  // 매핑
+    }
+
+    @GetMapping("/create")
+    public String createPostForm(Model model) {
+        model.addAttribute("postDto", new PostDTO());
+        return "post/create";
     }
 
     //게시글 생성
     @PostMapping("/")
-    public ResponseEntity<Long> createPost(@Valid @RequestBody PostDTO postDto) {
+    public String createPost(@ModelAttribute("postDto") @Valid PostDTO postDto) {
         Long id = postService.savePost(postDto);
-        return ResponseEntity.created(URI.create("/posts/" + id)).body(id);
+        return "redirect:/posts/" + id;
     }
+
+    // 단일 게시글 조회
+    @GetMapping("/{pNo}")
+    public String getOnePosts(@PathVariable Long pNo, Model model) {
+        Post post = postService.findPost(pNo);
+        model.addAttribute("post", post);
+        return "post/view";
+    }
+
+    // 매핑
 
     //삭제
     @DeleteMapping("/{pNo}")
@@ -66,12 +82,11 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
-    //아이디로 찾기
-   //   @GetMapping("/member/{mId}")
-  //  public ResponseEntity<List<Post>> getPostsByMember(@PathVariable String mId) {
-  //      List<Post> posts = postService.findPostsByMemberId(mId);
-  //      return ResponseEntity.ok(posts);
-  //  }
+    @GetMapping("/member/nickname/{mNickName}")
+    public ResponseEntity<List<Post>> getPostsByMemberNickname(@PathVariable String mNickName) {
+        List<Post> posts = postService.findPostsByMemberNickName(mNickName);
+        return ResponseEntity.ok(posts);
+    }
 
 
 }

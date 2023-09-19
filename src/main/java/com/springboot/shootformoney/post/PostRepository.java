@@ -79,11 +79,12 @@ public class PostRepository {
                 .getResultList();
     }
 
-  //  public List<Post> findByMemberId(String memberId) {
-  //      return em.createQuery("select p from Post p where p.member.mId = :memberId", Post.class)
-  //              .setParameter("memberId", memberId)
-  //              .getResultList();
-  //  }
+    public List<Post> findByMemberId(String memberId) {
+        return em.createQuery("select p from Post p where p.member.mId = :memberId", Post.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
+
 
 
 

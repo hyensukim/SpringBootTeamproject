@@ -3,11 +3,11 @@ package com.springboot.shootformoney.post;
 
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
+import com.springboot.shootformoney.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,6 +17,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
 
     //저장
     @Transactional
@@ -85,5 +86,9 @@ public class PostService {
         return postRepository.findByTitle(pTitle);
     }
 
+
+    public List<Post> findPostsByMemberNickName(String mNickName) {
+        return postRepository.findByMember_MNickName(mNickName);
+    }
 
 }

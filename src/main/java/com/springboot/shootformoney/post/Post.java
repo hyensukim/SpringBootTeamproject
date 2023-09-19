@@ -3,6 +3,7 @@ package com.springboot.shootformoney.post;
 
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.common.BaseEntity;
+import com.springboot.shootformoney.file.File;
 import com.springboot.shootformoney.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -32,7 +33,8 @@ public class Post extends BaseEntity {
 
     private Long view = 0L; // 조회수
 
-
+    @OneToMany(mappedBy = "f_no")
+    private File file;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bNo")
@@ -69,17 +71,10 @@ public class Post extends BaseEntity {
         }
     }
 
-//    public Long getBNo() {
-//        return this.board.getBNo();
-//    }
 
     public Long getBNo() {
         return this.board == null ? null : this.board.getBNo();
     }
-
-//    public String getBName() {
-//        return this.board.getBName();
-//    }
 
     public String getBName() {
         return this.board == null ? null : this.board.getBName();
