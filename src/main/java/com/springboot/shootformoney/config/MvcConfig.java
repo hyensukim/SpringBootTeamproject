@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MvcConfig implements WebMvcConfigurer {
 
     // 사이트 설정 유지 인터셉터
-    private final SiteConfigInterceptor siteConfigInterceptor;
+    private final com.springboot.shootformoney.admin.interceptors.SiteConfigInterceptor siteConfigInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
