@@ -5,26 +5,22 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Entity
-@Getter @Setter
-@Table(name = "files")
+@Getter
+@Setter
 public class File {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "f_no")
-    private Integer fNo;
+    private Long id;
 
-    @Column(name = "f_name")
-    private String fName;
+    @Column(nullable = false)
+    private String fileName; // 저장된 파일명
+
+    @Column(nullable = false)
+    private String originalFileName; // 원본 파일명
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "p_no")
+    @JoinColumn(name = "post_id")
     private Post post;
-
-    @Column(name = "f_path")
-    private String fPath;
-
-    // 생성자, getter, setter 등 필요한 코드 생략
-
 }

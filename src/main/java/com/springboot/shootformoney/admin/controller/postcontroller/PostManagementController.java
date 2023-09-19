@@ -1,5 +1,6 @@
 package com.springboot.shootformoney.admin.controller.postcontroller;
 
+import com.springboot.shootformoney.PageHandler;
 import com.springboot.shootformoney.admin.service.postservice.PostAdminService;
 import com.springboot.shootformoney.admin.service.postservice.PostFindService;
 import com.springboot.shootformoney.board.entity.Board;
@@ -26,8 +27,8 @@ public class PostManagementController {
     private PostService postService;
     @Autowired
     private BoardRepository boardRepository;
-
-    // 모든 게시물 조회
+//
+//    // 모든 게시물 조회
     @GetMapping("/postList/all")
     public String getAllPosts(Model model) {
         List<Post> posts = postService.findAllPosts();
@@ -35,6 +36,7 @@ public class PostManagementController {
         model.addAttribute("pageTitle", "게시물 관리");
         return "admin/postManagement";
     }
+
 
     // 게시글 상세보기
     // 추후에 실제 post 뷰로 넘어가는 것으로 구현 예정
@@ -106,5 +108,47 @@ public class PostManagementController {
         postAdminService.deletePost(pNo);
         return "redirect:/admin/post/postList/all";
     }
+
+//    // 모든 게시물 조회
+//    @GetMapping("/postList/all")
+//    public String getAllPosts(Model model,
+//                              @RequestParam(value = "page", defaultValue = "1") int page) {
+//        List<Post> posts = postService.findAllPosts();
+//        model.addAttribute("posts", posts);
+//
+//        // 페이지 핸들러 객체 생성 및 추가
+//        int totalCnt = posts.size();  // 총 게시글 수
+//        PageHandler pageHandler = new PageHandler(totalCnt, page);
+//        model.addAttribute("pageHandler", pageHandler);
+//
+//        model.addAttribute("pageTitle", "게시물 관리");
+//
+//        return "admin/postManagement";
+//    }
+//
+//    // 컨트롤러
+//    @GetMapping("/postList")
+//    public String postList(@RequestParam(required = false) String bName,
+//                           @RequestParam(value = "page", defaultValue = "1") int page,
+//                           Model model){
+//
+//        List<Board> boards = boardRepository.findAll();
+//        model.addAttribute("boards", boards);
+//
+//        List<Post> posts;
+//        if (bName != null) {
+//            posts = postFindService.searchPosts("bName", bName);
+//        } else {
+//            posts = postFindService.findAllposts();
+//        }
+//
+//        model.addAttribute("posts", posts);
+//        // 페이지 핸들러 객체 생성 및 추가
+//        int totalCnt = posts.size();  // 총 게시글 수 (특정 보드의 경우 해당 보드의 게시글 수)
+//        PageHandler pageHandler = new PageHandler(totalCnt, page);
+//        model.addAttribute("pageHandler", pageHandler);
+//
+//        return "/admin/postList";
+//    }
 
 }

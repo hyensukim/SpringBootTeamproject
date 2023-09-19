@@ -3,25 +3,48 @@ package com.springboot.shootformoney.post;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/posts")
 @RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
 
+    @GetMapping("/posts/all")
+    public String getAllPosts(Model model) {
+        List<Post> posts = postService.findAllPosts();
+        model.addAttribute("posts", posts);
+        return "post/list";  // 매핑
+    }
+
+    @GetMapping("/create")
+    public String createPostForm(Model model) {
+        model.addAttribute("postDto", new PostDTO());
+        return "post/create";
+    }
 
     //게시글 생성
     @PostMapping("/")
-    public ResponseEntity<Long> createPost(@Valid @RequestBody PostDTO postDto) {
+    public String createPost(@ModelAttribute("postDto") @Valid PostDTO postDto) {
         Long id = postService.savePost(postDto);
-        return ResponseEntity.created(URI.create("/posts/" + id)).body(id);
+        return "redirect:/posts/" + id;
     }
+
+    // 단일 게시글 조회
+    @GetMapping("/{pNo}")
+    public String getOnePosts(@PathVariable Long pNo, Model model) {
+        PostDTO post = postService.findPost(pNo);
+        model.addAttribute("post", post);
+        return "post/view";
+    }
+    // 매핑
 
     //삭제
     @DeleteMapping("/{pNo}")
@@ -44,12 +67,6 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
-    // 단일 게시글 조회
-    @GetMapping("/{pNo}")
-    public ResponseEntity<Post> getOnePosts(@PathVariable Long pNo) {
-        Post post = postService.findPost(pNo);
-        return ResponseEntity.ok(post);
-    }
 
     //제목으로 찾기
     @GetMapping("/tTitle/{pTitle}")
@@ -58,12 +75,11 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
-    //아이디로 찾기
-   //   @GetMapping("/member/{mId}")
-  //  public ResponseEntity<List<Post>> getPostsByMember(@PathVariable String mId) {
-  //      List<Post> posts = postService.findPostsByMemberId(mId);
-  //      return ResponseEntity.ok(posts);
-  //  }
+    @GetMapping("/member/nickname/{mNickName}")
+    public ResponseEntity<List<Post>> getPostsByMemberNickname(@PathVariable String mNickName) {
+        List<Post> posts = postService.findPostsByMemberNickName(mNickName);
+        return ResponseEntity.ok(posts);
+    }
 
 
 }
