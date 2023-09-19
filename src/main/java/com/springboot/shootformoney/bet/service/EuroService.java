@@ -64,6 +64,7 @@ public class EuroService {
     }
 
     public Integer getTotalEuro(Long mNo){
-        memberUtil.getEntity().g
+        int totalEuro = memberUtil.getEntity().getEuro().getValue();
+        return totalEuro / 10000;
     }
 }

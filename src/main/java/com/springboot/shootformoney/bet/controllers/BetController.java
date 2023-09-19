@@ -44,7 +44,8 @@ public class BetController {
     public String placeBet(BetDto betDto, Model model) {
         model.addAttribute("pageTitle", "배팅 등록하기");
         //보유금 변수 프론트에 보냄.
-
+        Integer totalEuro = euroService.getTotalEuro(memberUtil.getMember().getMNo());
+        model.addAttribute("totalEuro", totalEuro);
         // 배팅 정보 저장
         Bet bet = betService.bet(betDto.getGNo(), betDto.getExpect().toString(), betDto.getBtMoney());
         // EuroPool에 배팅금 누적

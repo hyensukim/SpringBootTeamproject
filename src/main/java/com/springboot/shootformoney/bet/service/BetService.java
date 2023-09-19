@@ -55,7 +55,6 @@ public class BetService {
         bet.setBtMoney(euro);
         bet.setBtTime(LocalDateTime.now());
         bet.setMember(memberUtil.getEntity());
-
         //배팅 정보 저장 후 가져옴.
         return betRepository.save(bet);
     }
