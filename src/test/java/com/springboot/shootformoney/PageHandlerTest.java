@@ -1,5 +1,6 @@
 package com.springboot.shootformoney;
 
+import com.springboot.shootformoney.board.PageHandler;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

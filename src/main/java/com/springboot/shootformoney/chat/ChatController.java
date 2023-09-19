@@ -16,14 +16,14 @@ public class ChatController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Chat> addComment(@RequestParam Long memberId, @RequestParam Long gameId, @RequestParam String content) {
-        Chat comment = chatService.addComment(memberId, gameId, content);
+    public ResponseEntity<Chat> addComment(@RequestParam String mId, @RequestParam Integer matchId, @RequestParam String content) {
+        Chat comment = chatService.addComment(mId, matchId, content);
         return ResponseEntity.ok(comment);
     }
 
-    @GetMapping("/member/{memberId}")
-    public ResponseEntity<List<Chat>> getCommentsByMemberId(@PathVariable Integer memberId) {
-        List<Chat> comments = chatService.getCommentsByMemberId(memberId);
+    @GetMapping("/member/{mNo}")
+    public ResponseEntity<List<Chat>> getCommentsByMemberId(@PathVariable Long mNo) {
+        List<Chat> comments = chatService.getCommentsByMemberId(mNo);
         return ResponseEntity.ok(comments);
     }
 

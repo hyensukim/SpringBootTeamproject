@@ -1,6 +1,6 @@
 package com.springboot.shootformoney.board.controller;
 
-import com.springboot.shootformoney.PageHandler;
+import com.springboot.shootformoney.board.PageHandler;
 import com.springboot.shootformoney.board.dto.BoardDto;
 import com.springboot.shootformoney.board.service.BoardService;
 import com.springboot.shootformoney.board.entity.Board;
@@ -10,10 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 //@Controller
@@ -23,7 +23,7 @@ public class BoardController {
 
     private final BoardService boardService;
     
-    // 게시파 전체 조회
+    // 게시판 전체 조회
     @GetMapping("/")
     public ResponseEntity<List<BoardDto>> getAllBoards() {
         List<BoardDto> boardDtos = boardService.getAllBoards();
@@ -72,13 +72,29 @@ public class BoardController {
     }
 
 
+//     페이징 처리
+//    @GetMapping("/paging/{bNo}")
+//    public ResponseEntity<PageHandler> getBoards(@PathVariable Long bNo,
+//                                                 @RequestParam(defaultValue = "1") int bPageNo,
+//                                                 @RequestParam(defaultValue = "10") int bUnitNo) {
+//
+//        return ResponseEntity.ok(boardService.getBoardsWithPaging(bNo, bPageNo, bUnitNo));
+//    }
+
     // 페이징 처리
     @GetMapping("/paging/{bNo}")
-    public ResponseEntity<PageHandler> getBoards(@PathVariable Long bNo,
-                                                 @RequestParam(defaultValue = "1") int bPageNo,
-                                                 @RequestParam(defaultValue = "10") int bUnitNo) {
+    public String getBoards(Model model,
+                            @PathVariable Long bNo,
+                            @RequestParam(defaultValue = "1") int bPageNo,
+                            @RequestParam(defaultValue = "10") int bUnitNo) {
 
-        return ResponseEntity.ok(boardService.getBoardsWithPaging(bNo, bPageNo, bUnitNo));
+        PageHandler pageHandler = boardService.getBoardsWithPaging(bNo, bPageNo, bUnitNo);
+        List<BoardDto> boards = boardService.getAllBoards();
+
+        model.addAttribute("boards", boards);
+        model.addAttribute("pageHandler", pageHandler);
+
+        return "post";
     }
 
 //    @GetMapping("/boards/{bNo}")

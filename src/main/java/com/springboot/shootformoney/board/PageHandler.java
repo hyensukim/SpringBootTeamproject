@@ -1,4 +1,4 @@
-package com.springboot.shootformoney;
+package com.springboot.shootformoney.board;
 
 public class PageHandler {
     int totalCnt; //총 게시물 갯수

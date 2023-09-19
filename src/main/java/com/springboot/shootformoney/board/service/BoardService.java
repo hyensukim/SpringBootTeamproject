@@ -1,20 +1,15 @@
 package com.springboot.shootformoney.board.service;
 
-import com.springboot.shootformoney.PageHandler;
+import com.springboot.shootformoney.board.PageHandler;
 import com.springboot.shootformoney.board.dto.BoardDto;
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
-import com.springboot.shootformoney.post.Post;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -87,7 +82,6 @@ public class BoardService {
 
         return pageHandler;
     }
-
 
 
 //    public Page<BoardDto> getBoardWithPaging(Long bNo, int bPgeNo, int bUnitNo) {
