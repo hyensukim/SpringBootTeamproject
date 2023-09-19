@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main}">
+      layout:decorate="~{layouts/admin/main}">
 
 <!--<body>-->
 <main layout:fragment="common">
 
 <!-- Member List -->
 <h2>Members List</h2>
-<table id="memberTable" border="1">
+<table id="memberTable" class="table text-center">
     <thead>
     <tr>
         <th>회원번호</th>
@@ -21,7 +21,7 @@
         <th>등급</th>
         <th>Level</th>
         <th>권한</th>
-        <th>제재</th>
+        <th>기타</th>
     </tr>
     </thead>
 
