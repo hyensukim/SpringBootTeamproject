@@ -27,6 +27,7 @@ public class MemberUpdateInterceptor implements HandlerInterceptor {
         if(memberUtil.isLogin()){
             MemberInfo memberInfo = memberUtil.getMember();
             Long mNo = memberInfo.getMNo();
+            req.setAttribute("mNo",mNo);
             Member member = levelRankUtil.levelUp(mNo);
             member = levelRankUtil.gradeUp(member);
 

@@ -19,43 +19,43 @@
                     <th>배당률 선택</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr th:each="# : ${#}">
-                    <td th:text="${}">17</td>
-                    <td th:text="${}">09.18(월) 23:00시</td>
-                    <td th:text="${}">BundesLiga</td>
-                    <td th:text="${}">바이에른</td>
-                    <td th:text="${}">아우크스부르크</td>
-                    <td>
-                        <div class="formBox">
-                            <div class="btnChkBox v2" th:each=" : ${}">
-                                <button type="button" class="betBtn" th:title="${}" th:data-selkey="${}">
-                                    <span th:text="${}">승</span><br/><span class="db" th:text="${}">2.50</span>
-                                </button>
-                                <button type="button" class="betBtn" title="" data-selkey="2">
-                                    <span th:text="${}">무</span><br/><span class="db" th:text="${}">3.20</span>
-                                </button>
-                                <button type="button" class="betBtn" title="" data-selkey="3">
-                                    <span th:text="${}">패</span><br/><span class="db" th:text="${}">2.36</span>
-                                </button>
+<!--            <tbody>-->
+<!--                <tr th:each="# : ${#}">-->
+<!--                    <td th:text="${}">17</td>-->
+<!--                    <td th:text="${}">09.18(월) 23:00시</td>-->
+<!--                    <td th:text="${}">BundesLiga</td>-->
+<!--                    <td th:text="${}">바이에른</td>-->
+<!--                    <td th:text="${}">아우크스부르크</td>-->
+<!--                    <td>-->
+<!--                        <div class="formBox">-->
+<!--                            <div class="btnChkBox v2" th:each=" : ${}">-->
+<!--                                <button type="button" class="betBtn" th:title="${}" th:data-selkey="${}">-->
+<!--                                    <span th:text="${}">승</span><br/><span class="db" th:text="${}">2.50</span>-->
+<!--                                </button>-->
+<!--                                <button type="button" class="betBtn" title="" data-selkey="2">-->
+<!--                                    <span th:text="${}">무</span><br/><span class="db" th:text="${}">3.20</span>-->
+<!--                                </button>-->
+<!--                                <button type="button" class="betBtn" title="" data-selkey="3">-->
+<!--                                    <span th:text="${}">패</span><br/><span class="db" th:text="${}">2.36</span>-->
+<!--                                </button>-->
 
-                                <!-- 위에꺼 안되면 이거 -->
-<!--                                <form method="post" th:action="@{/betting}">-->
-<!--                                    &lt;!&ndash; Include match id and option title as hidden fields in the form &ndash;&gt;-->
-<!--                                    <input type="hidden" name="matchId" th:value="${match.id}" />-->
-<!--                                    <input type="hidden" name="optionTitle" th:value="${option.title}" />-->
+<!--                                &lt;!&ndash; 위에꺼 안되면 이거 &ndash;&gt;-->
+<!--&lt;!&ndash;                                <form method="post" th:action="@{/betting}">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    &lt;!&ndash; Include match id and option title as hidden fields in the form &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <input type="hidden" name="matchId" th:value="${match.id}" />&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <input type="hidden" name="optionTitle" th:value="${option.title}" />&ndash;&gt;-->
 
-<!--                                    &lt;!&ndash; The button submits the form when clicked &ndash;&gt;-->
-<!--                                    <button type="submit">-->
-<!--                                        &lt;!&ndash; Set button text using BetOption properties &ndash;&gt;-->
-<!--                                        <span th:text="${option.title}"></span><span><br/><span th:text="${option.odds}"/></span>-->
-<!--                                    </button>-->
-<!--                                </form>-->
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
+<!--&lt;!&ndash;                                    &lt;!&ndash; The button submits the form when clicked &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <button type="submit">&ndash;&gt;-->
+<!--&lt;!&ndash;                                        &lt;!&ndash; Set button text using BetOption properties &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <span th:text="${option.title}"></span><span><br/><span th:text="${option.odds}"/></span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </form>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </tbody>-->
         </table>
     </div>
 
@@ -70,11 +70,9 @@
             </thead>
             <tbody>
                 <tr th:each="r,status : ${rank}" th:object="${r}">
-                    <td class="list_text">
-                        <span th:if="${r != null}" th:field="${status.index}"></span>
-                        <span th:if="${r != null}" th:field="*{mNickName}"></span>
-                        <span th:if="${r != null}" th:field="*{mLevel}"></span>
-                    </td>
+                    <td class="list_text" th:if="${r != null}" th:text="${status.index+1}"></td>
+                    <td class="list_text" th:if="${r != null}" th:text="*{mLevel}"></td>
+                    <td class="lsit_text" th:if="${r != null}" th:text="*{mNickName}"> </td>
                 </tr>
             </tbody>
         </table>

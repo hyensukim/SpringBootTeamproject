@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -22,8 +23,12 @@ public class RankListService {
     public List<Member> getRankList(){
         List<Member> rank10 = new ArrayList<>();
         List<Member> rankList = memberRepository.findByMemberOrderBymLevelAAndMStack();
-        for(int i=0; i<10; i++){
-            rank10.add(rankList.get(i));
+        if(rankList.size() >= 10){
+            for(int i=0; i<10; i++){
+                rank10.add(rankList.get(i));
+            }
+        }else{
+            rank10.addAll(rankList);
         }
         return rank10;
     }

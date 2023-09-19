@@ -1,5 +1,6 @@
 package com.springboot.shootformoney.member.controllers;
 
+import com.springboot.shootformoney.bet.repository.BetRepository;
 import com.springboot.shootformoney.member.dto.BoardSearch;
 import com.springboot.shootformoney.member.dto.MemberInfo;
 import com.springboot.shootformoney.member.dto.SignUpForm;
@@ -31,6 +32,7 @@ public class MyPageController {
     private final UpdateValidator updateValidator;
     private final MemberDeleteService memberDeleteService;
     private final MemberListService memberListService;
+
 
 
     // 마이페이지 들어가기 전 비밀번호 확인
