@@ -59,7 +59,7 @@ public class LevelGradeUtil {
         
         //levelUp 로직
         Integer levelUpScore = (2000 + 50 * level * (level-1))*10000; // 100
-        if(value >= levelUpScore){
+        if(value >= levelUpScore && level < 10){
             // 레벨업
             member.setMLevel(level+1);
             // 회원 포인트 100만 포인트로 리셋.
@@ -68,7 +68,4 @@ public class LevelGradeUtil {
 
         return member;
     }
-
-    //랭킹 조회 기능
-
 }
