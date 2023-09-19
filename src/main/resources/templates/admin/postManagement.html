@@ -6,11 +6,14 @@
 <main layout:fragment="common">
 
     <h2>게시판 조회</h2>
-    <a href="/admin/post/postList/">전체게시판</a>
+<!--    <a href="/admin/post/postList/">전체게시판</a>-->
 
-    <!-- 각각의 게시판 별로 조회 -->
-    <div th:each="board : ${boards}">
-        <a th:href="@{/admin/post/postList(bName=${board.bName})}" th:text="${board.bName}"></a>
+<!--    &lt;!&ndash; 각각의 게시판 별로 조회 &ndash;&gt;-->
+<!--    <div th:each="board : ${boards}">-->
+<!--        <a th:href="@{/admin/post/postList(bName=${board.bName})}" th:text="${board.bName}"></a>-->
+<!--    </div>-->
+    <div id="pagination">
+
     </div>
 
     <table class="table text-center">
@@ -47,6 +50,11 @@
 
         </tr>
     </table>
+
+    <div id="pagination">
+        <!-- Pagination links will be inserted here -->
+    </div>
+
     <form th:action="@{/admin/post/postList/search}" method="get">
         <!-- Search Category -->
         <select name="category">
