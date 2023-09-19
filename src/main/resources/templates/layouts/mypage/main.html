@@ -9,18 +9,21 @@
           href="../../static/css/styles.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<!--    <title th:text="${siteConfig['siteTitle']} + ' | ' + ${pageTitle}">기본 타이틀</title>-->
     <title>Title</title>
 </head>
 <body>
 <!-- 헤더 -->
-<header th:replace="~{outlines/header::common}"></header>
+<header th:replace="~{outlines/mypage/header::common}"></header>
 
 <!-- 네비게이션 바(헤더) -->
-<nav th:replace="~{outlines/nav :: navFragment}"></nav>
+<nav th:replace="~{outlines/mypage/nav :: common}"></nav>
 <!-- 메인-->
-<main layout:fragment="common"></main>
-
+<section>
+    <aside th:replace="~{outlines/mypage/_aside :: common}"></aside>
+    <main layout:fragment="common"></main>
+</section>
 <!-- 푸터 -->
-<footer th:replace="~{outlines/footer::common}"></footer>
+<footer th:replace="~{outlines/mypage/footer::common}"></footer>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
     xmlns:th="http://www.thymeleaf.org">
-<aside th:fragment="mypage">
+<aside th:fragment="common">
     <div>
         <a th:href="@{/member/mypage/info/{mNo}(mNo=${mNo})}">회원 정보</a>
         <a th:href="@{/member/mypage/mypost/{mNo}(mNo=${mNo})}">작성한 게시글</a>

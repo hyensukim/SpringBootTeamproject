@@ -67,28 +67,32 @@ public class MyPageController {
     public String myPage(@PathVariable Long mNo, Model model){
         model.addAttribute("pageTitle","마이페이지-회원정보");
         // 다른 회원이 마이페이지에 접근하는 것을 방지
-        if(memberUtil.isLogin()){
+        if(memberUtil.isLogin()) {
             Long no = memberUtil.getMember().getMNo();
-            if(!mNo.equals(no)){
+            if (!mNo.equals(no)) {
                 String script = String.format("Swal.fire('본인 계정만 접근 가능합니다.', '', 'error')" +
                         ".then(function(){location.href='/';})");
-                model.addAttribute("script",script);
+                model.addAttribute("script", script);
                 return "script/sweet";
             }
-        }
 
-        MemberInfo memberInfo = memberUtil.getMember();
-        SignUpForm signUpForm = SignUpForm.builder()
-                .mId(memberInfo.getMId())
-                .mName(memberInfo.getMName())
-                .mNickName(memberInfo.getMNickName())
-                .grade(memberInfo.getGrade())
-                .level(memberInfo.getLevel())
-                .mPhone(memberInfo.getMPhone())
-                .mEmail(memberInfo.getMEmail())
-                .build();
-        model.addAttribute("signUpForm",signUpForm);
-        return "member/mypage/info";
+            MemberInfo memberInfo = memberUtil.getMember();
+            SignUpForm signUpForm = SignUpForm.builder()
+                    .mId(memberInfo.getMId())
+                    .mName(memberInfo.getMName())
+                    .mNickName(memberInfo.getMNickName())
+                    .grade(memberInfo.getGrade())
+                    .level(memberInfo.getLevel())
+                    .mPhone(memberInfo.getMPhone())
+                    .mEmail(memberInfo.getMEmail())
+                    .build();
+            model.addAttribute("signUpForm", signUpForm);
+            return "member/mypage/info";
+        }
+        String script = String.format("Swal.fire('로그인 바랍니다.','','error').then(" +
+                "function(){location.href='/member/login';})");
+        model.addAttribute("script",script);
+        return "script/sweet";
     }
 
     @PostMapping("/info/{mNo}")
@@ -169,6 +173,6 @@ public class MyPageController {
     // 베팅 내역
     public String myBet(@PathVariable Long mNo, Model model){
         model.addAttribute("pageTitle","마이페이지-베팅 내역");
-        return "";
+        return "member/mypage/mybet";
     }
 }
