@@ -4,7 +4,7 @@ import com.springboot.shootformoney.member.dto.MemberInfo;
 import com.springboot.shootformoney.member.entity.LoginData;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.MemberRepository;
-import com.springboot.shootformoney.member.utils.LevelRankUtil;
+import com.springboot.shootformoney.member.utils.LevelGradeUtil;
 import com.springboot.shootformoney.member.utils.MemberUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class MemberUpdateInterceptor implements HandlerInterceptor {
 
-    private final LevelRankUtil levelRankUtil;
+    private final LevelGradeUtil levelRankUtil;
     private final MemberUtil memberUtil;
     private final MemberRepository memberRepository;
 

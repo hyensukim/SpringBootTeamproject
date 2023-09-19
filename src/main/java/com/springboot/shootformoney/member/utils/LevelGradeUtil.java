@@ -15,7 +15,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class LevelRankUtil {
+public class LevelGradeUtil {
 
     private final BetRepository betRepository;
     private final MemberRepository memberRepository;
@@ -68,4 +68,7 @@ public class LevelRankUtil {
 
         return member;
     }
+
+    //랭킹 조회 기능
+
 }
