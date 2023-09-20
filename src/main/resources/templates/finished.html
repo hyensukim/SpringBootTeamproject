@@ -11,7 +11,7 @@
 </head>
 <body>
 <!-- 네비게이션 바(헤더) -->
-<nav th:replace="~{../outlines/nav :: navFragment}"></nav>
+<nav th:replace="~{/outlines/nav :: common}"></nav>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="index.html" th:href="@{#}"><img class = "logo" src = "../static/image/Logo.png" th:src="@{이미지 경로}" />Shoot for Money</a>
@@ -102,7 +102,7 @@
 </main>
 
 <!-- 푸터 -->
-<footer th:replace="~{../outlines/footer :: footerFragment}"></footer>
+<footer th:replace="~{/outlines/footer :: common}"></footer>
 <footer class="py-5 bg-dark">
     <div class="container">
         <p class="m-0 text-center text-white">2023 Ait - Betting Site Prj</p>

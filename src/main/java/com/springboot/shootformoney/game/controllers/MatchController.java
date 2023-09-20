@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /*
@@ -31,41 +33,56 @@ public class MatchController {
 
 
     @GetMapping("/unstarted/epl")
-    @ResponseBody
     public String unstartedPLMatches(Model model){
         model.addAttribute("pageTitle", "EPL 경기 목록");
-        List<Game> unstartedPLMatches = matchService.getUnstartedPLMatches();
-        model.addAttribute("EPLgames", unstartedPLMatches);
+        Map<Integer, List<Double>> ratios = new HashMap<>();
+        List<Game> games = matchService.getUnstartedPLMatches();
+        for(Game game : games){
+            ratios.put(game.getMatchId(), euroPoolService.calculateRatio(game.getMatchId()));
+        }
+        model.addAttribute("allGames", games);
+        model.addAttribute("ratios", ratios);
         return "prediction-EPL";
     }
 
     @GetMapping("/unstarted/laliga")
-    @ResponseBody
     public String unstartedPDMatches(Model model){
         model.addAttribute("pageTitle", "라리가 경기 목록");
-        List<Game> unstartedPDMatches = matchService.getUnstartedPDMatches();
-        model.addAttribute("PDgames", unstartedPDMatches);
+        Map<Integer, List<Double>> ratios = new HashMap<>();
+        List<Game> games = matchService.getUnstartedPDMatches();
+        for(Game game : games){
+            ratios.put(game.getMatchId(), euroPoolService.calculateRatio(game.getMatchId()));
+        }
+        model.addAttribute("allGames", games);
+        model.addAttribute("ratios", ratios);
         return "prediction-LaLiga";
     }
     @GetMapping("/unstarted/bundes")
-    @ResponseBody
     public String unstartedBL1Matches(Model model){
         model.addAttribute("pageTitle", "분데스 경기 목록");
-        List<Game> unstartedBL1Matches = matchService.getUnstartedBL1Matches();
-        model.addAttribute("Bundesgames", unstartedBL1Matches);
+        Map<Integer, List<Double>> ratios = new HashMap<>();
+        List<Game> games = matchService.getUnstartedBL1Matches();
+        for(Game game : games){
+            ratios.put(game.getMatchId(), euroPoolService.calculateRatio(game.getMatchId()));
+        }
+        model.addAttribute("allGames", games);
+        model.addAttribute("ratios", ratios);
         return "prediction-Bundesliga";
     }
     @GetMapping("/unstarted/entirelist")
-    @ResponseBody
     public String everyUnstartedMatches(Model model){
         model.addAttribute("pageTitle", "전체 경기 목록");
-        List<Game> allUnstartedMatches = matchService.getAllUnstartedMatches();
-        model.addAttribute("Allgames", allUnstartedMatches);
+        Map<Integer, List<Double>> ratios = new HashMap<>();
+        List<Game> games = matchService.getAllUnstartedMatches();
+        for(Game game : games){
+            ratios.put(game.getMatchId(), euroPoolService.calculateRatio(game.getMatchId()));
+        }
+        model.addAttribute("allGames", games);
+        model.addAttribute("ratios", ratios);
         return "prediction";
     }
 
     @GetMapping("/finished/epl")
-    @ResponseBody
     public String finishedPLMatches(Model model){
         model.addAttribute("pageTitle", "종료된 EPL 경기 목록");
         List<Game> finishedPLMatches = matchService.getFinishedPLMatches();
@@ -74,7 +91,6 @@ public class MatchController {
     }
 
     @GetMapping("/finished/laliga")
-    @ResponseBody
     public String finishedPDMatches(Model model){
         model.addAttribute("pageTitle", "종료된 라리가 경기 목록");
         List<Game> finishedPDMatches = matchService.getFinishedPDMatches();
@@ -83,7 +99,6 @@ public class MatchController {
     }
 
     @GetMapping("/finished/bundes")
-    @ResponseBody
     public String finishedBL1Matches(Model model){
         model.addAttribute("pageTitle", "종료된 분데스 경기 목록");
         List<Game> finishedBL1Matches = matchService.getFinishedBL1Matches();
@@ -92,7 +107,6 @@ public class MatchController {
     }
 
     @GetMapping("/finished/entirelist")
-    @ResponseBody
     public String everyFinishedMatches(Model model){
         model.addAttribute("pageTitle", "종료된 경기 목록");
         List<Game> allFinishedMatches = matchService.getAllFinishedMatches();
