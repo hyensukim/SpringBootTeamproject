@@ -46,14 +46,15 @@
             <td th:text="${postCounts[board.bNo]}"></td>
             <td th:text="${board.bIsFile}"></td>
             <td th:text="${board.bPageNo + ' / ' + board.getBUnitNo}"></td>
-<!--            <td th:text="${board.bUnitNo}"></td>-->
+            <!--            <td th:text="${board.bUnitNo}"></td>-->
             <!-- 게시판 생성, 수정일 고민... -->
-<!--            <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
-<!--            <td th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
+            <!--            <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
+            <!--            <td th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
 
             <!-- 게시판 삭제 -->
             <td>
-                <form th:action="@{'/admin/board/' + ${board.bNo}}" method="post" onsubmit="return confirm('게시판 삭제를 진행하면 모든 내용과 게시글, 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까?')">
+                <form th:action="@{'/admin/board/' + ${board.bNo}}" method="post"
+                      onsubmit="return confirm('게시판 삭제를 진행하면 모든 내용과 게시글, 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까?')">
                     <input type="hidden" name="_method" value="delete"/>
                     <button type="submit">삭제</button>
                 </form>
@@ -72,17 +73,17 @@
         <label for="bUnitNo">리스트별 게시글 개수:</label><br/>
         <input type="number" id="bUnitNo" name="bUnitNo"/><br/>
 
+        <input type='hidden' name='bIsFile' value='false'>
         <label for='fileCheck'>파일 첨부 여부</label>
-        <input type='checkbox' id='fileCheck' name='fileCheck'><br>
+        <input type='checkbox' id='fileCheck' name='bIsFile' value='true'><br>
 
         <button type="submit">생성</button>
     </form>
 
 </main>
 </html>
-
 <script>
-    document.getElementById('createBoardButton').addEventListener('click', function() {
+    document.getElementById('createBoardButton').addEventListener('click', function () {
         var form = document.getElementById('createBoardForm');
         if (form.style.display === 'none') {
             form.style.display = 'block';
@@ -90,4 +91,14 @@
             form.style.display = 'none';
         }
     });
+
+    function handleFormSubmit() {
+        var checkbox = document.getElementById('fileCheck');
+        var hiddenInput = document.getElementById('bIsFile');
+
+// Set the hidden input's value according to the checkbox state
+        hiddenInput.value = checkbox.checked ? 'true' : 'false';
+
+        return true; // Allow form submission
+    }
 </script>

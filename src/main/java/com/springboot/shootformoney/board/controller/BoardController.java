@@ -71,7 +71,7 @@ public class BoardController {
     }
 
     // 게시판 삭제
-    @GetMapping("/{bNo}/delete")
+    @DeleteMapping("/{bNo}")
     public String deleteBoard(@PathVariable Long bNo) {
         boardService.deleteBoard(bNo);
         return "redirect:/admin/board/boardList";
