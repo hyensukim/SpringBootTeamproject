@@ -1,6 +1,7 @@
 package com.springboot.shootformoney.member.controllers;
 
-import com.springboot.shootformoney.member.dto.SearchInfo;
+import com.springboot.shootformoney.bet.entity.Bet;
+import com.springboot.shootformoney.member.dto.PageInfo;
 import com.springboot.shootformoney.member.dto.MemberInfo;
 import com.springboot.shootformoney.member.dto.SignUpForm;
 import com.springboot.shootformoney.member.services.MemberDeleteService;
@@ -147,22 +148,38 @@ public class MyPageController {
 
     // 마이페이지 - 작성한 게시글
     @GetMapping("/mypost/{mNo}")
-    public String myPost(@PathVariable Long mNo, @ModelAttribute SearchInfo boardSearch
+    public String myPost(@PathVariable Long mNo, @ModelAttribute PageInfo pageInfo
             , Model model){
         model.addAttribute("pageTitle","마이페이지-작성한 게시글");
         try {
-            Page<Post> posts = memberListService.getsPostWithPages(boardSearch, mNo);
+
+            //페이징 처리된 객체.
+            Page<Post> posts = memberListService.getsPostWithPages(pageInfo, mNo);
+            // 실제 페이지 안에 담길 내용.
             List<Post> postList = posts.getContent();
 
-            int nowPage = posts.getPageable().getPageNumber() + 1;
-            int startPage = Math.max(nowPage - 9, 1);
-            int endPage = Math.min(nowPage + 10, posts.getTotalPages());
+            // 페이징 이동하는 기능 구현.
+            boolean hasPrev = posts.hasPrevious();
+            boolean hasNext = posts.hasNext();
+
+            // getPageable() : 페이지 처리를 위한 정보
+            /*
+            pageNumber : 0(0번째 페이지(1번 의미)의 페이지 선택)
+            pageSize : 15(하나의 페이지에 담길 갯수)
+            navSize : 10개 용량
+            total page : 전체 페이지 갯수
+             */
+            int nowPage = posts.getPageable().getPageNumber() + 1; // 1번 페이지를 의미.
+            int startPage = (nowPage-1) / 10 * 10 + 1;
+            int endPage = Math.min(startPage + 10 - 1, posts.getTotalPages());
 
             model.addAttribute("postList", postList);
             model.addAttribute("nowPage", nowPage);
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
-        }catch(Exception e){
+            model.addAttribute("hasPrev",hasPrev);
+            model.addAttribute("hasNext",hasNext);
+        }catch(NullPointerException e){
             String script = String.format("Swal.fire('%s','','error')" +
                     ".then(function(){history.back();})",e.getMessage());
         }
@@ -172,8 +189,26 @@ public class MyPageController {
 
     @GetMapping("/mybet/{mNo}")
     // 베팅 내역
-    public String myBet(@PathVariable Long mNo, Model model){
+    public String myBet(@PathVariable Long mNo, @ModelAttribute PageInfo pageInfo
+            , Model model){
         model.addAttribute("pageTitle","마이페이지-베팅 내역");
+        try {
+            Page<Bet> bets = memberListService.getsBetWithPages(pageInfo,mNo);
+            List<Bet> betList = bets.getContent();
+
+            int nowPage = bets.getPageable().getPageNumber() + 1;
+            int startPage = (nowPage-1) / 10 * 10 + 1;
+            int endPage = Math.min(nowPage + 10, bets.getTotalPages());
+
+            model.addAttribute("postList", betList);
+            model.addAttribute("nowPage", nowPage);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+        }catch(NullPointerException e){
+            String script = String.format("Swal.fire('%s','','error')" +
+                    ".then(function(){history.back();})",e.getMessage());
+        }
+
         return "member/mypage/mybet";
     }
 }

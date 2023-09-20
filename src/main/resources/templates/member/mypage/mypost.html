@@ -11,15 +11,15 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>글번호</th>
+                            <th></th>
                             <th>제목</th>
                             <th>작성일</th>
                             <th>조회수</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="post : ${postList}" th:object="${post}">
-                            <td class="list_num" th:text="*{pNo}"></td>
+                        <tr th:each="post,status : ${postList}" th:object="${post}">
+                            <td class="list_num" th:text="${status.index+1  }"></td>
                             <td class="list_subject">
                                 <a th:href="@{/posts/{pNo}(pNo = *{pNo})}">
                                     [[*{pTitle}]]
@@ -32,6 +32,7 @@
                 </table>
 
                 <th:block class="myPostPg" th:each="page : ${#numbers.sequence(startPage, endPage)}" >
+                    <li></li>
                     <li class='page' th:classappend="on">
                         <a th:if="${page != nowPage}"
                            th:href="@{/member/mypage/mypost/{mNo}?page={page}(mNo=*{mNo}, page=${page})}"
