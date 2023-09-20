@@ -24,29 +24,29 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    // 게시판 저장
-    @Transactional
-    public Long saveBoardInfo(Board board) {
-        Board existingBoard = boardRepository.findBybName(board.getBName());
-        if (existingBoard != null) {
-            throw new IllegalArgumentException("이미 존재하는 게시판입니다.");
-        }
-
-        boardRepository.save(board);
-        return board.getBNo();
-    }
+//    // 게시판 저장
+//    @Transactional
+//    public Long saveBoardInfo(Board board) {
+//        Board existingBoard = boardRepository.findBybName(board.getBName());
+//        if (existingBoard != null) {
+//            throw new IllegalArgumentException("이미 존재하는 게시판입니다.");
+//        }
+//
+//        boardRepository.save(board);
+//        return board.getBNo();
+//    }
     
     // 게시판 전체 조회
-    public List<BoardDto> getAllBoards() {
-        List<Board> boards = boardRepository.findAll();
-
-        // Entity 리스트를 Dto 리스트로 변환
-        List<BoardDto> boardDtos = boards.stream()
-                .map(board -> BoardDto.fromEntity(board))
-                .collect(Collectors.toList());
-
-        return boardDtos;
-    }
+//    public List<BoardDto> getAllBoards() {
+//        List<Board> boards = boardRepository.findAll();
+//
+//        // Entity 리스트를 Dto 리스트로 변환
+//        List<BoardDto> boardDtos = boards.stream()
+//                .map(board -> BoardDto.fromEntity(board))
+//                .collect(Collectors.toList());
+//
+//        return boardDtos;
+//    }
 
     // 게시판 수정 - 이름, 파일 첨부 여부, 게시판 게시글 수, 게시판 페이지 수
     @Transactional
@@ -95,6 +95,47 @@ public class BoardService {
 //        Page<Board> boards = boardRepository.findByBNo(bNo, pageable);
 //
 //        return boards.map(BoardDto::fromEntity);
+//    }
+
+    public List<Board> getAllBoards() {
+        return boardRepository.findAll();
+    }
+
+    public List<Board> searchBoards(Long bNo, String bName, Boolean bIsFile) {
+        return boardRepository.search(bNo, bName, bIsFile);
+    }
+
+    public int getPostCountByBoardId(Long bNo) {
+        return boardRepository.getPostCountByBoardId(bNo);
+    }
+
+    public Long saveNewboardInfo(Board newBoard) throws IllegalArgumentException {
+        // 게시판 이름 중복 체크
+        Optional<Board> existingBoard = boardRepository.findBybName(newBoard.getBName());
+        if (existingBoard.isPresent()) {
+            throw new IllegalArgumentException("게시판 이름이 이미 존재합니다.");
+        }
+
+        // DB에 게시판 정보 저장
+        Board savedBoard = boardRepository.save(newBoard);
+
+        // 저장된 게시판의 ID 반환
+        return savedBoard.getBNo();
+    }
+
+
+//    public Long saveNewboardInfo(Board newBoard) throws IllegalArgumentException {
+//        // 게시판 이름 중복 체크
+//        Board existingBoard = boardRepository.findBybName(newBoard.getBName());
+//        if (existingBoard != null) {
+//            throw new IllegalArgumentException("게시판 이름이 이미 존재합니다.");
+//        }
+//
+//        // DB에 게시판 정보 저장
+//        Board savedBoard = boardRepository.save(newBoard);
+//
+//        // 저장된 게시판의 ID 반환
+//        return savedBoard.getBNo();
 //    }
 
 }

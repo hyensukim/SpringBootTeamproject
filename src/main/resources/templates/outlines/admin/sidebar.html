@@ -12,15 +12,16 @@
 <body>
 
 <!-- Sidebar -->
-<div class="bg-light border-right" id="sidebar-wrapper" th:fragment="sidebarFragment">
-    <div class="sidebar-heading">Admin Panel </div>
-    <div class="list-group list-group-flush">
-        <a th:href="@{/admin/config}" class="list-group-item list-group-item-action bg-light">사이트 설정</a>
-        <a th:href="@{/admin/member/memberList/all}" class="list-group-item list-group-item-action bg-light">회원 관리</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">게시판 관리</a>
-        <a th:href="@{/admin/post/postList/all}" class="list-group-item list-group-item-action bg-light">게시글 관리</a>
+    <div class="bg-light border-right" id="sidebar-wrapper" th:fragment="sidebarFragment">
+        <div class="sidebar-heading">Admin Panel</div>
+        <div class="list-group list-group-flush">
+            <a th:href="@{/admin/config}" class="list-group-item list-group-item-action bg-light">사이트 설정</a>
+            <a th:href="@{/admin/member/memberList/all}" class="list-group-item list-group-item-action bg-light">회원 관리</a>
+            <a th:href="@{/admin/board/boardList}" class="list-group-item list-group-item-action bg-light">게시판 관리</a>
+            <a th:href="@{/admin/post/postList/all}" class="list-group-item list-group-item-action bg-light">게시글 관리</a>
+        </div>
     </div>
-</div>
+
 
 <!-- Bootstrap JS and jQuery -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -29,7 +30,7 @@
 <!-- Optional JavaScript for sidebar toggle -->
 <script type='text/javascript'>
     $(document).ready(function () {
-        $("#menu-toggle").click(function(e) {
+        $("#menu-toggle").click(function (e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });

@@ -5,7 +5,7 @@
 
 <main layout:fragment="common">
 
-    <h2>게시판 조회</h2>
+    <h2>게시글 관리</h2>
 <!--    <a href="/admin/post/postList/">전체게시판</a>-->
 
 <!--    &lt;!&ndash; 각각의 게시판 별로 조회 &ndash;&gt;-->
@@ -15,11 +15,11 @@
 
     <form th:action="@{/admin/post/postList/search}" method="get">
         <!-- Search Category -->
-        <select id="dataPerPage">
-            <option value="10">10개씩보기</option>
-            <option value="15">15개씩보기</option>
-            <option value="20">20개씩보기</option>
-        </select>
+<!--        <select id="dataPerPage">-->
+<!--            <option value="10">10개씩보기</option>-->
+<!--            <option value="15">15개씩보기</option>-->
+<!--            <option value="20">20개씩보기</option>-->
+<!--        </select>-->
 
         <select name="category">
             <option value="pNo">게시글 번호</option>
