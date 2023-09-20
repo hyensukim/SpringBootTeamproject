@@ -80,7 +80,7 @@
             <!-- 경기 점수 -->
             <tr class="score">
                 <td colspan="2" th:text="${}">뮌헨</td>
-                <td colspan="3">0 : 0</td>
+                <td colspan="3"><span th:text="${value ?: 0}">0</span> : <span th:text="${value ?: 0}">0</span></td>
                 <td colspan="2" th:text="${}">아우크스부르크</td>
             </tr>
 
