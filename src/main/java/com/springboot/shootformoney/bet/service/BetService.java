@@ -46,13 +46,13 @@ public class BetService {
 
     //고객이 배팅하면, Bet 테이블에 기록을 저장하는 메서드
     @Transactional
-    public Bet bet(Long gNo, String expect, Integer euro) {
+    public Bet bet(Long gNo, String expect, Integer betAmount) {
         Game game = gameRepository.findById(gNo)
                 .orElseThrow(() -> new RuntimeException("해당 경기 정보가 없습니다.")); //gNo로 경기 데이터를 찾아 온다.
         Bet bet = new Bet();
         bet.setGame(game);
         bet.setExpect(Result.valueOf(expect));
-        bet.setBtMoney(euro);
+        bet.setBtMoney(betAmount);
         bet.setBtTime(LocalDateTime.now());
         bet.setMember(memberUtil.getEntity());
         //배팅 정보 저장 후 가져옴.

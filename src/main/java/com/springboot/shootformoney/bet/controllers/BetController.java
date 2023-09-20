@@ -5,9 +5,11 @@ import com.springboot.shootformoney.bet.entity.Bet;
 import com.springboot.shootformoney.bet.service.BetService;
 import com.springboot.shootformoney.bet.service.EuroPoolService;
 import com.springboot.shootformoney.bet.service.EuroService;
+import com.springboot.shootformoney.game.service.MatchService;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.MemberRepository;
 import com.springboot.shootformoney.member.utils.MemberUtil;
+import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,21 +21,15 @@ import org.springframework.web.bind.annotation.*;
 //import com.springboot.shootformoney.member.dto.MemberInfo;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/bet")
 public class BetController {
     private final BetService betService;
     private final EuroService euroService;
     private final EuroPoolService euroPoolService;
     private final MemberUtil memberUtil;
+    private final MatchService matchService;
 
-    @Autowired
-    public BetController(BetService betService, EuroService euroService,
-            EuroPoolService euroPoolService, MemberUtil memberUtil){
-        this.betService = betService;
-        this.euroService = euroService;
-        this.euroPoolService = euroPoolService;
-        this.memberUtil = memberUtil;
-    }
 
     //배팅하는 메서드. Bet 엔티티에 배팅 정보를 추가하고, 보유금에서 배팅금만큼을 감산한다.
     //마지막으로 배팅한 경기의 EuroPool에 해당 예측에 해당하는 배팅금 Pool 값을 증가시킨다.
@@ -41,15 +37,17 @@ public class BetController {
     @Transactional
     public String placeBet(BetDto betDto, Model model) {
         model.addAttribute("pageTitle", "배팅 등록하기");
-        //보유금 변수 프론트에 보냄.
-        Integer totalEuro = euroService.getTotalEuro(memberUtil.getMember().getMNo());
-        model.addAttribute("totalEuro", totalEuro);
-        // 배팅 정보 저장
-        Bet bet = betService.bet(betDto.getGNo(), betDto.getExpect().toString(), betDto.getBtMoney());
-        // EuroPool에 배팅금 누적
-        euroPoolService.collectEuro(bet);
         // 유저 정보 가져오기
         Long mNo = memberUtil.getMember().getMNo();
+        Integer totalEuro = memberUtil.getMember().getEuro().getValue();
+        model.addAttribute("totalEuro", totalEuro);
+        betDto.setGNo(matchService.getGameInfo(betDto.getMatchId())
+                .orElseThrow().getGNo());
+        betDto.setMNo(mNo);
+        // 배팅 정보 저장
+        Bet bet = betService.bet(betDto.getGNo(), betDto.getExpect(), betDto.getBtMoney());
+        // EuroPool에 배팅금 누적
+        euroPoolService.collectEuro(bet);
         // 유로 보유량 감소 처리
         euroService.decreaseEuro(mNo, betDto.getBtMoney());
 

@@ -74,7 +74,7 @@
             <!-- 경기 점수 -->
             <tr class="score3" th:each="# : ${#}">
                 <td colspan="2" th:text="${}">뮌헨</td>
-                <td colspan="2"><span th:text="${}">0</span> : <span th:text="${}">0</span></td>
+                <td colspan="3"><span th:text="${game.getGHomeScore() ?: 0}">0</span> : <span th:text="${game.getGAwayScore() ?: 0}">0</span></td>
                 <td colspan="2" th:text="${}">아우크스부르크</td>
             </tr>
             </tbody>

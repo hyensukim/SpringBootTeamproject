@@ -1,8 +1,11 @@
 package com.springboot.shootformoney.game.controllers;
 
 import com.springboot.shootformoney.bet.service.EuroPoolService;
+import com.springboot.shootformoney.bet.service.EuroService;
 import com.springboot.shootformoney.game.entity.Game;
 import com.springboot.shootformoney.game.service.MatchService;
+import com.springboot.shootformoney.member.utils.MemberUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,16 +21,15 @@ import java.util.Optional;
 */
 @Controller
 @RequestMapping("/list")
+@RequiredArgsConstructor
 public class MatchController {
 
     private final MatchService matchService;
     private final EuroPoolService euroPoolService;
+    private final EuroService euroService;
+    private final MemberUtil memberUtil;
 
-    @Autowired
-    public MatchController(MatchService matchService, EuroPoolService euroPoolService){
-        this.matchService = matchService;
-        this.euroPoolService = euroPoolService;
-    }
+
     @GetMapping("/unstarted/epl")
     @ResponseBody
     public String unstartedPLMatches(Model model){
@@ -101,14 +103,14 @@ public class MatchController {
     @GetMapping("/{matchId}")
     public String getGameByMatchId(@PathVariable Integer matchId, Model model) {
         model.addAttribute("pageTitle", "경기 상세 정보");
+        model.addAttribute("matchId", matchId);
         Game game = matchService.getGameInfo(matchId)
                 .orElseThrow(() -> new RuntimeException("잘못된 경기 정보 요청입니다."));
-        List<Double> ratios = euroPoolService.calculateRatio(matchId);
         model.addAttribute("game", game);
-        model.addAttribute("winRatio", ratios.get(0));
-        model.addAttribute("drawRatio", ratios.get(1));
-        model.addAttribute("loseRatio", ratios.get(2));
-
-        return "gameinfo";
+        List<Double> ratios = euroPoolService.calculateRatio(matchId);
+        model.addAttribute("ratios", ratios);
+        Integer totalEuro = euroService.getTotalEuro(memberUtil.getMember().getMNo());
+        model.addAttribute("totalEuro", totalEuro);
+        return "game-info";
     }
 }

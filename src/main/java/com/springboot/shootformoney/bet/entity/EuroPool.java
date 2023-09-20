@@ -25,12 +25,12 @@ public class EuroPool {
     @JoinColumn(name = "g_no")
     private Game game;
 
-    @Column(name = "win_euro", nullable = false, columnDefinition = "int default 1")
-    private Integer winEuro;
+    @Column(name = "win_euro", nullable = false)
+    private Integer winEuro = 1;
 
-    @Column(name = "draw_euro", nullable = false, columnDefinition = "int default 1")
-    private Integer drawEuro;
+    @Column(name = "draw_euro", nullable = false)
+    private Integer drawEuro = 1;
 
-    @Column(name = "lose_euro", nullable = false, columnDefinition = "int default 1")
-    private Integer loseEuro;
+    @Column(name = "lose_euro", nullable = false)
+    private Integer loseEuro = 1;
 }

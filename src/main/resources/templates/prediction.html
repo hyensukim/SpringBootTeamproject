@@ -49,14 +49,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="# : ${#}">
-                <td th:text="${}">17</td>
-                <td th:text="${}">09.18(월) 23:00시</td>
-                <td th:text="${}">BundesLiga</td>
-                <td th:text="${}">바이에른</td>
-                <td th:text="${}">아우크스부르크</td>
+            <tr th:each="game, stat : ${allGames}">
+                <td th:text="${game.gNo}"></td>
+                <td th:text="${game.gStartTime}"></td>
+                <td th:text="${game.gLeague}"></td>
+                <td th:text="${game.gHomeTeam}"></td>
+                <td th:text="${game.gAwayTeam}"></td>
                 <td>
-                    <a href="test.html" th:href="@{경기 상세 링크}">
+                    <a th:href="@{/list/__${game.getMatchId()}__}">
                         <div class="formBox">
                             <div class="btnChkBox v2" th:each=" : ${}">
                                 <button type="button" class="betBtn" th:title="${}">
