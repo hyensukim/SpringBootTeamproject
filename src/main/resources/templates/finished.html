@@ -32,7 +32,7 @@
 
 <main>
     <header class="prediction-hd">
-        <h2 class="fw-bolder mb-1">Bundesliga 승부 예측</h2>
+        <h2 class="fw-bolder mb-1">전체 경기 결과</h2>
     </header>
 
     <div class = "scroll3">
@@ -45,7 +45,6 @@
                 <th>홈팀</th>
                 <th>원정팀</th>
                 <th>배당률</th>
-                <th>배팅</th>
             </tr>
             </thead>
             <tbody>
@@ -56,27 +55,27 @@
                 <td th:text="${}">바이에른</td>
                 <td th:text="${}">아우크스부르크</td>
                 <td>
-                    <a href="test.html" th:href="@{경기 상세 링크}">
-                        <div class="formBox">
-                            <div class="btnChkBox v2" th:each=" : ${}">
-                                <button type="button" class="betBtn" th:title="${}">
-                                    <span>승</span><br/><span class="db">2.50</span>
-                                </button>
-                                <button type="button" class="betBtn" th:title="${}">
-                                    <span>무</span><br/><span class="db">3.20</span>
-                                </button>
-                                <button type="button" class="betBtn" th:title="${}">
-                                    <span>패</span><br/><span class="db">2.36</span>
-                                </button>
-                            </div>
+                    <div class="formBox">
+                        <div class="btnChkBox v2" th:each=" : ${}">
+                            <button type="button" class="betBtn" th:title="${}">
+                                <span>승</span><br/><span class="db">2.50</span>
+                            </button>
+                            <button type="button" class="betBtn" th:title="${}">
+                                <span>무</span><br/><span class="db">3.20</span>
+                            </button>
+                            <button type="button" class="betBtn" th:title="${}">
+                                <span>패</span><br/><span class="db">2.36</span>
+                            </button>
                         </div>
-                    </a>
+                    </div>
                 </td>
-                <td>
-                    <a href="game-info.html" th:href="@{경기 상세 링크}">
-                        <button type="button" class="betBtn">배팅</button>
-                    </a>
-                </td>
+            </tr>
+
+            <!-- 경기 점수 -->
+            <tr class="score3" th:each="# : ${#}">
+                <td colspan="2" th:text="${}">뮌헨</td>
+                <td colspan="2"><span th:text="${}">0</span> : <span th:text="${}">0</span></td>
+                <td colspan="2" th:text="${}">아우크스부르크</td>
             </tr>
             </tbody>
         </table>
@@ -91,9 +90,9 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <ul class="list-unstyled mb-0">
-                            <li><a href="prediction-EPL.html" th:href="@{#}">EPL</a></li>
-                            <li><a href="prediction-LaLiga.html" th:href="@{#}">LaLiga</a></li>
-                            <li><a href="prediction-Bundesliga.html" th:href="@{#}">Bundesliga</a></li>
+                            <li><a href="finished-EPL.html" th:href="@{#}">EPL</a></li>
+                            <li><a href="finished-LaLiga.html" th:href="@{#}">LaLiga</a></li>
+                            <li><a href="finished-Bundesliga.html" th:href="@{#}">Bundesliga</a></li>
                         </ul>
                     </div>
                 </div>

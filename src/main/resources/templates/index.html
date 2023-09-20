@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{../../static/css/styles.css}"
-          href="../../static/css/styles.css" rel="stylesheet">
+          href="../static/css/styles.css" rel="stylesheet">
 
     <title>Title</title>
 </head>
@@ -14,7 +14,7 @@
 <nav th:replace="~{../outlines/nav :: navFragment}"></nav>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#!">Shoot for Money</a>
+        <a class="navbar-brand" href="index.html" th:href="@{#}"><img class = "logo" src = "../static/image/Logo.png" th:src="@{이미지 경로}" />Shoot for Money</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
         </button>
@@ -35,19 +35,6 @@
         <img src="" alt="banner img">
     </div>
 
-<!--    <div class = "content">-->
-<!--        <div class="recentgame" th:each="# : ${#}">-->
-<!--            <p th:text="${#}"></p>-->
-<!--            <p th:text="${#}"></p>-->
-<!--        </div>-->
-
-<!--        <div class="ranking" th:each="# : ${#}">-->
-<!--            <p th:text="${entity.rank}"></p>-->
-<!--            <p th:text="${entity.name}"></p>-->
-<!--            &lt;!&ndash; Add more data cells as needed &ndash;&gt;-->
-<!--        </div>-->
-<!--    </div>-->
-
     <div class = "scroll2">
         <table class = "recentgame">
             <thead>
@@ -57,7 +44,8 @@
                     <th>대회</th>
                     <th>홈팀</th>
                     <th>원정팀</th>
-                    <th>배당률 선택</th>
+                    <th>배당률</th>
+                    <th>배팅</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,31 +57,24 @@
                     <td th:text="${}">아우크스부르크</td>
                     <td>
                         <div class="formBox">
+                            <!-- 변수 빈칸 버릴거 버리고(배당률 부분 제외) 그냥 기능없는 버튼으로 만들어도됨 사실 뭘 뺄지 잘 모르겠음 쏘리.. -->
                             <div class="btnChkBox v2" th:each=" : ${}">
-                                <button type="button" class="betBtn" th:title="${}" th:data-selkey="${}">
-                                    <span th:text="${}">승</span><br/><span class="db" th:text="${}">2.50</span>
+                                <button type="button" class="betBtn" th:title="${}">
+                                    <span>승</span><br/><span class="db" th:text="${}">2.50</span>
                                 </button>
-                                <button type="button" class="betBtn" title="" data-selkey="2">
-                                    <span th:text="${}">무</span><br/><span class="db" th:text="${}">3.20</span>
+                                <button type="button" class="betBtn" th:title="${}">
+                                    <span>무</span><br/><span class="db" th:text="${}">3.20</span>
                                 </button>
-                                <button type="button" class="betBtn" title="" data-selkey="3">
-                                    <span th:text="${}">패</span><br/><span class="db" th:text="${}">2.36</span>
+                                <button type="button" class="betBtn" th:title="${}">
+                                    <span>패</span><br/><span class="db" th:text="${}">2.36</span>
                                 </button>
-
-                                <!-- 위에꺼 안되면 이거 -->
-<!--                                <form method="post" th:action="@{/betting}">-->
-<!--                                    &lt;!&ndash; Include match id and option title as hidden fields in the form &ndash;&gt;-->
-<!--                                    <input type="hidden" name="matchId" th:value="${match.id}" />-->
-<!--                                    <input type="hidden" name="optionTitle" th:value="${option.title}" />-->
-
-<!--                                    &lt;!&ndash; The button submits the form when clicked &ndash;&gt;-->
-<!--                                    <button type="submit">-->
-<!--                                        &lt;!&ndash; Set button text using BetOption properties &ndash;&gt;-->
-<!--                                        <span th:text="${option.title}"></span><span><br/><span th:text="${option.odds}"/></span>-->
-<!--                                    </button>-->
-<!--                                </form>-->
                             </div>
                         </div>
+                    </td>
+                    <td>
+                        <a href="test.html" th:href="@{경기 상세 링크}">
+                            <button type="button" class="betBtn">배팅</button>
+                        </a>
                     </td>
                 </tr>
             </tbody>
