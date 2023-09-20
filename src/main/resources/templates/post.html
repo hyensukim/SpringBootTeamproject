@@ -3,8 +3,8 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="utf-8">
-    <link th:href="@{../../static/css/styles.css}"
-          href="../../static/css/styles.css" rel="stylesheet">
+    <link th:href="@{../static/css/styles.css}"
+          href="../static/css/styles.css" rel="stylesheet">
     <link th:href="@{../static/css/css.css}"
           href="../static/css/css.css" rel="stylesheet">
     <title>게시판 리스트</title>
@@ -16,7 +16,7 @@
 <!-- 네비게이션 바 임시 -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#!">Shoot for Money</a>
+        <a class="navbar-brand" href="#!"><img class = "logo" src = "../static/image/Logo.png" th:src="@{이미지 경로}" />Shoot for Money</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
         </button>

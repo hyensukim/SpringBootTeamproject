@@ -1269,8 +1269,10 @@ progress {
     width: 25%;
   }
   .col-lg-4 {
+    float: right;
     flex: 0 0 auto;
-    width: 33.33333333%;
+    width: 20%;
+    margin-right: 2%;
   }
   .col-lg-5 {
     flex: 0 0 auto;
@@ -3742,6 +3744,7 @@ textarea.form-control-lg {
   align-items: center;
   justify-content: space-between;
   padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
+  height: 100px;
 }
 .navbar > .container,
 .navbar > .container-fluid,
@@ -3754,18 +3757,21 @@ textarea.form-control-lg {
   flex-wrap: inherit;
   align-items: center;
   justify-content: space-between;
+  height: 90%;
 }
 .navbar-brand {
   padding-top: var(--bs-navbar-brand-padding-y);
   padding-bottom: var(--bs-navbar-brand-padding-y);
   margin-right: var(--bs-navbar-brand-margin-end);
-  font-size: var(--bs-navbar-brand-font-size);
+  /*font-size: var(--bs-navbar-brand-font-size);*/
   color: var(--bs-navbar-brand-color);
   text-decoration: none;
   white-space: nowrap;
+  font-size: x-large;
 }
 .navbar-brand:hover, .navbar-brand:focus {
   color: var(--bs-navbar-brand-hover-color);
+  font-size: x-large;
 }
 
 .navbar-nav {
@@ -3804,6 +3810,7 @@ textarea.form-control-lg {
   flex-basis: 100%;
   flex-grow: 1;
   align-items: center;
+  font-size: large;
 }
 
 .navbar-toggler {
@@ -7484,6 +7491,8 @@ textarea.form-control-lg {
 
 .m-0 {
   margin: 0 !important;
+  text-align: center;
+  font-size: medium;
 }
 
 .m-1 {
@@ -7776,6 +7785,7 @@ textarea.form-control-lg {
   padding-bottom: 3rem !important;
   bottom:0;
   width: 100%;
+  height: 10%;
   position: fixed;
   z-index: 1;
 }
@@ -10991,4 +11001,71 @@ main{
   width: 55%;
   height: 500px;
   overflow:auto;
+}
+
+.scroll3 {
+  margin-left: 2%;
+  float: left;
+  width: 70%;
+  height: 500px;
+  overflow:auto;
+}
+
+.logo {
+  width: 100px;
+  height: 56px;
+}
+
+.nav-item {
+  margin-right: 10px;
+}
+
+.recentgame2 {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recentgame2 th, td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.recentgame2 th {
+  background-color: #4d5154;
+  color: white;
+}
+
+.recentgame2 tr:hover {
+  background-color:#f5f5f5;
+}
+
+.prediction-hd {
+  margin-top: 20px;
+  margin-bottom: 25px;
+  margin-left: 2%;
+}
+
+.score td {
+  height: 120px;
+  background-color: #4d5154;
+  color: white;
+  text-align: center;
+}
+
+.score2 td {
+  height: 120px;
+  text-align: center;
+}
+
+.score3 td {
+  background-color: #4d5154;
+  color: white;
+  text-align: center;
+}
+
+.betBtn2 {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
 }
