@@ -5,7 +5,11 @@ import com.springboot.shootformoney.member.enum_.Grade;
 import com.springboot.shootformoney.member.enum_.Role;
 import com.springboot.shootformoney.post.Post;
 import com.springboot.shootformoney.post.PostRepository;
+import com.springboot.shootformoney.post.repository.PostRepositoryInterface;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,11 +20,14 @@ import java.util.List;
 public class PostFindService {
 
     private PostRepository postRepository;
+    private PostRepositoryInterface postRepositoryInterface;
 
     @Autowired
-    public PostFindService(PostRepository postRepository) {
+    public PostFindService(PostRepository postRepository, PostRepositoryInterface postRepositoryInterface) {
         this.postRepository = postRepository;
+        this.postRepositoryInterface = postRepositoryInterface;
     }
+
 
     // 전체 post 조회
     public List<Post> findAllposts() {
@@ -61,6 +68,10 @@ public class PostFindService {
             default:
                 throw new IllegalArgumentException("Invalid category: " + category);
         }
+    }
+
+    public Page<Post> findPosts(Pageable pageable) {
+        return postRepositoryInterface.findAll(pageable);
     }
 
 }
