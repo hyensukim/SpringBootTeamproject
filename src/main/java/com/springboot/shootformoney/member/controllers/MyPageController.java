@@ -196,9 +196,9 @@ public class MyPageController {
             Page<Bet> bets = memberListService.getsBetWithPages(pageInfo,mNo);
             List<Bet> betList = bets.getContent();
 
-            int nowPage = bets.getPageable().getPageNumber() + 1;
-            int startPage = (nowPage-1) / 10 * 10 + 1;
-            int endPage = Math.min(nowPage + 10, bets.getTotalPages());
+            int nowPage = (bets.getPageable().getPageNumber()) + 1;
+            int startPage = ((nowPage-1) / 10) * 10 + 1;
+            int endPage = Math.min(startPage + 10 - 1, bets.getTotalPages());
 
             model.addAttribute("postList", betList);
             model.addAttribute("nowPage", nowPage);

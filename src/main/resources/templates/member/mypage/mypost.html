@@ -30,17 +30,28 @@
                         </tr>
                     </tbody>
                 </table>
-
-                <th:block class="myPostPg" th:each="page : ${#numbers.sequence(startPage, endPage)}" >
-                    <li></li>
-                    <li class='page' th:classappend="on">
-                        <a th:if="${page != nowPage}"
-                           th:href="@{/member/mypage/mypost/{mNo}?page={page}(mNo=*{mNo}, page=${page})}"
-                           th:text="${page}">
+<!--                xi-angle-right-min-->
+                <ul class="pagination">
+                    <li class="page-prev" th:classappend="${hasPrev ? '' : 'disabled'}">
+                        <a th:href="@{/member/mypage/mypost/{mNo}?page={page}(mNo=${mNo}, page=${nowPage-1})}">
+                            <i class="xi-angle-left-min"></i>
                         </a>
-                        <strong th:if="${page == nowPage}" th:text="${page}"></strong>
                     </li>
-                </th:block>
+                    <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}" >
+                        <li th:if="${item > 0}" class='page' th:classappend="on">
+                            <a th:if="${item != nowPage && item > 0}"
+                               th:href="@{/member/mypage/mypost/{mNo}?page={page}(mNo=${mNo}, page=${item})}"
+                               th:text="${item}">
+                            </a>
+                            <strong th:if="${item == nowPage}" th:text="${item}"></strong>
+                        </li>
+                    </th:block>
+                    <li class="page-next" th:classappend="${hasNext ? '' : 'disabled'}">
+                        <a th:href="@{/member/mypage/mypost/{mNo}?page={page}(mNo=${mNo}, page=${nowPage+1})}">
+                            <i class="xi-angle-right-min"></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </form>
     </div>

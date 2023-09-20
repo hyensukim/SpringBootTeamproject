@@ -25,13 +25,13 @@
                 </tbody>
             </table>
 
-            <th:block class="myBetPg" th:each="page : ${#numbers.sequence(startPage, endPage)}" >
-                <li class='page' th:classappend="on">
-                    <a th:if="${page != nowPage}"
-                       th:href="@{/member/mypage/mybet/{mNo}?page={page}(mNo=*{mNo}, page=${page})}"
-                       th:text="${page}">
+            <th:block class="myBetPg" th:each="item : ${#numbers.sequence(startPage, endPage)}" >
+                <li th:if="${item > 0}" class='page' th:classappend="on">
+                    <a th:if="${item != nowPage}"
+                       th:href="@{/member/mypage/mypost/{mNo}?page={page}(mNo=${mNo}, page=${item})}"
+                       th:text="${item}">
                     </a>
-                    <strong th:if="${page == nowPage}" th:text="${page}"></strong>
+                    <strong th:if="${item == nowPage}" th:text="${item}"></strong>
                 </li>
             </th:block>
         </div>
