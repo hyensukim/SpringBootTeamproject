@@ -8,6 +8,8 @@ import com.springboot.shootformoney.board.repository.BoardRepository;
 import com.springboot.shootformoney.post.Post;
 import com.springboot.shootformoney.post.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,15 +29,39 @@ public class PostManagementController {
     private PostService postService;
     @Autowired
     private BoardRepository boardRepository;
-//
-//    // 모든 게시물 조회
+
+
+//     모든 게시물 조회
     @GetMapping("/postList/all")
     public String getAllPosts(Model model) {
         List<Post> posts = postService.findAllPosts();
+
+//        int startPage = 1;  // 시작 페이지
+//        int endPage = 10;  // 끝 페이지
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+
         model.addAttribute("posts", posts);
         model.addAttribute("pageTitle", "게시물 관리");
         return "admin/postManagement";
     }
+
+//    @GetMapping("/postList/all")
+//    public String getAllPosts(@RequestParam(name = "page", defaultValue = "1") int page,
+//                              @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
+//                              Model model) {
+//        // 데이터베이스에서 게시글 목록을 가져옵니다.
+//        Page<Post> postPage = postFindService.findPosts(PageRequest.of(page - 1, pageSize));
+//
+//        // 총 게시글 수와 페이지당 게시글 수를 모델에 추가합니다.
+//        long totalCnt = postPage.getTotalElements();
+//        model.addAttribute("posts", postPage.getContent());
+//        model.addAttribute("totalCnt", totalCnt);
+//        model.addAttribute("pageSize", pageSize);
+//        model.addAttribute("currentPage", page);
+//        model.addAttribute("pageTitle", "게시글 관리");
+//        return "admin/postManagement";
+//    }
 
 
     // 게시글 상세보기
