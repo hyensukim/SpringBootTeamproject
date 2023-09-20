@@ -3,10 +3,10 @@ package com.springboot.shootformoney.member.dto;
 import lombok.Data;
 
 @Data
-public class SearchInfo {
+public class PageInfo {
 
     private int page = 1;
 
-    private int pageSize = 15;
+    private int pageSize = 10;
 
 }
