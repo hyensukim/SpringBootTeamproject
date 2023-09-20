@@ -23,9 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class BetController {
     private final BetService betService;
     private final EuroService euroService;
-
     private final EuroPoolService euroPoolService;
-
     private final MemberUtil memberUtil;
 
     @Autowired
