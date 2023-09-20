@@ -12,27 +12,10 @@
 <body>
 <!-- 네비게이션 바(헤더) -->
 <nav th:replace="~{/outlines/nav :: common}"></nav>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="index.html" th:href="@{#}"><img class = "logo" src = "../static/image/Logo.png" th:src="@{이미지 경로}" />Shoot for Money</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link" href="post.html" th:href="@{#}">커뮤니티</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">경기 결과</a></li>
-                <li class="nav-item"><a class="nav-link" href="prediction.html" th:href="@{#}">승부 예측</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">로그인</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">마이페이지</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
 
 <main>
     <header class="prediction-hd">
-        <h2 class="fw-bolder mb-1">LaLiga 승부 예측</h2>
+        <h2 class="fw-bolder mb-1">LaLiga 경기 결과</h2>
     </header>
 
     <div class = "scroll3">
@@ -44,8 +27,8 @@
                 <th>대회</th>
                 <th>홈팀</th>
                 <th>원정팀</th>
+                <th>스코어</th>
                 <th>배당률</th>
-                <th>배팅</th>
             </tr>
             </thead>
             <tbody>
@@ -55,6 +38,7 @@
                 <td th:text="${game.gLeague}"></td>
                 <td th:text="${game.gHomeTeam}"></td>
                 <td th:text="${game.gAwayTeam}"></td>
+                <td><span th:text="${game.getGHomeScore() ?: 0}">0</span> : <span th:text="${game.getGAwayScore() ?: 0}">0</span></td>
                 <td>
                     <div class="formBox">
                         <th:block th:with="ratioList=${ratios[__${game.getMatchId()}__]}">
@@ -72,11 +56,6 @@
                         </th:block>
                     </div>
                 </td>
-                <td>
-                    <a th:href="@{/list/__${game.getMatchId()}__}">
-                        <button type="button" class="betBtn">배팅</button>
-                    </a>
-                </td>
             </tr>
             </tbody>
         </table>
@@ -86,14 +65,15 @@
     <div class="col-lg-4">
         <!-- Categories widget-->
         <div class="card mb-4">
-            <div class="card-header">리그 별 승부예측</div>
+            <div class="card-header">리그 별 경기 결과</div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-6">
                         <ul class="list-unstyled mb-0">
-                            <li><a href="prediction-EPL.html" th:href="@{#}">EPL</a></li>
-                            <li><a href="prediction-LaLiga.html" th:href="@{#}">LaLiga</a></li>
-                            <li><a href="prediction-Bundesliga.html" th:href="@{#}">Bundesliga</a></li>
+                            <li><a th:href="@{/list/finished/entirelist}">전체 목록 보기</a></li>
+                            <li><a th:href="@{/list/finished/epl}">EPL</a></li>
+                            <li><a th:href="@{/list/finished/laliga}">LaLiga</a></li>
+                            <li><a th:href="@{/list/finished/bundes}">Bundesliga</a></li>
                         </ul>
                     </div>
                 </div>

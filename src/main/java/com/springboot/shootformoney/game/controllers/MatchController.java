@@ -85,32 +85,52 @@ public class MatchController {
     @GetMapping("/finished/epl")
     public String finishedPLMatches(Model model){
         model.addAttribute("pageTitle", "종료된 EPL 경기 목록");
-        List<Game> finishedPLMatches = matchService.getFinishedPLMatches();
-        model.addAttribute("EPLgames", finishedPLMatches);
+        Map<Integer, List<Double>> ratios = new HashMap<>();
+        List<Game> games = matchService.getFinishedPLMatches();
+        for(Game game : games){
+            ratios.put(game.getMatchId(), euroPoolService.calculateRatio(game.getMatchId()));
+        }
+        model.addAttribute("allGames", games);
+        model.addAttribute("ratios", ratios);
         return "finished-EPL";
     }
 
     @GetMapping("/finished/laliga")
     public String finishedPDMatches(Model model){
         model.addAttribute("pageTitle", "종료된 라리가 경기 목록");
-        List<Game> finishedPDMatches = matchService.getFinishedPDMatches();
-        model.addAttribute("PDgames", finishedPDMatches);
-        return "finished-LaLiga";
+        Map<Integer, List<Double>> ratios = new HashMap<>();
+        List<Game> games = matchService.getFinishedPDMatches();
+        for(Game game : games){
+            ratios.put(game.getMatchId(), euroPoolService.calculateRatio(game.getMatchId()));
+        }
+        model.addAttribute("allGames", games);
+        model.addAttribute("ratios", ratios);
+        return "finished-Laliga";
     }
 
     @GetMapping("/finished/bundes")
     public String finishedBL1Matches(Model model){
         model.addAttribute("pageTitle", "종료된 분데스 경기 목록");
-        List<Game> finishedBL1Matches = matchService.getFinishedBL1Matches();
-        model.addAttribute("Bundesgames", finishedBL1Matches);
+        Map<Integer, List<Double>> ratios = new HashMap<>();
+        List<Game> games = matchService.getFinishedBL1Matches();
+        for(Game game : games){
+            ratios.put(game.getMatchId(), euroPoolService.calculateRatio(game.getMatchId()));
+        }
+        model.addAttribute("allGames", games);
+        model.addAttribute("ratios", ratios);
         return "finished-Bundesliga";
     }
 
     @GetMapping("/finished/entirelist")
     public String everyFinishedMatches(Model model){
         model.addAttribute("pageTitle", "종료된 경기 목록");
-        List<Game> allFinishedMatches = matchService.getAllFinishedMatches();
-        model.addAttribute("Allgames", allFinishedMatches);
+        Map<Integer, List<Double>> ratios = new HashMap<>();
+        List<Game> games = matchService.getAllFinishedMatches();
+        for(Game game : games){
+            ratios.put(game.getMatchId(), euroPoolService.calculateRatio(game.getMatchId()));
+        }
+        model.addAttribute("allGames", games);
+        model.addAttribute("ratios", ratios);
         return "finished";
     }
 
@@ -123,7 +143,7 @@ public class MatchController {
         model.addAttribute("game", game);
         List<Double> ratios = euroPoolService.calculateRatio(matchId);
         model.addAttribute("ratios", ratios);
-        Integer totalEuro = euroService.getTotalEuro(memberUtil.getMember().getMNo());
+        Integer totalEuro = memberUtil.getMember().getEuro().getValue() / 10000;
         model.addAttribute("totalEuro", totalEuro);
         return "game-info";
     }

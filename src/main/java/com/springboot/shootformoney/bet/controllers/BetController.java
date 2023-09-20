@@ -39,8 +39,6 @@ public class BetController {
         model.addAttribute("pageTitle", "배팅 등록하기");
         // 유저 정보 가져오기
         Long mNo = memberUtil.getMember().getMNo();
-        Integer totalEuro = memberUtil.getMember().getEuro().getValue();
-        model.addAttribute("totalEuro", totalEuro);
         betDto.setGNo(matchService.getGameInfo(betDto.getMatchId())
                 .orElseThrow().getGNo());
         betDto.setMNo(mNo);
@@ -50,7 +48,6 @@ public class BetController {
         euroPoolService.collectEuro(bet);
         // 유로 보유량 감소 처리
         euroService.decreaseEuro(mNo, betDto.getBtMoney());
-
         return "redirect:/list/unstarted/entirelist";
     }
 

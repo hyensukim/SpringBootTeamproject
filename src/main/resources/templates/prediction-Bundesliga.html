@@ -12,24 +12,6 @@
 <body>
 <!-- 네비게이션 바(헤더) -->
 <nav th:replace="~{/outlines/nav :: common}"></nav>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="index.html" th:href="@{#}"><img class = "logo" src = "../static/image/Logo.png" th:src="@{이미지 경로}" />Shoot for Money</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link" href="post.html" th:href="@{#}">커뮤니티</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">경기 결과</a></li>
-                <li class="nav-item"><a class="nav-link" href="prediction.html" th:href="@{#}">승부 예측</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">로그인</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">마이페이지</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
 <main>
     <header class="prediction-hd">
         <h2 class="fw-bolder mb-1">Bundesliga 승부 예측</h2>
@@ -91,6 +73,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <ul class="list-unstyled mb-0">
+                            <li><a th:href="@{/list/unstarted/entirelist}">전체 목록 보기</a></li>
                             <li><a th:href="@{/list/unstarted/epl}">EPL</a></li>
                             <li><a th:href="@{/list/unstarted/laliga}">LaLiga</a></li>
                             <li><a th:href="@{/list/unstarted/bundes}">Bundesliga</a></li>

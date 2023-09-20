@@ -7,7 +7,7 @@
     <link th:href="@{../../static/css/styles.css}"
           href="../static/css/styles.css" rel="stylesheet">
 
-    <title>Title</title>
+    <title th:text="${pageTitle}"></title>
 </head>
 <body>
 <!-- 네비게이션 바(헤더) -->
@@ -133,9 +133,10 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <ul class="list-unstyled mb-0">
-                            <li><a href="prediction-EPL.html" th:href="@{#}">EPL</a></li>
-                            <li><a href="prediction-LaLiga.html" th:href="@{#}">LaLiga</a></li>
-                            <li><a href="prediction-Bundesliga.html" th:href="@{#}">Bundesliga</a></li>
+                            <li><a th:href="@{/list/unstarted/entirelist}">전체 목록 보기</a></li>
+                            <li><a th:href="@{/list/unstarted/epl}">EPL</a></li>
+                            <li><a th:href="@{/list/unstarted/laliga}">LaLiga</a></li>
+                            <li><a th:href="@{/list/unstarted/bundes}">Bundesliga</a></li>
                         </ul>
                     </div>
                 </div>
