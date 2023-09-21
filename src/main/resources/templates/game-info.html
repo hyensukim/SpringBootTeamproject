@@ -116,9 +116,6 @@
                 <td colspan="2">
                     배팅 가능금액 : <span th:text="${totalEuro}"></span> (만 유로)
                 </td>
-<!--                <td colspan="3">-->
-<!--                    예상 적중금액 : <span th:text="${}">0</span> (만 유로)-->
-<!--                </td>-->
             </tr>
             </tbody>
         </table>
@@ -197,7 +194,20 @@
             alert('예상 결과를 선택해주세요.'); // 또는 다른 예외 처리 로직을 추가
             return false; // 폼 서브밋을 방지하여 500 오류를 방지
         }
-        return true; // 예상 결과가 선택된 경우 폼 서브밋 허용
+        // 배팅 금액을 가져오기
+        var btMoney = parseInt(document.getElementsByName('btMoney')[0].value);
+        var totalEuro = parseInt([[${totalEuro}]]);
+
+        if (isNaN(btMoney) || btMoney <= 0) {
+            alert('올바른 배팅 금액을 입력하세요.');
+            return false;
+        }
+
+        if (btMoney > totalEuro) {
+            alert('배팅 가능 금액을 초과했습니다.');
+            return false;
+        }
+        return true; // 예상 결과가 선택되고 배팅 금액이 올바른 경우 폼 서브밋 허용
     }
 </script>
 </body>

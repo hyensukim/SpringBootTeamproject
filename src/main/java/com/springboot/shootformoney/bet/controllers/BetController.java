@@ -61,8 +61,14 @@ public class BetController {
             Bet bet = betService.bet(betDto.getGNo(), betDto.getExpect(), betDto.getBtMoney());
             // EuroPool에 배팅금 누적
             euroPoolService.collectEuro(bet);
-            // 유로 보유량 감소 처리
-            euroService.decreaseEuro(mNo, betDto.getBtMoney());
+            try{
+                // 유로 보유량 감소 처리
+                euroService.decreaseEuro(mNo, betDto.getBtMoney());
+            } catch (IllegalArgumentException e){
+                String errorMsg = "보유 유로가 부족합니다.";
+                model.addAttribute("errorMsg", errorMsg);
+            }
+
         } else {
             String errorMsg = "error : 경기가 이미 시작되어 배팅할 수 없습니다.";
             model.addAttribute("errorMsg", errorMsg);
