@@ -7788,6 +7788,14 @@ textarea.form-control-lg {
   z-index: 1;
 }
 
+.py-55{
+  bottom:0;
+  width: 100%;
+  height: 30px;
+  position: fixed;
+  z-index: 1;
+}
+
 .pt-0 {
   padding-top: 0 !important;
 }
