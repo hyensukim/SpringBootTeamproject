@@ -6,21 +6,20 @@
 <main layout:fragment="common">
 
     <h2>게시글 관리</h2>
-<!--    <a href="/admin/post/postList/">전체게시판</a>-->
+    <!--    <a href="/admin/post/postList/">전체게시판</a>-->
 
-<!--    &lt;!&ndash; 각각의 게시판 별로 조회 &ndash;&gt;-->
-<!--    <div th:each="board : ${boards}">-->
-<!--        <a th:href="@{/admin/post/postList(bName=${board.bName})}" th:text="${board.bName}"></a>-->
-<!--    </div>-->
+    <!--    &lt;!&ndash; 각각의 게시판 별로 조회 &ndash;&gt;-->
+    <!--    <div th:each="board : ${boards}">-->
+    <!--        <a th:href="@{/admin/post/postList(bName=${board.bName})}" th:text="${board.bName}"></a>-->
+    <!--    </div>-->
 
     <form th:action="@{/admin/post/postList/search}" method="get">
         <!-- Search Category -->
-<!--        <select id="dataPerPage">-->
-<!--            <option value="10">10개씩보기</option>-->
-<!--            <option value="15">15개씩보기</option>-->
-<!--            <option value="20">20개씩보기</option>-->
-<!--        </select>-->
-
+        <!--        <select id="dataPerPage">-->
+        <!--            <option value="10">10개씩보기</option>-->
+        <!--            <option value="15">15개씩보기</option>-->
+        <!--            <option value="20">20개씩보기</option>-->
+        <!--        </select>-->
         <select name="category">
             <option value="pNo">게시글 번호</option>
             <option value="mId">작성자 ID</option>
@@ -36,8 +35,8 @@
         <!-- Submit Button -->
         <button type="submit">검색</button>
     </form>
-        <a></a>
-        <table class="table text-center">
+<!--    <ul class="pagination">-->
+    <table class="table text-center">
         <thead>
         <tr>
             <th>게시글 번호</th>
@@ -49,52 +48,50 @@
             <th>수정일</th>
         </tr>
         </thead>
-        <!-- 게시판 내용 반복 -->
-        <tr th:each="post : ${posts}">
-            <td th:text="${post.pNo}"></td>
-            <td th:text="${post.member.mId}"></td>
-            <td th:text="${post.member.mNickName}"></td>
-            <td th:text="${post.board.bName}"></td>
-            <td><a th:href="@{'/admin/post/' + ${post.pNo}}" th:text="${post.pTitle}"></a></td>
-            <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-            <td th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
 
-            <!-- 게시글 삭제 -->
-            <td>
-                <form th:action="@{'/admin/post/' + ${post.pNo}}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
-                    <input type="hidden" name="_method" value="delete"/>
-                    <button type="submit">게시글 삭제</button>
-                </form>
-            </td>
+            <!-- 게시판 내용 반복 -->
+            <tr th:each="post : ${postList}">
+                <td th:text="${post.pNo}"></td>
+                <td th:text="${post.member.mId}"></td>
+                <td th:text="${post.member.mNickName}"></td>
+                <td th:text="${post.board.bName}"></td>
+                <td><a th:href="@{'/admin/post/' + ${post.pNo}}" th:text="${post.pTitle}"></a></td>
+                <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
 
-        </tr>
+                <!-- 게시글 삭제 -->
+                <td>
+                    <form th:action="@{'/admin/post/' + ${post.pNo}}" method="post"
+                          onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button type="submit">게시글 삭제</button>
+                    </form>
+                </td>
+
+            </tr>
     </table>
 
-    <!--    </ul>-->
-
-<!--    <th:block class="paging" th:each="page : ${#numbers.sequence(startPage, endPage)}" >-->
-<!--        <li class='page' th:classappend="on">-->
-<!--            <a th:if="${page != nowPage}"-->
-<!--               th:href="@{/admin/post/postList/all?page={page}(page=${page})}"-->
-<!--               th:text="${page}">-->
-<!--            </a>-->
-<!--            <strong th:if="${page == nowPage}" th:text="${page}"></strong>-->
-<!--        </li>-->
-<!--    </th:block>-->
-
-<!--    <ul class="paging" style="display: flex;">-->
-<!--        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">-->
-<!--            <li class='page' th:classappend="on">-->
-<!--                <a th:if="${page != nowPage}"-->
-<!--                   th:href="@{/admin/post/postList/all?page={page}(page=${page})}"-->
-<!--                   th:text="${page}">-->
-<!--                </a>-->
-<!--                <strong th:if="${page == nowPage}" th:text="${page}"></strong>-->
-<!--            </li>-->
-<!--        </th:block>-->
-<!--    </ul>-->
-
-
+    <ul class="pagination">
+        <!--                    <li class="page-prev" th:classappend="${hasPrev ? '' : 'disabled'}">-->
+        <!--                        <a th:href="@{/member/mypage/mypost/{mNo}?page={page}(mNo=${mNo}, page=${nowPage-1})}">-->
+        <!--                            <i class="xi-angle-left-min"></i>-->
+        <!--                        </a>-->
+        <!--                    </li>-->
+        <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}" >
+            <li th:if="${item > 0}" class='page' th:classappend="on">
+                <a th:if="${item != nowPage && item > 0}"
+                   th:href="@{/admin/post/postList/all?page={page}(page=${item})}"
+                   th:text="${item}">
+                </a>
+                <strong th:if="${item == nowPage}" th:text="${item}"></strong>
+            </li>
+        </th:block>
+        <!--                    <li class="page-next" th:classappend="${hasNext ? '' : 'disabled'}">-->
+        <!--                        <a th:href="@{/member/mypage/mypost/{mNo}?page={page}(mNo=${mNo}, page=${nowPage+1})}">-->
+        <!--                            <i class="xi-angle-right-min"></i>-->
+        <!--                        </a>-->
+        <!--                    </li>-->
+    </ul>
 </main>
 </html>
 

@@ -34,6 +34,7 @@ public class PostController {
         }
         model.addAttribute("posts", posts);
         return "posts";
+
     }
 
     @GetMapping("/create")
@@ -55,6 +56,7 @@ public class PostController {
 
 
     //게시글 생성
+
     @PostMapping("/create")
     public String createPost(@ModelAttribute("postDto") @Valid PostDTO postDto) {
         Long pNo = postService.savePost(postDto);
@@ -67,6 +69,7 @@ public class PostController {
         PostDTO post = postService.findPost(pNo);
         model.addAttribute("post", post);
         return "detail";
+
     }
     // 매핑
 
@@ -74,7 +77,8 @@ public class PostController {
     @PostMapping("/{pNo}/delete")
     public String deletePost(@PathVariable Long pNo) {
         postService.deletePost(pNo);
-        return "redirect:/posts/all"; // 삭제 후 목록 페이지로 리다이렉트
+        return "redirect:/posts/all";
+
     }
 
     // 게시글 수정
@@ -115,8 +119,6 @@ public class PostController {
     public String editPostForm(@PathVariable Long pNo, Model model) {
         PostDTO post = postService.findPost(pNo);
         model.addAttribute("post", post);
-        return "edit"; //
+        return "post/edit";
     }
-
-
 }

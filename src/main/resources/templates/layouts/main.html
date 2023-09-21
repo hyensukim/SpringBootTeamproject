@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< HEAD
     <link th:href="@{../../static/css/styles.css}"
           href="../../static/css/styles.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -26,5 +27,30 @@
 
 <!-- 푸터 -->
 <footer th:replace="~{outlines/footer::common}"></footer>
+=======
+    <link th:href="@{/static/css/styles.css}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- 사이트 설정 값(siteTitle)과 특정 페이지 타이틀(pageTitle)을 적용 -->
+    <title th:text="${siteConfig['siteTitle']} + ' | ' + ${pageTitle}">기본 타이틀</title>
+<!--    <title th:text="${T(org.springframework.ui.Model).attribute('siteTitle')} ?: '기본 타이틀'">기본 타이틀</title>-->
+<!--    <title th:text="${T(org.springframework.ui.Model).attribute('title')} ?: 'ShootForMoney'">ShootForMoney</title>-->
+
+</head>
+<body>
+
+<!-- 헤더 -->
+<header th:replace='~{outlines/header :: common}'></header>
+
+<!-- 네비게이션 바(헤더) -->
+<nav th:replace='~{outlines/nav :: navFragment}'></nav>
+
+<!-- 메인-->
+<main layout:fragment='common'></main>
+
+<!-- 푸터 -->
+<footer th:replace='~{outlines/footer :: common}'></footer>
+>>>>>>> 9530d803bfc432e032357eaf7849097ab655f74e
 </body>
 </html>

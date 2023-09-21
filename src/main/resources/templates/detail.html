@@ -11,25 +11,6 @@
   </style>
 </head>
   <body>
-  <!-- 네비게이션 바 -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">Shoot for Money</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="post.html" th:href="@{#}">커뮤니티</a></li>
-          <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">경기 결과</a></li>
-          <li class="nav-item"><a class="nav-link" href="prediction.html" th:href="@{#}">승부 예측</a></li>
-          <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">로그인</a></li>
-          <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">마이페이지</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</nav>
 <div class="board_wrap">
   <div class="board_title">
     <h2 th:text="#{}">글 상세</h2>
@@ -43,9 +24,93 @@
                readonly>
       </div>
 
-      <div class="board_view_wrap">
-        <div class="board_view">
+      <div class="info">
+        <dl>
+          <dt>
+            <label for="boardId" th:text="#{}">글 ID : </label>
+          </dt>
+          <dd>
+            <input type="text" id="boardId" name="boardId" class="form-control" th:value="${post.pNo}" readonly>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            <label for="name" th:text="#{}">작성자 : </label>
+          </dt>
+          <dd>
+            <input type="text" id="name" name="name" class="form-control" th:value="${post.author}" readonly>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            <label for="regdate" th:text="#{}">등록일</label>
+          </dt>
+          <dd>
+            <input type="text" id="regdate" name="regdate" class="form-control"
+                   th:value="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}" readonly>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            <label for="viewcnt" th:text="#{}">조회수 : </label>
+          </dt>
+          <dd>
+            <input type="text" id="viewcnt" name="viewcnt" class="form-control" th:value="${post.viewCount}" readonly>
+          </dd>
+        </dl>
+      </div>
+
+      <div class="cont">
+        <label for="contents" th:text="#{}"></label>
+        <textarea id="contents" name="contents" class="form-control" th:text="${post.pContent}" readonly></textarea>
+      </div>
+
+      <hr class="my-4">
+
+      <!-- 댓글 창 시작 -->
+      <div class="comment_section">
+        <h3>댓글</h3>
+
+        <!-- 댓글 입력 폼 -->
+        <form action="/posts/{pNo}/comments" th:action="@{/posts/{pNo}/comments(pNo=${post.pNo})}" method="post">
+          <div>
+            <label for="commentContent">댓글 작성:</label>
+            <textarea id="commentContent" name="cContent" class="form-control" rows="3" required></textarea>
+          </div>
+          <div class="bt_wrap">
+            <button type="submit">댓글 작성</button>
+          </div>
+        </form>
+
+        <!-- 댓글 목록 표시 -->
+        <div class="comment_list">
+          <ul>
+            <!-- 댓글을 Thymeleaf 반복문을 사용하여 조회 -->
+            <li th:each="comment : ${post.comments}">
+              <div class="comment_content">
+                <!-- Display comment author's nickname -->
+                <span class="comment_author" th:text="${comment.member.mNickName}"></span>
+                <!-- Display comment creation time -->
+                <span class="comment_date" th:text="${#temporals.format(comment.cCreatedAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                <!-- Display comment content -->
+                <p class="comment_text" th:text="${comment.cContent}"></p>
+              </div>
+            </li>
+          </ul>
         </div>
+      <!-- 댓글 창 끝 -->
+
+      <hr class="my-4">
+
+      <div class="bt_wrap">
+        <!-- 글 목록, 글 수정, 글 삭제 버튼은 이미 있는 코드입니다. -->
+        <a href="/posts/all" th:href="@{/posts/all}" th:text="#{}">글 목록</a>
+        <a href="/posts/{pNo}/edit" th:href="@{/posts/{pNo}/edit(pNo=${post.pNo})}" th:text="#{}">글 수정</a>
+        <form action="/posts/{pNo}/delete" th:action="@{/posts/{pNo}/delete(pNo=${post.pNo})}" method="post"
+              onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
+          <input type="hidden" name="_method" value="post"/>
+          <button type="submit">글 삭제</button>
+        </form>
       </div>
 
       <div class="cont">

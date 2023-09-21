@@ -16,6 +16,7 @@ public class MvcConfig implements WebMvcConfigurer {
     private final MemberUpdateInterceptor memberUpdateInterceptor;
     private final ScoreUpdateInterceptor scoreUpdateInterceptor;
     private final SiteConfigInterceptor siteConfigInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(siteConfigInterceptor)
@@ -24,5 +25,6 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**");
         registry.addInterceptor(scoreUpdateInterceptor)
                 .addPathPatterns("/list/**");
+
     }
 }

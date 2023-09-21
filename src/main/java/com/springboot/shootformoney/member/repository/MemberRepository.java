@@ -3,11 +3,9 @@ package com.springboot.shootformoney.member.repository;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.enum_.Grade;
 import com.springboot.shootformoney.member.enum_.Role;
-import com.springboot.shootformoney.post.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {

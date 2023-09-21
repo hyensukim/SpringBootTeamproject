@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/static/admin/css/styles.css}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <meta name="description" th:content="${@siteConf.get('siteDescription')}">
+    <title>
+        <th:block th:text="${@siteConf.get('siteTitle') +' | '}"></th:block>
+        <th:block th:if="${pageTitle != null}" th:text="${pageTitle}"></th:block>
+    </title>
+
+    <!-- cssJava 버전 -->
+    <!--    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">-->
+    <!--    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/style.css?v={v}(v=${@siteConf.get('cssJsVersion')})}">-->
+    <!--    <link rel="stylesheet" type="text/css" th:each="file : ${addCss}" th:href="@{/css/admin/{cssFile}.css?v={v}(cssFile=${file}, v=${@siteConf.get('cssJsVersion')})}">-->
+    <!--    <th:block layout:fragment="addCss"></th:block>-->
+
+    <!--    <script th:src="@{/js/admin/common.js?v={v}(v=${@siteConf.get('cssJsVersion')})}"></script>-->
+    <!--    <script th:each="jsFile : ${addScript}"-->
+    <!--            th:src="@{/js/admin/{jsFile}.js?v={v}(jsFile=${jsFile}, v=${@siteConf.get('cssJsVersion')})}"></script>-->
+
+    <style>
+        /* 테이블의 각 열에 세로 구분선을 추가하는 스타일 */
+        table {
+            border-collapse: separate; /* 테이블 셀 경계를 분리 */
+            border-spacing: 0 3px; /* 세로 간격 설정 (원하는 간격으로 조절) */
+        }
+
+        td, th {
+            border-bottom: 1px solid #dddddd; /* 각 셀의 하단 경계선 설정 */
+            padding: 3px; /* 셀 안의 내용과 경계선 사이의 간격 설정 */
+        }
+    </style>
+
+</head>
+<body>
+
+<!-- 헤더 -->
+<header th:replace='~{outlines/admin/header :: common}'></header>
+
+<!-- 네비게이션 바(헤더) -->
+<nav th:replace='~{outlines/admin/nav :: navFragment}'></nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- 사이드바 -->
+        <div class="col-3" th:replace='~{outlines/admin/sidebar :: sidebarFragment}'></div>
+
+        <!-- 메인-->
+        <main layout:fragment='common' class="col-9">
+            <table class="table text-center">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <!-- 추가적인 리스트 항목을 원하는 만큼 추가할 수 있습니다. -->
+                <!--        <script th:src="@{admin/js/paging.js}"></script>-->
+
+                </tbody>
+            </table>
+        </main>
+    </div>
+</div>
+
+<!-- 푸터 -->
+<footer th:replace='~{outlines/admin/footer :: common}'></footer>
+</body>
+</html>
