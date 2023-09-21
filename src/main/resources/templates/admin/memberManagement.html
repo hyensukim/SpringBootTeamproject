@@ -7,7 +7,28 @@
 <main layout:fragment="common">
 
 <!-- Member List -->
-<h2>Members List</h2>
+<h2>회원 관리</h2>
+
+    <form th:action="@{/admin/member/memberList/search}" method="get">
+        <!-- Search Category -->
+        <select name="category">
+            <option value="mNo">회원번호</option>
+            <option value="mId">ID</option>
+            <option value="mName">이름</option>
+            <option value="mNickName">별명</option>
+            <option value="grade">등급</option>
+            <option value="mLevel">레벨</option>
+            <option value="role">권한</option>
+            <!-- Add more options as needed -->
+        </select>
+
+        <!-- Search Query -->
+        <input type="text" name="query" placeholder="검색">
+
+        <!-- Submit Button -->
+        <button type="submit">검색</button>
+    </form>
+
 <table id="memberTable" class="table text-center">
     <thead>
     <tr>
@@ -62,46 +83,7 @@
 
 </table>
 
-    <form th:action="@{/admin/member/memberList/search}" method="get">
-        <!-- Search Category -->
-        <select name="category">
-            <option value="mNo">회원번호</option>
-            <option value="mId">ID</option>
-            <option value="mName">이름</option>
-            <option value="mNickName">별명</option>
-            <option value="grade">등급</option>
-            <option value="mLevel">레벨</option>
-            <option value="role">권한</option>
-            <!-- Add more options as needed -->
-        </select>
 
-        <!-- Search Query -->
-        <input type="text" name="query" placeholder="검색">
-
-        <!-- Submit Button -->
-        <button type="submit">검색</button>
-    </form>
 
 </main>
-
-<!--<script type='text/javascript'> ajax 이용 시 부드러운 URL 이동(사용자 불편함 최소)
-    // Delete member when delete button is clicked
-    $('.deleteButton').on('click', function(e) {
-        e.preventDefault();
-
-        let mId = $(this).data('id');
-
-        $.ajax({
-            url: "/admin/member/" + mId,
-            type: "DELETE",
-            success: function(result) {
-                alert("회원이 삭제되었습니다.");
-                location.reload();  // Reload page to update member list
-            },
-            error: function(xhr, status, error) {
-                alert("회원 삭제에 실패했습니다.");
-            }
-        });
-    });
-</script>-->
 </html>

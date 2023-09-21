@@ -74,7 +74,7 @@ public class PostManagementController {
         return "admin/postDetail";  // 게시글 상세 정보를 보여주는 뷰 이름
     }
 
-    // 컨트롤러
+
     @GetMapping("/postList")
     public String postList(@RequestParam(required = false) String bName, Model model){
         List<Board> boards = boardRepository.findAll();
