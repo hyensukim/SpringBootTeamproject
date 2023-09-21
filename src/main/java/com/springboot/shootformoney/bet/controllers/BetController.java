@@ -51,8 +51,13 @@ public class BetController {
         return "redirect:/list/unstarted/entirelist";
     }
 
+    //추가용~
+//    public String cancel(@PathVariable Long btNo, Model model){
+//
+//    }
+
     //배팅 취소 메서드. Bet엔터티에서 배팅 정보를 삭제하고, 보유금에 배팅금만큼 가산한다.
-    @PostMapping("/cancelbet/{btNo}")
+    @GetMapping("/cancelbet/{btNo}")
     @Transactional
     public String cancelBet(@PathVariable Long btNo, Model model) {
         model.addAttribute("pageTitle", "배팅 취소하기");
@@ -68,10 +73,9 @@ public class BetController {
             // 보유 유로 롤백 처리
             euroService.rollbackEuro(mNo, btNo);
 
-            return "redirect:/list/unstarted/entirelist";
+            return "index";
         } catch (Exception e) {
             return "배팅 취소 중 오류가 발생했습니다.";
         }
     }
-
 }

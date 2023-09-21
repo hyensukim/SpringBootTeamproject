@@ -67,4 +67,8 @@ public class EuroService {
         int totalEuro = memberUtil.getEntity().getEuro().getValue();
         return totalEuro / 10000;
     }
+
+    public Euro getMemberEuro(Long mNo){
+        return euroRepository.findBymNo(mNo);
+    }
 }

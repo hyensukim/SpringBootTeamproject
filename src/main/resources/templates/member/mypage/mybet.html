@@ -6,21 +6,36 @@
 <main layout:fragment="common">
     <div class="frmMyBet">
         <form method="get" name="frmMyBet">
-            <h1>배팅 이력</h1>
+            <h1>배팅 이력(경기 전)</h1>
             <div>
                 <table>
                     <thead>
                     <tr>
                         <th>배팅번호</th>
-                        <th>게임정보</th>
-                        <th>배팅금액</th>
-                        <th>배팅결과</th>
+                        <th>경기정보</th>
+                        <th>예상결과</th>
+                        <th>배팅금액(만)</th>
                         <th>배팅시간</th>
-                        <th>배팅율</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
-
+                    <tr th:each="bet,status : ${betList}" th:object="${bet}">
+                        <td class="list_num" th:text="${status.index+1}"></td>
+                        <td class="list_subject">
+                            <div>
+                                <span th:text="*{game.GHomeTeam}"></span>
+                                <strong> : </strong>
+                                <span th:text="*{game.GAwayTeam}"></span>
+                            </div>
+                        </td>
+                        <td class="list_text" th:text="*{expect}"></td>
+                        <td class="list_num" th:text="*{btMoney}">__만</td>
+                        <td class="list_num" th:text="*{#temporals.format(btTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                        <td class="list_button">
+                            <a th:href="@{/bet/cancelbet/{btNo}(btNo = ${bet.btNo})}">배팅 취소</a>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
 

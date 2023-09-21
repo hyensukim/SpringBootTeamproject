@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
         @Index(name="idx_member_email", columnList = "m_email"),
         @Index(name="idx_member_nickName", columnList= "m_nickName")
 })
-public class Member extends BaseEntity{
+public class Member extends BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

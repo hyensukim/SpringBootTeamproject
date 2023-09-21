@@ -1,6 +1,7 @@
 package com.springboot.shootformoney.member.dto;
 
 
+    import com.springboot.shootformoney.member.entity.Euro;
     import com.springboot.shootformoney.member.enum_.Grade;
     import com.springboot.shootformoney.member.enum_.Role;
     import jakarta.validation.constraints.*;
@@ -43,4 +44,6 @@ package com.springboot.shootformoney.member.dto;
         private Integer level;
         
         private Role role;
+
+        private Euro euro;
     }

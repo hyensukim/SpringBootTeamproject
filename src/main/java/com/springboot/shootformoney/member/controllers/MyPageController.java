@@ -1,9 +1,11 @@
 package com.springboot.shootformoney.member.controllers;
 
 import com.springboot.shootformoney.bet.entity.Bet;
+import com.springboot.shootformoney.bet.service.EuroService;
 import com.springboot.shootformoney.member.dto.SearchInfo;
 import com.springboot.shootformoney.member.dto.MemberInfo;
 import com.springboot.shootformoney.member.dto.SignUpForm;
+import com.springboot.shootformoney.member.entity.Euro;
 import com.springboot.shootformoney.member.services.MemberDeleteService;
 import com.springboot.shootformoney.member.services.MemberListService;
 import com.springboot.shootformoney.member.services.MemberPwCheckService;
@@ -32,6 +34,7 @@ public class MyPageController {
     private final UpdateValidator updateValidator;
     private final MemberDeleteService memberDeleteService;
     private final MemberListService memberListService;
+    private final EuroService euroService;
 
 
 
@@ -47,12 +50,11 @@ public class MyPageController {
     public String checkPw(MemberInfo memberInfo, Model model) {
         String mPassword = memberInfo.getMPassword();
         MemberInfo getMember = memberUtil.getMember();
-    
+        Long mNo = getMember.getMNo();
+
         if(getMember == null){
             return "redirect:/member/login";
         }
-
-        Long mNo = getMember.getMNo();
 
         try {
             memberPwCheckService.check(mPassword);
@@ -79,6 +81,7 @@ public class MyPageController {
             }
 
             MemberInfo memberInfo = memberUtil.getMember();
+            Euro euro = euroService.getMemberEuro(memberInfo.getMNo());
             SignUpForm signUpForm = SignUpForm.builder()
                     .mId(memberInfo.getMId())
                     .mName(memberInfo.getMName())
@@ -87,6 +90,7 @@ public class MyPageController {
                     .level(memberInfo.getLevel())
                     .mPhone(memberInfo.getMPhone())
                     .mEmail(memberInfo.getMEmail())
+                    .euro(euro)
                     .build();
             model.addAttribute("signUpForm", signUpForm);
             return "member/mypage/info";
@@ -100,9 +104,7 @@ public class MyPageController {
     @PostMapping("/info/{mNo}")
     public String myPagePs(@PathVariable Long mNo, @ModelAttribute @Valid SignUpForm signUpForm,
                            Errors errors, Model model){
-
         updateValidator.validate(signUpForm,errors);
-
         if(errors.hasErrors()){
             return "member/mypage/info";
         }
@@ -201,7 +203,7 @@ public class MyPageController {
             int startPage = ((nowPage-1) / 10) * 10 + 1;
             int endPage = Math.min(startPage + 10 - 1, bets.getTotalPages());
 
-            model.addAttribute("postList", betList);
+            model.addAttribute("betList", betList);
             model.addAttribute("nowPage", nowPage);
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
