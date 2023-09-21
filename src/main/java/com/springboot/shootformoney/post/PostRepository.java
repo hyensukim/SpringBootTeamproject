@@ -74,6 +74,12 @@ public class PostRepository {
                 .getResultList();
     }
 
+    public List<Post> findByMemberId(String mId) {
+        return em.createQuery("select p from Post p where p.member.mId = :mId", Post.class)
+                .setParameter("mId", mId)
+                .getResultList();
+    }
+
     public List<Post> findByMemberNo(Long mNo) {
         return em.createQuery("select p from Post p where p.member.mNo = :mNo", Post.class)
                 .setParameter("mNo", mNo)
