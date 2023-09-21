@@ -83,20 +83,21 @@ public class BetController {
     public String cancelBet(@PathVariable Long btNo, Model model) {
         model.addAttribute("pageTitle", "배팅 취소하기");
         try {
-            // 배팅 정보 삭제
-            Bet cancelBet = betService.betCancel(btNo);
-
+            Bet targetBet = betService.findToCancel(btNo);
             //EuroPool에 배팅금액 가산.
-            euroPoolService.rollbackEuroPool(cancelBet);
+            euroPoolService.rollbackEuroPool(targetBet);
 
             // 유저 정보 가져오기
             Long mNo = memberUtil.getMember().getMNo();
             // 보유 유로 롤백 처리
             euroService.rollbackEuro(mNo, btNo);
 
-            return "index";
+            // 배팅 정보 삭제
+            betService.betCancel(btNo);
         } catch (Exception e) {
-            return "배팅 취소 중 오류가 발생했습니다.";
+            String errorMsg =  "배팅 취소 중 오류가 발생했습니다.";
+            model.addAttribute("errorMsg", errorMsg);
         }
+        return "redirect:/member/mypage/mybet/1";
     }
 }

@@ -1,6 +1,7 @@
 package com.springboot.shootformoney.bet.repository;
 
 import com.springboot.shootformoney.bet.entity.EuroPool;
+import com.springboot.shootformoney.member.entity.Euro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

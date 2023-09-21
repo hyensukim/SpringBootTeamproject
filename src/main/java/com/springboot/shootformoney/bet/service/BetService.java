@@ -59,6 +59,15 @@ public class BetService {
         return betRepository.save(bet);
     }
 
+    //취소할 배팅을 불러오는 메서드
+    @Transactional
+    public Bet findToCancel(Long btNo){
+        Optional<Bet> bet = betRepository.findByBtNo(btNo);
+        if(bet.isPresent()){
+           return bet.get();
+        }
+        return null;
+    }
     //배팅 취소 메서드
     @Transactional
     public Bet betCancel(Long btNo){

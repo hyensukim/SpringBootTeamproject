@@ -33,7 +33,7 @@
                         <td class="list_num" th:text="*{btMoney}">__만</td>
                         <td class="list_num" th:text="*{#temporals.format(btTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                         <td class="list_button">
-                            <a th:href="@{/bet/cancelbet/{btNo}(btNo = ${bet.btNo})}">배팅 취소</a>
+                            <a th:href="@{/bet/cancelbet/{btNo}(btNo=${bet.btNo})}">배팅취소</a>
                         </td>
                     </tr>
                     </tbody>

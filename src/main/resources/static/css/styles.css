@@ -11102,7 +11102,7 @@ main{
   padding-top :5px;
 }
 
-button[type='submit']{
+button[type='submit']:not(.no-style){
   background-color:#4d5154;
   color:white;
   border:none;

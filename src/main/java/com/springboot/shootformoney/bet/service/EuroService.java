@@ -63,8 +63,9 @@ public class EuroService {
         euroRepository.save(currentEuro);  // 변경된 정보 저장
     }
 
-    public Integer getTotalEuro(Long mNo){
-        int totalEuro = memberUtil.getEntity().getEuro().getValue();
+    public Integer getTotalEuro(){
+        Long mNo = memberUtil.getMember().getMNo();
+        Integer totalEuro = euroRepository.findBymNo(mNo).getValue();
         return totalEuro / 10000;
     }
 
