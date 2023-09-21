@@ -8,21 +8,6 @@
 
     <h2>게시판 관리</h2>
 
-    <form th:action="@{/admin/board/boardList/search}" method="get">
-        <select name="category">
-            <option value="bNo">게시판 번호</option>
-            <option value="bName">게시판 이름</option>
-            <option value="bIsFile">파일 첨부 여부</option>
-            <!-- Add more options as needed -->
-        </select>
-
-        <!-- Search Query -->
-        <input type="text" name="query" placeholder="검색">
-
-        <!-- Submit Button -->
-        <button type="submit">검색</button>
-    </form>
-
     <!-- 게시판 생성 버튼 -->
     <button id="createBoardButton">게시판 생성</button>
 
