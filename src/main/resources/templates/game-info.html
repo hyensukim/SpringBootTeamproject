@@ -45,6 +45,7 @@
                 <th>홈팀</th>
                 <th>원정팀</th>
                 <th>배당률</th>
+                <th>배팅</th>
             </tr>
             </thead>
             <tbody>
@@ -69,12 +70,17 @@
                         </div>
                     </div>
                 </td>
+                <td>
+                    <a href="test.html" th:href="@{경기 상세 링크}">
+                        <button type="button" class="betBtn">배팅</button>
+                    </a>
+                </td>
             </tr>
 
             <!-- 경기 점수 -->
             <tr class="score">
                 <td colspan="2" th:text="${}">뮌헨</td>
-                <td colspan="2"><span th:text="${value ?: 0}">0</span> : <span th:text="${value ?: 0}">0</span></td>
+                <td colspan="3"><span th:text="${value ?: 0}">0</span> : <span th:text="${value ?: 0}">0</span></td>
                 <td colspan="2" th:text="${}">아우크스부르크</td>
             </tr>
 
@@ -83,14 +89,14 @@
                 <td colspan="7">
                     <div class="formBox">
                         <div class="btnChkBox v2" th:each=" : ${}">
-                            <button type="button" class="betBtn2" onclick="highlight(this) ; selectOutcome('WIN')">
-                                <span>승</span><br/><span class="db" th:text="${match.bet}">2.50</span>
+                            <button type="button" class="betBtn2" th:title="${}">
+                                <span th:text="${match.win}">승</span><br/><span class="db" th:text="${match.bet}">2.50</span>
                             </button>
-                            <button type="button" class="betBtn2" onclick="highlight(this) ; selectOutcome('DRAW')">
-                                <span>무</span><br/><span class="db" th:text="${}">3.20</span>
+                            <button type="button" class="betBtn2" th:title="${}">
+                                <span th:text="${}">무</span><br/><span class="db" th:text="${}">3.20</span>
                             </button>
-                            <button type="button" class="betBtn2" onclick="highlight(this) ; selectOutcome('LOSE')">
-                                <span>패</span><br/><span class="db" th:text="${}">2.36</span>
+                            <button type="button" class="betBtn2" th:title="${}">
+                                <span th:text="${}">패</span><br/><span class="db" th:text="${}">2.36</span>
                             </button>
                         </div>
                     </div>
@@ -100,7 +106,6 @@
             <tr class="score2">
                 <td colspan="2">
                     <form th:action="@{/betting}" method="post">
-                        <input type='hidden' id='outcome' name='outcome'>
                         <input type="number" name="betAmount" th:value="${betAmount}">
                         <span>만 유로</span>
                         <button type="submit">
@@ -111,7 +116,7 @@
                 <td colspan="2">
                     배팅 가능금액 : <span th:text="${}">0</span> (만 유로)
                 </td>
-                <td colspan="2">
+                <td colspan="3">
                     예상 적중금액 : <span th:text="${}">0</span> (만 유로)
                 </td>
             </tr>
@@ -152,36 +157,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
-<!-- Button -->
-<script type='text/javascript'>
-    // When the DOM is ready...
-    document.addEventListener('DOMContentLoaded', function() {
-        // Function to highlight a button and un-highlight others
-        window.highlight = function(button) {
-            // Get all buttons with the 'betBtn2' class
-            var buttons = document.querySelectorAll('.betBtn2');
-
-            // For each button...
-            for (var i = 0; i < buttons.length; i++) {
-                // If this is the clicked button, add the 'highlight' class
-                if (buttons[i] === button) {
-                    buttons[i].classList.add('highlight');
-                }
-                // Otherwise, remove the 'highlight' class
-                else {
-                    buttons[i].classList.remove('highlight');
-                }
-            }
-        };
-
-        window.selectOutcome = function(outcome) {
-            console.log("Select outcome function called with outcome: " + outcome);
-
-            // Set the value of the hidden input field to the selected outcome
-            document.getElementById('outcome').value = outcome;
-        };
-    });
-</script>
-
 </body>
 </html>
