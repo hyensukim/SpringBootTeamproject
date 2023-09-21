@@ -39,16 +39,17 @@
         <!-- 게시판 내용 반복 -->
         <tr th:each="post : ${posts}">
             <td th:text="${post.pNo}"></td>
-            <td th:text="${post.member.mId}"></td>
-            <td th:text="${post.member.mNickName}"></td>
+            <td th:text="${post.member != null ? post.member.mId : ''}"></td>
+            <td th:text="${post.member != null ? post.member.mNickName : ''}"></td>
             <td th:text="${post.board.bName}"></td>
-            <td><a th:href="@{'/post/' + ${post.pNo}}" th:text="${post.pTitle}"></a></td>
+            <td><a th:href="@{'/posts/' + ${post.pNo}}" th:text="${post.pTitle}"></a></td>
             <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
 
             <!-- 게시글 삭제 -->
+
             <td>
-                <form th:action="@{'/posts/' + ${post.pNo}/delete}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
+                <form th:action="@{/posts/{pNo}(pNo=${post.pNo})}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
                     <input type="hidden" name="_method" value="delete"/>
                     <button type="submit">게시글 삭제</button>
                 </form>

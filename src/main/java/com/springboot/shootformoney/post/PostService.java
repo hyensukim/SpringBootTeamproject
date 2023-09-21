@@ -3,10 +3,12 @@ package com.springboot.shootformoney.post;
 
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
+import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.webjars.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +66,7 @@ public class PostService {
         return 	postRepository.findAll();
     }
 
-    //단일 조회
+//    단일 조회
     @Transactional
     public PostDTO findPost(Long pNo) {
         Post post = postRepository.findOne(pNo);
@@ -76,7 +78,9 @@ public class PostService {
         }
     }
 
-    // 제목으로 찾기
+
+
+        // 제목으로 찾기
     public List<Post> findPostsByTitle(String pTitle) {
         return postRepository.findByTitle(pTitle);
     }

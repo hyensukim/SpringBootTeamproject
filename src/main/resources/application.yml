@@ -7,8 +7,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/shootformoney
-    username: root
-    password: aA!123456
+    username: beo
+    password: 7730
 
   jpa:
     hibernate:
@@ -53,5 +53,5 @@ logging.level:
 # football-data.org API 연동
 football:
   api:
-    key: 26d128ed6a694c3699f698df83a4eb54
+    key: c5930ecf721541b29558195336ad3b6f
     base-url: https://api.football-data.org/v4

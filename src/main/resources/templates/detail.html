@@ -13,52 +13,33 @@
   <body>
 <div class="board_wrap">
   <div class="board_title">
-    <h2 th:text="#{}">글 상세</h2>
+    <h2 th:text="'글 상세'">글 상세</h2>
   </div>
 
   <div class="board_view_wrap">
     <div class="board_view">
-      <div class="title" th:text="${#}">
-        <label for="boardSubject" th:text="#{}">제목 : </label>
-        <input type="text" id="boardSubject" name="boardSubject" class="form-control" th:value="${post.pTitle}"
-               readonly>
+      <div class="title">
+        <label for="boardSubject">제목 : </label>
+        <input type="text" id="boardSubject" name="boardSubject" class="form-control" th:value="${post.pTitle}" readonly>
       </div>
 
       <div class="info">
         <dl>
-          <dt>
-            <label for="boardId" th:text="#{}">글 ID : </label>
-          </dt>
-          <dd>
-            <input type="text" id="boardId" name="boardId" class="form-control" th:value="${post.pNo}" readonly>
-          </dd>
+          <dt><label for="boardId">게시글 번호 : </label></dt>
+          <dd><input type="text" id="boardId" name="boardId" class="form-control" th:value="${post.pNo}" readonly></dd>
+
+          <dt><label for="author">작성자 ID : </label></dt>
+          <dd><input type="text" id="author" name="author" class="form-control" th:value="${post.member.mId}" readonly></dd>
+
+          <dt><label for="regdate">등록일 : </label></dt>
+          <dd><input type="text" id ="regdate" name ="regdate"class ="form-control"
+                     th:value="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}" readonly ></dd>
         </dl>
         <dl>
-          <dt>
-            <label for="name" th:text="#{}">작성자 : </label>
-          </dt>
-          <dd>
-            <input type="text" id="name" name="name" class="form-control" th:value="${post.author}" readonly>
-          </dd>
+          <dt><label for="viewcnt">조회수 : </label></dt>
+          <dd><input type="text" id="viewcnt" name="viewcnt" class="form-control" th:value="${post.viewCount}" readonly></dd>
         </dl>
-        <dl>
-          <dt>
-            <label for="regdate" th:text="#{}">등록일</label>
-          </dt>
-          <dd>
-            <input type="text" id="regdate" name="regdate" class="form-control"
-                   th:value="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}" readonly>
-          </dd>
-        </dl>
-        <dl>
-          <dt>
-            <label for="viewcnt" th:text="#{}">조회수 : </label>
-          </dt>
-          <dd>
-            <input type="text" id="viewcnt" name="viewcnt" class="form-control" th:value="${post.viewCount}" readonly>
-          </dd>
-        </dl>
-      </div>
+        </div>
 
       <div class="cont">
         <label for="contents" th:text="#{}"></label>
