@@ -1,74 +1,91 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-    <meta charset="utf-8">
-    <link th:href="@{../static/css/css.css}"
-          href="../static/css/css.css" rel="stylesheet">
-    <title>게시판 리스트</title>
-</head>
-<body>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<meta charset="utf-8">
+<main layout:fragment="common">
 
-<!-- 네비게이션 바 -->
-<div id="nav-load" th:insert="html/nav.html :: navFragment"></div>
+    <h2>게시판 조회</h2>
+    <form th:action="@{/posts/posts/all}" method="get">
+        <select name="bNo">
+            <option value="">All Boards</option>
+            <option value="1">Board 1</option>
+            <option value="2">Board 2</option>
+            <!-- Add more options for other boards -->
+        </select>
+        <button type="submit">Filter by Board</button>
+    </form>
+    <table class="table text-center">
+        <thead>
+        <tr>
+            <th>게시글 번호</th>
+            <th>회원 ID</th>
+            <th>별명</th>
+            <th>게시판</th>
+            <th>제목</th>
+            <th>작성일</th>
+            <th>수정일</th>
+        </tr>
+        </thead>
 
-<!-- 게시판 -->
-<div class="board_wrap">
-    <div class="board_title">
-        <h2 th:text="#{}">게시판 이름</h2>
+        <!-- 게시판 내용 반복 -->
+        <tr th:each="post : ${posts}">
+            <td th:text="${post.pNo}"></td>
+            <td th:text="${post.member.mId}"></td>
+            <td th:text="${post.member.mNickName}"></td>
+            <td th:text="${post.board.bName}"></td>
+            <td><a th:href="@{'/post/' + ${post.pNo}}" th:text="${post.pTitle}"></a></td>
+            <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+
+            <!-- 게시글 삭제 -->
+            <td>
+                <form th:action="@{'/post/' + ${post.pNo}}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit">게시글 삭제</button>
+                </form>
+            </td>
+
+        </tr>
+    </table>
+
+    <!-- 게시글 조회 -->
+    <form th:action="@{/post/postList/search}" method="get">
+        <!-- Search Category -->
+        <select name="category">
+            <option value="pNo">게시글 번호</option>
+            <option value="mId">작성자 ID</option>
+            <option value="mNickName">작성자 별명</option>
+            <option value="bName">게시판</option>
+            <option value="pTitle">제목</option>
+        </select>
+
+        <input type="text" name="query" placeholder="검색">
+
+        <button type="submit">검색</button>
+        <a th:href="@{/post/postList/all}">전체보기</a>
+    </form>
+
+    <div class="pagination">
+        <ul>
+            <!-- showPrev가 true일 때 '이전' 링크를 보여줍니다 -->
+            <li th:if="${pageHandler.showPrev}">
+                <a th:href="@{'/post/postList/all?page=' + ${pageHandler.beginPage - 1}}">이전</a>
+            </li>
+
+            <!-- 페이지 번호들을 보여줍니다 -->
+            <li th:each="pageNum : ${#numbers.sequence(pageHandler.beginPage, pageHandler.endPage)}">
+                <a th:href="@{'/admin/post/postList/all?page=' + ${pageNum}}"
+                   th:text="${pageNum}"
+                   th:class="${pageNum == pageHandler.page ? 'active' : ''}"></a>
+            </li>
+
+            <!-- showNext가 true일 때 '다음' 링크를 보여줍니다 -->
+            <li th:if="${pageHandler.showNext}">
+                <a th:href="@{'/post/postList/all?page=' + ${pageHandler.endPage + 1}}">다음</a>
+            </li>
+        </ul>
     </div>
 
-    <div class="row">
-        <div class="col">
-            <button class="btn1">
-                <a href="#" th:href="@{#}" th:text="${}">게시판 이름</a>
-            </button>
-            <button class="btn1">
-                <a href="#" th:href="@{#}" th:text="${}">게시판 이름</a>
-            </button>
-            <button class="btn1">
-                <a href="#" th:href="@{#}" th:text="${}">게시판 이름</a>
-            </button>
-        </div>
-    </div>
-
-    <div class="board_list_wrap">
-        <div class="board_list">
-            <div class="top">
-                <div class="ID"  th:text="#{}">글 ID</div>
-                <div class="title" th:text="#{}">제목</div>
-                <div class="writer" th:text="#{}">작성자</div>
-                <div class="date" th:text="#{}">등록일</div>
-                <div class="count" th:text="#{}">조회수</div>
-            </div>
-            <div th:each="board : ${}">
-                <div class="ID"><a href="detail.html" th:href="@{#}" th:text="${}">글 ID</a></div>
-                <div class="title"><a href="#" th:href="@{#}" th:text="${}">제목</a></div>
-                <div class="writer" th:text="${}">작성자</div>
-                <div class="date" th:text="${}">등록일</div>
-                <div class="count" th:text="${}">조회수</div>
-            </div>
-        </div>
-        <!-- 페이징 처리 전 임시용 -->
-        <div class="board_page">
-            <a href="#" class="bt first" th:href="@{#}"><<</a>
-            <a href="#" class="bt prev" th:href="@{#}"><</a>
-            <a href="#" class="num on" th:href="@{#}">1</a>
-            <a href="#" class="num" th:href="@{#}">2</a>
-            <a href="#" class="num" th:href="@{#}">3</a>
-            <a href="#" class="num" th:href="@{#}">4</a>
-            <a href="#" class="num" th:href="@{#}">5</a>
-            <a href="#" class="bt next" th:href="@{#}">></a>
-            <a href="#" class="bt last" th:href="@{#}">>></a>
-        </div>
-        <div class="bt_wrap">
-            <a href="addForm.html" th:href="@{#}" th:text="${}">글 작성</a>
-        </div>
-    </div>
-</div>
-
-<!-- 푸터 -->
-<footer th:replace="~{footer :: footerFragment}"></footer>
-
-</body>
+</main>
 </html>

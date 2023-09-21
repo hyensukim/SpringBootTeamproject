@@ -3,9 +3,6 @@ package com.springboot.shootformoney.post;
 
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
-import com.springboot.shootformoney.file.File;
-import com.springboot.shootformoney.file.FileRepository;
-import com.springboot.shootformoney.member.entity.Member;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +15,6 @@ public class PostRepository {
 
     private final EntityManager em;
     private final BoardRepository boardRepository;
-    private final FileRepository fileRepository;
 
     //게시판 저장
     public void save(Post post, Long bNo){
@@ -83,18 +79,10 @@ public class PostRepository {
     }
 
 
-    public void save(Post post, Long bNo, List<File> files){
-        this.save(post, bNo);
 
-        for (File file : files) {
-            post.addFile(file);
-            file.setPost(post);
-            fileRepository.save(file); // 파일 저장
-        }
+    public List<Post> findByBoardBNo(Long bNo) {
+        return em.createQuery("select p from Post p where p.board.bNo = :bNo", Post.class)
+                .setParameter("bNo", bNo)
+                .getResultList();
     }
-
-
-
-
-
 }

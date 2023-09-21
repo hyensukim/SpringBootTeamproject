@@ -3,17 +3,12 @@ package com.springboot.shootformoney.post;
 
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.common.BaseEntity;
-import com.springboot.shootformoney.file.File;
 import com.springboot.shootformoney.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -44,8 +39,6 @@ public class Post extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval=true)
-    private List<File> files = new ArrayList<>();
 
     @Builder
     public Post(String title, String content) {
@@ -90,11 +83,5 @@ public class Post extends BaseEntity {
        }
       }
 
-    public void addFile(File file) {
-        this.files.add(file);
-        if (file.getPost() != this) {
-            file.setPost(this);
-        }
-    }
 
 }

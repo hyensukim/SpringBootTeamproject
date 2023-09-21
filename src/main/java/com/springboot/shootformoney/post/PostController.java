@@ -1,5 +1,9 @@
 package com.springboot.shootformoney.post;
 
+import com.springboot.shootformoney.board.entity.Board;
+import com.springboot.shootformoney.board.repository.BoardRepository;
+import com.springboot.shootformoney.member.entity.Member;
+import com.springboot.shootformoney.member.repository.MemberRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,19 +20,32 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final MemberRepository memberRepository;
+    private  final BoardRepository boardRepository;
 
     @GetMapping("/posts/all")
-    public String getAllPosts(Model model) {
-        List<Post> posts = postService.findAllPosts();
+    public String getAllPosts(@RequestParam(name = "bNo", required = false) Long bNo, Model model) {
+        List<Post> posts;
+
+        if (bNo != null) {
+            posts = postService.findPostsByBoardBNo(bNo);
+        } else {
+            posts = postService.findAllPosts();
+        }
         model.addAttribute("posts", posts);
-        return "post/list";  // 매핑
+        return "post";
     }
 
     @GetMapping("/create")
     public String createPostForm(Model model) {
+        List<Member> members = memberRepository.findAll();
+        List<Board> boards = boardRepository.findAll();
         model.addAttribute("postDto", new PostDTO());
+        model.addAttribute("members", members);
+        model.addAttribute("boards", boards);
         return "post/create";
     }
+
 
     //게시글 생성
     @PostMapping("/")
@@ -47,19 +64,18 @@ public class PostController {
     // 매핑
 
     //삭제
-    @DeleteMapping("/{pNo}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long pNo) {
+    @PostMapping("/{pNo}/delete")
+    public String deletePost(@PathVariable Long pNo) {
         postService.deletePost(pNo);
-        return ResponseEntity.noContent().build();
+        return "redirect:/posts/all";
     }
 
     // 게시글 수정
-    @PutMapping("/{pNo}")
-    public ResponseEntity<Void> updatePost(@PathVariable Long pNo, @Valid @RequestBody 	PostDTO updatedPost) {
+    @PostMapping("/{pNo}/edit")
+    public String editPost(@PathVariable Long pNo, @ModelAttribute("post") @Valid PostDTO updatedPost) {
         postService.updatePost(pNo, updatedPost.getPTitle(), updatedPost.getPContent());
-        return 	ResponseEntity.noContent().build();
+        return "redirect:/posts/{pNo}";
     }
-
     // 전체 게시글 조회
     @GetMapping("/")
     public ResponseEntity<List<Post>> getAllPosts() {
@@ -79,6 +95,20 @@ public class PostController {
     public ResponseEntity<List<Post>> getPostsByMemberNickname(@PathVariable String mNickName) {
         List<Post> posts = postService.findPostsByMemberNickName(mNickName);
         return ResponseEntity.ok(posts);
+    }
+
+    @PostMapping("/{pNo}/detail")
+    public String getPostDetail(@PathVariable Long pNo, Model model) {
+        PostDTO post = postService.findPost(pNo);
+        model.addAttribute("post", post);
+        return "post/view";
+    }
+
+    @GetMapping("/{pNo}/edit")
+    public String editPostForm(@PathVariable Long pNo, Model model) {
+        PostDTO post = postService.findPost(pNo);
+        model.addAttribute("post", post);
+        return "post/edit";
     }
 
 
