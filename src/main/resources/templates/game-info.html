@@ -102,7 +102,7 @@
 
             <tr class="score2">
                 <td colspan="2">
-                    <form th:action="@{/bet/placebet}" method="post">
+                    <form th:action="@{/bet/placebet}" method="post" onsubmit="return validateOutcome()">
                         <input type='hidden' name='gNo' th:value="${gNo}">
                         <input type='hidden' name='matchId' th:value="${matchId}">
                         <input type='hidden' id='outcome' name='expect' th:value="${expect}">
@@ -188,6 +188,17 @@
         };
     });
 </script>
-
+<!-- 그 머지? 그 500오류 방진데 머더라? 아 버튼안누르면 배팅 안되게. -->
+<script>
+    function validateOutcome() {
+        // 'expect' 값이 선택되었는지 확인
+        var outcomeValue = document.getElementById('outcome').value;
+        if (!outcomeValue) {
+            alert('예상 결과를 선택해주세요.'); // 또는 다른 예외 처리 로직을 추가
+            return false; // 폼 서브밋을 방지하여 500 오류를 방지
+        }
+        return true; // 예상 결과가 선택된 경우 폼 서브밋 허용
+    }
+</script>
 </body>
 </html>

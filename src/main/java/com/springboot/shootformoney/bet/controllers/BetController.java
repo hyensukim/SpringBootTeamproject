@@ -20,8 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 //import com.springboot.shootformoney.member.dto.MemberInfo;
 
 @Controller
@@ -45,7 +47,9 @@ public class BetController {
         //경기 시작 후 배팅을 막기 위해 현재 시간 가져옴.
         Game currentGame = matchService.getGameInfo(betDto.getMatchId())
                 .orElseThrow();
-        ZonedDateTime gameStartKST = ZonedDateTime.parse(currentGame.getGStartTime());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime localDateTime = LocalDateTime.parse(currentGame.getGStartTime(), formatter);
+        ZonedDateTime gameStartKST = localDateTime.atZone(ZoneId.of("Asia/Seoul"));
 
         if(currentDateTime.isBefore(gameStartKST)){
             // 유저 정보 가져오기
@@ -59,12 +63,11 @@ public class BetController {
             euroPoolService.collectEuro(bet);
             // 유로 보유량 감소 처리
             euroService.decreaseEuro(mNo, betDto.getBtMoney());
-            return "redirect:/list/unstarted/entirelist";
         } else {
             String errorMsg = "error : 경기가 이미 시작되어 배팅할 수 없습니다.";
             model.addAttribute("errorMsg", errorMsg);
-            return "redirect:/list/unstarted/entirelist";
         }
+        return "redirect:/list/unstarted/entirelist";
 
     }
 
