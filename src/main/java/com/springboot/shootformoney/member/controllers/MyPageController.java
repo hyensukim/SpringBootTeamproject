@@ -159,26 +159,27 @@ public class MyPageController {
             List<Post> postList = posts.getContent();
 
             // 페이징 이동하는 기능 구현.
-            boolean hasPrev = posts.hasPrevious();
-            boolean hasNext = posts.hasNext();
+//            boolean hasPrev = posts.hasPrevious();
+//            boolean hasNext = posts.hasNext();
 
             // getPageable() : 페이지 처리를 위한 정보
             /*
             pageNumber : 0(0번째 페이지(1번 의미)의 페이지 선택)
             pageSize : 15(하나의 페이지에 담길 갯수)
-            navSize : 10개 용량
+            navSize : 정해놓은 페이지 크기
             total page : 전체 페이지 갯수
              */
-            int nowPage = posts.getPageable().getPageNumber() + 1; // 1번 페이지를 의미.
-            int startPage = (nowPage-1) / 10 * 10 + 1;
-            int endPage = Math.min(startPage + 10 - 1, posts.getTotalPages());
+            // getPageNumber() : Pageable 안에 pageNumber : 현재 페이지(0부터 시작)
+            int nowPage = posts.getPageable().getPageNumber() + 1; // 현재 페이지
+            int startPage = (nowPage-1) / 10 * 10 + 1; // 첫페이지
+            int endPage = Math.min(startPage + 10 - 1, posts.getTotalPages()); // 마지막 페이지
 
             model.addAttribute("postList", postList);
             model.addAttribute("nowPage", nowPage);
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
-            model.addAttribute("hasPrev",hasPrev);
-            model.addAttribute("hasNext",hasNext);
+//            model.addAttribute("hasPrev",hasPrev);
+//            model.addAttribute("hasNext",hasNext);
         }catch(NullPointerException e){
             String script = String.format("Swal.fire('%s','','error')" +
                     ".then(function(){history.back();})",e.getMessage());
@@ -196,7 +197,7 @@ public class MyPageController {
             Page<Bet> bets = memberListService.getsBetWithPages(pageInfo,mNo);
             List<Bet> betList = bets.getContent();
 
-            int nowPage = (bets.getPageable().getPageNumber()) + 1;
+            int nowPage = bets.getPageable().getPageNumber() + 1;
             int startPage = ((nowPage-1) / 10) * 10 + 1;
             int endPage = Math.min(startPage + 10 - 1, bets.getTotalPages());
 

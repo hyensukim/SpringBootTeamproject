@@ -7,7 +7,7 @@ public class SendMailUtil {
                 + "<p> 귀하께서 요청하신 비밀번호 변경 페이지 수신을 위해 </p> \n"
                 + "<br>"
                 + "<p> 발송된 메일 입니다.</p> \n"
-                + "<p> 임시 비밀번호 : <h2>\"+tempPw+\"</h2></p>"
+                + "<p> 임시 비밀번호 : <h2>\"" + tempPw +"\"</h2></p>"
                 + "<br>"
                 + "<h3><a style='text-decoration: none; background-color: #C6BFBFFF; color: red;'"
                 + "href='"+loginUrl+"' target='_blank'>로그인 페이지로 이동</a></h3>"

@@ -58,14 +58,15 @@ public class LevelGradeUtil {
         Integer value = euro.getValue();
         
         //levelUp 로직
-        Integer levelUpScore = (2000 + 50 * level * (level-1))*10000; // 100
-        if(value >= levelUpScore && level < 10){
+        Integer levelUpScore = (2000 + 50 * level * (level-1))*10000; // 100단위 증가
+        if(value >= levelUpScore){
             // 레벨업
-            member.setMLevel(level+1);
+            if(level < 10) {
+                member.setMLevel(level + 1);
+            }
             // 회원 포인트 100만 포인트로 리셋.
             euro.setValue(100 * 10000);
         }
-
         return member;
     }
 }
