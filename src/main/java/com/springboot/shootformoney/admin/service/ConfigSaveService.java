@@ -6,10 +6,14 @@ import com.springboot.shootformoney.admin.entity.ConfigEntity;
 import com.springboot.shootformoney.admin.repository.ConfigRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+/*
+ 관리자 페이지 저장
+ */
 @Service
 @RequiredArgsConstructor
-// 관리자 페이지 저장
+@Transactional
 public class ConfigSaveService {
 
     private final ConfigRepository configRepository;
@@ -18,11 +22,12 @@ public class ConfigSaveService {
         ConfigEntity configEntity = configRepository.findById(code).orElseGet(ConfigEntity::new);
 
         ObjectMapper om = new ObjectMapper();
-        String value = null;
+        String value;
         try{
             value = om.writeValueAsString(t);
         } catch (JsonProcessingException e ) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            throw new RuntimeException("객체를 JSON으로 변환하는 도중 오류가 발생했습니다.", e);
         }
 
         configEntity.setCode(code);

@@ -7,28 +7,31 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cNo;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="m_no")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "m_no")
     private Member member;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="p_no")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "p_no")
     private Post post;
 
+    @Column(columnDefinition = "TEXT")
     private String cContent;
 
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime cCreatedAt;
 
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime cUpdatedAt;
 
-    // getter and setter methods...
+    // Constructors, getters, setters...
 }

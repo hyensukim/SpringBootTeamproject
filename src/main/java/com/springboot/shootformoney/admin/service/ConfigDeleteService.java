@@ -4,9 +4,11 @@ import com.springboot.shootformoney.admin.entity.ConfigEntity;
 import com.springboot.shootformoney.admin.repository.ConfigRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ConfigDeleteService {
     private final ConfigRepository configRepository;
 

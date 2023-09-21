@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin/main}">
+
+<main layout:fragment="common">
+
+    <h2>회원 조회</h2>
+
+    <!-- 회원 조회 -->
+    <form th:action="@{/admin/member/memberList/search}" method="get">
+        <!-- Search Category -->
+        <select name="category">
+            <option value="mNo">회원번호</option>
+            <option value="mId">ID</option>
+            <option value="mName">이름</option>
+            <option value="mNickName">별명</option>
+            <option value="grade">등급</option>
+            <option value="mLevel">레벨</option>
+            <option value="role">권한</option>
+            <!-- Add more options as needed -->
+        </select>
+
+        <input type="text" name="query" placeholder="검색">
+
+        <button type="submit">검색</button>
+        <a th:href="@{/admin/member/memberList/all}">전체보기</a>
+
+        <table class="table text-center">
+            <thead>
+            <tr>
+                <th>회원번호</th>
+                <th>ID</th>
+                <th>PW</th>
+                <th>이름</th>
+                <th>별명</th>
+                <th>이메일</th>
+                <th>핸드폰 번호</th>
+                <th>등급</th>
+                <th>Level</th>
+                <th>권한</th>
+                <th>제재</th>
+            </tr>
+            </thead>
+
+            <tbody th:each="member : ${members}">
+            <tr>
+                <td th:text="${member.mNo}"></td>
+                <td th:text="${member.mId}"></td>
+                <td th:text="${member.mPassword}"></td>
+                <td th:text="${member.mName}"></td>
+                <td th:text="${member.mNickName}"></td>
+                <td th:text="${member.mEmail}"></td>
+                <td th:text="${member.mPhone}"></td>
+                <td th:text="${member.grade}"></td>
+                <td th:text="${member.mLevel}"></td>
+                <td th:text="${member.role}"></td>
+
+                <td>
+                    <!-- 비동기 방식s -->
+                    <!-- 회원 제재 -->
+                    <form th:action="@{'/admin/member/' + ${member.mId}}" method="post"
+                          onsubmit="return confirm('해당 회원을 영구적으로 서비스에서 제외하시겠습니까?')">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button type="submit">Delete</button>
+                    </form>
+
+                    <!-- 권한 변경 -->
+                    <form th:action="@{'/admin/member/' + ${member.mId} + '/role'}" method="post">
+                        <input type="hidden" name="_method" value="put"/>
+                        <!-- ADMIN / MEMBER 둘 중 하나만 선택 하도록 구현 -->
+                        <select name="newRole">
+                            <option value="MEMBER">MEMBER</option>
+                            <option value="ADMIN">ADMIN</option>
+                        </select>
+                        <button type="submit">Change Role</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </form>
+</main>

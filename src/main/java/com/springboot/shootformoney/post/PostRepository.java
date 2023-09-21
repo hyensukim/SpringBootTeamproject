@@ -3,7 +3,6 @@ package com.springboot.shootformoney.post;
 
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
-import com.springboot.shootformoney.member.entity.Member;
 import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,12 +36,6 @@ public class PostRepository {
     public void delete(Post post) {
         em.remove(post);
     }
-
-
-    //게시판 id로 하나 조회
-//    public Post findOne(Long pNo){
-//        return em.find(Post.class, pNo);
-//    }
 
     public Post findOne(Long pNo){
         return em.createQuery("select p from Post p join fetch p.board where p.pNo = :pNo", Post.class)
@@ -87,4 +80,9 @@ public class PostRepository {
                 .getResultList();
     }
 
+    public List<Post> findByBoardBNo(Long bNo) {
+        return em.createQuery("select p from Post p where p.board.bNo = :bNo", Post.class)
+                .setParameter("bNo", bNo)
+                .getResultList();
+    }
 }
