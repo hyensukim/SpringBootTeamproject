@@ -143,7 +143,7 @@ public class MatchController {
         model.addAttribute("game", game);
         List<Double> ratios = euroPoolService.calculateRatio(matchId);
         model.addAttribute("ratios", ratios);
-        Integer totalEuro = memberUtil.getMember().getEuro().getValue() / 10000;
+        Integer totalEuro = euroService.getTotalEuro(memberUtil.getMember().getMNo());
         model.addAttribute("totalEuro", totalEuro);
         return "game-info";
     }

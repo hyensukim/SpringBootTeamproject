@@ -19,6 +19,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -123,25 +126,6 @@ public class MatchService {
         return responseEntity.getBody();
     }
 
-    //기간 내의 모든 EPL/라리가/분데스리가 경기를 API에서 조회하는 메서드.
-    public List<MatchesDto> getAllMatches() {
-        List<MatchesDto> allMatches = new ArrayList<>();
-
-        // EPL 경기 정보 가져오기
-        MatchesDto eplMatches = getPLMatches();
-        allMatches.add(eplMatches);
-
-        // 라리가 경기 정보 가져오기
-        MatchesDto pdMatches = getPDMatches();
-        allMatches.add(pdMatches);
-
-        // 분데스리가 경기 정보 가져오기
-        MatchesDto bl1matches= getBL1Matches();
-        allMatches.add(bl1matches);
-
-        return allMatches;
-    }
-
     //외부 API에서 PL/라리가/분데스 경기 정보를 가져오고 DB에 저장하는 메서드.
     public void saveAllMatchesToDB(){
         MatchesDto plMatches = getPLMatches();
@@ -161,13 +145,16 @@ public class MatchService {
     //외부 API에서 JSON 형식으로 받아 온 데이터를 DB에 저장할 수 있는 List<Game>으로 변환하는 메서드.
     //saveAllMatchesToDB()에 포함되는 메서드임.
     private List<Game> convertToEntity(List<Match> matches){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return matches.stream()
                 .map(match -> Game.builder()
                         .gLeague(match.getCompetition().getName())
                         .matchId(match.getMatchId())
                         .gHomeTeam(match.getHomeTeam().getName())
                         .gAwayTeam(match.getAwayTeam().getName())
-                        .gStartTime(match.getUtcDate())
+                        .gStartTime(ZonedDateTime.parse(match.getUtcDate())
+                                .withZoneSameInstant(ZoneId.of("Asia/Seoul"))
+                                .format(formatter))
                         .gHomeScore(match.getScore().getFullTime().getHome())
                         .gAwayScore(match.getScore().getFullTime().getAway())
                         .build())

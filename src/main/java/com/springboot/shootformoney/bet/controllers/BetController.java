@@ -5,6 +5,7 @@ import com.springboot.shootformoney.bet.entity.Bet;
 import com.springboot.shootformoney.bet.service.BetService;
 import com.springboot.shootformoney.bet.service.EuroPoolService;
 import com.springboot.shootformoney.bet.service.EuroService;
+import com.springboot.shootformoney.game.entity.Game;
 import com.springboot.shootformoney.game.service.MatchService;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.MemberRepository;
@@ -18,6 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 //import com.springboot.shootformoney.member.dto.MemberInfo;
 
 @Controller
@@ -37,18 +41,31 @@ public class BetController {
     @Transactional
     public String placeBet(BetDto betDto, Model model) {
         model.addAttribute("pageTitle", "배팅 등록하기");
-        // 유저 정보 가져오기
-        Long mNo = memberUtil.getMember().getMNo();
-        betDto.setGNo(matchService.getGameInfo(betDto.getMatchId())
-                .orElseThrow().getGNo());
-        betDto.setMNo(mNo);
-        // 배팅 정보 저장
-        Bet bet = betService.bet(betDto.getGNo(), betDto.getExpect(), betDto.getBtMoney());
-        // EuroPool에 배팅금 누적
-        euroPoolService.collectEuro(bet);
-        // 유로 보유량 감소 처리
-        euroService.decreaseEuro(mNo, betDto.getBtMoney());
-        return "redirect:/list/unstarted/entirelist";
+        ZonedDateTime currentDateTime = ZonedDateTime.now();
+        //경기 시작 후 배팅을 막기 위해 현재 시간 가져옴.
+        Game currentGame = matchService.getGameInfo(betDto.getMatchId())
+                .orElseThrow();
+        ZonedDateTime gameStartKST = ZonedDateTime.parse(currentGame.getGStartTime());
+
+        if(currentDateTime.isBefore(gameStartKST)){
+            // 유저 정보 가져오기
+            Long mNo = memberUtil.getMember().getMNo();
+            betDto.setGNo(matchService.getGameInfo(betDto.getMatchId())
+                    .orElseThrow().getGNo());
+            betDto.setMNo(mNo);
+            // 배팅 정보 저장
+            Bet bet = betService.bet(betDto.getGNo(), betDto.getExpect(), betDto.getBtMoney());
+            // EuroPool에 배팅금 누적
+            euroPoolService.collectEuro(bet);
+            // 유로 보유량 감소 처리
+            euroService.decreaseEuro(mNo, betDto.getBtMoney());
+            return "redirect:/list/unstarted/entirelist";
+        } else {
+            String errorMsg = "error : 경기가 이미 시작되어 배팅할 수 없습니다.";
+            model.addAttribute("errorMsg", errorMsg);
+            return "redirect:/list/unstarted/entirelist";
+        }
+
     }
 
     //추가용~
