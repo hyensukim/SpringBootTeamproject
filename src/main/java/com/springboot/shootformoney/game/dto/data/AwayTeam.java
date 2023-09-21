@@ -9,6 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class AwayTeam {
-    @JsonProperty("name")
+    @JsonProperty("shortName")
     private String name;
 }

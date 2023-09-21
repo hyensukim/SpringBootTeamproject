@@ -2,6 +2,7 @@ package com.springboot.shootformoney.bet.dto;
 
 
 import com.springboot.shootformoney.game.dto.data.Result;
+import com.springboot.shootformoney.game.entity.Game;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ public class BetDto {
 
     private Long gNo;
     private Long mNo;
+    private Integer matchId;
     private Integer btMoney;
-    private Result expect;
+    private String expect;
 }

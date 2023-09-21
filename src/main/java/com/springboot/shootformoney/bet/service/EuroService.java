@@ -11,6 +11,7 @@ import com.springboot.shootformoney.member.entity.Euro;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.EuroRepository;
 import com.springboot.shootformoney.member.repository.MemberRepository;
+import com.springboot.shootformoney.member.utils.MemberUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +28,7 @@ public class EuroService {
     private BetRepository betRepository;
 
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberUtil memberUtil;
 
     //유저가 배팅하면 유로 보유량을 배팅금만큼 감산하는 메서드.
     @Transactional
@@ -47,9 +48,9 @@ public class EuroService {
 
     //유저가 배팅을 취소하면 유로 보유량을 취소한 배팅금만큼 가산하는 메서드.
     @Transactional
-    public void rollbackEuro(Long mNo, Long betId) {
+    public void rollbackEuro(Long mNo, Long btNo) {
         // 해당 Member와 연결된 Bet 데이터를 찾아 온다.
-        Optional<Bet> optionalBet = betRepository.findById(betId);
+        Optional<Bet> optionalBet = betRepository.findById(btNo);
         Bet bet = optionalBet.get();
         Integer rollbackValue = bet.getBtMoney() * 10000;  // 취소할 배팅금액 조회 후 1만을 곱합.
 
@@ -60,5 +61,10 @@ public class EuroService {
         currentEuro.setValue(updatedValue);  // 갱신된 금액으로 설정
 
         euroRepository.save(currentEuro);  // 변경된 정보 저장
+    }
+
+    public Integer getTotalEuro(Long mNo){
+        int totalEuro = memberUtil.getEntity().getEuro().getValue();
+        return totalEuro / 10000;
     }
 }

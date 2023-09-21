@@ -24,7 +24,7 @@ public class EuroPoolService {
     }
 
     //실시간 배당률 정보를 프론트에 제공하기 위한 메서드이다.
-    public List<Double> calculateRate(Integer matchId) {
+    public List<Double> calculateRatio(Integer matchId) {
 
         Game game = gameRepository.findByMatchId(matchId)
                 .orElseThrow(()->new RuntimeException("해당 경기 정보가 존재하지 않습니다."));
@@ -50,10 +50,10 @@ public class EuroPoolService {
             if(gNo != null && !euroPoolRepository.existsByGame_gNo(gNo)){
                 EuroPool euroPool = EuroPool.builder()
                     .game(game)
-                    //default가 0으로 설정되어 있지만, 코드의 명확성과 ORM 동작방식으로 고려하여 명시적으로 초기화함.
-                    .winEuro(0)
-                    .drawEuro(0)
-                    .loseEuro(0)
+                    //default가 1로 설정되어 있지만, 코드의 명확성과 ORM 동작방식으로 고려하여 명시적으로 초기화함.
+                    .winEuro(1)
+                    .drawEuro(1)
+                    .loseEuro(1)
                     .build();
                 euroPoolRepository.save(euroPool);
             }

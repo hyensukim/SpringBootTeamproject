@@ -12,9 +12,10 @@
 <body>
 <!-- 네비게이션 바(헤더) -->
 <nav th:replace="~{/outlines/nav :: common}"></nav>
+
 <main>
     <header class="prediction-hd">
-        <h2 class="fw-bolder mb-1">EPL 승부 예측</h2>
+        <h2 class="fw-bolder mb-1">전체 경기 결과</h2>
     </header>
 
     <div class = "scroll3">
@@ -26,8 +27,8 @@
                 <th>대회</th>
                 <th>홈팀</th>
                 <th>원정팀</th>
+                <th>스코어</th>
                 <th>배당률</th>
-                <th>배팅</th>
             </tr>
             </thead>
             <tbody>
@@ -37,6 +38,7 @@
                 <td th:text="${game.gLeague}"></td>
                 <td th:text="${game.gHomeTeam}"></td>
                 <td th:text="${game.gAwayTeam}"></td>
+                <td><span th:text="${game.getGHomeScore() ?: 0}">0</span> : <span th:text="${game.getGAwayScore() ?: 0}">0</span></td>
                 <td>
                     <div class="formBox">
                         <th:block th:with="ratioList=${ratios[__${game.getMatchId()}__]}">
@@ -54,11 +56,6 @@
                         </th:block>
                     </div>
                 </td>
-                <td>
-                    <a th:href="@{/list/__${game.getMatchId()}__}">
-                        <button type="button" class="betBtn">배팅</button>
-                    </a>
-                </td>
             </tr>
             </tbody>
         </table>
@@ -68,15 +65,15 @@
     <div class="col-lg-4">
         <!-- Categories widget-->
         <div class="card mb-4">
-            <div class="card-header">리그 별 승부예측</div>
+            <div class="card-header">리그 별 경기 결과</div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-6">
                         <ul class="list-unstyled mb-0">
-                            <li><a th:href="@{/list/unstarted/entirelist}">전체 목록 보기</a></li>
-                            <li><a th:href="@{/list/unstarted/epl}">EPL</a></li>
-                            <li><a th:href="@{/list/unstarted/laliga}">LaLiga</a></li>
-                            <li><a th:href="@{/list/unstarted/bundes}">Bundesliga</a></li>
+                            <li><a th:href="@{/list/finished/entirelist}">전체 목록 보기</a></li>
+                            <li><a th:href="@{/list/finished/epl}">EPL</a></li>
+                            <li><a th:href="@{/list/finished/laliga}">LaLiga</a></li>
+                            <li><a th:href="@{/list/finished/bundes}">Bundesliga</a></li>
                         </ul>
                     </div>
                 </div>

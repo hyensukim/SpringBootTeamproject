@@ -4,8 +4,6 @@ import com.springboot.shootformoney.game.dto.data.Result;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 /*경기 데이터 엔터티
 * Author: Hyedokal(https://www.github.com/Hyedokal)
  */
