@@ -57,17 +57,17 @@ public class BoardService {
         }
     }
 
-    // 페이징 처리
-    public PageHandler getBoardsWithPaging(Long bNo, int bPageNo, int bUnitNo) {
-        int totalCnt = boardRepository.countBybNo(bNo);
-        PageHandler pageHandler = new PageHandler(totalCnt, bPageNo, bUnitNo);
-
-        List<Board> boards = boardRepository.findAll(PageRequest.of(bPageNo - 1, bUnitNo)).getContent();
-        List<BoardDto> boardDtos = boards.stream().map(BoardDto::fromEntity).collect(Collectors.toList());
-
-
-        return pageHandler;
-    }
+//    // 페이징 처리
+//    public PageHandler getBoardsWithPaging(Long bNo, int bPageNo, int bUnitNo) {
+//        int totalCnt = boardRepository.countBybNo(bNo);
+//        PageHandler pageHandler = new PageHandler(totalCnt, bPageNo, bUnitNo);
+//
+//        List<Board> boards = boardRepository.findAll(PageRequest.of(bPageNo - 1, bUnitNo)).getContent();
+//        List<BoardDto> boardDtos = boards.stream().map(BoardDto::fromEntity).collect(Collectors.toList());
+//
+//
+//        return pageHandler;
+//    }
 
 
 
