@@ -34,13 +34,13 @@
     <tr>
         <th>회원번호</th>
         <th>ID</th>
-        <th>PW</th>
         <th>이름</th>
         <th>별명</th>
         <th>이메일</th>
         <th>핸드폰 번호</th>
         <th>등급</th>
         <th>Level</th>
+        <th>보유 EURO</th>
         <th>권한</th>
         <th>기타</th>
     </tr>
@@ -51,13 +51,13 @@
     <tr th:each="member : ${members}">
         <td th:text="${member.mNo}"></td>
         <td th:text="${member.mId}"></td>
-        <td th:text="${member.mPassword}"></td>
         <td th:text="${member.mName}"></td>
         <td th:text="${member.mNickName}"></td>
         <td th:text="${member.mEmail}"></td>
         <td th:text="${member.mPhone}"></td>
         <td th:text="${member.grade}"></td>
         <td th:text="${member.mLevel}"></td>
+        <td th:text="${member.euro.value + '€'}"></td>
         <td th:text="${member.role}"></td>
 
         <td>
