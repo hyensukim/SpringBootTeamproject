@@ -78,7 +78,7 @@ public class BetController {
     }
 
     //배팅 취소 메서드. Bet엔터티에서 배팅 정보를 삭제하고, 보유금에 배팅금만큼 가산한다.
-    @PostMapping("/cancelbet/{btNo}")
+    @DeleteMapping("/cancelbet/{btNo}")
     @Transactional
     public String cancelBet(@PathVariable Long btNo, Model model) {
         model.addAttribute("pageTitle", "배팅 취소하기");
