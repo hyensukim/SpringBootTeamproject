@@ -8,13 +8,11 @@
 
     <h2>게시판 관리</h2>
 
-    <form th:action="@{/admin/board/boadrList/search}" method="get">
-
+    <form th:action="@{/admin/board/boardList/search}" method="get">
         <select name="category">
             <option value="bNo">게시판 번호</option>
             <option value="bName">게시판 이름</option>
             <option value="bIsFile">파일 첨부 여부</option>
-
             <!-- Add more options as needed -->
         </select>
 
@@ -31,6 +29,7 @@
     <table class="table text-center">
         <thead>
         <tr>
+            <th>수정</th>
             <th>게시판 번호</th>
             <th>게시판 이름</th>
             <th>게시글 개수</th>
@@ -41,15 +40,40 @@
         </thead>
         <!-- 게시판 내용 반복 -->
         <tr th:each="board : ${boards}">
-            <td th:text="${board.bNo}"></td>
-            <td th:text="${board.bName}"></td>  <!-- 게시판 선택 시 해당 게시판의 게시글 리스트 조회 -->
-            <td th:text="${postCounts[board.bNo]}"></td>
-            <td th:text="${board.bIsFile}"></td>
-            <td th:text="${board.bPageNo + ' / ' + board.getBUnitNo}"></td>
-            <!--            <td th:text="${board.bUnitNo}"></td>-->
-            <!-- 게시판 생성, 수정일 고민... -->
-            <!--            <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
-            <!--            <td th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
+            <!-- 게시판 수정 -->
+            <td>
+                <button class="editButton">수정</button>
+                <form class="updateForm" th:action="@{'/admin/board/update/' + ${board.bNo}}" method="post"
+                      style="display: none;">
+                    <button type='submit'>저장</button>
+
+                    <td th:text="${board.bNo}"></td>
+                    <!-- 게시판 선택 시 해당 게시판의 게시글 리스트 조회 -->
+                    <td>
+                        <span class="readable" th:text="${board.bName}"></span>
+                        <input class="editable" type="text" name="newBName" th:value="${board.bName}"
+                               style="display: none;"/>
+                    </td>
+                    <td th:text="${postCounts[board.bNo]}"></td>
+                    <td>
+                        <span class="readable" th:text="${board.bIsFile ? 'ture' : 'false'}"></span>
+                        <input class='editable' type='checkbox' name='newBIsFile' th:checked='${board.bIsFile}'
+                               style='display: none;'/>
+                    </td>
+                    <td>
+                        <div class='readable'>
+                            Page:
+                            <span th:text='${board.bPageNo + " / " + board.bUnitNo}'></span>
+                        </div>
+                        <div class='editable' style='display: none;'>
+                            Page:
+                            <input type='number' name='newBPageNo' th:value='${board.bPageNo}'/>
+                            Size:
+                            <input type='number' name='newBUniNo' th:value='${board.bUnitNo}'/>
+                        </div>
+                    </td>
+                </form>
+            </td>
 
             <!-- 게시판 삭제 -->
             <td>
@@ -61,9 +85,12 @@
             </td>
 
         </tr>
+        <br/>
+
     </table>
     <!-- 게시판 생성 폼 (기본적으로 숨겨져 있음) -->
-    <form id="createBoardForm" th:action="@{/admin/board/create}" method="post" style="display: none;">
+    <form id="createBoardForm" th:action="@{/admin/board/create}" method="post" style="display: none;"
+          onsubmit="return handleFormSubmit();">
         <label for="bName">게시판 이름:</label><br/>
         <input type="text" id="bName" name="bName"/><br/>
 
@@ -73,15 +100,16 @@
         <label for="bUnitNo">리스트별 게시글 개수:</label><br/>
         <input type="number" id="bUnitNo" name="bUnitNo"/><br/>
 
-        <input type='hidden' name='bIsFile' value='false'>
+        <input type='hidden' id='bIsFile' name='bIsFile' value='false'>
         <label for='fileCheck'>파일 첨부 여부</label>
-        <input type='checkbox' id='fileCheck' name='bIsFile' value='true'><br>
+        <input type='checkbox' id='fileCheck'><br>
 
         <button type="submit">생성</button>
     </form>
 
 </main>
 </html>
+
 <script>
     document.getElementById('createBoardButton').addEventListener('click', function () {
         var form = document.getElementById('createBoardForm');
@@ -96,9 +124,29 @@
         var checkbox = document.getElementById('fileCheck');
         var hiddenInput = document.getElementById('bIsFile');
 
-// Set the hidden input's value according to the checkbox state
+        // Set the hidden input's value according to the checkbox state
         hiddenInput.value = checkbox.checked ? 'true' : 'false';
 
         return true; // Allow form submission
     }
+
+    // 수정 시 발생 이벤트
+    document.querySelectorAll('.editButton').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var row = button.parentNode.parentNode;
+
+            // Hide the readable elements and show the editable elements
+            row.querySelectorAll('.readable').forEach(function (span) {
+                span.style.display = 'none';
+            });
+
+            row.querySelectorAll('.editable').forEach(function (input) {
+                input.style.display = 'inline';
+            });
+
+            // Hide the edit button and show the update form
+            button.style.display = 'none';
+            row.querySelector('.updateForm').style.display = 'inline-block';
+        });
+    });
 </script>

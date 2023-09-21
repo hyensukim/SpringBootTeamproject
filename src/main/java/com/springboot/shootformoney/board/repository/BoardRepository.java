@@ -22,14 +22,6 @@ public interface BoardRepository extends JpaRepository<Board, String> {
     int countBybNo(Long bNo);
 
 
-    // 게시판 검색용
-    @Query("SELECT b FROM Board b WHERE (:bNo is null or b.bNo = :bNo) and " +
-            "(:bName is null or b.bName like %:bName%) and " +
-            "(:bIsFile is null or b.bIsFile = :bIsFile)")
-    List<Board> search(@Param("bNo") Long bNo,
-                       @Param("bName") String bName,
-                       @Param("bIsFile") Boolean bIsFile);
-
     // 게시판 - 게시글 개수
     @Query("SELECT COUNT(p) FROM Board b JOIN b.posts p WHERE b.bNo = :bNo")
     int getPostCountByBoardId(@Param("bNo") Long bNo);
