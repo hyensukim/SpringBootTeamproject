@@ -91,13 +91,12 @@ public class BetController {
             Long mNo = memberUtil.getMember().getMNo();
             // 보유 유로 롤백 처리
             euroService.rollbackEuro(mNo, btNo);
-
             // 배팅 정보 삭제
             betService.betCancel(btNo);
         } catch (Exception e) {
             String errorMsg =  "배팅 취소 중 오류가 발생했습니다.";
             model.addAttribute("errorMsg", errorMsg);
         }
-        return "redirect:/member/mypage/mybet/1";
+        return "redirect:/member/mypage/mybet/${mNo}";
     }
 }
