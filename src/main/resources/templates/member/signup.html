@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{../../static/css/styles.css}"
+          href="../../static/css/styles.css" rel="stylesheet">
+
+    <title th:text="${}">Title</title>
+</head>
+<body>
+<!-- 네비게이션 바(헤더) -->
+<nav th:replace="~{../../outlines/nav :: common}"></nav>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="index.html" th:href="@{#}"><img class = "logo" src = "../static/image/Logo.png" th:src="@{이미지 경로}" />Shoot for Money</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="post.html" th:href="@{#}">커뮤니티</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">경기 결과</a></li>
+                <li class="nav-item"><a class="nav-link" href="prediction.html" th:href="@{#}">승부 예측</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">로그인</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!" th:href="@{#}">마이페이지</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="center-form">
+    <h2 class="fw-bolder mb-1">회원 가입</h2>
+</header>
+
+<div class="fmrSignUp">
+    <form th:action="@{/member/signup}" th:object="${signUpForm}" method="post">
+        <div class="form-group">
+            <label for="mId">ID:</label>
+            <input type="text" id="mId" th:field="*{mId}" class="form-control" placeholder="4자리 이상 16자리 이하"/>
+            <span th:if="${#fields.hasErrors('mId')}" th:errors="*{mId}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="mPassword">Password:</label>
+            <input type="password" id="mPassword" th:field="*{mPassword}" class="form-control" placeholder="8자리 이상 16자리 이하"/>
+            <span class="error" th:if="${#fields.hasErrors('mPassword')}" th:errors="*{mPassword}"></span>
+        </div>
+
+        <div class='form-group'>
+            <label for='mPasswordCheck'>Confirm Password:</label>
+            <input type='password' id='mPasswordCheck' name='mPasswordCheck' class='form-control'/>
+            <span class="error" th:if="${#fields.hasErrors('mPasswordCheck')}" th:errors="*{mPasswordCheck}"></span>
+        </div>
+
+        <!-- Add other form fields here -->
+        <div class="form-group">
+            <label for="mName">Name:</label>
+            <input type="text" id="mName" th:field="*{mName}" class="form-control" placeholder="2자리 이상 20자리 이하"/>
+            <span class="error" th:if="${#fields.hasErrors('mName')}" th:errors="*{mName}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="mName">Phone:</label>
+            <input type="text" id="mPhone" th:field="*{mPhone}" class="form-control" placeholder="11자리 이하"/>
+            <span class="error" th:if="${#fields.hasErrors('mPhone')}" th:errors="*{mPhone}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="mEmail">Email:</label>
+            <input type="text" id="mEmail" th:field="*{mEmail}" class="form-control" placeholder="이메일 형식"/>
+            <span class="error" th:if="${#fields.hasErrors('mEmail')}" th:errors="*{mEmail}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="mNickName">NickName:</label>
+            <input type="text" id="mNickName" th:field="*{mNickName}" class="form-control" placeholder="4자리 이상 16자리 이하"/>
+            <span class="error" th:if="${#fields.hasErrors('mNickName')}" th:errors="*{mNickName}"></span>
+        </div>
+
+        <!-- Submit button -->
+        <button type='submit'>회원 가입</button>
+    </form>
+</div>
+
+<!-- 푸터 -->
+<footer th:replace="~{../outlines/footer :: common}"></footer>
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">2023 Ait - Betting Site Prj</p>
+    </div>
+</footer>
+</body>
+</html>
