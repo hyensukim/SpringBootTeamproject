@@ -31,9 +31,6 @@ public class Board {
     @ColumnDefault("15")
     private int bUnitNo; // 리스트별 게시글 개수
 
-    @Column(name = "b_isFile")
-    @ColumnDefault("false")
-    private boolean bIsFile; // 파일 작성 여부
 
 //    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)

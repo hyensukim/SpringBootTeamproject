@@ -48,7 +48,7 @@ public class BoardController {
         newBoard.setBName(newBoardDto.getBName());
         newBoard.setBPageNo(newBoardDto.getBPageNo());
         newBoard.setBUnitNo(newBoardDto.getBUnitNo());
-        newBoard.setBIsFile(newBoardDto.isBIsFile());
+//        newBoard.setBIsFile(newBoardDto.isBIsFile());
 
         try {
             Long bNo = boardService.saveNewboardInfo(newBoard);
@@ -65,10 +65,9 @@ public class BoardController {
     @PostMapping("/update/{bNo}")
     public String updateBoard(@PathVariable Long bNo,
                               @RequestParam("newBName") String newBName,
-                              @RequestParam(value = "newBIsFile", defaultValue = "false") boolean newBIsFile,
                               @RequestParam("newBUniNo") int newBUnitNo,
                               @RequestParam("newBPageNo") int newBPageNo) {
-        boardService.updateBoardInfo(bNo, newBName, newBIsFile, newBUnitNo, newBPageNo);
+        boardService.updateBoardInfo(bNo, newBName, newBUnitNo, newBPageNo);
         return "redirect:/admin/board/boardList";
     }
 
