@@ -1,4 +1,4 @@
-package com.springboot.shootformoney.admin.interceptors;
+package com.springboot.shootformoney.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.springboot.shootformoney.admin.service.ConfigInfoService;
@@ -13,7 +13,7 @@ import java.util.Map;
 /*
 사이트 설정 유지
  */
-@Component("siteConf")
+@Component
 @RequiredArgsConstructor
 public class SiteConfigInterceptor implements HandlerInterceptor {
 
@@ -36,4 +36,5 @@ public class SiteConfigInterceptor implements HandlerInterceptor {
 
         return value;
     }
+
 }

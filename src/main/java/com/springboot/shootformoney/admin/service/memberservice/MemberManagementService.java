@@ -1,6 +1,7 @@
 package com.springboot.shootformoney.admin.service.memberservice;
 
 import com.springboot.shootformoney.member.entity.Member;
+import com.springboot.shootformoney.member.enum_.Grade;
 import com.springboot.shootformoney.member.enum_.Role;
 import com.springboot.shootformoney.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -62,4 +64,33 @@ public class MemberManagementService {
             throw new IllegalArgumentException("존재하지 않는 회원입니다.");
         }
     }
+
+    public List<Member> searchMembers(String category, String query) {
+        switch (category) {
+            case "mNo":
+                return memberRepository.findBymNo(Long.parseLong(query));
+
+            case "mId":
+                return Arrays.asList(memberRepository.findBymId(query));
+
+            case "mName":
+                return Arrays.asList(memberRepository.findBymName(query));
+
+            case "mNickName":
+                return Arrays.asList(memberRepository.findBymNickName(query));
+
+            case "grade":
+                return memberRepository.findByGrade(Grade.valueOf(query.toUpperCase()));
+
+            case "role":
+                return memberRepository.findByRole(Role.valueOf(query.toUpperCase()));
+
+            case "mLevel":
+                return memberRepository.findBymLevel(Integer.parseInt(query));
+
+            default:
+                throw new IllegalArgumentException("Invalid category: " + category);
+        }
+    }
+    
 }

@@ -21,7 +21,7 @@ public class Board {
     private Long bNo;
 
     @Column(name = "b_name")
-    private String bName; // 게시글 명(카테고리 명)
+    private String bName; // 게시판 명(카테고리 명)
 
     @Column(name = "b_pageNo")
     @ColumnDefault("10")

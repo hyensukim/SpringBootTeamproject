@@ -8,9 +8,6 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -42,6 +39,7 @@ public class Post extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+
     @Builder
     public Post(String title, String content) {
         this.pTitle = title;
@@ -69,17 +67,10 @@ public class Post extends BaseEntity {
         }
     }
 
-//    public Long getBNo() {
-//        return this.board.getBNo();
-//    }
 
     public Long getBNo() {
         return this.board == null ? null : this.board.getBNo();
     }
-
-//    public String getBName() {
-//        return this.board.getBName();
-//    }
 
     public String getBName() {
         return this.board == null ? null : this.board.getBName();
@@ -91,5 +82,6 @@ public class Post extends BaseEntity {
             member.getPosts().add(this);
        }
       }
+
 
 }
