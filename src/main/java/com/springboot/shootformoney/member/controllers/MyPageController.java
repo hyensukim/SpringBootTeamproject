@@ -1,7 +1,7 @@
 package com.springboot.shootformoney.member.controllers;
 
 import com.springboot.shootformoney.bet.entity.Bet;
-import com.springboot.shootformoney.member.dto.PageInfo;
+import com.springboot.shootformoney.member.dto.SearchInfo;
 import com.springboot.shootformoney.member.dto.MemberInfo;
 import com.springboot.shootformoney.member.dto.SignUpForm;
 import com.springboot.shootformoney.member.services.MemberDeleteService;
@@ -148,7 +148,7 @@ public class MyPageController {
 
     // 마이페이지 - 작성한 게시글
     @GetMapping("/mypost/{mNo}")
-    public String myPost(@PathVariable Long mNo, @ModelAttribute PageInfo pageInfo
+    public String myPost(@PathVariable Long mNo, @ModelAttribute SearchInfo pageInfo
             , Model model){
         model.addAttribute("pageTitle","마이페이지-작성한 게시글");
         try {
@@ -189,7 +189,7 @@ public class MyPageController {
 
     @GetMapping("/mybet/{mNo}")
     // 베팅 내역
-    public String myBet(@PathVariable Long mNo, @ModelAttribute PageInfo pageInfo
+    public String myBet(@PathVariable Long mNo, @ModelAttribute SearchInfo pageInfo
             , Model model){
         model.addAttribute("pageTitle","마이페이지-베팅 내역");
         try {

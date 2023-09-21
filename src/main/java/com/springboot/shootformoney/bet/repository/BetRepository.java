@@ -4,6 +4,7 @@ import com.springboot.shootformoney.bet.entity.Bet;
 import com.springboot.shootformoney.game.entity.Game;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface BetRepository extends JpaRepository<Bet, Long> {
+public interface BetRepository extends JpaRepository<Bet, Long>, QuerydslPredicateExecutor<Bet> {
     Optional<Bet> findByBtNo(Long btNo);
 
     //회원번호로 배팅내역 조회하기.

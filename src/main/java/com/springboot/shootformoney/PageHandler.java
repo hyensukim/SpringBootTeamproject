@@ -1,5 +1,8 @@
 package com.springboot.shootformoney;
 
+import lombok.Data;
+
+@Data
 public class PageHandler {
     int totalCnt; //총 게시물 갯수
     int pageSize; //한 페이지의 크기

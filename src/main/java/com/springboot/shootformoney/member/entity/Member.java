@@ -61,9 +61,7 @@ public class Member extends BaseEntity{
     private Long mStack = 0L;
 
     // 변경사항
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    @JsonIgnore // 클라이언트로부터 게시판 정보만 받고 게시물 정보는 따로 처리하려는 경우에 유용
-//    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -1,16 +1,16 @@
 package com.springboot.shootformoney.member.services;
 
+import com.querydsl.core.BooleanBuilder;
 import com.springboot.shootformoney.bet.entity.Bet;
+import com.springboot.shootformoney.bet.entity.QBet;
 import com.springboot.shootformoney.bet.repository.BetRepository;
-import com.springboot.shootformoney.member.dto.PageInfo;
-import com.springboot.shootformoney.member.repository.Post2Repository;
+import com.springboot.shootformoney.member.dto.SearchInfo;
+import com.springboot.shootformoney.member.utils.MemberUtil;
+import com.springboot.shootformoney.post.PagingRepository;
 import com.springboot.shootformoney.post.Post;
-import com.springboot.shootformoney.post.PostRepository;
+import com.springboot.shootformoney.post.QPost;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,40 +19,58 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberListService {
 
-    private final PostRepository postRepository;
-    private final Post2Repository post2Repository;
     private final BetRepository betRepository;
+    private final PagingRepository pagingRepository;
+    private final MemberUtil memberUtil;
 
-    public Page<Post> getsPostWithPages(PageInfo pageInfo, Long mNo){
+    public Page<Post> getsPostWithPages(SearchInfo searchInfo, Long mNo){
+        QPost post = QPost.post;
+        BooleanBuilder andBuilder = new BooleanBuilder();
+        andBuilder.and(post.member.mNo.eq(mNo));
 
-        int page = pageInfo.getPage();
-        int pageSize = pageInfo.getPageSize();
-        List<Post> posts = postRepository.findByMemberNo(mNo);
-
+        int page = searchInfo.getPage();
+        int pageSize = searchInfo.getPageSize();
         page = Math.max(page, 1);
         pageSize = pageSize < 1 ? 15 : pageSize;
 
-        if(posts == null){ throw new NullPointerException("회원이 작성한 게시글이 없습니다.");}
+        //검색 기능 추가 시 구현
+//        String sOpt = searchInfo.getSOpt();
+//        String sKey = searchInfo.getSKey();
+//        if (sOpt != null && !sOpt.isBlank() && sKey != null && !sKey.isBlank()) {
+//            sOpt = sOpt.trim();
+//            sKey = sKey.trim();
+//
+//            if (sOpt.equals("all")) { // 통합 검색 - bId, bName
+//                BooleanBuilder orBuilder = new BooleanBuilder();
+//                orBuilder.or(post.bId.contains(sKey))
+//                        .or(board.bName.contains(sKey));
+//                andBuilder.and(orBuilder);
+//
+//            } else if (sopt.equals("bId")) { // 게시판 아이디 bId
+//                andBuilder.and(board.bId.contains(skey));
+//            } else if (sopt.equals("bName")) { // 게시판명 bName
+//                andBuilder.and(board.bName.contains(skey));
+//            }
+//        }
 
         Pageable pageable = PageRequest.of(page-1,pageSize,Sort.by(Sort.Order.desc("createdAt")));
-        Page<Post> myPostList = post2Repository.findAll(pageable);
+        Page<Post> myPostList = pagingRepository.findAll(andBuilder,pageable);
 
         return myPostList;
     }
 
-    public Page<Bet> getsBetWithPages(PageInfo pageInfo, Long mNo){
+    public Page<Bet> getsBetWithPages(SearchInfo searchInfo, Long mNo){
+        QBet bet = QBet.bet;
+        BooleanBuilder andBuilder = new BooleanBuilder();
+        andBuilder.and(bet.member.mNo.eq(mNo));
 
-        int page = pageInfo.getPage();
-        int pageSize = pageInfo.getPageSize();
-        List<Bet> bets = betRepository.findBymNo(mNo);
-
+        int page = searchInfo.getPage();
+        int pageSize = searchInfo.getPageSize();
         page = Math.max(page, 1);
         pageSize = pageSize < 1 ? 15 : pageSize;
 
-        if(bets == null){ throw new NullPointerException("회원이 배팅한 내역이 없습니다.");}
-
         Pageable pageable = PageRequest.of(page-1,pageSize,Sort.by(Sort.Order.desc("btTime")));
-        Page<Bet> myBetList = betRepository.findAll(pageable);
+        Page<Bet> myBetList = betRepository.findAll(andBuilder,pageable);
         return myBetList;
     }
 
