@@ -1,13 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<header th:fragment="common">
-    헤더
-    <section class="header_left">
-        <a th:href="@{/}">
-            <img src="/image/qq.png" alt="logo">
-        </a>
-    </section>
-    <section class="header_right">
-    </section>
-</header>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <header class="header" th:fragment="headerFragment">
+        <div class="container">
+            <div class="header-content">
+                <p class="welcome-message" th:text="${}">xxx<span>님 환영합니다.</span></p>
+                <div class="header-buttons">
+                    <a class="hbt" th:href="@{#}" th:if="${!session.isLoggedIn}">로그인</a>
+                    <a class="hbt" th:href="@{#}" th:if="${session.isLoggedIn}">로그아웃</a>
+                    <a class="hbt" th:href="@{#}" id='mypage-link'>마이페이지</a>
+                    <a class="hbt" th:href="@{#}" id='adminpage-link'>관리자페이지</a>
+                    <button type='button' id='attendance-button'>출석</button>
+                </div>
+            </div>
+        </div>
+    </header>
+</body>
 </html>
