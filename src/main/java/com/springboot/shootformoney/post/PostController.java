@@ -24,7 +24,8 @@ public class PostController {
     private final MemberRepository memberRepository;
     private  final BoardRepository boardRepository;
 
-    @GetMapping("/all") // 페이징 처리한 전체 목록
+    // 페이징 처리한 전체 목록 조회
+    @GetMapping("/all") 
     public String getAllPosts(@ModelAttribute PostSearchInfo postSearchInfo,Model model) {
         Page<Post> pageList = postService.getAllWithPage(postSearchInfo);
         List<Post> postList = pageList.getContent();
@@ -47,11 +48,10 @@ public class PostController {
         model.addAttribute("boards",boards);
         return "post/addForm";
     }
-
+    
     @PostMapping("/create")
     public String createPost(@ModelAttribute("postDto") @Valid PostDTO postDto,
                              Model model) {
-        // ---------------------
         try {
             postService.savePost(postDto);
             model.addAttribute("postDto",postDto); // 모델에 새 게시글 추가
@@ -66,27 +66,28 @@ public class PostController {
         return "redirect:/post/all"; // 'post/all' 뷰로 이동
     }
 
-    // 게시판별 목록 조회
+    // 게시판별 목록 조회 - 추가 구현(Service - if)
     @GetMapping("/all/{bNo}")
     public String getAllFreeTalk(@PathVariable Long bNo, Model model){
         return null;
     }
 
-
-    //게시글 생성
-
-
     // 단일 게시글 조회
     @GetMapping("/detail/{pNo}")
     public String getOnePost(@PathVariable Long pNo, Model model) {
-        Post post = postService.findPost(pNo);
-        model.addAttribute("post", post);
-        return "detail";
-
+        try {
+            Post post = postService.findPost(pNo);
+            model.addAttribute("post", post);
+        }catch(Exception e){
+            String script = String.format("Swal.fire({title: '%s', text: '%s', icon: 'error'})" +
+                    ".then(function() { location.href='/post/create'; })", "Error!", e.getMessage());
+            model.addAttribute("script", script);
+            return "script/sweet";
+        }
+        return "post/detail";
     }
 
     // 매핑
-
     //삭제
 //    @PostMapping("/{pNo}/delete")
 //    public String deletePost(@PathVariable Long pNo) {

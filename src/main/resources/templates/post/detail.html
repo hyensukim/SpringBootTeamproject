@@ -1,30 +1,39 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="utf-8">
-  <link th:href="@{../../static/css/styles.css}" href="../../static/css/styles.css" rel="stylesheet">
-  <title>글 상세</title>
-
-</head>
-
-
-<h2>게시글 상세보기</h2>
-<main>
-  <div>
-    <h3>제목 </h3>
-    <p th:text="${post.pTitle}"></p>
-    <h3> 내용</h3>
-    <p th:text="${post.pContent}"></p></br>
-    <p>별명</p><p th:text="${post.mNickName}"></p></br>
-    <p>조회수 </p><p th:text="${post.view -1}"></p>
-    <p>작성일: <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
-    <p th:if="${post.updatedAt != null}">
-      수정일:
-      <span th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
-    </p>
-    <p th:unless="${post.updatedAt != null}">
-      수정일: -
-    </p>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<main layout:fragment="common">
+  <h2>게시글 상세보기</h2>
+  <div class="detail" th:object="${post}">
+    <dl>
+      <dt>제목 </dt>
+      <dd th:text="*{pTitle}"></dd>
+    </dl>
+    <dl>
+      <dt>내용 </dt>
+      <dd th:text="*{pContent}"></dd>
+    </dl>
+    <dl>
+      <dt>별명 </dt>
+      <dd th:text="*{member.mNickName}"></dd>
+    </dl>
+    <dl>
+      <dt>조회수 </dt>
+      <dd th:text="*{view}"></dd>
+    </dl>
+    <dl>
+      <dt>작성일 </dt>
+      <dd th:text="*{#temporals.format(createdAt, 'yyyy-MM-dd HH:mm:ss')}"></dd>
+    </dl>
+    <dl>
+      <dt>수정일 </dt>
+      <th:block th:if="*{updatedAt != null}">
+        <dd th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></dd>
+      </th:block>
+      <th:block th:unless="*{updatedAt != null}">
+        <dd th:text> - </dd>
+      </th:block>
+    </dl>
   </div>
 
 
