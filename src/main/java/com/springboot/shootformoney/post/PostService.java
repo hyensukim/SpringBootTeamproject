@@ -3,8 +3,10 @@ package com.springboot.shootformoney.post;
 
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
+import com.springboot.shootformoney.member.dto.MemberInfo;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.MemberRepository;
+import com.springboot.shootformoney.member.utils.MemberUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,19 +22,34 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final BoardRepository boardRepository;
-    private final MemberRepository memberRepository;
+    private final MemberUtil memberUtil;
+
     //저장
     @Transactional
     public Long savePost(PostDTO postDto){
         Board board = boardRepository.findBybNo(postDto.getBNo());
+        MemberInfo memberInfo = memberUtil.getMember();
+        String mId = "";
+        String nick = "";
+
         if (board == null) {
             throw new IllegalArgumentException("해당 번호의 게시판이 존재하지 않습니다: " + postDto.getBNo());
         }
+
+        if(memberUtil.isLogin()){
+            mId = memberInfo.getMId();
+            nick = memberInfo.getMNickName();
+        }
+
         Post post = new Post();
         post.setPTitle(postDto.getPTitle());
         post.setPContent(postDto.getPContent());
+        post.setMId(mId);
+        post.setMNickName(nick);
         // 연관 관계 설정
+
         post.setBoard(board);
+
         // Save the post
         postRepository.save(post,postDto.getBNo());
         return post.getPNo();
@@ -67,16 +84,16 @@ public class PostService {
     }
 
 //    단일 조회
-    @Transactional
-    public PostDTO findPost(Long pNo) {
-        Post post = postRepository.findOne(pNo);
-        if (post != null) {
-            post.incrementViewCount();
-            return 	PostDTO.of(post);
-        } else {
-            throw new IllegalArgumentException("해당 아이디의 게시물이 존재하지 않습니다.");
-        }
+@Transactional
+public Post findPost(Long pNo) {
+    Post post = postRepository.findOne(pNo);
+    if (post != null) {
+        post.incrementViewCount();
+        return post;
+    } else {
+        throw new IllegalArgumentException("해당 아이디의 게시물이 존재하지 않습니다.");
     }
+}
 
 
 

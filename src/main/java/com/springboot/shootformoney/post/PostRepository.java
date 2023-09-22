@@ -3,6 +3,7 @@ package com.springboot.shootformoney.post;
 
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
+import com.springboot.shootformoney.member.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ public class PostRepository {
 
     private final EntityManager em;
     private final BoardRepository boardRepository;
+
 
     //게시판 저장
     public void save(Post post, Long bNo){
@@ -37,11 +39,17 @@ public class PostRepository {
         em.remove(post);
     }
 
+
+
+
+
     public Post findOne(Long pNo){
-        return em.createQuery("select p from Post p join fetch p.board where p.pNo = :pNo", Post.class)
+        return em.createQuery("select p from Post p where p.pNo = :pNo", Post.class)
                 .setParameter("pNo", pNo)
                 .getSingleResult();
     }
+
+
 
     //게시글 전체 조회
     public List<Post> findAll() {
@@ -91,4 +99,12 @@ public class PostRepository {
                 .setParameter("bNo", bNo)
                 .getResultList();
     }
+
+    public List<Post> findAllWithMember() { //수정
+        return em.createQuery("SELECT p FROM Post p LEFT JOIN FETCH p.member", Post.class)
+                .getResultList();
+    }
+
+    
+
 }

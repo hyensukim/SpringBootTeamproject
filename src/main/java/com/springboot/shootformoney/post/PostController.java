@@ -2,8 +2,10 @@ package com.springboot.shootformoney.post;
 
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
+import com.springboot.shootformoney.member.dto.MemberInfo;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.MemberRepository;
+import com.springboot.shootformoney.member.utils.MemberUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ public class PostController {
     private final PostService postService;
     private final MemberRepository memberRepository;
     private  final BoardRepository boardRepository;
+
 
 //    @GetMapping("/posts/all")
 //    public String getAllPosts(@RequestParam(name = "bNo", required = false) Long bNo, Model model) {
@@ -42,6 +45,8 @@ public class PostController {
         model.addAttribute("posts", posts);
         return "posts";
     }
+
+
     @GetMapping("/{param}") //추가
     public String handleStringParam(@PathVariable String param, Model model) {
         if ("all".equals(param)) {
@@ -74,21 +79,26 @@ public class PostController {
     //게시글 생성
     @PostMapping("/create")
     public String createPost(@ModelAttribute("postDto") @Valid PostDTO postDto, Model model) {
+//        String currentMemberId = "로그인한 회원의 ID"; // 예시로 지정
+
+//        postDto.setMId(currentMemberId); // 멤버 ID 설정
+
         Long pNo = postService.savePost(postDto);
-        PostDTO newPost = postService.findPost(pNo); // 새로 생성된 게시글 조회
+        Post newPost = postService.findPost(pNo); // 새로 생성된 게시글 조회
 
         model.addAttribute("post", newPost); // 모델에 새 게시글 추가
         return "redirect:/posts/all"; // 'posts/all' 뷰로 이동
     }
 
     // 단일 게시글 조회
-    @GetMapping("/{pNo}")
+    @GetMapping("/detail/{pNo}")
     public String getOnePost(@PathVariable Long pNo, Model model) {
-        PostDTO post = postService.findPost(pNo);
+        Post post = postService.findPost(pNo);
         model.addAttribute("post", post);
         return "detail";
 
     }
+
     // 매핑
 
     //삭제
@@ -135,14 +145,14 @@ public class PostController {
 
     @PostMapping("/{pNo}/detail")
     public String getPostDetail(@PathVariable Long pNo, Model model) {
-        PostDTO post = postService.findPost(pNo);
+        Post post = postService.findPost(pNo);
         model.addAttribute("post", post);
         return "post/view";
     }
 
     @GetMapping("/{pNo}/edit")
     public String editPostForm(@PathVariable Long pNo, Model model) {
-        PostDTO post = postService.findPost(pNo);
+        Post post = postService.findPost(pNo);
         model.addAttribute("post", post);
         return "post/edit";
     }
