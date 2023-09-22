@@ -13,7 +13,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
-    <title>Title</title>
+
+    <!-- 사이트 설명 -->
+    <meta name="description" th:content="${@siteConf.get('siteDescription')}">
+
+    <!-- 사이트 제목 -->
+    <title>
+        <th:block th:text="${@siteConf.get('siteTitle') +' | '}"></th:block>
+        <th:block th:if="${pageTitle != null}" th:text="${pageTitle}"></th:block>
+    </title>
 </head>
 <body>
 <!-- 헤더 -->
