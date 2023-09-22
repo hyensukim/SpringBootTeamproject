@@ -4,54 +4,56 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/mypage/main}">
 <main layout:fragment="common">
-    <h2>회원 정보</h2>
-    <form method="post" name="frmMyPage" th:object="${signUpForm}" autocomplete="off">
+    <div class="center-form">
+        <h2 class="fw-bolder mb-1">회원 정보</h2>
+    </div>
+    <form class="margin" method="post" name="frmMyPage" th:object="${signUpForm}" autocomplete="off">
         <dl>
             <dt>ID : </dt>
             <dd>
-                <input type="text" name="mId" th:value="*{mId}" readonly>
+                <input type="text" name="mId" th:value="*{mId}" disabled readonly>
             </dd>
         </dl>
 
         <dl>
             <dt>NAME : </dt>
             <dd>
-                <input type="text" name="mName" th:value="*{mName}" readonly>
+                <input type="text" name="mName" th:value="*{mName}" disabled readonly>
             </dd>
         </dl>
 
         <dl>
             <dt>NICKNAME : </dt>
             <dd>
-                <input type="text" name="mNickName" th:value="*{mNickName}" readonly>
+                <input type="text" name="mNickName" th:value="*{mNickName}" disabled readonly>
             </dd>
         </dl>
 
         <dl>
             <dt>EMAIL : </dt>
             <dd>
-                <input type="text" name="mEmail" th:value="*{mEmail}" readonly>
+                <input type="text" name="mEmail" th:value="*{mEmail}" disabled readonly>
             </dd>
         </dl>
 
         <dl>
             <dt>GRADE : </dt>
             <dd>
-                <input type="text" name="grade" th:value="*{grade}" readonly>
+                <input type="text" name="grade" th:value="*{grade}" disabled readonly>
             </dd>
         </dl>
 
         <dl>
             <dt>LEVEL : </dt>
-            <dd>
-                <input type="text" name="level" th:value="*{level}" readonly>
+            <dd >
+                <input type="text" name="level" th:value="*{level}" disabled readonly>
             </dd>
         </dl>
 
         <dl>
             <dt>EURO : </dt>
             <dd>
-                <input type="text" name="euro" th:value="*{euro.value}" readonly>
+                <input type="text" th:value="*{euro.value}" disabled readonly>
             </dd>
         </dl>
 
@@ -77,7 +79,7 @@
                 <span class="error" th:each="err : ${#fields.errors('mPhone')}" th:text="${err}"></span>
             </dd>
         </dl>
-        <div>
+        <div class="btn btn-block">
             <button type="submit">수정하기</button>
             <a th:href="@{/member/mypage/deletepw/{mNo}(mNo = ${mNo})}">회원 탈퇴</a>
         </div>

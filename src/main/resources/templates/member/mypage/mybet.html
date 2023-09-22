@@ -5,61 +5,50 @@
       layout:decorate="~{layouts/mypage/main}">
 <main layout:fragment="common">
     <div class="frmMyBet">
+        <div class="center-form">
+            <h2 class="fw-bolder mb-1">배팅 이력</h2>
+        </div>
         <form method="get" name="frmMyBet">
-            <h1>배팅 이력(경기 전)</h1>
             <div>
                 <table>
                     <thead>
-                    <tr>
-                        <th>배팅번호</th>
-                        <th>경기정보</th>
-                        <th>예상결과</th>
-                        <th>배팅금액(만)</th>
-                        <th>배팅시간</th>
-                        <th></th>
-                    </tr>
+                        <tr>
+                            <th>No</th>
+                            <th>배팅시간</th>
+                            <th>리그명</th>
+                            <th colspan="3">홈팀 VS 어웨이팀</th>
+                            <th colspan="3">배팅금액(만)</th>
+                            <th>비고</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="bet,status : ${betList}" th:object="${bet}">
-                        <td class="list_num" th:text="${status.index+1}"></td>
-                        <td class="list_subject">
-                            <div>
-                                <span th:text="*{game.GHomeTeam}"></span>
-                                <strong> : </strong>
-                                <span th:text="*{game.GAwayTeam}"></span>
-                            </div>
-                        </td>
-                        <td class="list_text" th:text="*{expect}"></td>
-                        <td class="list_num" th:text="*{btMoney}">__만</td>
-                        <td class="list_num" th:text="*{#temporals.format(btTime,'yyyy-MM-dd HH:mm:ss')}"></td>
-                        <td class="list_button">
-                            <a th:href="@{/bet/cancelbet/{btNo}(btNo = ${bet.btNo})}">배팅 취소</a>
-                        </td>
-                    </tr>
+                        <tr th:each="bet,status : ${betList}" th:object="${bet}">
+                            <td class="list_num" th:text="${status.index+1}"></td>
+                            <td class="list_num" th:text="*{#temporals.format(btTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                            <td class="list_text" th:text="*{game.GLeague}"></td>
+                            <td class="list_text" th:text="*{game.GHomeTeam}"></td>
+                            <td> VS </td>
+                            <td class="list_text" th:text="*{game.GAwayTeam}"></td>
+                            <td th:if="${bet.expect.toString().equals('WIN')}"
+                                th:text="승 + ${bet.btMoney}"></td>
+                            <td th:unless="${bet.expect.toString().equals('WIN')}"
+                                th:text="'-'"></td>
+                            <td th:if="${bet.expect.toString().equals('DRAW')}"
+                                th:text="무 + ${bet.btMoney}">-</td>
+                            <td th:unless="${bet.expect.toString().equals('DRAW')}"
+                                th:text="'-'"></td>
+                            <td th:if="${bet.expect.toString().equals('LOSE')}"
+                                th:text="패 + ${bet.btMoney}">-</td>
+                            <td th:unless="${bet.expect.toString().equals('LOSE')}"
+                                th:text="'-'"></td>
+                            <td th:if="*{endPaid.toString().equals('1')}"
+                                th:text="'결과 배당률' + ' : ' +${bet.btRatio}"></td>
+                            <td th:unless="*{endPaid.toString().equals('1')}" class="list_button">
+                                <a th:href="@{/bet/cancelbet/{btNo}(btNo = ${bet.btNo})}">배팅 취소</a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
-
-                <ul class="pagination">
-<!--                    <li class="page-prev" th:classappend="${hasPrev ? '' : 'disabled'}">-->
-<!--                        <a th:href="@{/member/mypage/mybet/{mNo}?page={page}(mNo=${mNo}, page=${nowPage-1})}">-->
-<!--                            <i class="xi-angle-left-min"></i>-->
-<!--                        </a>-->
-<!--                    </li>-->
-                    <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}" >
-                        <li th:if="${item > 0}" class='page' th:classappend="on">
-                            <a th:if="${item != nowPage && item > 0}"
-                               th:href="@{/member/mypage/mybet/{mNo}?page={page}(mNo=${mNo}, page=${item})}"
-                               th:text="${item}">
-                            </a>
-                            <strong th:if="${item == nowPage}" th:text="${item}"></strong>
-                        </li>
-                    </th:block>
-<!--                    <li class="page-next" th:classappend="${hasNext ? '' : 'disabled'}">-->
-<!--                        <a th:href="@{/member/mypage/mybet/{mNo}?page={page}(mNo=${mNo}, page=${nowPage+1})}">-->
-<!--                            <i class="xi-angle-right-min"></i>-->
-<!--                        </a>-->
-<!--                    </li>-->
-                </ul>
             </div>
         </form>
     </div>

@@ -82,7 +82,7 @@ public class MyPageController {
 
             MemberInfo memberInfo = memberUtil.getMember();
             Euro euro = euroService.getMemberEuro(memberInfo.getMNo());
-            SignUpForm signUpForm = SignUpForm.builder()
+           SignUpForm signUpForm = SignUpForm.builder()
                     .mId(memberInfo.getMId())
                     .mName(memberInfo.getMName())
                     .mNickName(memberInfo.getMNickName())
@@ -102,15 +102,26 @@ public class MyPageController {
     }
 
     @PostMapping("/info/{mNo}")
-    public String myPagePs(@PathVariable Long mNo, @ModelAttribute @Valid SignUpForm signUpForm,
+    public String myPagePs(@PathVariable Long mNo, @Valid SignUpForm signUpForm,
                            Errors errors, Model model){
-        updateValidator.validate(signUpForm,errors);
-        if(errors.hasErrors()){
-            return "member/mypage/info";
-        }
-
         String mPassword = signUpForm.getMPassword();
         String mPhone = signUpForm.getMPhone();
+
+        updateValidator.validate(signUpForm,errors);
+        if(errors.hasErrors()){
+            MemberInfo memberInfo = memberUtil.getMember();
+            Euro euro = euroService.getMemberEuro(mNo);
+            signUpForm.setMId(memberInfo.getMId());
+            signUpForm.setMName(memberInfo.getMName());
+            signUpForm.setMNickName(memberInfo.getMNickName());
+            signUpForm.setGrade(memberInfo.getGrade());
+            signUpForm.setLevel(memberInfo.getLevel());
+            signUpForm.setMPhone(memberInfo.getMPhone());
+            signUpForm.setMEmail(memberInfo.getMEmail());
+            signUpForm.setEuro(euro);
+            return "/member/mypage/info";
+        }
+
         memberUpdateService.update(mNo,mPassword,mPhone);
         String script = String.format("Swal.fire('수정 완료, 재로그인 시 수정된 정보가 반영됩니다. :D','success')" +
                 ".then(function(){history.back();})");
@@ -154,6 +165,13 @@ public class MyPageController {
             , Model model){
         model.addAttribute("pageTitle","마이페이지-작성한 게시글");
         try {
+            Long no = memberUtil.getMember().getMNo();
+            if (!mNo.equals(no)) {
+                String script = String.format("Swal.fire('본인 계정만 접근 가능합니다.', '', 'error')" +
+                        ".then(function(){location.href='/';})");
+                model.addAttribute("script", script);
+                return "script/sweet";
+            }
 
             //페이징 처리된 객체.
             Page<Post> posts = memberListService.getsPostWithPages(pageInfo, mNo);
@@ -161,11 +179,8 @@ public class MyPageController {
             List<Post> postList = posts.getContent();
 
             // 페이징 이동하는 기능 구현.
-//            boolean hasPrev = posts.hasPrevious();
-//            boolean hasNext = posts.hasNext();
-
-            // getPageable() : 페이지 처리를 위한 정보
             /*
+            getPageable() : 페이지 처리를 위한 정보
             pageNumber : 0(0번째 페이지(1번 의미)의 페이지 선택)
             pageSize : 15(하나의 페이지에 담길 갯수)
             navSize : 정해놓은 페이지 크기
@@ -180,8 +195,7 @@ public class MyPageController {
             model.addAttribute("nowPage", nowPage);
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
-//            model.addAttribute("hasPrev",hasPrev);
-//            model.addAttribute("hasNext",hasNext);
+
         }catch(NullPointerException e){
             String script = String.format("Swal.fire('%s','','error')" +
                     ".then(function(){history.back();})",e.getMessage());
@@ -192,21 +206,19 @@ public class MyPageController {
 
     @GetMapping("/mybet/{mNo}")
     // 베팅 내역
-    public String myBet(@PathVariable Long mNo, @ModelAttribute SearchInfo pageInfo
-            , Model model){
+    public String myBet(@PathVariable Long mNo, Model model){
         model.addAttribute("pageTitle","마이페이지-베팅 내역");
         try {
-            Page<Bet> bets = memberListService.getsBetWithPages(pageInfo,mNo);
-            List<Bet> betList = bets.getContent();
+            Long no = memberUtil.getMember().getMNo();
+            if (!mNo.equals(no)) {
+                String script = String.format("Swal.fire('본인 계정만 접근 가능합니다.', '', 'error')" +
+                        ".then(function(){location.href='/';})");
+                model.addAttribute("script", script);
+                return "script/sweet";
+            }
 
-            int nowPage = bets.getPageable().getPageNumber() + 1;
-            int startPage = ((nowPage-1) / 10) * 10 + 1;
-            int endPage = Math.min(startPage + 10 - 1, bets.getTotalPages());
-
-            model.addAttribute("betList", betList);
-            model.addAttribute("nowPage", nowPage);
-            model.addAttribute("startPage", startPage);
-            model.addAttribute("endPage", endPage);
+            List<Bet> betList = memberListService.getsBetList(mNo);
+            model.addAttribute("betList",betList);
         }catch(NullPointerException e){
             String script = String.format("Swal.fire('%s','','error')" +
                     ".then(function(){history.back();})",e.getMessage());

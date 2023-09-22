@@ -5,7 +5,7 @@
       layout:decorate="~{layouts/main}">
 <main layout:fragment="common">
 <div class="fmrSignUp">
-    <form th:action="@{/member/signup}" th:object="${signUpForm}" method="post">
+    <form th:action="@{/member/signup}" th:object="${signUpForm}" method="post" autocomplete="off">
         <div class="form-group">
             <label for="mId">ID:</label>
             <input type="text" id="mId" th:field="*{mId}" class="form-control" placeholder="4자리 이상 16자리 이하"/>

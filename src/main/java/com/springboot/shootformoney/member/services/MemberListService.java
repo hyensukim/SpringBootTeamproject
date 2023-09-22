@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,12 +35,12 @@ public class MemberListService {
         pageSize = pageSize < 1 ? 15 : pageSize;
 
         //검색 기능 추가 시 구현
-//        String sOpt = searchInfo.getSOpt();
-//        String sKey = searchInfo.getSKey();
-//        if (sOpt != null && !sOpt.isBlank() && sKey != null && !sKey.isBlank()) {
-//            sOpt = sOpt.trim();
-//            sKey = sKey.trim();
-//
+        String sOpt = searchInfo.getSOpt();
+        String sKey = searchInfo.getSKey();
+        if (sOpt != null && !sOpt.isBlank() && sKey != null && !sKey.isBlank()) {
+            sOpt = sOpt.trim();
+            sKey = sKey.trim();
+
 //            if (sOpt.equals("all")) { // 통합 검색 - bId, bName
 //                BooleanBuilder orBuilder = new BooleanBuilder();
 //                orBuilder.or(post.bId.contains(sKey))
@@ -51,7 +52,7 @@ public class MemberListService {
 //            } else if (sopt.equals("bName")) { // 게시판명 bName
 //                andBuilder.and(board.bName.contains(skey));
 //            }
-//        }
+        }
 
         Pageable pageable = PageRequest.of(page-1,pageSize,Sort.by(Sort.Order.desc("createdAt")));
         Page<Post> myPostList = pagingRepository.findAll(andBuilder,pageable);
@@ -59,19 +60,18 @@ public class MemberListService {
         return myPostList;
     }
 
-    public Page<Bet> getsBetWithPages(SearchInfo searchInfo, Long mNo){
+    public List<Bet> getsBetList(Long mNo){
+        List<Bet> betList = new ArrayList<>();
         QBet bet = QBet.bet;
         BooleanBuilder andBuilder = new BooleanBuilder();
         andBuilder.and(bet.member.mNo.eq(mNo));
-
-        int page = searchInfo.getPage();
-        int pageSize = searchInfo.getPageSize();
-        page = Math.max(page, 1);
-        pageSize = pageSize < 1 ? 15 : pageSize;
-
-        Pageable pageable = PageRequest.of(page-1,pageSize,Sort.by(Sort.Order.desc("btTime")));
-        Page<Bet> myBetList = betRepository.findAll(andBuilder,pageable);
-        return myBetList;
+        Sort sort = Sort.by(Sort.Order.asc("endPaid"),Sort.Order.desc("btTime"));
+        Iterable<Bet> it = betRepository.findAll(andBuilder,sort);
+        if(it == null){
+            throw new NullPointerException("회원이 베팅한 항목이 없습니다.");
+        }
+        it.forEach(betList::add);
+        return betList;
     }
 
 }

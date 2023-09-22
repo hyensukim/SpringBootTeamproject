@@ -75,6 +75,6 @@ public class Member extends BaseEntity implements Serializable {
 
     public void createEuro() {
         this.euro = new Euro();
-        euro.setMember(this);  // 만약 양방향 매핑이라면 이 코드도 필요합니다.
+        euro.setMember(this);  // 만약 양방향 매핑시, 해당 코드 필요
     }
 }

@@ -5,13 +5,16 @@
       layout:decorate="~{layouts/mypage/main}">
 <main layout:fragment="common">
     <div class="frmMyPost">
-        <form method="get" name="frmMyPost">
-            <h1>작성한 게시글</h1>
+        <div class="center-form">
+            <h2 class="fw-bolder mb-1">작성한 게시글</h2>
+        </div>
+        <form method="get" name="frmMyPost" autocomplete="off">
             <div>
                 <table>
                     <thead>
                         <tr>
-                            <th></th>
+                            <th>No</th>
+                            <th>게시판명</th>
                             <th>제목</th>
                             <th>작성일</th>
                             <th>조회수</th>
@@ -19,24 +22,20 @@
                     </thead>
                     <tbody>
                         <tr th:each="post,status : ${postList}" th:object="${post}">
-                            <td class="list_num" th:text="${status.index+1  }"></td>
+                            <td class="list_num" th:text="${status.index+1}"/>
+                            <td class="list_text" th:text="*{board.bName}"></td>
                             <td class="list_subject">
                                 <a th:href="@{/posts/{pNo}(pNo = *{pNo})}">
                                     [[*{pTitle}]]
                                 </a>
                             </td>
-                            <td class="list_num" th:text="*{#temporals.format(createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>
-                            <td class="list_num" th:text="*{view}"></td>
+                            <td class="list_num" th:text="*{#temporals.format(createdAt,'yyyy-MM-dd HH:mm:ss')}"/>
+                            <td class="list_num" th:text="*{view}"/>
                         </tr>
                     </tbody>
                 </table>
-<!--                xi-angle-right-min-->
+                <th:block th:if="${postList != null}">
                 <ul class="pagination">
-<!--                    <li class="page-prev" th:classappend="${hasPrev ? '' : 'disabled'}">-->
-<!--                        <a th:href="@{/member/mypage/mypost/{mNo}?page={page}(mNo=${mNo}, page=${nowPage-1})}">-->
-<!--                            <i class="xi-angle-left-min"></i>-->
-<!--                        </a>-->
-<!--                    </li>-->
                     <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}" >
                         <li th:if="${item > 0}" class='page' th:classappend="on">
                             <a th:if="${item != nowPage && item > 0}"
@@ -46,12 +45,8 @@
                             <strong th:if="${item == nowPage}" th:text="${item}"></strong>
                         </li>
                     </th:block>
-<!--                    <li class="page-next" th:classappend="${hasNext ? '' : 'disabled'}">-->
-<!--                        <a th:href="@{/member/mypage/mypost/{mNo}?page={page}(mNo=${mNo}, page=${nowPage+1})}">-->
-<!--                            <i class="xi-angle-right-min"></i>-->
-<!--                        </a>-->
-<!--                    </li>-->
                 </ul>
+                </th:block>
             </div>
         </form>
     </div>

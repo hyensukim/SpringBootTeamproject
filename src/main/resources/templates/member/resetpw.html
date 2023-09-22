@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 <main layout:fragment="common">
-<form th:action="@{/member/resetpw}" th:object="${signUpForm}" method="post">
+<form th:action="@{/member/resetpw}" th:object="${signUpForm}" method="post" autocomplete="off">
     <div class="error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div></div>
     <div class="form-group">
         <label for="mPassword">PASSWORD: </label>
