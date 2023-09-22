@@ -18,7 +18,7 @@ public class StartupRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         // 경기정보 저장
-        matchService.saveAllMatchesToDB();
+//        matchService.saveAllMatchesToDB();
 //        matchService.updateAllEndedGames();
         // BetService의 정산 메서드 실행
         betService.calcBtRatio();

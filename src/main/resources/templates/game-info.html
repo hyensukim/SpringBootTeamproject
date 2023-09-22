@@ -89,15 +89,17 @@
                         <input type='hidden' name='gNo' th:value="${gNo}">
                         <input type='hidden' name='matchId' th:value="${matchId}">
                         <input type='hidden' id='outcome' name='expect' th:value="${expect}">
-                        <input type="number" name="btMoney" th:value="${btMoney}">
+                        <input type="number" name="btMoney" id="btMoneyInput" th:value="${btMoney}">
                         <span>만 유로</span>
-                        <button type="submit">
+                        <!-- 올인 버튼 -->
+                        <button class="no-style" type="button" onclick="placeBetAllIn()">올인</button>
+                        <button class="no-style" type="submit">
                             <span>배팅</span>
                         </button>
                     </form>
                 </td>
                 <td colspan="2">
-                    배팅 가능금액 : <span th:text="${totalEuro}"></span> (만 유로)
+                    배팅 가능금액 : <span id="totalEuro0" th:text="${totalEuro}"></span> (만 유로)
                 </td>
             </tr>
             </tbody>
@@ -193,5 +195,16 @@
         return true; // 예상 결과가 선택되고 배팅 금액이 올바른 경우 폼 서브밋 허용
     }
 </script>
+
+<script>
+function placeBetAllIn() {
+    // totalEuro 값 가져오기
+    var totalEuro = document.getElementById('totalEuro0').textContent;
+
+    // btMoneyInput 필드에 totalEuro 값을 설정
+    document.getElementById('btMoneyInput').value = totalEuro;
+}
+</script>
+
 </body>
 </html>
