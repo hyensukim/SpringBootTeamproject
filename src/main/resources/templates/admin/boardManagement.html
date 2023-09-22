@@ -18,9 +18,7 @@
             <th>게시판 번호</th>
             <th>게시판 이름</th>
             <th>게시글 개수</th>
-            <th>파일 첨부 여부</th>
             <th>페이징 처리<br>[Page(하단) / Size(게시글 목록 개수)]</th>
-
         </tr>
         </thead>
         <!-- 게시판 내용 반복 -->
@@ -40,11 +38,6 @@
                                style="display: none;"/>
                     </td>
                     <td th:text="${postCounts[board.bNo]}"></td>
-                    <td>
-                        <span class="readable" th:text="${board.bIsFile ? 'ture' : 'false'}"></span>
-                        <input class='editable' type='checkbox' name='newBIsFile' th:checked='${board.bIsFile}'
-                               style='display: none;'/>
-                    </td>
                     <td>
                         <div class='readable'>
                             Page:
@@ -85,10 +78,6 @@
         <label for="bUnitNo">리스트별 게시글 개수:</label><br/>
         <input type="number" id="bUnitNo" name="bUnitNo"/><br/>
 
-        <input type='hidden' id='bIsFile' name='bIsFile' value='false'>
-        <label for='fileCheck'>파일 첨부 여부</label>
-        <input type='checkbox' id='fileCheck'><br>
-
         <button type="submit">생성</button>
     </form>
 
@@ -104,16 +93,6 @@
             form.style.display = 'none';
         }
     });
-
-    function handleFormSubmit() {
-        var checkbox = document.getElementById('fileCheck');
-        var hiddenInput = document.getElementById('bIsFile');
-
-        // Set the hidden input's value according to the checkbox state
-        hiddenInput.value = checkbox.checked ? 'true' : 'false';
-
-        return true; // Allow form submission
-    }
 
     // 수정 시 발생 이벤트
     document.querySelectorAll('.editButton').forEach(function (button) {

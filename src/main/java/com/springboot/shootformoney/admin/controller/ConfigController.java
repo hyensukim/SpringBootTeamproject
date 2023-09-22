@@ -52,7 +52,7 @@ public class ConfigController {
 
         model.addAttribute("pageTitle", title); // 텝 이름 설정
         model.addAttribute("title", title); // 사이트 내 title 이름 설정
-        model.addAttribute("menuCode", menuCode); // 프론트 - 네비게이션 바 구현시, 선택된 메뉴 on 표시 용도
+//        model.addAttribute("menuCode", menuCode); // 프론트 - 네비게이션 바 구현시, 선택된 메뉴 on 표시 용도
     }
 
 }

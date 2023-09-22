@@ -1,9 +1,9 @@
-package com.springboot.shootformoney.admin.dto.postdto;
+package com.springboot.shootformoney.admin.dto;
 
 import lombok.Data;
 
 @Data
-public class PostSearchInfo {
+public class AdminSearchInfo {
 
     private int page = 1;
     private int pageSize = 10;
@@ -13,4 +13,5 @@ public class PostSearchInfo {
 
 //    private String sOpt; // 검색 조건
 //    private String sKey; // 검색 키워드(유저 입력)
+
 }

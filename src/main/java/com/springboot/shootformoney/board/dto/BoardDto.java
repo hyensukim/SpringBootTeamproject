@@ -27,23 +27,19 @@ public class BoardDto {
     @NotBlank
     private int bUnitNo; // 리스트별 게시글 개수, 기본 값 : 15
 
-    @NotBlank
-    private boolean bIsFile; // 파일 첨부 여부, 기본 값 : false
 
     // 기본 값 설정
     public BoardDto() {
         this.bPageNo = 10;
         this.bUnitNo = 15;
-        this.bIsFile = false;
     }
 
     public BoardDto(Long bNo, String bName, int bPageNo, int bUnitNo,
-                    boolean bIsFile, List<PostDTO> posts) {
+                     List<PostDTO> posts) {
         this.bNo = bNo;
         this.bName = bName;
         this.bPageNo = bPageNo;
         this.bUnitNo = bUnitNo;
-        this.bIsFile = bIsFile;
         this.posts = posts;
     }
 
@@ -55,7 +51,6 @@ public class BoardDto {
                 board.getBName(),
                 board.getBPageNo(),
                 board.getBUnitNo(),
-                board.isBIsFile(),
                 board.getPosts().stream().map(PostDTO::of).collect(Collectors.toList())
         );
     }

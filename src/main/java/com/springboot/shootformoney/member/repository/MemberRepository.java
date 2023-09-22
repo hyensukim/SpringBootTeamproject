@@ -3,12 +3,14 @@ package com.springboot.shootformoney.member.repository;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.enum_.Grade;
 import com.springboot.shootformoney.member.enum_.Role;
+import com.springboot.shootformoney.post.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import java.util.List;
 
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long>, QuerydslPredicateExecutor<Member>{
 
     Member findBymId(String mId); // 회원 Id로 조회.
     Member findBymNickName(String mNickName); // 닉네임으로 조회
