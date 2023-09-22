@@ -130,4 +130,21 @@ public class PostFindService {
 //
 //        return adminPostList;
 //    }
+    
+    
+    // 게시글 일괄 삭제 서비스
+//    public void deleteMultiplePosts(List<Long> pNos) {
+//        for(Long id : pNos) {
+//            postRepositoryInterface.deleteById(id);
+//        }
+//    }
+
+    public void deleteMultiplePosts(List<Long> pNos) {
+        if(pNos.isEmpty()) {
+            throw new IllegalArgumentException("삭제할 게시글을 선택해주세요.");
+        }
+
+        List<Post> posts = postRepositoryInterface.findAllById(pNos);
+        postRepositoryInterface.deleteInBatch(posts);
+    }
 }

@@ -13,6 +13,8 @@ import java.util.Optional;
 
 public interface PostRepositoryInterface extends JpaRepository<Post,Long>, QuerydslPredicateExecutor<Post> {
 
+
+
 //    Page<Post> findByPTitleContaining(String query, Pageable pageable);
 
 //    Page<Post> findBypNo(Long pNo, Pageable pageable);
