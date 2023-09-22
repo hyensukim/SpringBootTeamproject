@@ -48,7 +48,7 @@
 
     <!-- 서버에서 제공하는 회원 목록을 반복하여 표시 -->
     <!-- 각 회원에 대해 ID, 이름 등의 정보와 삭제 버튼 -->
-    <tr th:each="member : ${members}">
+    <tr th:each="member : ${memberList}">
         <td th:text="${member.mNo}"></td>
         <td th:text="${member.mId}"></td>
         <td th:text="${member.mName}"></td>

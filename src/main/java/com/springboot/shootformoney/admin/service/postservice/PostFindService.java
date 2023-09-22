@@ -1,7 +1,7 @@
 package com.springboot.shootformoney.admin.service.postservice;
 
 import com.querydsl.core.BooleanBuilder;
-import com.springboot.shootformoney.admin.dto.postdto.PostSearchInfo;
+import com.springboot.shootformoney.admin.dto.AdminSearchInfo;
 import com.springboot.shootformoney.board.repository.BoardRepository;
 import com.springboot.shootformoney.post.Post;
 import com.springboot.shootformoney.post.PostRepository;
@@ -74,13 +74,13 @@ public class PostFindService {
 
 
 //        public Page<Post> getsAdminPostWithPages(PostSearchInfo postSearchInfo, Long bNo){
-    public Page<Post> getsAdminPostWithPages(PostSearchInfo postSearchInfo) {
+    public Page<Post> getsAdminPostWithPages(AdminSearchInfo adminSearchInfo) {
 //        QPost post = QPost.post;
 //        BooleanBuilder andBuilder = new BooleanBuilder();
 //        andBuilder.and(post.board.bNo.eq(bNo));
 
-        int page = postSearchInfo.getPage();
-        int pageSize = postSearchInfo.getPageSize();
+        int page = adminSearchInfo.getPage();
+        int pageSize = adminSearchInfo.getPageSize();
         page = Math.max(page, 1);
         pageSize = pageSize < 1 ? 15 : pageSize;
 

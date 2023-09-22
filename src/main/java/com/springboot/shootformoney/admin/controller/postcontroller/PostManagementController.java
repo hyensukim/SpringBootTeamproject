@@ -1,6 +1,6 @@
 package com.springboot.shootformoney.admin.controller.postcontroller;
 
-import com.springboot.shootformoney.admin.dto.postdto.PostSearchInfo;
+import com.springboot.shootformoney.admin.dto.AdminSearchInfo;
 import com.springboot.shootformoney.admin.service.postservice.PostAdminService;
 import com.springboot.shootformoney.admin.service.postservice.PostFindService;
 import com.springboot.shootformoney.board.entity.Board;
@@ -32,7 +32,7 @@ public class PostManagementController {
     // 모든 게시물 조회 (+페이징 처리)
     @GetMapping("/postList/all")
 //    public String getAllPosts(@ModelAttribute PostSearchInfo pageInfo, Model model) {
-    public String getAllPosts(@ModelAttribute PostSearchInfo pageInfo
+    public String getAllPosts(@ModelAttribute AdminSearchInfo pageInfo
 //    public String getAllPosts(@PathVariable Long bNo, @ModelAttribute PostSearchInfo pageInfo
             , Model model) {
 
