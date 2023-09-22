@@ -49,6 +49,7 @@ public class PostFindService {
         return postRepository.findByBoard_BName(bName);
     }
 
+    // 각 카테고리별 검색 기능 서비스
     public List<Post> searchPosts(String category, String query) {
         switch (category) {
             case "pNo":
@@ -73,7 +74,8 @@ public class PostFindService {
     }
 
 
-//        public Page<Post> getsAdminPostWithPages(PostSearchInfo postSearchInfo, Long bNo){
+    // 전체 리스트 조회 서비스 (+ 페이징 처리)
+    //        public Page<Post> getsAdminPostWithPages(PostSearchInfo postSearchInfo, Long bNo){
     public Page<Post> getsAdminPostWithPages(AdminSearchInfo adminSearchInfo) {
 //        QPost post = QPost.post;
 //        BooleanBuilder andBuilder = new BooleanBuilder();
