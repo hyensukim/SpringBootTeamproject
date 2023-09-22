@@ -11110,7 +11110,7 @@ main{
   padding-top :5px;
 }
 
-button[type='submit']{
+button[type='submit']:not(.no-style){
   background-color:#4d5154;
   color:white;
   border:none;
@@ -11120,7 +11120,6 @@ button[type='submit']{
   margin-left: auto;
   margin-right: auto;
 }
-
 .center-form {
   text-align: center;
   margin-top: 30px;
@@ -11357,4 +11356,55 @@ form[name="frmMyPage"] dd input[type='password']{
 .pagination .on strong{
   background-color:#4d5154;
   color:white;
+
+}
+
+.header {
+  background-color: #212529;
+  padding: 5px 0; /* 패딩 값을 줄여서 헤더의 높이를 줄입니다 */
+  border-bottom: 2px solid;
+  border-bottom-color: #4d5154;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.welcome-message {
+  font-size: 1.2em;
+  color: white;
+}
+
+.header-buttons button,
+#mypage-link,
+#adminpage-link {
+  margin-left :10px ;
+  padding :5px ;
+  border-radius :5px ;
+}
+
+#attendance-button {
+  background-color:#4d5154;
+  color:white;
+}
+
+.header-buttons a {
+  background: none;
+  border: none;
+  color: #fff; /* 흰색으로 설정 */
+  text-decoration: none;
+}
+
+.welcome-message {
+  text-align: center;
+  font-size: medium;
+}
+
+.header-buttons .hbt {
+  background: none;
+  border: none;
+  color: #fff; /* 흰색으로 설정 */
+  text-decoration: none;
 }
