@@ -1,5 +1,6 @@
 package com.springboot.shootformoney.post;
 
+import com.springboot.shootformoney.member.entity.Member;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -15,6 +16,11 @@ public class PostDTO {
     private Long bNo;
 
     private String bName;
+
+    private String mId; //수정
+    private String mNickName; //수정
+
+
 
     @NotNull(message = "제목을 정해주세요")
     @Size(min = 1, max = 100, message = "제목 글자수 제한 오류")
@@ -34,6 +40,12 @@ public class PostDTO {
         dto.setBName(post.getBoard().getBName()); // 게시판 이름 설정. Board 필드가 없다면 이 부분 수정 필요.
         dto.setPTitle(post.getPTitle());
         dto.setPContent(post.getPContent());
+
+        // Member 정보 설정 부분 수정: 회원 ID와 별명 설정(수정)
+        if (post.getMember() != null) {
+            dto.setMId(post.getMember().getMId());
+            dto.setMNickName(post.getMember().getMNickName());
+        }
 
         return dto;
     }

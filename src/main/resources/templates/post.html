@@ -69,26 +69,26 @@
         <a th:href="@{/post/postList/all}">전체보기</a>
     </form>
 
-    <div class="pagination">
-        <ul>
-            <!-- showPrev가 true일 때 '이전' 링크를 보여줍니다 -->
-            <li th:if="${pageHandler.showPrev}">
-                <a th:href="@{'/post/postList/all?page=' + ${pageHandler.beginPage - 1}}">이전</a>
-            </li>
+<!--    <div class="pagination">-->
+<!--        <ul>-->
+<!--            &lt;!&ndash; showPrev가 true일 때 '이전' 링크를 보여줍니다 &ndash;&gt;-->
+<!--            <li th:if="${pageHandler.showPrev}">-->
+<!--                <a th:href="@{'/post/postList/all?page=' + ${pageHandler.beginPage - 1}}">이전</a>-->
+<!--            </li>-->
 
-            <!-- 페이지 번호들을 보여줍니다 -->
-            <li th:each="pageNum : ${#numbers.sequence(pageHandler.beginPage, pageHandler.endPage)}">
-                <a th:href="@{'/admin/post/postList/all?page=' + ${pageNum}}"
-                   th:text="${pageNum}"
-                   th:class="${pageNum == pageHandler.page ? 'active' : ''}"></a>
-            </li>
+<!--            &lt;!&ndash; 페이지 번호들을 보여줍니다 &ndash;&gt;-->
+<!--            <li th:each="pageNum : ${#numbers.sequence(pageHandler.beginPage, pageHandler.endPage)}">-->
+<!--                <a th:href="@{'/admin/post/postList/all?page=' + ${pageNum}}"-->
+<!--                   th:text="${pageNum}"-->
+<!--                   th:class="${pageNum == pageHandler.page ? 'active' : ''}"></a>-->
+<!--            </li>-->
 
-            <!-- showNext가 true일 때 '다음' 링크를 보여줍니다 -->
-            <li th:if="${pageHandler.showNext}">
-                <a th:href="@{'/post/postList/all?page=' + ${pageHandler.endPage + 1}}">다음</a>
-            </li>
-        </ul>
-    </div>
-</main>
+<!--            &lt;!&ndash; showNext가 true일 때 '다음' 링크를 보여줍니다 &ndash;&gt;-->
+<!--            <li th:if="${pageHandler.showNext}">-->
+<!--                <a th:href="@{'/post/postList/all?page=' + ${pageHandler.endPage + 1}}">다음</a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--</main>-->
 
 </html>

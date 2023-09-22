@@ -52,8 +52,8 @@
             <!-- 게시판 내용 반복 -->
             <tr th:each="post : ${postList}">
                 <td th:text="${post.pNo}"></td>
-                <td th:text="${post.member.mId}"></td>
-                <td th:text="${post.member.mNickName}"></td>
+                <td th:text="${post.mId}"></td>
+                <td th:text="${post.mNickName}"></td>
                 <td th:text="${post.board.bName}"></td>
                 <td><a th:href="@{'/admin/post/' + ${post.pNo}}" th:text="${post.pTitle}"></a></td>
                 <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
