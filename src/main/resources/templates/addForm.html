@@ -15,28 +15,29 @@
 </head>
 <body>
 <div class="board_wrap">
-    <div class="board_title">
-        <!-- <h2 th:text="">글 작성</h2> -->
-    </div>
 
     <!-- 게시판 선택 폼 -->
     <form th:action="@{/posts/create}" th:object="${postDto}" method="POST" id="postForm">
 
         <select name="bNo" th:field="*{bNo}" required>
             <!-- Iterate through a list of boards to populate the dropdown -->
+            <p>게시판</p></br>
             <option value="" disabled selected>게시판을 선택하세요</option>
             <option th:each="board : ${boards}" th:value="${board.bNo}" th:text="${board.bName}"></option>
         </select>
 
         <!-- 제목 입력란 -->
-        <input type="text" name="pTitle" placeholder="제목을 입력하세요." th:field="*{pTitle}" required/>
+        <!--        <input type="text" name="pTitle" placeholder="제목을 입력하세요." th:field="${pTitle}"> <input/>-->
+        <p>제목</p>
+        <input type="text" id= "pTitle" name="pTitle" placeholder="제목을 입력하세요."/></br>
 
         <!-- 본문 입력란 -->
-        <!-- 기존 textarea 태그 대신 div 태그 사용 -->
-        <div id="editor"></div>
+        <!--        <input type="text" name="pContent" placeholder="제목을 입력하세요." th:field="${pContent}"> <input/>-->
+        <p>내용</p>
+        <textarea type="text" id= "pContent" name="pContent" placeholder="내용을 입력하세요."></textarea>
 
         <!-- 등록 버튼 -->
-        <input type="submit" value="등록" />
+        <input type="submit" value="등록"/>
 
         <!-- 취소 버튼, 컨트롤러의 "/posts/all" 경로에 맞춰 href 속성 수정 -->
         <a href="/posts/posts/all" th:href="@{/posts/posts/all}">취소</a>

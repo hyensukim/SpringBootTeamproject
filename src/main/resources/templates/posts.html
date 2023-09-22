@@ -13,14 +13,9 @@
                 <option th:value="${board.bNo}" th:text="${board.bName}"></option>
             </th:block>
         </select>
-        <button type="submit">Filter by Board</button>
     </form>
 
-<!--    <form th:action="@{/posts/posts/create}" method="get">-->
-<!--        <button type="submit" class="btn btn-primary">게시글 작성</button>-->
-<!--    </form>-->
-
-    <a th:href="@{/posts/create}">게시글 작성</a>
+    <button th:href="@{/posts/create}">게시글 작성</button>
 
     <table class="table text-center">
 
@@ -42,64 +37,12 @@
             <td th:text="${post.mId}"></td> <!-- 회원 ID 표시 -->
             <td th:text="${post.mNickName}"></td> <!-- 회원 별명 표시 -->
             <td th:text="${post.board.bName}"></td>
-
             <td><a th:href="@{/posts/detail/{pNo}(pNo=${post.pNo})}" th:text="${post.pTitle}"></a></td>
-
-
-
             <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
         </tr>
 
-            <!-- 게시글 삭제 -->
-            <td>
-                <form th:action="@{'/posts/' + ${post != null ? post.pNo : ''}}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
-                    <input type="hidden" name="_method" value="delete"/>
-                    <button type="submit">게시글 삭제</button>
-                </form>
-            </td>
-        </tr>
-
-        </tr>
     </table>
-
-    <!-- 게시글 조회 -->
-    <form th:action="@{/post/postList/search}" method="get">
-        <!-- Search Category -->
-        <select name="category">
-            <option value="pNo">게시글 번호</option>
-            <option value="mId">작성자 ID</option>
-            <option value="mNickName">작성자 별명</option>
-            <option value="bName">게시판</option>
-            <option value="pTitle">제목</option>
-        </select>
-
-        <input type="text" name="query" placeholder="검색">
-
-        <button type="submit">검색</button>
-        <a th:href="@{/post/postList/all}">전체보기</a>
-    </form>
-
-<!--    <div class="pagination">-->
-<!--        <ul>-->
-<!--            &lt;!&ndash; showPrev가 true일 때 '이전' 링크를 보여줍니다 &ndash;&gt;-->
-<!--            <li th:if="${pageHandler.showPrev}">-->
-<!--                <a th:href="@{'/post/postList/all?page=' + ${pageHandler.beginPage - 1}}">이전</a>-->
-<!--            </li>-->
-
-<!--            &lt;!&ndash; 페이지 번호들을 보여줍니다 &ndash;&gt;-->
-<!--            <li th:each="pageNum : ${#numbers.sequence(pageHandler.beginPage, pageHandler.endPage)}">-->
-<!--                <a th:href="@{'/admin/post/postList/all?page=' + ${pageNum}}"-->
-<!--                   th:text="${pageNum}"-->
-<!--                   th:class="${pageNum == pageHandler.page ? 'active' : ''}"></a>-->
-<!--            </li>-->
-
-<!--            &lt;!&ndash; showNext가 true일 때 '다음' 링크를 보여줍니다 &ndash;&gt;-->
-<!--            <li th:if="${pageHandler.showNext}">-->
-<!--                <a th:href="@{'/post/postList/all?page=' + ${pageHandler.endPage + 1}}">다음</a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
 
 </main>
 </html>

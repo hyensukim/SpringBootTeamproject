@@ -26,7 +26,7 @@ public class PostController {
     private  final BoardRepository boardRepository;
 
 
-//    @GetMapping("/posts/all")
+    //    @GetMapping("/posts/all")
 //    public String getAllPosts(@RequestParam(name = "bNo", required = false) Long bNo, Model model) {
 //        List<Post> posts;
 //
@@ -116,12 +116,8 @@ public class PostController {
         return "redirect:/posts/all";
     }
 
-    // 게시글 수정
-    @PostMapping("/{pNo}/edit")
-    public String editPost(@PathVariable Long pNo, @ModelAttribute("post") @Valid PostDTO updatedPost) {
-        postService.updatePost(pNo, updatedPost.getPTitle(), updatedPost.getPContent());
-        return "redirect:/posts/{pNo}";
-    }
+
+
     // 전체 게시글 조회
 //    @GetMapping("/")
 //    public ResponseEntity<List<Post>> getAllPosts() {
@@ -150,10 +146,20 @@ public class PostController {
         return "post/view";
     }
 
+    // 게시글 수정
     @GetMapping("/{pNo}/edit")
     public String editPostForm(@PathVariable Long pNo, Model model) {
         Post post = postService.findPost(pNo);
         model.addAttribute("post", post);
         return "post/edit";
     }
+
+    @PutMapping("/{pNo}/edit")
+    public String editPost(@PathVariable Long pNo, @ModelAttribute("post") @Valid PostDTO updatedPost) {
+        System.out.println(updatedPost);
+
+        postService.updatePost(pNo, updatedPost.getPTitle(), updatedPost.getPContent());
+        return "redirect:/posts/{pNo}";
+    }
+
 }

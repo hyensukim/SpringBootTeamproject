@@ -4,22 +4,20 @@
   <meta charset="utf-8">
   <link th:href="@{../static/css/styles.css}" href="../static/css/styles.css" rel="stylesheet">
   <title>글 상세</title>
-  <style>
-    input {
-      border: none;
-    }
-  </style>
+
 </head>
 
 
-  <h2>게시글 상세보기</h2>
+<h2>게시글 상세보기</h2>
 <main>
-  <div class="post-details">
-    <h3 th:text="${post.pTitle}"></h3>
-    <p th:text="${post.pContent}"></p>
+  <div>
+    <h3>제목 </h3>
+    <p th:text="${post.pTitle}"></p>
+    <h3> 내용</h3>
+    <p th:text="${post.pContent}"></p></br>
+    <p>별명</p><p th:text="${post.mNickName}"></p></br>
+    <p>조회수 </p><p th:text="${post.view -1}"></p>
     <p>작성일: <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
-    <!--        <p th:if="${post.updatedAt != null}">수정일:-->
-    <!--            <span th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></span></p>-->
     <p th:if="${post.updatedAt != null}">
       수정일:
       <span th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
@@ -32,37 +30,28 @@
 
 
 
-  <div class="info">
-    <dl>
-      <dt><label for="boardId">게시글 번호 : </label></dt>
-      <dd><input type="text" id="boardId" name="boardId" class="form-control" th:value="${post.pNo}" readonly></dd>
+  <!--  <div class="info">-->
+  <!--    <dl>-->
+  <!--      <dt><label for="boardId">게시글 번호 : </label></dt>-->
+  <!--      <dd><input type="text" id="boardId" name="boardId" class="form-control" th:value="${post.pNo}" readonly></dd>-->
 
-      <dt><label for="author">작성자 ID : </label></dt>
-      <dd><input type="text" id="author" name="author" class="form-control" th:value="${post.mId}" readonly></dd>
-
-      <dt><label for="regdate">등록일 : </label></dt>
-      <dd><input type="text" id ="regdate" name ="regdate"class ="form-control"
-                 th:value="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}" readonly ></dd>
-    </dl>
-    <dl>
-      <dt><label for="viewcnt">조회수 : </label></dt>
-      <dd><input type="text" id="viewcnt" name="viewcnt" class="form-control" th:value="${post.view}" readonly></dd>
-    </dl>
-  </div>
+  <!--      <dt><label for="author">작성자 ID : </label></dt>-->
+  <!--      <dd><input type="text" id="author" name="author" class="form-control" th:value="${post.mId}" readonly></dd>-->
 
 
-
+  <!--      <dt><label for="regdate">등록일 : </label></dt>-->
+  <!--      <dd><input type="text" id ="regdate" name ="regdate"class ="form-control"-->
+  <!--                 th:value="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}" readonly ></dd>-->
+  <!--    </dl>-->
+  <!--    <dl>-->
+  <!--      <dt><label for="viewcnt">조회수 : </label></dt>-->
+  <!--      <dd><input type="text" id="viewcnt" name="viewcnt" class="form-control" th:value="${post.view}" readonly></dd>-->
+  <!--    </dl>-->
+  <!--  </div>-->
 
 
 
-  <!--    &lt;!&ndash; 게시글 삭제 &ndash;&gt;-->
-  <!--    <td>-->
-  <!--        <form th:action="@{'/admin/post/' + ${post.pNo}}" method="post">-->
-  <!--            <a href="javascript:history.back()">< 뒤로가기</a>-->
-  <!--            <input type="hidden" name="_method" value="delete"/>-->
-  <!--            <button type="submit">게시글 삭제</button>-->
-  <!--        </form>-->
-  <!--    </td>-->
+
 
   <!-- 게시글 삭제 -->
   <td>
@@ -72,13 +61,20 @@
       <button type="submit">게시글 삭제</button>
     </form>
   </td>
+
+  <!--게시글 수정-->
+  <!--  <td>-->
+  <!--    <form th:action="@{'/posts/' + ${post.pNo} + '/edit'}" method="post" onsubmit="return confirm('게시글 수정을 진행하시겠습니까?')">-->
+  <!--      <input type="hidden" name="_method" value="put"/>-->
+
+  <!--      <label for="title">제목:</label><br/>-->
+  <!--      <input type="text" id="title" name="pTitle" th:value="${post.pTitle}" required/><br/>-->
+
+  <!--      <label for="content">내용:</label><br/>-->
+  <!--      <textarea id="content" name="pContent" rows=5 th:value="${post.pContent}">required</textarea><br/>-->
+
+  <!--      <button type="submit">게시글 수정</button>-->
+  <!--    </form>-->
+  <!--  </td>-->
 </main>
 </html>
-
-<!--게시글 수정-->
-<td>
-  <form th:action="@{'/posts/edit/' + ${post.pNo}}" method="post" onsubmit="return confirm('게시글 수정을 진행하시겠습니까?')">
-    <input type="hidden" name="_method" value="put"/>
-    <button type="submit">게시글 수정</button>
-  </form>
-</td>

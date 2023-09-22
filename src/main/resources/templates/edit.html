@@ -23,7 +23,7 @@
     <!-- 게시글 수정 폼 -->
     <form action="/posts/{pNo}/edit" th:action="@{/posts/{pNo}/edit(pNo=${post.pNo})}" method="post">
         <!-- POST 요청을 사용하므로 _method 필드는 제거 -->
-        <!-- <input type="hidden" name="_method" value="post"/> -->
+        <input type="hidden" name="_method" value="put"/>
 
         <div>
             <label for="pTitle" th:text="#{}">제목 : </label>
@@ -34,7 +34,7 @@
         <div>
             <label for="pContent" th:text="#{}">내용 : </label>
             <!-- CKEditor 추가 -->
-            <textarea id="editor" name="pContent" required></textarea>
+            <textarea id="editor" name="pContent" required th:text="${post.pContent}"></textarea>
         </div>
 
         <div class="bt_wrap">
@@ -45,11 +45,11 @@
     </form>
 
     <!-- CKEditor 에러 처리 메서드, 폼 제출 이벤트 리스너 삭제 -->
-    <script>
+    <script th:inline="javascript">
         ClassicEditor
             .create(document.querySelector('#editor'))
             .then(editor => {
-                editor.setData(`${post.pContent}`);
+                editor.setData([[${post.pContent}]]);
             })
             .catch(error => {
                 console.error(error);
