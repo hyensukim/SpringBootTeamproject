@@ -66,7 +66,7 @@
 
   <!-- 게시글 삭제 -->
   <td>
-    <form th:action="@{'/posts/all' + ${post.pNo}}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
+    <form th:action="@{'/posts/' + ${post.pNo}}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
       <a href="javascript:history.back()"> 뒤로가기</a>
       <input type="hidden" name="_method" value="delete"/>
       <button type="submit">게시글 삭제</button>

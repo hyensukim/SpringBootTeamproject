@@ -31,8 +31,10 @@
     </title>
 </head>
 <body>
+<!-- 헤더 -->
+<header th:replace="~{outlines/header::common}"></header>
 <!-- 네비게이션 바(헤더) -->
-<nav th:replace="~{outlines/nav :: common}"></nav>
+<nav th:replace="~{outlines/nav::common}"></nav>
 <!-- 메인-->
 <main layout:fragment="common"></main>
 
