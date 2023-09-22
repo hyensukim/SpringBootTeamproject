@@ -1,14 +1,17 @@
 package com.springboot.shootformoney.post;
 
 import com.springboot.shootformoney.member.entity.Member;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import java.util.List;
 
-@Getter
-@Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PostDTO {
 
     private Long pNo;
@@ -20,17 +23,13 @@ public class PostDTO {
     private String mId; //수정
     private String mNickName; //수정
 
-
-
-    @NotNull(message = "제목을 정해주세요")
-    @Size(min = 1, max = 100, message = "제목 글자수 제한 오류")
+//    @NotBlank(message = "제목을 입력해주세요.")
+//    @Size(min = 1, max = 100, message = "제목은 1자 이상 100자 이하로 입력해주세요.")
     private String pTitle;
 
-    @Size(min = 1, max = 3000, message = "게시글 글자수 제한 오류")
+//    @NotBlank(message = "제목을 입력해주세요.")
+//    @Size(min = 1, max = 3000, message = "내용은 1자 이상 3000자 이하로 입력해주세요.")
     private String pContent;
-
-
-    private List<String> files;
 
 
     public static PostDTO of(Post post) {

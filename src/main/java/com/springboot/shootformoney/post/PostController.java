@@ -2,22 +2,21 @@ package com.springboot.shootformoney.post;
 
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
-import com.springboot.shootformoney.member.dto.MemberInfo;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.MemberRepository;
-import com.springboot.shootformoney.member.utils.MemberUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 
 @Controller
-@RequestMapping("/posts")
+@RequestMapping("/post")
 @RequiredArgsConstructor
 public class PostController {
 
@@ -25,70 +24,57 @@ public class PostController {
     private final MemberRepository memberRepository;
     private  final BoardRepository boardRepository;
 
+    @GetMapping("/all") // 페이징 처리한 전체 목록
+    public String getAllPosts(@ModelAttribute PostSearchInfo postSearchInfo,Model model) {
+        Page<Post> pageList = postService.getAllWithPage(postSearchInfo);
+        List<Post> postList = pageList.getContent();
 
-    //    @GetMapping("/posts/all")
-//    public String getAllPosts(@RequestParam(name = "bNo", required = false) Long bNo, Model model) {
-//        List<Post> posts;
-//
-//        if (bNo != null) {
-//            posts = postService.findPostsByBoardBNo(bNo);
-//        } else {
-//            posts = postService.findAllPosts();
-//        }
-//        model.addAttribute("posts", posts);
-//        return "posts";
-//
-//    }
-    @GetMapping("/all") //추가
-    public String getAllPosts(Model model) {
-        List<Post> posts = postService.findAllPosts();
-        model.addAttribute("posts", posts);
-        return "posts";
+        int nowPage = pageList.getPageable().getPageNumber() + 1; // 현재 페이지
+        int startPage = (nowPage-1) / 10 * 10 + 1; // 첫페이지
+        int endPage = Math.min(startPage + 10 - 1, pageList.getTotalPages());
+
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("endPage",endPage);
+        model.addAttribute("nowPage",nowPage);
+        model.addAttribute("postList", postList);
+        return "post/posts";
     }
 
-
-//    @GetMapping("/{param}") //추가
-//    public String handleStringParam(@PathVariable String param, Model model) {
-//        if ("all".equals(param)) {
-//            List<Post> posts = postService.findAllPosts();
-//            model.addAttribute("posts", posts);
-//            return "posts";
-//        } else {
-//            // 잘못된 경로 파라미터에 대한 처리 코드...
-//            throw new IllegalArgumentException("Invalid Path Variable");
-//        }
-//    }
-
+    // 게시글 작성
     @GetMapping("/create")
-    public String createPostForm(Model model) {
-        List<Member> members = memberRepository.findAll();
+    public String createPostForm(@ModelAttribute("postDto") PostDTO postDto, Model model) {
         List<Board> boards = boardRepository.findAll();
-
-        // 모델 객체 생성 및 필드 설정
-        PostDTO postDto = new PostDTO();
-        postDto.setBNo(1L); // 예시로 필드 값을 설정
-        postDto.setPTitle("제목"); // 예시로 필드 값을 설정
-
-        model.addAttribute("postDto", postDto);
-        model.addAttribute("members", members);
-        model.addAttribute("boards", boards);
-
-        return "addForm";
+        model.addAttribute("boards",boards);
+        return "post/addForm";
     }
+
+    @PostMapping("/create")
+    public String createPost(@ModelAttribute("postDto") @Valid PostDTO postDto,
+                             Model model) {
+        // ---------------------
+        try {
+            postService.savePost(postDto);
+            model.addAttribute("postDto",postDto); // 모델에 새 게시글 추가
+
+        }catch(Exception e){
+            String script = String.format("Swal.fire({title: '%s', text: '%s', icon: 'error'})" +
+                    ".then(function() { location.href='/post/create'; })", "Error!", e.getMessage());
+            model.addAttribute("script", script);
+            return "script/sweet";
+        }
+
+        return "redirect:/post/all"; // 'post/all' 뷰로 이동
+    }
+
+    // 게시판별 목록 조회
+    @GetMapping("/all/{bNo}")
+    public String getAllFreeTalk(@PathVariable Long bNo, Model model){
+        return null;
+    }
+
 
     //게시글 생성
-    @PostMapping("/create")
-    public String createPost(@ModelAttribute("postDto") @Valid PostDTO postDto, Model model) {
-//        String currentMemberId = "로그인한 회원의 ID"; // 예시로 지정
 
-//        postDto.setMId(currentMemberId); // 멤버 ID 설정
-
-        Long pNo = postService.savePost(postDto);
-        Post newPost = postService.findPost(pNo); // 새로 생성된 게시글 조회
-
-        model.addAttribute("post", newPost); // 모델에 새 게시글 추가
-        return "redirect:/posts/all"; // 'posts/all' 뷰로 이동
-    }
 
     // 단일 게시글 조회
     @GetMapping("/detail/{pNo}")
@@ -147,11 +133,11 @@ public class PostController {
     }
 
     // 게시글 수정
-    @GetMapping("/{pNo}/edit")
+    @GetMapping("/{pNo}")
     public String editPostForm(@PathVariable Long pNo, Model model) {
         Post post = postService.findPost(pNo);
         model.addAttribute("post", post);
-        return "post/edit";
+        return "edit";
     }
 
     @PutMapping("/{pNo}/edit")

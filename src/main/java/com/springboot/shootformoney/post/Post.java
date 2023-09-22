@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-
 public class Post extends BaseEntity {
 
     @Id
@@ -29,7 +28,6 @@ public class Post extends BaseEntity {
 
     private Long view = 0L; // 조회수
 
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bNo")
     private Board board;
@@ -37,7 +35,6 @@ public class Post extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mNo")
     private Member member;
-
 
     @Builder
     public Post(String title, String content) {
@@ -66,7 +63,6 @@ public class Post extends BaseEntity {
         }
     }
 
-
     public Long getBNo() {
         return this.board == null ? null : this.board.getBNo();
     }
@@ -74,27 +70,4 @@ public class Post extends BaseEntity {
     public String getBName() {
         return this.board == null ? null : this.board.getBName();
     }
-
-//      public void setMember(Member member) {
-//        this.member= member;
-//        if (!member.getPosts().contains(this)) {
-//            member.getPosts().add(this);
-//       }
-//      }
-public void setMember(Member member) {
-    this.member = member;
-    if (!member.getPosts().contains(this)) {
-        member.getPosts().add(this);
-    }
-    // 회원 정보 설정
-    this.mId = member.getMId();
-    this.mNickName = member.getMNickName();
-}
-
-
-    @Column(name = "m_id")
-    private String mId; // 회원 ID
-
-    @Column(name = "m_nick_name")
-    private String mNickName; // 회원 별명
 }

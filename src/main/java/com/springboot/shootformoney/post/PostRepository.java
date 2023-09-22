@@ -21,13 +21,8 @@ public class PostRepository {
 
 
     //게시판 저장
-    public void save(Post post, Long bNo){
+    public void save(Post post){
         if (post.getPNo() == null) {
-            Board board = boardRepository.findBybNo(bNo);
-            if (board == null) {
-                throw new IllegalArgumentException("해당 번호의 게시판이 존재하지 않습니다: " + bNo);
-            }
-            post.setBoard(board);
             em.persist(post);
         } else {
             em.merge(post);
