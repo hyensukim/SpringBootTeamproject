@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    <header class="header" th:fragment="headerFragment">
+    <header class="header" th:fragment="common">
         <div class="container">
             <div class="header-content">
                 <p class="welcome-message" th:text="${}">xxx<span>님 환영합니다.</span></p>
@@ -15,6 +15,20 @@
                     <a class="hbt" th:href="@{#}" id='mypage-link'>마이페이지</a>
                     <a class="hbt" th:href="@{#}" id='adminpage-link'>관리자페이지</a>
                     <button type='button' id='attendance-button'>출석</button>
+                    <button type='button' class="noticelogo" id='notice-button'>
+                        <img class = "notice" th:src="@{../static/image/speaker.png}" />
+                    </button>
+
+                    <!-- 모달 -->
+                    <div id="modal" class="modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3><img class = "logo" th:src="@{../static/image/Logo.png}" />Shoot For Money 규칙</h3>
+                                <span id="close-modal-button" class="close">&times;</span>
+                            </div>
+                            <p th:text="${}">공지사항 들어감</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
