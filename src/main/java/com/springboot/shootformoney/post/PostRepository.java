@@ -39,6 +39,10 @@ public class PostRepository {
         em.remove(post);
     }
 
+
+
+
+
     public Post findOne(Long pNo){
         return em.createQuery("select p from Post p where p.pNo = :pNo", Post.class)
                 .setParameter("pNo", pNo)
