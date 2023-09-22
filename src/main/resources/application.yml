@@ -56,6 +56,6 @@ logging.level:
 # football-data.org API 연동
 football:
   api:
-    key: 532100355bc34c5391ef8036da24736d
+    key: 26d128ed6a694c3699f698df83a4eb54
     base-url: https://api.football-data.org/v4
 

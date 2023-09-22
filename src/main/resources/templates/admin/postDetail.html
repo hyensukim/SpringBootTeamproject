@@ -8,11 +8,11 @@
     <h2>게시글 상세보기</h2>
 
     <div class="post-details">
-        <h3 th:text="${post.pTitle}"></h3>
+        <h4 th:text="'제목 : ' + ${post.pTitle}"></h4>
+        <p th:text =" '작성자 : ' + ${post.member.mNickName}"></p>
+        <h5>내용</h5>
         <p th:text="${post.pContent}"></p>
         <p>작성일: <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
-<!--        <p th:if="${post.updatedAt != null}">수정일:-->
-<!--            <span th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></span></p>-->
         <p th:if="${post.updatedAt != null}">
             수정일:
             <span th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
@@ -21,14 +21,6 @@
             수정일: -
         </p>
     </div>
-<!--    &lt;!&ndash; 게시글 삭제 &ndash;&gt;-->
-<!--    <td>-->
-<!--        <form th:action="@{'/admin/post/' + ${post.pNo}}" method="post">-->
-<!--            <a href="javascript:history.back()">< 뒤로가기</a>-->
-<!--            <input type="hidden" name="_method" value="delete"/>-->
-<!--            <button type="submit">게시글 삭제</button>-->
-<!--        </form>-->
-<!--    </td>-->
 
     <!-- 게시글 삭제 -->
     <td>
@@ -38,5 +30,6 @@
             <button type="submit">게시글 삭제</button>
         </form>
     </td>
+    <div class="foot"></div>
 </main>
 </html>

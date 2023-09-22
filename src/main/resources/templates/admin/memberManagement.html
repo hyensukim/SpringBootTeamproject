@@ -57,7 +57,7 @@
         <td th:text="${member.mPhone}"></td>
         <td th:text="${member.grade}"></td>
         <td th:text="${member.mLevel}"></td>
-        <td th:text="${member.euro.value + '€'}"></td>
+        <td> <span th:text="${member.euro.value + ' '}"></span><strong>€</strong></td>
         <td th:text="${member.role}"></td>
 
         <td>
