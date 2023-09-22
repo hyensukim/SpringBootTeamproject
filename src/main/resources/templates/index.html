@@ -13,10 +13,19 @@
 <!-- 네비게이션 바(헤더) -->
 <nav th:replace="~{outlines/nav :: common}"></nav>
 
-
 <main>
-    <div class = "banner">
-        <img src="" alt="banner img">
+    <div class="banner">
+        <div class="slides">
+            <div class="slide active"><img src="../static/image/banner1.png" th:src="@{../static/image/banner1.png}" alt="banner1"></div>
+            <div class="slide"><img src="../static/image/banner2.png" th:src="@{../static/image/banner2.png}" alt="banner2"></div>
+            <div class="slide"><img src="../static/image/banner3.png" th:src="@{../static/image/banner3.png}" alt="banner3"></div>
+        </div>
+
+<!--         이전/다음 버튼-->
+        <button id="prevSlide">‹</button>
+        <button id="nextSlide">›</button>
+
+        <ul id="indicators"></ul>
     </div>
 
     <div class = "scroll2">
@@ -84,19 +93,74 @@
             </tbody>
         </table>
     </div>
+    <div class="foot"></div>
 </main>
 <!-- 푸터 -->
 <footer th:replace="~{outlines/footer :: common}"></footer>
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">2023 Ait - Betting Site Prj</p>
-    </div>
-</footer>
 
 
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
+
+
+<script>
+    let slideIndex = 0;
+
+    function showSlide(index) {
+        const slides = document.querySelectorAll('.slide');
+
+        // 모든 슬라이드 숨김
+        slides.forEach((slide) => slide.style.display = 'none');
+
+        // 현재 인덱스의 슬라이드만 표시
+        slides[index].style.display = 'block';
+
+        const indicators = document.getElementById('indicators');
+
+        while (indicators.firstChild) indicators.removeChild(indicators.firstChild);
+
+        slides.forEach((_, i) => {
+            const li = document.createElement('li');
+
+            if (i === index) li.style.backgroundColor = 'black';
+
+            indicators.appendChild(li);
+        });
+    }
+
+    document.getElementById('prevSlide').addEventListener('click', () => {
+        slideIndex--;
+
+        if(slideIndex < 0){
+            slideIndex = document.querySelectorAll('.slide').length - 1;
+        }
+
+        showSlide(slideIndex);
+    });
+
+    document.getElementById('nextSlide').addEventListener('click', () => {
+        slideIndex++;
+
+        if(slideIndex === document.querySelectorAll('.slide').length){
+            slideIndex = 0;
+        }
+
+        showSlide(slideIndex);
+    });
+
+    setInterval(() => {
+        slideIndex++;
+
+        if(slideIndex === document.querySelectorAll('.slide').length){
+            slideIndex = 0;
+        }
+
+        showSlide(slideIndex);
+    },4000);
+
+    window.onload = () => showSlide(0);
+</script>
 </body>
 </html>

@@ -10914,32 +10914,78 @@ a {
 }
 
 .banner {
-  width: 100%;
-  height: 200px;
-  background-color: #4d5154;
+  width: 1250px;
+  height: 201px;
+  margin: 0 auto;
   margin-bottom: 20px;
   margin-top: 20px;
+  position: relative;
+  overflow: hidden;
 }
 
-/*.content {*/
-/*  width: 100%;*/
-/*  height: 500px;*/
-/*}*/
+.slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  overflow: hidden; /* Add this line */
+}
 
-/*.content .recentgame {*/
-/*  float: left;*/
-/*  background-color: #4d5154;*/
-/*  width: 60%;*/
-/*  height: 100%;*/
-/*  margin-bottom: 30px;*/
-/*}*/
-/*.content .ranking {*/
-/*  float: right;*/
-/*  background-color: #4d5154;*/
-/*  width: 30%;*/
-/*  height: 100%;*/
-/*  margin-bottom: 30px;*/
-/*}*/
+.slide {
+  min-width: 100%;
+}
+
+#prevSlide, #nextSlide {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2em;
+  background-color:transparent;
+  border: none;
+}
+
+#prevSlide {
+  left: 10px;
+}
+
+#nextSlide {
+  right: 10px;
+}
+
+#indicators {
+  position :absolute ;
+  bottom :10px ;
+  left :50% ;
+  transform :translateX(-50%) ;
+  display :flex ;
+}
+
+#indicators li {
+  list-style-type:none;
+  margin-right:5px;
+  padding:5px;
+  border-radius:50%;
+  background-color:#ddd;
+}
+
+
+.content {
+  width: 100%;
+  height: 500px;
+}
+
+.content .recentgame {
+  float: left;
+  background-color: #4d5154;
+  width: 60%;
+  height: 100%;
+  margin-bottom: 30px;
+}
+.content .ranking {
+  float: right;
+  background-color: #4d5154;
+  width: 30%;
+  height: 100%;
+  margin-bottom: 30px;
+}
 
 .recentgame {
   width: 100%;
