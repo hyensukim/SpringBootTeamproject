@@ -62,8 +62,8 @@ public class Member extends BaseEntity implements Serializable {
     private Long mStack = 0L;
 
     // 변경사항
-    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Post> posts = new ArrayList<>();
+//    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    private List<Post> posts = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="l_no", referencedColumnName = "l_No")

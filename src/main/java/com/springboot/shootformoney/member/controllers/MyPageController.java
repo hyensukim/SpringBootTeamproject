@@ -6,6 +6,7 @@ import com.springboot.shootformoney.member.dto.SearchInfo;
 import com.springboot.shootformoney.member.dto.MemberInfo;
 import com.springboot.shootformoney.member.dto.SignUpForm;
 import com.springboot.shootformoney.member.entity.Euro;
+import com.springboot.shootformoney.member.repository.MemberRepository;
 import com.springboot.shootformoney.member.services.MemberDeleteService;
 import com.springboot.shootformoney.member.services.MemberListService;
 import com.springboot.shootformoney.member.services.MemberPwCheckService;
@@ -28,6 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MyPageController {
 
+    private final MemberRepository memberRepository;
     private final MemberUtil memberUtil;
     private final MemberPwCheckService memberPwCheckService;
     private final MemberUpdateService memberUpdateService;
@@ -48,14 +50,17 @@ public class MyPageController {
 
     @PostMapping("/checkpw")
     public String checkPw(MemberInfo memberInfo, Model model) {
-        String mPassword = memberInfo.getMPassword();
         MemberInfo getMember = memberUtil.getMember();
-        Long mNo = getMember.getMNo();
 
-        if(getMember == null){
-            return "redirect:/member/login";
+        if(!memberUtil.isLogin()){
+            String script = String.format("Swal.fire('로그인 바랍니다.','','error').then(" +
+                    "function(){location.href='/member/login';})");
+            model.addAttribute("script",script);
+            return "script/sweet";
         }
 
+        String mPassword = memberInfo.getMPassword();
+        Long mNo = getMember.getMNo();
         try {
             memberPwCheckService.check(mPassword);
             return "redirect:/member/mypage/info/" + mNo;
@@ -79,10 +84,8 @@ public class MyPageController {
                 model.addAttribute("script", script);
                 return "script/sweet";
             }
-
             MemberInfo memberInfo = memberUtil.getMember();
-            Euro euro = euroService.getMemberEuro(memberInfo.getMNo());
-           SignUpForm signUpForm = SignUpForm.builder()
+            SignUpForm signUpForm = SignUpForm.builder()
                     .mId(memberInfo.getMId())
                     .mName(memberInfo.getMName())
                     .mNickName(memberInfo.getMNickName())
@@ -90,8 +93,9 @@ public class MyPageController {
                     .level(memberInfo.getLevel())
                     .mPhone(memberInfo.getMPhone())
                     .mEmail(memberInfo.getMEmail())
-                    .euro(euro)
+                    .euroValue(memberInfo.getEuro().getValue())
                     .build();
+
             model.addAttribute("signUpForm", signUpForm);
             return "member/mypage/info";
         }
@@ -102,28 +106,20 @@ public class MyPageController {
     }
 
     @PostMapping("/info/{mNo}")
-    public String myPagePs(@PathVariable Long mNo, @Valid SignUpForm signUpForm,
+    public String myPagePs(@PathVariable Long mNo, @ModelAttribute @Valid SignUpForm signUpForm,
                            Errors errors, Model model){
+
         String mPassword = signUpForm.getMPassword();
         String mPhone = signUpForm.getMPhone();
 
         updateValidator.validate(signUpForm,errors);
+
         if(errors.hasErrors()){
-            MemberInfo memberInfo = memberUtil.getMember();
-            Euro euro = euroService.getMemberEuro(mNo);
-            signUpForm.setMId(memberInfo.getMId());
-            signUpForm.setMName(memberInfo.getMName());
-            signUpForm.setMNickName(memberInfo.getMNickName());
-            signUpForm.setGrade(memberInfo.getGrade());
-            signUpForm.setLevel(memberInfo.getLevel());
-            signUpForm.setMPhone(memberInfo.getMPhone());
-            signUpForm.setMEmail(memberInfo.getMEmail());
-            signUpForm.setEuro(euro);
             return "/member/mypage/info";
         }
 
         memberUpdateService.update(mNo,mPassword,mPhone);
-        String script = String.format("Swal.fire('수정 완료, 재로그인 시 수정된 정보가 반영됩니다. :D','success')" +
+        String script = String.format("Swal.fire({'수정 완료, 재로그인 시 수정된 정보가 반영됩니다.','success'})" +
                 ".then(function(){history.back();})");
         model.addAttribute("script",script);
         return "script/sweet";

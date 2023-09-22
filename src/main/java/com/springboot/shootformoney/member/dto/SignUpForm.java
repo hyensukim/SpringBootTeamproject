@@ -32,6 +32,7 @@ package com.springboot.shootformoney.member.dto;
         private String mPhone;
 
         @Email(message = "이메일 양식에 맞지 않습니다.")
+        @NotBlank(message="이메일을 입력해주세요.")
         private String mEmail;
 
         @NotBlank(message = "별명을 입력해주세요.")
@@ -45,5 +46,5 @@ package com.springboot.shootformoney.member.dto;
         
         private Role role;
 
-        private Euro euro;
+        private Integer euroValue;
     }

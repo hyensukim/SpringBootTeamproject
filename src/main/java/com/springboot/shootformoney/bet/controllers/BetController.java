@@ -76,6 +76,12 @@ public class BetController {
         return "redirect:/list/unstarted/entirelist";
 
     }
+    @GetMapping("/cancelbet/confirm/{btNo}")
+    public String cancelBetConfirm(@PathVariable Long btNo,Model model){
+        String url = "/bet/cancelbet/"+btNo;
+        model.addAttribute("confirmCancelBet", url);
+        return "script/sweet";
+    }
 
     //배팅 취소 메서드. Bet엔터티에서 배팅 정보를 삭제하고, 보유금에 배팅금만큼 가산한다.
     @GetMapping("/cancelbet/{btNo}")

@@ -9,7 +9,7 @@
         <div class="form-group">
             <label for="mId">ID:</label>
             <input type="text" id="mId" th:field="*{mId}" class="form-control" placeholder="4자리 이상 16자리 이하"/>
-            <span th:if="${#fields.hasErrors('mId')}" th:errors="*{mId}"></span>
+            <span class="error" th:if="${#fields.hasErrors('mId')}" th:errors="*{mId}"></span>
         </div>
 
         <div class="form-group">

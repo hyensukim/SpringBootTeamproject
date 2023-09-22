@@ -11,13 +11,13 @@
         <div class="form-group">
             <label for="mId">ID:</label>
             <input type="text" name="mId" id="mId" th:field="*{mId}" class="form-control"/>
-            <span th:if="${session.requiredMId != null}" th:text="${session.requiredMId}"></span>
+            <span class="error" th:if="${session.requiredMId != null}" th:text="${session.requiredMId}"></span>
         </div>
 
         <div class="form-group">
             <label for="mPassword">Password:</label>
             <input type="password" name="mPassword" id="mPassword" th:field="*{mPassword}" class="form-control"/>
-            <span th:if="${session.requiredMPassword != null}" th:text="${session.requiredMPassword}"></span>
+            <span class="error" th:if="${session.requiredMPassword != null}" th:text="${session.requiredMPassword}"></span>
         </div>
 
         <div class='form-group'>

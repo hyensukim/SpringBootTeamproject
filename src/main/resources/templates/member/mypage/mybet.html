@@ -44,7 +44,7 @@
                             <td th:if="*{endPaid.toString().equals('1')}"
                                 th:text="'결과 배당률' + ' : ' +${bet.btRatio}"></td>
                             <td th:unless="*{endPaid.toString().equals('1')}" class="list_button">
-                                <a th:href="@{/bet/cancelbet/{btNo}(btNo = ${bet.btNo})}">배팅 취소</a>
+                                <a th:href="@{/bet/cancelbet/confirm/{btNo}(btNo = ${bet.btNo})}">배팅 취소</a>
                             </td>
                         </tr>
                     </tbody>

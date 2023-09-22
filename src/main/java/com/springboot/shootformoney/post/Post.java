@@ -81,15 +81,15 @@ public class Post extends BaseEntity {
 //            member.getPosts().add(this);
 //       }
 //      }
-public void setMember(Member member) {
-    this.member = member;
-    if (!member.getPosts().contains(this)) {
-        member.getPosts().add(this);
-    }
-    // 회원 정보 설정
-    this.mId = member.getMId();
-    this.mNickName = member.getMNickName();
-}
+//public void setMember(Member member) {
+//    this.member = member;
+//    if (!member.getPosts().contains(this)) {
+//        member.getPosts().add(this);
+//    }
+//    // 회원 정보 설정
+//    this.mId = member.getMId();
+//    this.mNickName = member.getMNickName();
+//}
 
 
     @Column(name = "m_id")
