@@ -1,39 +1,38 @@
 package com.springboot.shootformoney.comment;
 
-import com.springboot.shootformoney.post.Post;
-import com.springboot.shootformoney.post.PostService;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 @Controller
 @RequestMapping("/comments")
+@RequiredArgsConstructor
 public class CommentController {
 
     private final CommentService commentService;
-    private final PostService postService;
-    private Post post;
+
+    @PostMapping("/")
+    public String createComment(@ModelAttribute Comment comment) {
+        commentService.save(comment);
+        return "redirect:/comments";
+    } // 댓글 달기
 
 
-    public CommentController(CommentService commentService, PostService postService) {
-        this.commentService = commentService;
-        this.postService = postService;
-    }
-
-    @GetMapping("/post/{pNo}")
-    public String getCommentsByPost(@PathVariable Long pNo, Model model) {
-        List<Comment> comments = commentService.findCommentsByPost(pNo);
+    @GetMapping("/")
+    public String getAllComments(Model model) {
+        List<Comment> comments = commentService.findAll();
         model.addAttribute("comments", comments);
-        return "comment/list"; // Adjust the view name as needed
-    }
+        return "commentsList";
+    } // 댓글 전부 조회
 
-    @GetMapping("/member/{mNo}")
-    public String getCommentsByMember(@PathVariable Long mNo, Model model) {
-        List<Comment> comments = commentService.findCommentsByMember(mNo);
-        model.addAttribute("comments", comments);
-        return "comment/list"; // Adjust the view name as needed
-    }
+    @PostMapping("/{id}/delete")
+    public String deleteComment(@PathVariable Long id) {
+        commentService.delete(id);
+        return "redirect:/comments";
+    } // 댓글 지우기
 }

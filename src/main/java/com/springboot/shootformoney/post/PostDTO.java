@@ -20,6 +20,8 @@ public class PostDTO {
     private String mId; //수정
     private String mNickName; //수정
 
+
+
     @NotNull(message = "제목을 정해주세요")
     @Size(min = 1, max = 100, message = "제목 글자수 제한 오류")
     private String pTitle;
