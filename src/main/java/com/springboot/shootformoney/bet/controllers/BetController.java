@@ -19,7 +19,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -42,11 +41,10 @@ public class BetController {
     //마지막으로 배팅한 경기의 EuroPool에 해당 예측에 해당하는 배팅금 Pool 값을 증가시킨다.
     @PostMapping("/placebet")
     @Transactional
-    public String placeBet(BetDto betDto, Model model, RedirectAttributes redirectAttributes) {
+    public String placeBet(BetDto betDto, Model model) {
         model.addAttribute("pageTitle", "배팅 등록하기");
-        //경기 시작 후 배팅을 막기 위해 현재 시간 가져옴.
         ZonedDateTime currentDateTime = ZonedDateTime.now();
-
+        //경기 시작 후 배팅을 막기 위해 현재 시간 가져옴.
         Game currentGame = matchService.getGameInfo(betDto.getMatchId())
                 .orElseThrow();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -72,8 +70,8 @@ public class BetController {
             }
 
         } else {
-            redirectAttributes.addFlashAttribute("showAlert", true);
-            return "redirect:/list/" + betDto.getMatchId();
+            String errorMsg = "error : 경기가 이미 시작되어 배팅할 수 없습니다.";
+            model.addAttribute("errorMsg", errorMsg);
         }
         return "redirect:/list/unstarted/entirelist";
 
@@ -84,13 +82,13 @@ public class BetController {
     @Transactional
     public String cancelBet(@PathVariable Long btNo, Model model) {
         model.addAttribute("pageTitle", "배팅 취소하기");
-        // 유저 정보 가져오기
-        Long mNo = memberUtil.getMember().getMNo();
         try {
             Bet targetBet = betService.findToCancel(btNo);
             //EuroPool에 배팅금액 가산.
             euroPoolService.rollbackEuroPool(targetBet);
 
+            // 유저 정보 가져오기
+            Long mNo = memberUtil.getMember().getMNo();
             // 보유 유로 롤백 처리
             euroService.rollbackEuro(mNo, btNo);
             // 배팅 정보 삭제
@@ -99,6 +97,6 @@ public class BetController {
             String errorMsg =  "배팅 취소 중 오류가 발생했습니다.";
             model.addAttribute("errorMsg", errorMsg);
         }
-        return "redirect:/member/mypage/mybet/" + mNo;
+        return "redirect:/member/mypage/mybet/${mNo}";
     }
 }
