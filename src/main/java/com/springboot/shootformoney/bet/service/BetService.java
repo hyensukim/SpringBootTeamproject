@@ -127,7 +127,7 @@ public class BetService {
                         //배당금 = 배팅금 * (배당률 - 1) (만 단위, 배팅금 보전)
                         double prizeValue = bet.getBtMoney() * (bet.getBtRatio() - 1);
                         //지급금 = 배당금 * (1 - 수수료) + 배팅금
-                        Integer addValue = (int) (prizeValue * (1 - fee) + bet.getBtMoney()) * 10000;
+                        Integer addValue = (int) ((prizeValue * (1 - fee) + bet.getBtMoney()) * 10000);
 
                         //현재 사용자의 유로 보유량 조회.
                         Integer originalValue = euroRepository.findBymNo(member.getMNo()).getValue();
