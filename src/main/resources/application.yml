@@ -7,8 +7,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/shootformoney
-    username: root
-    password: aA!123456
+    username: beo
+    password: 7730
 
   jpa:
     hibernate:

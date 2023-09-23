@@ -100,7 +100,7 @@ public class PostController {
     @DeleteMapping("/{pNo}")
     public String deletePost(@PathVariable Long pNo) {
         postService.deletePost(pNo);
-        return "redirect:/posts/all";
+        return "redirect:/post/all";
     }
 
 
@@ -134,19 +134,19 @@ public class PostController {
     }
 
     // 게시글 수정
-    @GetMapping("/{pNo}")
-    public String editPostForm(@PathVariable Long pNo, Model model) {
-        Post post = postService.findPost(pNo);
-        model.addAttribute("post", post);
-        return "edit";
-    }
+//    @GetMapping("/{pNo}")
+//    public String editPostForm(@PathVariable Long pNo, Model model) {
+//        Post post = postService.findPost(pNo);
+//        model.addAttribute("post", post);
+//        return "edit";
+//    }
 
     @PutMapping("/{pNo}/edit")
-    public String editPost(@PathVariable Long pNo, @ModelAttribute("post") @Valid PostDTO updatedPost) {
-        System.out.println(updatedPost);
+    public String editPost(@PathVariable Long pNo, @ModelAttribute("post") @Valid PostDTO updatedPost, Model model) {
 
         postService.updatePost(pNo, updatedPost.getPTitle(), updatedPost.getPContent());
-        return "redirect:/posts/{pNo}";
+
+        return "post/edit";
     }
 
 }
