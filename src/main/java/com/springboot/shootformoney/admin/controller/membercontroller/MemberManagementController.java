@@ -26,17 +26,6 @@ public class MemberManagementController {
 
     private final MemberManagementService memberManagementService;
 
-    //    // 전체 회원 조회
-//    @GetMapping("/memberList/all")
-//    public String getAllMember(Model model) {
-//        List<Member> members = memberInfoService.findAllMembers();
-//        model.addAttribute("members", members);
-//
-//        model.addAttribute("pageTitle", "회원 관리");
-//
-//        return "admin/memberManagement";
-//    }
-
     // 회원 전체 조회 (+ 페이징 처리)
     @GetMapping("/memberList/all")
     public String getAllMember(@ModelAttribute AdminSearchInfo pageInfo, Model model) {
@@ -63,51 +52,7 @@ public class MemberManagementController {
         return "admin/memberManagement";
     }
 
-    // 카테고리별 멤버 조회
-//    @GetMapping("/memberList/search")
-//    public String searchMember(@RequestParam String category, @RequestParam String query, Model model) {
-//
-//        List<Member> members = memberInfoService.searchMembers(category, query);
-//        model.addAttribute("members", members);
-//
-//        switch (category) {
-//            case "mNo":
-//                model.addAttribute("pageTitle", "회원 조회 | 회원번호");
-//                break;
-//
-//            case "mId":
-//                model.addAttribute("pageTitle", "회원 조회 | ID");
-//                break;
-//
-//            case "mName":
-//                model.addAttribute("pageTitle", "회원 조회 | 이름");
-//                break;
-//
-//            case "mNickName":
-//                model.addAttribute("pageTitle", "회원 조회 | 별명");
-//                break;
-//
-//            case "grade":
-//                model.addAttribute("pageTitle", "회원 조회 | 등급");
-//                break;
-//
-//            case "mLevel":
-//                model.addAttribute("pageTitle", "회원 조회 | Level");
-//                break;
-//
-//            case "role":
-//                model.addAttribute("pageTitle", "회원 조회 | 권한");
-//                break;
-//
-//
-//            default:
-//                throw new IllegalArgumentException("Invalid category: " + category);
-//        }
-//
-//        return "admin/memberList";
-//    }
-
-    // 회원 검색 (+ 페이징 처리)
+    // 회원 검색 조회 (+ 페이징 처리)
     @GetMapping("/memberList/search")
     public String getAllMembers(@ModelAttribute AdminSearchInfo searchInfo,
                                 Model model) {

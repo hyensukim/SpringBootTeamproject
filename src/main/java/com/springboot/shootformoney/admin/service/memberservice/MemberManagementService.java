@@ -31,11 +31,6 @@ public class MemberManagementService {
 
     private final MemberRepository memberRepository;
 
-//    @Autowired
-//    public MemberManagementService(MemberRepository memberRepository) {
-//        this.memberRepository = memberRepository;
-//    }
-
     // 회원 전체 조회
     public List<Member> findAllMembers() {
         return memberRepository.findAll();
@@ -73,34 +68,6 @@ public class MemberManagementService {
             throw new IllegalArgumentException("존재하지 않는 회원입니다.");
         }
     }
-
-//    public List<Member> searchMembers(String category, String query) {
-//        switch (category) {
-//            case "mNo":
-//                return memberRepository.findBymNo(Long.parseLong(query));
-//
-//            case "mId":
-//                return Arrays.asList(memberRepository.findBymId(query));
-//
-//            case "mName":
-//                return Arrays.asList(memberRepository.findBymName(query));
-//
-//            case "mNickName":
-//                return Arrays.asList(memberRepository.findBymNickName(query));
-//
-//            case "grade":
-//                return memberRepository.findByGrade(Grade.valueOf(query.toUpperCase()));
-//
-//            case "role":
-//                return memberRepository.findByRole(Role.valueOf(query.toUpperCase()));
-//
-//            case "mLevel":
-//                return memberRepository.findBymLevel(Integer.parseInt(query));
-//
-//            default:
-//                throw new IllegalArgumentException("Invalid category: " + category);
-//        }
-//    }
 
     // 회원 전체 조회(페이징 처리)
     public Page<Member> getsAdminMemberWithPages(AdminSearchInfo adminSearchInfo) {

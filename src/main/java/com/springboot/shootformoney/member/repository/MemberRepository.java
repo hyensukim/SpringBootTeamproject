@@ -19,18 +19,9 @@ public interface MemberRepository extends JpaRepository<Member, Long>, QuerydslP
     Member findBymPhone(String mPhone); // 전화 번호로 조회
     Member findBymEmail(String mEmail); // 이메일로 조회
 
-//    Member findBymName(String mName); // 회원 이름 조회
-//    List<Member> findBymLevel(Integer mLevel); // 회원 LV 조회
-//    List<Member> findBymNo(Long mNo); // 회원 no로 조회
-//    List<Member> findByGrade(Grade grade); // 회원 등급 조회
-//    List<Member> findByRole(Role role); // 회원 권한 조회
-
-    // 윤환 추가 검색 * 페이징 처리
-//    Page<Member> findBymNo(
-//            Long mNo, String mId,
-//            String mName, String mNickName,
-//            Grade grade, Integer mLevel,
-//            Role role, Pageable pageable);
+    /*
+    페이징 처리용 by 유난
+     */
     Page<Member> findBymNo(Long mNo, Pageable pageable); // 회원 no로 조회
     Page<Member> findBymId(String mName, Pageable pageable); // 회원 ID 조회
     Page<Member> findBymName(String mName, Pageable pageable); // 회원 이름 조회
