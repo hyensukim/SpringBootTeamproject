@@ -1,17 +1,20 @@
-package com.springboot.shootformoney.comment;
+package com.springboot.shootformoney.comment.entity;
 
 import com.springboot.shootformoney.common.BaseEntity;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.post.Post;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
-public class Comment extends BaseEntity {
+public class Comment extends BaseEntity{
 
     @Id
     @GeneratedValue
@@ -21,15 +24,8 @@ public class Comment extends BaseEntity {
     @Column(name = "c_content")
     private String cContent;  // 댓글 본문
 
-    @Column(name = "m_nick_name")
-    private String mNickName; // 회원 별명
-
-//    @Column(name = "p_no")
-//    private Long pNo; // 게시글 번호
-
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "m_no")
+    @JoinColumn(name = "mNo")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)

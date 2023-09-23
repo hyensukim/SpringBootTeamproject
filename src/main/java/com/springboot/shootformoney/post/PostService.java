@@ -20,6 +20,7 @@ import org.webjars.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.data.domain.Sort.by;
 
@@ -96,19 +97,31 @@ public class PostService {
         return 	postRepository.findAll();
     }
 
-//    단일 조회
-@Transactional
-public Post findPost(Long pNo) {
-    Post post = postRepository.findOne(pNo);
-    if (post != null) {
-        post.incrementViewCount();
-        return post;
-    } else {
-        throw new IllegalArgumentException("해당 아이디의 게시물이 존재하지 않습니다.");
+    //단일 조회
+    @Transactional
+    public Post findPost(Long pNo) {
+        Post post = postRepository.findOne(pNo);
+        if (post != null) {
+            post.incrementViewCount();
+            return post;
+        } else {
+            throw new IllegalArgumentException("해당 아이디의 게시물이 존재하지 않습니다.");
+        }
     }
-}
 
+    //단일 조회(postResponseDto 사용 -> 순환 조회 방지)
+    @Transactional
+    public PostResponseDto findById(Long pNo){
+        Post post = postRepositoryInterface.findById(pNo).orElseThrow(()->
+                new IllegalArgumentException("게시글 조회 오류 : 게시글이 존재하지 않습니다."));
+        PostResponseDto postResponseDto = new PostResponseDto(post);
+        return postResponseDto;
+    }
 
+    public void updateView(Long pNo){
+        Optional<Post> post = postRepositoryInterface.findById(pNo);
+        post.ifPresent(Post::incrementViewCount);
+    }
 
         // 제목으로 찾기
     public List<Post> findPostsByTitle(String pTitle) {

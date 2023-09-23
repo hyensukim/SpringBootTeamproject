@@ -2,6 +2,7 @@ package com.springboot.shootformoney.post;
 
 
 import com.springboot.shootformoney.board.entity.Board;
+import com.springboot.shootformoney.comment.entity.Comment;
 import com.springboot.shootformoney.common.BaseEntity;
 import com.springboot.shootformoney.member.entity.Member;
 import jakarta.persistence.*;
@@ -9,6 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -41,6 +43,10 @@ public class Post extends BaseEntity {
         this.pTitle = title;
         this.pContent= content;
     }
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("createdAt desc")//댓글 관련(정렬)
+    private List<Comment> comments;
 
     public Post() {
 
