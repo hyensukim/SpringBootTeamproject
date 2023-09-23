@@ -44,42 +44,34 @@ public class PostFindService {
         }
     }
 
-    // bName 조회
-    public List<Post> findPostBybName(String bName) {
-        return postRepository.findByBoard_BName(bName);
-    }
-
-    // 각 카테고리별 검색 기능 서비스
-    public List<Post> searchPosts(String category, String query) {
-        switch (category) {
-            case "pNo":
-                Post post = postRepository.findOne(Long.parseLong(query));
-                return post != null ? Arrays.asList(post) : new ArrayList<>();
-
-            case "mId":
-                return postRepository.findByMemberId(query);
-
-            case "mNickName":
-                return postRepository.findByMember_MNickName(query);
-
-            case "bName":
-                return postRepository.findByBoard_BName(query);
-
-            case "pTitle":
-                return postRepository.findByTitle(query);
-
-            default:
-                throw new IllegalArgumentException("Invalid category: " + category);
-        }
-    }
+//    // 각 카테고리별 검색 기능 서비스
+//    public List<Post> searchPosts(String category, String query) {
+//        switch (category) {
+//            case "pNo":
+//                Post post = postRepository.findOne(Long.parseLong(query));
+//                return post != null ? Arrays.asList(post) : new ArrayList<>();
+//
+//            case "mId":
+//                return postRepository.findByMemberId(query);
+//
+//            case "mNickName":
+//                return postRepository.findByMember_MNickName(query);
+//
+//            case "bName":
+//                return postRepository.findByBoard_BName(query);
+//
+//            case "pTitle":
+//                return postRepository.findByTitle(query);
+//
+//            default:
+//                throw new IllegalArgumentException("Invalid category: " + category);
+//        }
+//    }
 
 
     // 전체 리스트 조회 서비스 (+ 페이징 처리)
-    //        public Page<Post> getsAdminPostWithPages(PostSearchInfo postSearchInfo, Long bNo){
     public Page<Post> getsAdminPostWithPages(AdminSearchInfo adminSearchInfo) {
-//        QPost post = QPost.post;
-//        BooleanBuilder andBuilder = new BooleanBuilder();
-//        andBuilder.and(post.board.bNo.eq(bNo));
+
 
         int page = adminSearchInfo.getPage();
         int pageSize = adminSearchInfo.getPageSize();
@@ -93,52 +85,40 @@ public class PostFindService {
     }
 
 
-//    public Page<Post> getsAdminPostWithPages(PostSearchInfo postSearchInfo) {
-//        int page = postSearchInfo.getPage();
-//        int pageSize = postSearchInfo.getPageSize();
-//        page = Math.max(page, 1);
-//        pageSize = pageSize < 1 ? 15 : pageSize;
-//
-//        Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by(Sort.Order.desc("createdAt")));
-//
-//        // 검색 조건과 키워드를 가져오기
-//        String category = postSearchInfo.getCategory();
-//        String query = postSearchInfo.getQuery();
-//
-//        Page<Post> adminPostList = Page.empty();
-//
-//        if (category != null && !category.isEmpty() && query != null && !query.isEmpty()) {
-//            // 검색 조건에 따른 동적 쿼리 생성
-//            if ("pNo".equals(category)) {
-//                adminPostList = postRepositoryInterface.findBypNo(Long.parseLong(query), pageable);
-//            } else if ("mId".equals(category)) {
-//                adminPostList = postRepositoryInterface.findByMembermId(query, pageable);
-//            } else if ("mNickName".equals(category)) {
-//                adminPostList = postRepositoryInterface.findByMembermNickName(query, pageable);
-//            } else if ("bName".equals(category)) {
-//                adminPostList = postRepositoryInterface.findByBoardbName(query, pageable);
-//            } else if ("pTitle".equals(category)) {
-//                adminPostList = postRepositoryInterface.findBypTitleContaining(query, pageable);
-//            } else {
-//                // 기타 검색 조건 처리
-//                // adminPostList = postRepositoryInterface.findByCustomCondition(category, query, pageable);
-//            }
-//        } else {
-//            // 검색 조건이 없을 경우 모든 게시물을 가져옴
-//            adminPostList = postRepositoryInterface.findAll(pageable);
-//        }
-//
-//        return adminPostList;
-//    }
-    
-    
-    // 게시글 일괄 삭제 서비스
-//    public void deleteMultiplePosts(List<Long> pNos) {
-//        for(Long id : pNos) {
-//            postRepositoryInterface.deleteById(id);
-//        }
-//    }
+    public Page<Post> searchPosts(AdminSearchInfo adminSearchInfo) {
+        int page = adminSearchInfo.getPage();
+        int pageSize = adminSearchInfo.getPageSize();
 
+        page = Math.max(page, 1);
+        pageSize = pageSize < 1 ? 15 : pageSize;
+
+        String sOpt = adminSearchInfo.getSOpt();
+        String sKey = adminSearchInfo.getSKey();
+
+        Pageable pageable = PageRequest.of(page - 1, pageSize,
+                Sort.by(Sort.Order.desc("createdAt")));
+
+        if (sOpt != null && sKey != null) {
+            switch (sOpt) {
+                case "pNo":
+                    Long pNo = Long.parseLong(sKey);
+                    return postRepositoryInterface.findBypNo(pNo,pageable);
+                case "mId":
+                    return postRepositoryInterface.findByMembermId(sKey, pageable);
+                case "mNickName":
+                    return postRepositoryInterface.findByMembermNickName(sKey, pageable);
+                case "bName":
+                    return postRepositoryInterface.findByBoardbName(sKey, pageable);
+                case "pTitle":
+                    return postRepositoryInterface.findBypTitle(sKey, pageable);
+            }
+        }
+
+        return postRepositoryInterface.findAll(pageable);
+    }
+    
+    
+    // 게시글 일괄 삭제
     public void deleteMultiplePosts(List<Long> pNos) {
         if(pNos.isEmpty()) {
             throw new IllegalArgumentException("삭제할 게시글을 선택해주세요.");

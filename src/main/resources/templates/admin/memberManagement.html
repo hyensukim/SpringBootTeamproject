@@ -83,18 +83,16 @@
     </tr>
 
 </table>
-
-    <th:block class="myMemberPg" th:each="item : ${#numbers.sequence(startPage, endPage)}">
-        <li th:if="${item > 0}" class='page' th:classappend="on">
-            <a th:if="${item != nowPage && item > 0}"
-               th:href="@{/admin/member/memberList/all?page={page}(page=${item})}"
-               th:text="${item}">
-            </a>
-            <strong th:if="${item == nowPage}" th:text="${item}"></strong>
-        </li>
-    </th:block>
-
-
-
+    <ul class="pagination">
+        <th:block class="myMemberPg" th:each="item : ${#numbers.sequence(startPage, endPage)}">
+            <li th:class="${item == nowPage} ? 'page on' : 'page'">
+                <a th:if="${item != nowPage}"
+                   th:href="@{/admin/member/memberList/search(page=${item}, sOpt=${param.sOpt}, sKey=${param.sKey})}"
+                   th:text="${item}">
+                </a>
+                <strong th:if="${item == nowPage}" th:text="${item}"></strong>
+            </li>
+        </th:block>
+    </ul>
 </main>
 </html>

@@ -30,16 +30,13 @@ public class PostManagementController {
     private BoardRepository boardRepository;
 
     // 모든 게시물 조회 (+페이징 처리)
-    @GetMapping("/postList/all")
-//    public String getAllPosts(@ModelAttribute PostSearchInfo pageInfo, Model model) {
+    @GetMapping("/postList")
     public String getAllPosts(@ModelAttribute AdminSearchInfo pageInfo
-//    public String getAllPosts(@PathVariable Long bNo, @ModelAttribute PostSearchInfo pageInfo
             , Model model) {
 
-        model.addAttribute("pageTitle", "게시물 관리");
+        model.addAttribute("pageTitle", "게시글 관리");
 
         try {
-//            Page<Post> posts = postFindService.getsAdminPostWithPages(pageInfo, bNo);
             Page<Post> posts = postFindService.getsAdminPostWithPages(pageInfo);
             List<Post> postList = posts.getContent();
 
@@ -70,92 +67,8 @@ public class PostManagementController {
     }
 
 
-    @GetMapping("/postList")
-    public String postList(@RequestParam(required = false) String bName, Model model) {
-        List<Board> boards = boardRepository.findAll();
-        model.addAttribute("boards", boards);
-
-        List<Post> posts;
-        if (bName != null) {
-            posts = postFindService.searchPosts("bName", bName);
-        } else {
-            posts = postFindService.findAllposts();
-        }
-
-        model.addAttribute("posts", posts);
-
-        return "/admin/postList";
-    }
-
-
-    // 각 기능 별 게시글 조회
-    @GetMapping("/postList/search")
-    public String searchPost(@RequestParam String category, @RequestParam String query, Model model) {
-
-        List<Post> posts = postFindService.searchPosts(category, query);
-        model.addAttribute("posts", posts);
-
-        switch (category) {
-            case "pNo":
-                model.addAttribute("pageTitle", "게시글 조회 | 번호");
-                break;
-
-            case "mId":
-                model.addAttribute("pageTitle", "게시글 조회 | 작성자 ID");
-                break;
-
-            case "mNickName":
-                model.addAttribute("pageTitle", "게시글 조회 | 작성자 별명");
-                break;
-
-            case "bName":
-                model.addAttribute("pageTitle", "게시글 조회 | 게시판 이름");
-                break;
-
-            case "pTitle":
-                model.addAttribute("pageTitle", "게시글 조회 | 게시글 제목");
-                break;
-
-            default:
-                throw new IllegalArgumentException("Invalid category: " + category);
-        }
-
-        return "admin/postList";
-    }
-
-
-
-    //     게시글 일괄 삭제
-    @DeleteMapping("/deleteMultiple")
-    public String deleteMultiplePosts(@RequestParam("selectPosts") List<Long> pNos) {
-        postFindService.deleteMultiplePosts(pNos);
-        return "redirect:/admin/post/postList/all";
-    }
-
-//    // 모든 게시물 조회
-//    @GetMapping("/postList/all")
-//    public String getAllPosts(Model model,
-//                              @RequestParam(value = "page", defaultValue = "1") int page) {
-//        List<Post> posts = postService.findAllPosts();
-//        model.addAttribute("posts", posts);
-//
-//        // 페이지 핸들러 객체 생성 및 추가
-//        int totalCnt = posts.size();  // 총 게시글 수
-//        PageHandler pageHandler = new PageHandler(totalCnt, page);
-//        model.addAttribute("pageHandler", pageHandler);
-//
-//        model.addAttribute("pageTitle", "게시물 관리");
-//
-//        return "admin/postManagement";
-//    }
-
-
-//    // 컨트롤러
 //    @GetMapping("/postList")
-//    public String postList(@RequestParam(required = false) String bName,
-//                           @RequestParam(value = "page", defaultValue = "1") int page,
-//                           Model model){
-//
+//    public String postList(@RequestParam(required = false) String bName, Model model) {
 //        List<Board> boards = boardRepository.findAll();
 //        model.addAttribute("boards", boards);
 //
@@ -167,12 +80,81 @@ public class PostManagementController {
 //        }
 //
 //        model.addAttribute("posts", posts);
-//        // 페이지 핸들러 객체 생성 및 추가
-//        int totalCnt = posts.size();  // 총 게시글 수 (특정 보드의 경우 해당 보드의 게시글 수)
-//        PageHandler pageHandler = new PageHandler(totalCnt, page);
-//        model.addAttribute("pageHandler", pageHandler);
 //
 //        return "/admin/postList";
 //    }
+
+
+//    // 각 기능 별 게시글 조회
+//    @GetMapping("/postList/search")
+//    public String searchPost(@RequestParam String category, @RequestParam String query, Model model) {
+//
+//        List<Post> posts = postFindService.searchPosts(category, query);
+//        model.addAttribute("posts", posts);
+//
+//        switch (category) {
+//            case "pNo":
+//                model.addAttribute("pageTitle", "게시글 조회 | 번호");
+//                break;
+//
+//            case "mId":
+//                model.addAttribute("pageTitle", "게시글 조회 | 작성자 ID");
+//                break;
+//
+//            case "mNickName":
+//                model.addAttribute("pageTitle", "게시글 조회 | 작성자 별명");
+//                break;
+//
+//            case "bName":
+//                model.addAttribute("pageTitle", "게시글 조회 | 게시판 이름");
+//                break;
+//
+//            case "pTitle":
+//                model.addAttribute("pageTitle", "게시글 조회 | 게시글 제목");
+//                break;
+//
+//            default:
+//                throw new IllegalArgumentException("Invalid category: " + category);
+//        }
+//
+//        return "admin/postList";
+//    }
+
+    // 게시글 검색 조회 (+ 페이징 처리)
+    @GetMapping("/postList/search")
+    public String getAllMembers(@ModelAttribute AdminSearchInfo searchInfo,
+                                Model model) {
+
+        model.addAttribute("pageTitle", "게시글 관리");
+
+        try {
+            // 게시글 조회
+            Page<Post> posts = postFindService.searchPosts(searchInfo);
+
+            List<Post> postList= posts.getContent();
+
+            int nowPage= posts.getPageable().getPageNumber() + 1; // 현재 페이지
+            int startPage= (nowPage - 1) / 10 * 10 + 1; // 첫 페이지
+            int endPage= Math.min(startPage + 10 - 1 ,posts.getTotalPages()); // 마지막 페이지
+
+            model.addAttribute("postList", postList);
+            model.addAttribute("nowPage", nowPage);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+
+        } catch (NullPointerException e) {
+            String script = String.format(
+                    "Swal.fire('%s','','error').then(function(){history.back();})", e.getMessage());
+        }
+
+        return "admin/postList";
+    }
+
+    //     게시글 일괄 삭제
+    @DeleteMapping("/deleteMultiple")
+    public String deleteMultiplePosts(@RequestParam("selectPosts") List<Long> pNos) {
+        postFindService.deleteMultiplePosts(pNos);
+        return "redirect:/admin/post/postList/all";
+    }
 
 }

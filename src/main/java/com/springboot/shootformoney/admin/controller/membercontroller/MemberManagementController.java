@@ -27,7 +27,7 @@ public class MemberManagementController {
     private final MemberManagementService memberManagementService;
 
     // 회원 전체 조회 (+ 페이징 처리)
-    @GetMapping("/memberList/all")
+    @GetMapping("/memberList")
     public String getAllMember(@ModelAttribute AdminSearchInfo pageInfo, Model model) {
 
         model.addAttribute("pageTitle", "회원관리");
@@ -57,7 +57,7 @@ public class MemberManagementController {
     public String getAllMembers(@ModelAttribute AdminSearchInfo searchInfo,
                                 Model model) {
 
-        model.addAttribute("pageTitle", "회원관리");
+        model.addAttribute("pageTitle", "회원 관리");
 
         try {
             // 회원 조회

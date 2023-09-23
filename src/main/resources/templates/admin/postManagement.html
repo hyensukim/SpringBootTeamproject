@@ -14,25 +14,16 @@
     <!--    </div>-->
 
     <form th:action="@{/admin/post/postList/search}" method="get">
-        <!-- Search Category -->
-        <!--        <select id="dataPerPage">-->
-        <!--            <option value="10">10개씩보기</option>-->
-        <!--            <option value="15">15개씩보기</option>-->
-        <!--            <option value="20">20개씩보기</option>-->
-        <!--        </select>-->
-        <select name="category">
+        <select name="sOpt">
             <option value="pNo">게시글 번호</option>
             <option value="mId">작성자 ID</option>
             <option value="mNickName">작성자 별명</option>
             <option value="bName">게시판</option>
             <option value="pTitle">제목</option>
-            <!-- Add more options as needed -->
         </select>
 
-        <!-- Search Query -->
-        <input type="text" name="query" placeholder="검색">
+        <input type="text" name="sKey" placeholder="검색">
 
-        <!-- Submit Button -->
         <button type="submit">검색</button>
     </form>
 
@@ -58,8 +49,8 @@
             <tr th:each="post : ${postList}">
                 <td><input type="checkbox" name="selectPosts" th:value="${post.pNo}"/></td>
                 <td th:text="${post.pNo}"></td>
-                <td th:text="${post.mId}"></td>
-                <td th:text="${post.mNickName}"></td>
+                <td th:text="${post.member.mId}"></td>
+                <td th:text="${post.member.mNickName}"></td>
                 <td th:text="${post.board.bName}"></td>
                 <td><a th:href="@{'/admin/post/' + ${post.pNo}}" th:text="${post.pTitle}"></a></td>
                 <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
@@ -75,15 +66,26 @@
         <!--                            <i class="xi-angle-left-min"></i>-->
         <!--                        </a>-->
         <!--                    </li>-->
-        <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}">
-            <li th:if="${item > 0}" class='page' th:classappend="on">
-                <a th:if="${item != nowPage && item > 0}"
-                   th:href="@{/admin/post/postList/all?page={page}(page=${item})}"
-                   th:text="${item}">
-                </a>
-                <strong th:if="${item == nowPage}" th:text="${item}"></strong>
-            </li>
-        </th:block>
+<!--        <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}">-->
+<!--            <li th:if="${item > 0}" class='page' th:classappend="on">-->
+<!--                <a th:if="${item != nowPage && item > 0}"-->
+<!--                   th:href="@{/admin/post/postList/all?page={page}(page=${item})}"-->
+<!--                   th:text="${item}">-->
+<!--                </a>-->
+<!--                <strong th:if="${item == nowPage}" th:text="${item}"></strong>-->
+<!--            </li>-->
+<!--        </th:block>-->
+
+    <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}">
+        <li th:class="${item == nowPage} ? 'page on' : 'page'">
+            <a th:if="${item != nowPage}"
+               th:href="@{/admin/post/postList/search(page=${item}, sOpt=${param.sOpt}, sKey=${param.sKey})}"
+               th:text="${item}">
+            </a>
+            <strong th:if="${item == nowPage}" th:text="${item}"></strong>
+        </li>
+    </th:block>
+
         <!--                    <li class="page-next" th:classappend="${hasNext ? '' : 'disabled'}">-->
         <!--                        <a th:href="@{/member/mypage/mypost/{mNo}?page={page}(mNo=${mNo}, page=${nowPage+1})}">-->
         <!--                            <i class="xi-angle-right-min"></i>-->
