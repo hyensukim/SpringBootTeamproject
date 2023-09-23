@@ -25,5 +25,6 @@ public class StartupRunner implements ApplicationRunner {
         betService.dividend();
         //EuroPoolService의 경기정보 저장 메서드 실행
         euroPoolService.addEuroPools();
+        //test
     }
 }
