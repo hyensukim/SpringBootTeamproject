@@ -35,9 +35,26 @@
             <tr>
                 <td th:text="${game.gNo}"></td>
                 <td th:text="${game.gStartTime}"></td>
-                <td th:text="${game.gLeague}"></td>
-                <td th:text="${game.gHomeTeam}"></td>
-                <td th:text="${game.gAwayTeam}"></td>
+                <td>
+                    <div style="display: flex; align-items: center">
+                        <img th:src="@{'/static/image/league/' + ${game.gLeague} + '/' + ${game.gLeague} + '.png'}"
+                             alt="League Image" style="width: 70px; height:50px;">
+                    </div>
+                </td>
+                <td>
+                    <div style="display: flex; align-items: center">
+                        <img th:src="@{'/static/image/league/' + ${game.gLeague} + '/' + ${game.gHomeTeam} + '.png'}"
+                             alt="Home Team Image" style="width:50px; height:50px;"><br>
+                        <span th:text="${game.gHomeTeam}" style="margin: 10px"></span>
+                    </div>
+                </td>
+                <td>
+                    <div style="display: flex; align-items: center">
+                        <img th:src="@{'/static/image/league/' + ${game.gLeague} + '/' + ${game.gAwayTeam} + '.png'}"
+                             alt="Away Team Image" style="width:50px; height:50px;"><br>
+                        <span th:text="${game.gAwayTeam}" style="margin: 10px"></span>
+                    </div>
+                </td>
                 <td>
                     <div class="formBox">
                         <div class="btnChkBox v2">
