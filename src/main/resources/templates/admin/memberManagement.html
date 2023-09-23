@@ -9,9 +9,10 @@
 <!-- Member List -->
 <h2>회원 관리</h2>
 
-    <form th:action="@{/admin/member/memberList/search}" method="get">
+<!--    <form th:action="@{/admin/member/memberList/search}" method="get">-->
+    <form th:action="@{admin/member/memberList/search}" method="get">
         <!-- Search Category -->
-        <select name="category">
+        <select name="sOpt">
             <option value="mNo">회원번호</option>
             <option value="mId">ID</option>
             <option value="mName">이름</option>
@@ -23,7 +24,7 @@
         </select>
 
         <!-- Search Query -->
-        <input type="text" name="query" placeholder="검색">
+        <input type="text" name="sKey" placeholder="검색">
 
         <!-- Submit Button -->
         <button type="submit">검색</button>
@@ -82,6 +83,16 @@
     </tr>
 
 </table>
+
+    <th:block class="myMemberPg" th:each="item : ${#numbers.sequence(startPage, endPage)}">
+        <li th:if="${item > 0}" class='page' th:classappend="on">
+            <a th:if="${item != nowPage && item > 0}"
+               th:href="@{/admin/member/memberList/all?page={page}(page=${item})}"
+               th:text="${item}">
+            </a>
+            <strong th:if="${item == nowPage}" th:text="${item}"></strong>
+        </li>
+    </th:block>
 
 
 

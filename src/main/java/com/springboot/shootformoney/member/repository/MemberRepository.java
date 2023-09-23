@@ -4,6 +4,8 @@ import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.enum_.Grade;
 import com.springboot.shootformoney.member.enum_.Role;
 import com.springboot.shootformoney.post.Post;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -22,6 +24,13 @@ public interface MemberRepository extends JpaRepository<Member, Long>, QuerydslP
     List<Member> findBymNo(Long mNo); // 회원 no로 조회
     List<Member> findByGrade(Grade grade); // 회원 등급 조회
     List<Member> findByRole(Role role); // 회원 권한 조회
+
+    // 윤환 추가 검색 * 페이징 처리
+    Page<Member> findBySearch(
+            Long mNo, String mId,
+            String mName, String mNickName,
+            Grade grade, Integer mLevel,
+            Role role, Pageable pageable);
 
     @Query("SELECT m FROM Member m WHERE m.mEmail = :mEmail AND m.mName = :mName ")
     Member findBymEmailAndmName(String mEmail, String mName); // 이메일 + 이름으로 조회
