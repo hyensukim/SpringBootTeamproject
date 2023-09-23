@@ -134,7 +134,7 @@ public class MemberManagementController {
                     "Swal.fire('%s','','error').then(function(){history.back();})", e.getMessage());
         }
 
-        return "admin/memberManagement";
+        return "admin/memberList";
     }
 
     // 회원 제재 (탈퇴)

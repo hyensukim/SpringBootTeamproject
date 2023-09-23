@@ -26,14 +26,15 @@ import static org.springframework.data.domain.Sort.by;
  */
 
 @Service
+@RequiredArgsConstructor
 public class MemberManagementService {
 
     private final MemberRepository memberRepository;
 
-    @Autowired
-    public MemberManagementService(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
+//    @Autowired
+//    public MemberManagementService(MemberRepository memberRepository) {
+//        this.memberRepository = memberRepository;
+//    }
 
     // 회원 전체 조회
     public List<Member> findAllMembers() {
@@ -136,22 +137,22 @@ public class MemberManagementService {
             switch (sOpt) {
                 case "mNo":
                     Long mNo = Long.parseLong(sKey);
-                    return memberRepository.findBySearch(mNo, null, null, null, null, null, null,pageable);
+                    return memberRepository.findBymNo(mNo,pageable);
                 case "mId":
-                    return memberRepository.findBySearch(null, sKey ,null ,null, null, null, null, pageable);
+                    return memberRepository.findBymId(sKey, pageable);
                 case "mName":
-                    return memberRepository.findBySearch(null ,null ,sKey ,null ,null, null,null, pageable);
+                    return memberRepository.findBymName(sKey, pageable);
                 case "mNickName":
-                    return memberRepository.findBySearch(null ,null ,null ,sKey ,null, null,null, pageable);
+                    return memberRepository.findBymNickName(sKey, pageable);
                 case "grade":
                     Grade grade = Grade.valueOf(sKey);
-                    return memberRepository.findBySearch(null ,null ,null ,null ,grade, null,null, pageable);
+                    return memberRepository.findByGrade(grade, pageable);
                 case "mLevel":
                     Integer mLevel = Integer.parseInt(sKey);
-                    return memberRepository.findBySearch(null ,null ,null ,null ,null, mLevel,null, pageable);
+                    return memberRepository.findBymLevel(mLevel, pageable);
                 case "role":
                     Role role = Role.valueOf(sKey);
-                    return memberRepository.findBySearch(null ,null ,null ,null ,null, null,role, pageable);
+                    return memberRepository.findByRole(role, pageable);
             }
         }
 
