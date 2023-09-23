@@ -84,7 +84,7 @@ public class PostService {
     @Transactional
     public void updatePost(Long pNo, String pTitle, String pContent) {
         Post post = postRepository.findOne(pNo);
-        if (post != null) {
+        if (post != null && (pTitle != null && !pTitle.isBlank()) && (pContent != null && !pContent.isBlank())) {
             post.update(pTitle, pContent);
         } else {
             throw new IllegalArgumentException("해당 아이디의 게시물이 존재하지 않습니다.");
@@ -105,7 +105,7 @@ public class PostService {
             post.incrementViewCount();
             return post;
         } else {
-            throw new IllegalArgumentException("해당 아이디의 게시물이 존재하지 않습니다.");
+            throw new IllegalArgumentException("**해당 아이디의 게시물이 존재하지 않습니다.");
         }
     }
 

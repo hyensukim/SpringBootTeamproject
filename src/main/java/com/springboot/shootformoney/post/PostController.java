@@ -133,16 +133,19 @@ public class PostController {
         return "post/view";
     }
 
-    // 게시글 수정
-//    @GetMapping("/{pNo}")
-//    public String editPostForm(@PathVariable Long pNo, Model model) {
-//        Post post = postService.findPost(pNo);
-//        model.addAttribute("post", post);
-//        return "edit";
-//    }
+    @GetMapping("/{pNo}/edit")
+    public String editPost(@PathVariable Long pNo, Model model){
+        Post post = postService.findPost(pNo);
+        PostDTO dto = PostDTO.builder()
+                .pTitle(post.getPTitle())
+                .pContent(post.getPContent())
+                .build();
+        model.addAttribute("post",dto);
+        return "post/edit";
+    }
 
     @PutMapping("/{pNo}/edit")
-    public String editPost(@PathVariable Long pNo, @ModelAttribute("post") @Valid PostDTO updatedPost, Model model) {
+    public String editPostPs(@PathVariable Long pNo, @ModelAttribute("post") @Valid PostDTO updatedPost, Model model) {
 
         postService.updatePost(pNo, updatedPost.getPTitle(), updatedPost.getPContent());
 
