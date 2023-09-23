@@ -141,8 +141,16 @@ public class PostController {
 //        return "edit";
 //    }
 
+    @GetMapping("/{pNo}/edit")
+    public String editPostForm(@PathVariable Long pNo, Model model) {
+        PostDTO post = PostDTO.of(postService.findPost(pNo));  // getPost() 메서드는 해당 번호의 게시글 정보를 반환해야 합니다.
+        model.addAttribute("post", post);
+        return "post/edit";
+    }
+
+
     @PutMapping("/{pNo}/edit")
-    public String editPost(@PathVariable Long pNo, @ModelAttribute("post") @Valid PostDTO updatedPost, Model model) {
+    public String editPostPs(@PathVariable Long pNo, @ModelAttribute("post") @Valid PostDTO updatedPost, Model model) {
 
         postService.updatePost(pNo, updatedPost.getPTitle(), updatedPost.getPContent());
 

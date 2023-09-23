@@ -5,8 +5,8 @@
 <main layout:fragment="common">
 <head>
     <meta charset="utf-8">
-<!--    <link th:href="@{../../static/css/css.css}" href="../../static/css/css.css" rel="stylesheet">-->
-<!--    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>-->
+    <link th:href="@{../../static/css/css.css}" href="../../static/css/css.css" rel="stylesheet">
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
     <title>글 수정</title>
     <!-- CKEditor 크기 조절을 위한 CSS -->
     <style>
@@ -41,9 +41,9 @@
         </div>
 
         <div class="bt_wrap">
-            <button type="submit">수정 완료</button>
+            <button type="submit" th:text>수정 완료</button>
             <!-- 게시글 상세 페이지로 이동하는 링크 수정 -->
-            <a href="/post/{pNo}" th:href="@{/post/{pNo}(pNo=${post.pNo})}">취소</a>
+            <a href="/post/detail/{pNo}" th:href="@{/post/detail/{pNo}(pNo=${post.pNo})}">취소</a>
         </div>
     </form>
 
