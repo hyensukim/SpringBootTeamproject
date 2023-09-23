@@ -15,20 +15,11 @@ import java.util.List;
 public class PostDTO {
 
     private Long pNo;
-
     private Long bNo;
-
     private String bName;
-
     private String mId; //수정
     private String mNickName; //수정
-
-//    @NotBlank(message = "제목을 입력해주세요.")
-//    @Size(min = 1, max = 100, message = "제목은 1자 이상 100자 이하로 입력해주세요.")
     private String pTitle;
-
-//    @NotBlank(message = "제목을 입력해주세요.")
-//    @Size(min = 1, max = 3000, message = "내용은 1자 이상 3000자 이하로 입력해주세요.")
     private String pContent;
 
 
@@ -45,7 +36,6 @@ public class PostDTO {
             dto.setMId(post.getMember().getMId());
             dto.setMNickName(post.getMember().getMNickName());
         }
-
         return dto;
     }
 

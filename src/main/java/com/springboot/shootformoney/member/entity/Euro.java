@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Entity @Data
 @Getter
-public class Euro {
+public class Euro implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

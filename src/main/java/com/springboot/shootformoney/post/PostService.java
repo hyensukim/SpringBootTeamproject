@@ -102,11 +102,16 @@ public class PostService {
     public Post findPost(Long pNo) {
         Post post = postRepository.findOne(pNo);
         if (post != null) {
-            post.incrementViewCount();
             return post;
         } else {
             throw new IllegalArgumentException("**해당 아이디의 게시물이 존재하지 않습니다.");
         }
+    }
+
+    //조회수 증가
+    public void updateView(Long pNo){
+        Optional<Post> post = postRepositoryInterface.findById(pNo);
+        post.ifPresent(Post::incrementViewCount);
     }
 
     //단일 조회(postResponseDto 사용 -> 순환 조회 방지)
@@ -118,10 +123,6 @@ public class PostService {
         return postResponseDto;
     }
 
-    public void updateView(Long pNo){
-        Optional<Post> post = postRepositoryInterface.findById(pNo);
-        post.ifPresent(Post::incrementViewCount);
-    }
 
         // 제목으로 찾기
     public List<Post> findPostsByTitle(String pTitle) {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main}">
+      layout:decorate="~{layouts/ckeditor/main}">
 <main layout:fragment="common">
 <div class="board_wrap">
     <!-- 게시판 선택 폼 -->
@@ -21,8 +21,8 @@
 
         <!-- 본문 입력란 -->
         <div class="form-group">
-            <label for="pContent" th:text="내용"></label>
-            <textarea id= "pContent" name="pContent" placeholder="내용을 입력하세요."></textarea>
+            <label for="editor" th:text="내용"></label>
+            <textarea id= "editor" name="pContent" placeholder="내용을 입력하세요."></textarea>
         </div>
         <!-- 등록 버튼 -->
         <button type="submit" value="등록"> 등록</button>

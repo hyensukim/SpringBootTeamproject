@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -21,7 +22,6 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
-    private final MemberRepository memberRepository;
     private  final BoardRepository boardRepository;
 
     // 페이징 처리한 전체 목록 조회
@@ -77,6 +77,9 @@ public class PostController {
     public String getOnePost(@PathVariable Long pNo, Model model) {
         try {
             Post post = postService.findPost(pNo);
+            if(post != null){
+                postService.updateView(pNo);
+            }
             model.addAttribute("post", post);
         }catch(Exception e){
             String script = String.format("Swal.fire({title: '%s', text: '%s', icon: 'error'})" +
@@ -87,15 +90,6 @@ public class PostController {
         return "post/detail";
     }
 
-    // 매핑
-    //삭제
-//    @PostMapping("/{pNo}/delete")
-//    public String deletePost(@PathVariable Long pNo) {
-//        postService.deletePost(pNo);
-//        return "redirect:/posts/all";
-//
-//    }
-
     //삭제(수정)
     @DeleteMapping("/{pNo}")
     public String deletePost(@PathVariable Long pNo) {
@@ -103,15 +97,22 @@ public class PostController {
         return "redirect:/post/all";
     }
 
+    /* 게시글 수정 */
+    @GetMapping("/{pNo}/edit")
+    public String editPost(@PathVariable Long pNo, Model model){
+        Post post = postService.findPost(pNo);
+        PostDTO dto = PostDTO.of(post);
+        model.addAttribute("post",dto);
+        return "post/edit";
+    }
 
+    @PutMapping("/{pNo}/edit")
+    public String editPostPs(@PathVariable Long pNo, @ModelAttribute("post") @Valid PostDTO updatedPost, Model model) {
 
-    // 전체 게시글 조회
-//    @GetMapping("/")
-//    public ResponseEntity<List<Post>> getAllPosts() {
-//        List<Post> posts = postService.findAllPosts();
-//        return ResponseEntity.ok(posts);
-//    }
+        postService.updatePost(pNo, updatedPost.getPTitle(), updatedPost.getPContent());
 
+        return "post/edit";
+    }
 
     //제목으로 찾기
     @GetMapping("/tTitle/{pTitle}")
@@ -132,24 +133,4 @@ public class PostController {
         model.addAttribute("post", post);
         return "post/view";
     }
-
-    @GetMapping("/{pNo}/edit")
-    public String editPost(@PathVariable Long pNo, Model model){
-        Post post = postService.findPost(pNo);
-        PostDTO dto = PostDTO.builder()
-                .pTitle(post.getPTitle())
-                .pContent(post.getPContent())
-                .build();
-        model.addAttribute("post",dto);
-        return "post/edit";
-    }
-
-    @PutMapping("/{pNo}/edit")
-    public String editPostPs(@PathVariable Long pNo, @ModelAttribute("post") @Valid PostDTO updatedPost, Model model) {
-
-        postService.updatePost(pNo, updatedPost.getPTitle(), updatedPost.getPContent());
-
-        return "post/edit";
-    }
-
 }
