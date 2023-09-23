@@ -89,6 +89,7 @@
                         <input type='hidden' name='gNo' th:value="${gNo}">
                         <input type='hidden' name='matchId' th:value="${matchId}">
                         <input type='hidden' id='outcome' name='expect' th:value="${expect}">
+                        <input type="hidden" id="showAlert" name='showAlert' th:value="${showAlert}">
                         <input type="number" name="btMoney" id="btMoneyInput" th:value="${btMoney}">
                         <span>만 유로</span>
                         <!-- 올인 버튼 -->
@@ -182,6 +183,7 @@
         // 배팅 금액을 가져오기
         var btMoney = parseInt(document.getElementsByName('btMoney')[0].value);
         var totalEuro = parseInt([[${totalEuro}]]);
+        var showAlert = document.getElementById('showAlert').value === 'true';
 
         if (isNaN(btMoney) || btMoney <= 0) {
             alert('올바른 배팅 금액을 입력하세요.');
@@ -192,7 +194,12 @@
             alert('배팅 가능 금액을 초과했습니다.');
             return false;
         }
-        return true; // 예상 결과가 선택되고 배팅 금액이 올바른 경우 폼 서브밋 허용
+
+        if(showAlert){
+            alert('경기가 이미 시작되어 배팅할 수 없습니다.')
+            return false;
+        }
+        return true; // 예상 결과가 선택되고 배팅 금액이 올바르며, 경기 시작 전일 경우 폼 서브밋 허용
     }
 </script>
 

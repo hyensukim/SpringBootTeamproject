@@ -37,7 +37,10 @@
                     <td th:text="${game.gNo}"></td>
                     <td th:text="${game.gStartTime}"></td>
                     <td th:text="${game.gLeague}"></td>
-                    <td th:text="${game.gHomeTeam}"></td>
+                    <td>
+                        <img th:src="@{'/image/league/' + ${game.getGLeague()} +'/'+ ${game.gHomeTeam} + '.png'}" alt="Home Team Logo">
+                        <div th:text="${game.gHomeTeam}"></div>
+                    </td>
                     <td th:text="${game.gAwayTeam}"></td>
                     <td>
                         <div class="formBox">
