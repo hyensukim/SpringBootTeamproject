@@ -3,6 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 <main layout:fragment="common">
+
   <h2>게시글 상세보기</h2>
   <div class="detail" th:object="${post}">
     <dl>
@@ -36,55 +37,25 @@
     </dl>
   </div>
 
-
-
-
-  <!--  <div class="info">-->
-  <!--    <dl>-->
-  <!--      <dt><label for="boardId">게시글 번호 : </label></dt>-->
-  <!--      <dd><input type="text" id="boardId" name="boardId" class="form-control" th:value="${post.pNo}" readonly></dd>-->
-
-  <!--      <dt><label for="author">작성자 ID : </label></dt>-->
-  <!--      <dd><input type="text" id="author" name="author" class="form-control" th:value="${post.mId}" readonly></dd>-->
-
-
-  <!--      <dt><label for="regdate">등록일 : </label></dt>-->
-  <!--      <dd><input type="text" id ="regdate" name ="regdate"class ="form-control"-->
-  <!--                 th:value="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}" readonly ></dd>-->
-  <!--    </dl>-->
-  <!--    <dl>-->
-  <!--      <dt><label for="viewcnt">조회수 : </label></dt>-->
-  <!--      <dd><input type="text" id="viewcnt" name="viewcnt" class="form-control" th:value="${post.view}" readonly></dd>-->
-  <!--    </dl>-->
-  <!--  </div>-->
-
-
-
-
-
   <!-- 게시글 삭제 -->
   <td>
-    <form th:action="@{'/posts/' + ${post.pNo}}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
+    <form th:action="@{'/post/' + ${post.pNo}}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
       <a href="javascript:history.back()"> 뒤로가기</a>
       <input type="hidden" name="_method" value="delete"/>
       <button type="submit">게시글 삭제</button>
     </form>
   </td>
 
-  <a th:href="@{'posts/' + ${post.pNo} + '/edit'}">수정</a>
-  <!--게시글 수정-->
-  <!--  <td>-->
-  <!--    <form th:action="@{'/posts/' + ${post.pNo} + '/edit'}" method="post" onsubmit="return confirm('게시글 수정을 진행하시겠습니까?')">-->
-  <!--      <input type="hidden" name="_method" value="put"/>-->
+<!--  <a th:href="@{'post/' + ${post.pNo} + '/edit'}">수정</a>-->
 
-  <!--      <label for="title">제목:</label><br/>-->
-  <!--      <input type="text" id="title" name="pTitle" th:value="${post.pTitle}" required/><br/>-->
+<!--  게시글 수정-->
+    <td>
+      <form th:action="@{'/post/' + ${post.pNo} + '/edit'}" method="post" onsubmit="return confirm('게시글 수정을 진행하시겠습니까?')">
+        <input type="hidden" name="_method" value="put"/></br>
+        <button type="submit">게시글 수정</button>
+      </form>
+    </td>
 
-  <!--      <label for="content">내용:</label><br/>-->
-  <!--      <textarea id="content" name="pContent" rows=5 th:value="${post.pContent}">required</textarea><br/>-->
 
-  <!--      <button type="submit">게시글 수정</button>-->
-  <!--    </form>-->
-  <!--  </td>-->
 </main>
 </html>
