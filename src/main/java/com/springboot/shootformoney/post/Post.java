@@ -62,6 +62,10 @@ public class Post extends BaseEntity {
         this.view += 1;
     }
 
+    public void decreaseViewCount() {
+        this.view -= 1;
+    }
+
     public void setBoard(Board board) {
         this.board = board;
         if (!board.getPosts().contains(this)) {

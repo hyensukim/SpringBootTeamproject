@@ -42,9 +42,6 @@ public class PostIndexController {
             }
         }
 
-        // 조회수 증가
-        postService.updateView(pNo);
-
         model.addAttribute("post",dto);
         return "post/read";
     }

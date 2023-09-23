@@ -59,8 +59,8 @@ public class PostService {
         }
 
         Post post = new Post();
-        post.setPTitle(postDto.getPTitle());
-        post.setPContent(postDto.getPContent());
+        post.setPTitle(title);
+        post.setPContent(content.replace("<p>","").replace("</p>",""));
         post.setMember(member);
         post.setBoard(board);
 
@@ -82,13 +82,23 @@ public class PostService {
 
     //수정
     @Transactional
-    public void updatePost(Long pNo, String pTitle, String pContent) {
+    public void updatePost(Long pNo, PostDTO updatedPost) {
         Post post = postRepository.findOne(pNo);
-        if (post != null && (pTitle != null && !pTitle.isBlank()) && (pContent != null && !pContent.isBlank())) {
-            post.update(pTitle, pContent);
-        } else {
+        String pTitle = updatedPost.getPTitle();
+        String pContent = updatedPost.getPContent();
+        if(post == null){
             throw new IllegalArgumentException("해당 아이디의 게시물이 존재하지 않습니다.");
         }
+        if(pTitle == null || pTitle.isBlank()){
+            throw new IllegalArgumentException("제목을 입력 해주세요.");
+        }
+
+        if(pContent == null || pContent.isBlank()){
+            throw new IllegalArgumentException("내용을 입력 해주세요.");
+        }
+        pContent = pContent.replace("<p>","")
+                .replace("</p>","");
+        post.update(pTitle, pContent);
     }
 
 
@@ -99,6 +109,17 @@ public class PostService {
 
     //단일 조회
     @Transactional
+    public Post findPostWithView(Long pNo) {
+        Post post = postRepository.findOne(pNo);
+        if (post != null) {
+            post.incrementViewCount();
+            return post;
+        } else {
+            throw new IllegalArgumentException("**해당 아이디의 게시물이 존재하지 않습니다.");
+        }
+    }
+
+    @Transactional
     public Post findPost(Long pNo) {
         Post post = postRepository.findOne(pNo);
         if (post != null) {
@@ -106,12 +127,6 @@ public class PostService {
         } else {
             throw new IllegalArgumentException("**해당 아이디의 게시물이 존재하지 않습니다.");
         }
-    }
-
-    //조회수 증가
-    public void updateView(Long pNo){
-        Optional<Post> post = postRepositoryInterface.findById(pNo);
-        post.ifPresent(Post::incrementViewCount);
     }
 
     //단일 조회(postResponseDto 사용 -> 순환 조회 방지)

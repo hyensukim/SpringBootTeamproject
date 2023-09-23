@@ -23,7 +23,7 @@
             <div>
                 <label for="editor">내용 : </label>
                 <!-- CKEditor 추가 -->
-                <textarea id="editor" th:utext="true" name="pContent" required th:text="*{pContent}"></textarea>
+                <textarea name="pContent" id="editor" required th:text="*{pContent}"></textarea>
             </div>
 
             <div class="bt_wrap">
@@ -32,23 +32,18 @@
                     <input type="hidden" name="_method" value="put"/>
                     <button type="submit">수정</button>
                 </form>
-                <a href="/post/detail/{pNo}" th:href="@{/post/detail/{pNo}(pNo=${post.pNo})}">취소</a>
+                <a href="javascript:history.back()">취소</a>
             </div>
         </form>
 
-        <!-- CKEditor 에러 처리 메서드, 폼 제출 이벤트 리스너 삭제 -->
         <script th:inline="javascript">
-            ClassicEditor
-                .create(document.querySelector('#editor'))
+            ClassicEditor.create(document.querySelector('#editor'))
                 .then(editor => {
                     editor.setData([[${post.pContent}]]);
                 })
                 .catch(error => {
                     console.error(error);
                 });
-            ClassicEditor.editorConfig = function( config ) {
-                config.autoParagraph = false;
-            };
         </script>
     </div>
 </main>
