@@ -3,14 +3,16 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/admin/main}">
 
+<!--<body>-->
 <main layout:fragment="common">
 
-    <h2>회원 조회</h2>
+    <!-- Member List -->
+    <h2>회원 관리</h2>
 
-    <!-- 회원 조회 -->
     <form th:action="@{/admin/member/memberList/search}" method="get">
+        <!--    <form th:action="@{search}" method="get">-->
         <!-- Search Category -->
-        <select name="category">
+        <select name="sOpt">
             <option value="mNo">회원번호</option>
             <option value="mId">ID</option>
             <option value="mName">이름</option>
@@ -21,65 +23,76 @@
             <!-- Add more options as needed -->
         </select>
 
-        <input type="text" name="query" placeholder="검색">
+        <!-- Search Query -->
+        <input type="text" name="sKey" placeholder="검색">
 
+        <!-- Submit Button -->
         <button type="submit">검색</button>
-        <a th:href="@{/admin/member/memberList/all}">전체보기</a>
-
-        <table class="table text-center">
-            <thead>
-            <tr>
-                <th>회원번호</th>
-                <th>ID</th>
-                <th>이름</th>
-                <th>별명</th>
-                <th>이메일</th>
-                <th>핸드폰 번호</th>
-                <th>등급</th>
-                <th>Level</th>
-                <th>보유 EURO</th>
-                <th>권한</th>
-                <th>기타</th>
-            </tr>
-            </thead>
-
-            <tbody th:each="member : ${members}">
-            <tr>
-                <td th:text="${member.mNo}"></td>
-                <td th:text="${member.mId}"></td>
-                <td th:text="${member.mName}"></td>
-                <td th:text="${member.mNickName}"></td>
-                <td th:text="${member.mEmail}"></td>
-                <td th:text="${member.mPhone}"></td>
-                <td th:text="${member.grade}"></td>
-                <td th:text="${member.mLevel}"></td>
-                <td th:text="${member.euro.value + '€'}"></td>
-                <td th:text="${member.role}"></td>
-
-                <td>
-                    <!-- 비동기 방식s -->
-                    <!-- 회원 제재 -->
-                    <form th:action="@{'/admin/member/' + ${member.mId}}" method="post"
-                          onsubmit="return confirm('해당 회원을 영구적으로 서비스에서 제외하시겠습니까?')">
-                        <input type="hidden" name="_method" value="delete"/>
-                        <button type="submit">Delete</button>
-                    </form>
-
-                    <!-- 권한 변경 -->
-                    <form th:action="@{'/admin/member/' + ${member.mId} + '/role'}" method="post">
-                        <input type="hidden" name="_method" value="put"/>
-                        <!-- ADMIN / MEMBER 둘 중 하나만 선택 하도록 구현 -->
-                        <select name="newRole">
-                            <option value="MEMBER">MEMBER</option>
-                            <option value="ADMIN">ADMIN</option>
-                        </select>
-                        <button type="submit">Change Role</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
-
     </form>
+
+    <table id="memberTable" class="table text-center">
+        <thead>
+        <tr>
+            <th>회원번호</th>
+            <th>ID</th>
+            <th>이름</th>
+            <th>별명</th>
+            <th>이메일</th>
+            <th>핸드폰 번호</th>
+            <th>등급</th>
+            <th>Level</th>
+            <th>보유 EURO</th>
+            <th>권한</th>
+            <th>기타</th>
+        </tr>
+        </thead>
+
+        <!-- 서버에서 제공하는 회원 목록을 반복하여 표시 -->
+        <!-- 각 회원에 대해 ID, 이름 등의 정보와 삭제 버튼 -->
+        <tr th:each="member : ${memberList}">
+            <td th:text="${member.mNo}"></td>
+            <td th:text="${member.mId}"></td>
+            <td th:text="${member.mName}"></td>
+            <td th:text="${member.mNickName}"></td>
+            <td th:text="${member.mEmail}"></td>
+            <td th:text="${member.mPhone}"></td>
+            <td th:text="${member.grade}"></td>
+            <td th:text="${member.mLevel}"></td>
+            <td> <span th:text="${member.euro.value + ' '}"></span><strong>€</strong></td>
+            <td th:text="${member.role}"></td>
+
+            <td>
+                <!-- 비동기 방식s -->
+                <!-- 회원 제재 -->
+                <form th:action="@{'/admin/member/' + ${member.mId}}" method="post" onsubmit="return confirm('해당 회원을 영구적으로 서비스에서 제외하시겠습니까?')">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit">Delete</button>
+                </form>
+
+                <!-- 권한 변경 -->
+                <form th:action="@{'/admin/member/' + ${member.mId} + '/role'}" method="post">
+                    <input type="hidden" name="_method" value="put" />
+                    <!-- ADMIN / MEMBER 둘 중 하나만 선택 하도록 구현 -->
+                    <select name="newRole">
+                        <option value="MEMBER">MEMBER</option>
+                        <option value="ADMIN">ADMIN</option>
+                    </select>
+                    <button type="submit">Change Role</button>
+                </form>
+            </td>
+        </tr>
+
+    </table>
+    <ul class="pagination">
+        <th:block class="myMemberPg" th:each="item : ${#numbers.sequence(startPage, endPage)}">
+            <li th:class="${item == nowPage} ? 'page on' : 'page'">
+                <a th:if="${item != nowPage}"
+                   th:href="@{/admin/member/memberList/search(page=${item}, sOpt=${param.sOpt}, sKey=${param.sKey})}"
+                   th:text="${item}">
+                </a>
+                <strong th:if="${item == nowPage}" th:text="${item}"></strong>
+            </li>
+        </th:block>
+    </ul>
 </main>
+</html>

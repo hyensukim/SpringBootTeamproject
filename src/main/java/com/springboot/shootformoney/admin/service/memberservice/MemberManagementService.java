@@ -29,12 +29,7 @@ import static org.springframework.data.domain.Sort.by;
 @RequiredArgsConstructor
 public class MemberManagementService {
 
-    private MemberRepository memberRepository;
-
-    @Autowired
-    public MemberManagementService(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
+    private final MemberRepository memberRepository;
 
     // 회원 전체 조회
     public List<Member> findAllMembers() {
@@ -74,34 +69,6 @@ public class MemberManagementService {
         }
     }
 
-    public List<Member> searchMembers(String category, String query) {
-        switch (category) {
-            case "mNo":
-                return memberRepository.findBymNo(Long.parseLong(query));
-
-            case "mId":
-                return Arrays.asList(memberRepository.findBymId(query));
-
-            case "mName":
-                return Arrays.asList(memberRepository.findBymName(query));
-
-            case "mNickName":
-                return Arrays.asList(memberRepository.findBymNickName(query));
-
-            case "grade":
-                return memberRepository.findByGrade(Grade.valueOf(query.toUpperCase()));
-
-            case "role":
-                return memberRepository.findByRole(Role.valueOf(query.toUpperCase()));
-
-            case "mLevel":
-                return memberRepository.findBymLevel(Integer.parseInt(query));
-
-            default:
-                throw new IllegalArgumentException("Invalid category: " + category);
-        }
-    }
-
     // 회원 전체 조회(페이징 처리)
     public Page<Member> getsAdminMemberWithPages(AdminSearchInfo adminSearchInfo) {
 
@@ -118,5 +85,46 @@ public class MemberManagementService {
 
         return adminMemberList;
 
+    }
+
+    // 검색(필터링) 페이징 처리
+    public Page<Member> searchMembers(AdminSearchInfo adminSearchInfo) {
+        int page = adminSearchInfo.getPage();
+        int pageSize = adminSearchInfo.getPageSize();
+
+        page = Math.max(page, 1);
+        pageSize = pageSize < 1 ? 15 : pageSize;
+
+        String sOpt = adminSearchInfo.getSOpt();
+        String sKey = adminSearchInfo.getSKey();
+
+        // 권한(Admin / Member) 오름차순, 생성일 내림차순
+        Pageable pageable = PageRequest.of(page - 1, pageSize,
+                Sort.by(Sort.Order.asc("role"), Sort.Order.desc("createdAt")));
+
+        if (sOpt != null && sKey != null) {
+            switch (sOpt) {
+                case "mNo":
+                    Long mNo = Long.parseLong(sKey);
+                    return memberRepository.findBymNo(mNo,pageable);
+                case "mId":
+                    return memberRepository.findBymId(sKey, pageable);
+                case "mName":
+                    return memberRepository.findBymName(sKey, pageable);
+                case "mNickName":
+                    return memberRepository.findBymNickName(sKey, pageable);
+                case "grade":
+                    Grade grade = Grade.valueOf(sKey);
+                    return memberRepository.findByGrade(grade, pageable);
+                case "mLevel":
+                    Integer mLevel = Integer.parseInt(sKey);
+                    return memberRepository.findBymLevel(mLevel, pageable);
+                case "role":
+                    Role role = Role.valueOf(sKey);
+                    return memberRepository.findByRole(role, pageable);
+            }
+        }
+
+        return memberRepository.findAll(pageable);
     }
 }

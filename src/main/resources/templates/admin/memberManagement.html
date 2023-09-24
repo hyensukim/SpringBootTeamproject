@@ -10,8 +10,9 @@
 <h2>회원 관리</h2>
 
     <form th:action="@{/admin/member/memberList/search}" method="get">
+<!--    <form th:action="@{search}" method="get">-->
         <!-- Search Category -->
-        <select name="category">
+        <select name="sOpt">
             <option value="mNo">회원번호</option>
             <option value="mId">ID</option>
             <option value="mName">이름</option>
@@ -23,7 +24,7 @@
         </select>
 
         <!-- Search Query -->
-        <input type="text" name="query" placeholder="검색">
+        <input type="text" name="sKey" placeholder="검색">
 
         <!-- Submit Button -->
         <button type="submit">검색</button>
@@ -57,7 +58,7 @@
         <td th:text="${member.mPhone}"></td>
         <td th:text="${member.grade}"></td>
         <td th:text="${member.mLevel}"></td>
-        <td th:text="${member.euro.value + '€'}"></td>
+        <td> <span th:text="${member.euro.value + ' '}"></span><strong>€</strong></td>
         <td th:text="${member.role}"></td>
 
         <td>
@@ -82,8 +83,16 @@
     </tr>
 
 </table>
-
-
-
+    <ul class="pagination">
+        <th:block class="myMemberPg" th:each="item : ${#numbers.sequence(startPage, endPage)}">
+            <li th:class="${item == nowPage} ? 'page on' : 'page'">
+                <a th:if="${item != nowPage}"
+                   th:href="@{/admin/member/memberList/search(page=${item}, sOpt=${param.sOpt}, sKey=${param.sKey})}"
+                   th:text="${item}">
+                </a>
+                <strong th:if="${item == nowPage}" th:text="${item}"></strong>
+            </li>
+        </th:block>
+    </ul>
 </main>
 </html>

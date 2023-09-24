@@ -5,12 +5,16 @@
 
 <main layout:fragment="common">
 
-    <h2>게시글 조회</h2>
+    <h2>게시글 관리</h2>
+    <!--    <a href="/admin/post/postList/">전체게시판</a>-->
 
-    <!-- 게시글 조회 -->
+    <!--    &lt;!&ndash; 각각의 게시판 별로 조회 &ndash;&gt;-->
+    <!--    <div th:each="board : ${boards}">-->
+    <!--        <a th:href="@{/admin/post/postList(bName=${board.bName})}" th:text="${board.bName}"></a>-->
+    <!--    </div>-->
+
     <form th:action="@{/admin/post/postList/search}" method="get">
-        <!-- Search Category -->
-        <select name="category">
+        <select name="sOpt">
             <option value="pNo">게시글 번호</option>
             <option value="mId">작성자 ID</option>
             <option value="mNickName">작성자 별명</option>
@@ -18,45 +22,89 @@
             <option value="pTitle">제목</option>
         </select>
 
-        <input type="text" name="query" placeholder="검색">
+        <input type="text" name="sKey" placeholder="검색">
 
         <button type="submit">검색</button>
-        <a th:href="@{/admin/post/postList/all}">전체보기</a>
     </form>
 
-    <table class="table text-center">
-        <thead>
-        <tr>
-            <th>게시글 번호</th>
-            <th>회원 ID</th>
-            <th>별명</th>
-            <th>게시판</th>
-            <th>제목</th>
-            <th>작성일</th>
-            <th>수정일</th>
-        </tr>
-        </thead>
+    <!-- 게시글 일괄 삭제 폼 -->
+    <form th:action="@{/admin/post/deleteMultiple}" method=post onsubmit='return checkBeforeSubmit()'>
+        <input type="hidden" name="_method" value="delete"/>
 
-        <!-- 게시판 내용 반복 -->
-        <tr th:each="post : ${posts}">
-            <td th:text="${post.pNo}"></td>
-            <td th:text="${post.member.mId}"></td>
-            <td th:text="${post.member.mNickName}"></td>
-            <td th:text="${post.board.bName}"></td>
-            <td><a th:href="@{'/admin/post/' + ${post.pNo}}" th:text="${post.pTitle}"></a></td>
-            <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-            <td th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <table class="table text-center">
+            <thead>
+            <tr>
+                <th></th>
+                <th>게시글 번호</th>
+                <th>회원 ID</th>
+                <th>별명</th>
+                <th>게시판</th>
+                <th>제목</th>
+                <th>작성일</th>
+                <th>수정일</th>
+            </tr>
+            </thead>
 
-            <!-- 게시글 삭제 -->
-            <td>
-                <form th:action="@{'/admin/post/' + ${post.pNo}}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
-                    <input type="hidden" name="_method" value="delete"/>
-                    <button type="submit">게시글 삭제</button>
-                </form>
-            </td>
+            <!-- 게시판 내용 반복 -->
+            <tr th:each="post : ${postList}">
+                <td><input type="checkbox" name="selectPosts" th:value="${post.pNo}"/></td>
+                <td th:text="${post.pNo}"></td>
+                <td th:text="${post.member.mId}"></td>
+                <td th:text="${post.member.mNickName}"></td>
+                <td th:text="${post.board.bName}"></td>
+                <td><a th:href="@{'/admin/post/' + ${post.pNo}}" th:text="${post.pTitle}"></a></td>
+                <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+        </table>
+        <button type="submit">일괄 삭제</button>
+    </form>
 
-        </tr>
-    </table>
+    <ul class="pagination">
+        <!--                    <li class="page-prev" th:classappend="${hasPrev ? '' : 'disabled'}">-->
+        <!--                        <a th:href="@{/member/mypage/mypost/{mNo}?page={page}(mNo=${mNo}, page=${nowPage-1})}">-->
+        <!--                            <i class="xi-angle-left-min"></i>-->
+        <!--                        </a>-->
+        <!--                    </li>-->
 
+        <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}">
+            <li th:class="${item == nowPage} ? 'page on' : 'page'">
+                <a th:if="${item != nowPage}"
+                   th:href="@{/admin/post/postList/search(page=${item}, sOpt=${param.sOpt}, sKey=${param.sKey})}"
+                   th:text="${item}">
+                </a>
+                <strong th:if="${item == nowPage}" th:text="${item}"></strong>
+            </li>
+        </th:block>
+
+        <!--                    <li class="page-next" th:classappend="${hasNext ? '' : 'disabled'}">-->
+        <!--                        <a th:href="@{/member/mypage/mypost/{mNo}?page={page}(mNo=${mNo}, page=${nowPage+1})}">-->
+        <!--                            <i class="xi-angle-right-min"></i>-->
+        <!--                        </a>-->
+        <!--                    </li>-->
+    </ul>
+    <div class="foot"></div>
 </main>
 </html>
+
+<!-- 일괄 삭제 예외 처리 알림창 -->
+<script>
+    function checkBeforeSubmit() {
+        var checkboxes = document.getElementsByName('selectPosts');
+        var isChecked = false;
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                isChecked = true;
+                break;
+            }
+        }
+
+        if (!isChecked) {
+            alert('삭제할 게시글을 선택해주세요.');
+            return false;
+        }
+
+        return confirm("선택한 게시글을 삭제하시겠습니까?");
+    }
+</script>
+

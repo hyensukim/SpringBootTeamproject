@@ -24,27 +24,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberManagementController {
 
-    private final MemberManagementService memberInfoService;
-
-    //    // 전체 회원 조회
-//    @GetMapping("/memberList/all")
-//    public String getAllMember(Model model) {
-//        List<Member> members = memberInfoService.findAllMembers();
-//        model.addAttribute("members", members);
-//
-//        model.addAttribute("pageTitle", "회원 관리");
-//
-//        return "admin/memberManagement";
-//    }
+    private final MemberManagementService memberManagementService;
 
     // 회원 전체 조회 (+ 페이징 처리)
-    @GetMapping("/memberList/all")
+    @GetMapping("/memberList")
     public String getAllMember(@ModelAttribute AdminSearchInfo pageInfo, Model model) {
 
         model.addAttribute("pageTitle", "회원관리");
 
         try {
-            Page<Member> members = memberInfoService.getsAdminMemberWithPages(pageInfo);
+            Page<Member> members = memberManagementService.getsAdminMemberWithPages(pageInfo);
             List<Member> memberList = members.getContent();
 
             int nowPage = members.getPageable().getPageNumber() + 1; //현재 페이지
@@ -63,45 +52,31 @@ public class MemberManagementController {
         return "admin/memberManagement";
     }
 
-    // 카테고리별 멤버 조회
+    // 회원 검색 조회 (+ 페이징 처리)
     @GetMapping("/memberList/search")
-    public String searchMember(@RequestParam String category, @RequestParam String query, Model model) {
+    public String getAllMembers(@ModelAttribute AdminSearchInfo searchInfo,
+                                Model model) {
 
-        List<Member> members = memberInfoService.searchMembers(category, query);
-        model.addAttribute("members", members);
+        model.addAttribute("pageTitle", "회원 관리");
 
-        switch (category) {
-            case "mNo":
-                model.addAttribute("pageTitle", "회원 조회 | 회원번호");
-                break;
+        try {
+            // 회원 조회
+            Page<Member> members = memberManagementService.searchMembers(searchInfo);
 
-            case "mId":
-                model.addAttribute("pageTitle", "회원 조회 | ID");
-                break;
+            List<Member> membersList= members.getContent();
 
-            case "mName":
-                model.addAttribute("pageTitle", "회원 조회 | 이름");
-                break;
+            int nowPage= members.getPageable().getPageNumber() + 1; // 현재 페이지
+            int startPage= (nowPage - 1) / 10 * 10 + 1; // 첫 페이지
+            int endPage= Math.min(startPage + 10 - 1 ,members.getTotalPages()); // 마지막 페이지
 
-            case "mNickName":
-                model.addAttribute("pageTitle", "회원 조회 | 별명");
-                break;
+            model.addAttribute("memberList", membersList);
+            model.addAttribute("nowPage", nowPage);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
 
-            case "grade":
-                model.addAttribute("pageTitle", "회원 조회 | 등급");
-                break;
-
-            case "mLevel":
-                model.addAttribute("pageTitle", "회원 조회 | Level");
-                break;
-
-            case "role":
-                model.addAttribute("pageTitle", "회원 조회 | 권한");
-                break;
-
-
-            default:
-                throw new IllegalArgumentException("Invalid category: " + category);
+        } catch (NullPointerException e) {
+            String script = String.format(
+                    "Swal.fire('%s','','error').then(function(){history.back();})", e.getMessage());
         }
 
         return "admin/memberList";
@@ -110,7 +85,7 @@ public class MemberManagementController {
     // 회원 제재 (탈퇴)
     @DeleteMapping("/{mId}")
     public RedirectView deleteMember(@PathVariable String mId) {
-        memberInfoService.deleteMember(mId);
+        memberManagementService.deleteMember(mId);
         return new RedirectView("/admin/member/memberList/all");
     }
 
@@ -118,7 +93,7 @@ public class MemberManagementController {
     @PutMapping("/{mId}/role")
     public RedirectView changeMemberRole(@PathVariable String mId, @RequestParam("newRole") Role newRole) {
         try {
-            memberInfoService.changeMemberRole(mId, newRole);
+            memberManagementService.changeMemberRole(mId, newRole);
             return new RedirectView("/admin/member/memberList/all");
         } catch (IllegalArgumentException e) {
             // 예외가 발생시 해당 예외 메시지와 함께 HTTP 상태 코드 400(Bad Request)를 반환

@@ -14,13 +14,7 @@ public interface BoardRepository extends JpaRepository<Board, String> {
 
     Board findBybNo(Long bNo); // 게시판 bNo 조회
 
-//    Board findBybName(String bName); // 게시판 제목별 조회
-
     boolean existsBybName(String bName); // 게시판 이름 중복 여부 판단
-
-    //    Page<Board> findByBNo(Long bNo, Pageable pageable);
-    int countBybNo(Long bNo);
-
 
     // 게시판 - 게시글 개수
     @Query("SELECT COUNT(p) FROM Board b JOIN b.posts p WHERE b.bNo = :bNo")
