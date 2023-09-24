@@ -41,7 +41,7 @@ public class MyPageController {
     @GetMapping("/checkpw")
     public String checkPw(Model model){
         if(!memberUtil.isLogin()){
-            String script = String.format("Swal.fire(title:'로그인 여부 확인',text:'로그인 후 입장해주세요.',icon:'warning')" +
+            String script = String.format("Swal.fire({title:'로그인 여부 확인',text:'로그인 후 입장해주세요.',icon:'warning'})" +
                     ".then(function(){location.href='/member/login';})");
             model.addAttribute("script",script);
             return "script/sweet";
@@ -61,10 +61,9 @@ public class MyPageController {
             model.addAttribute("pageTitle","비밀번호 확인");
             return "redirect:/member/mypage/info/" + mNo;
         } catch (Exception e) {
-            String script = String.format("Swal.fire(title:'비밀번호 일치 여부 확인',text:'%s',icon:'error')" +
+            String script = String.format("Swal.fire({title:'비밀번호 일치 여부 확인',text:'%s',icon:'error'})" +
                     ".then(function(){history.back();})", e.getMessage());
             model.addAttribute("script", script);
-            model.addAttribute("pageTitle","비밀번호 확인");
             return "script/sweet";
         }
     }
@@ -78,7 +77,7 @@ public class MyPageController {
             // 동일한 회원 여부 확인
             Long no = memberUtil.getEntity().getMNo();
             if (!mNo.equals(no)) {
-                String script = String.format("Swal.fire('본인 계정만 접근 가능합니다.', '', 'error')" +
+                String script = String.format("Swal.fire({title:'본인 계정만 접근 가능합니다.',text:'',icon:'error'})" +
                         ".then(function(){location.href='/';})");
                 model.addAttribute("script", script);
                 return "script/sweet";
@@ -152,7 +151,7 @@ public class MyPageController {
                 return "script/sweet";
             }
         } catch (Exception e) {
-            String script = String.format("Swal.fire('%s', '', 'error').then(function(){history.back();})", e.getMessage());
+            String script = String.format("Swal.fire({title:'%s',text:'',icon:'error'}).then(function(){history.back();})", e.getMessage());
             model.addAttribute("script", script);
             return "script/sweet";
         }
@@ -167,7 +166,7 @@ public class MyPageController {
         try {
             Long no = memberUtil.getMember().getMNo();
             if (!mNo.equals(no)) {
-                String script = String.format("Swal.fire('본인 계정만 접근 가능합니다.', '', 'warning')" +
+                String script = String.format("Swal.fire({title:'본인 계정만 접근 가능합니다.',text:'',icon:'warning'})" +
                         ".then(function(){location.href='/';})");
                 model.addAttribute("script", script);
                 return "script/sweet";
@@ -197,7 +196,7 @@ public class MyPageController {
             model.addAttribute("endPage", endPage);
 
         }catch(NullPointerException e){
-            String script = String.format("Swal.fire('%s','','error')" +
+            String script = String.format("Swal.fire({title:'%s',text:'',icon:'error'})" +
                     ".then(function(){history.back();})",e.getMessage());
         }
 
@@ -211,7 +210,7 @@ public class MyPageController {
         try {
             Long no = memberUtil.getMember().getMNo();
             if (!mNo.equals(no)) {
-                String script = String.format("Swal.fire('본인 계정만 접근 가능합니다.', '', 'error')" +
+                String script = String.format("Swal.fire({title:'본인 계정만 접근 가능합니다.',text:'',icon:'error'})" +
                         ".then(function(){location.href='/';})");
                 model.addAttribute("script", script);
                 return "script/sweet";
@@ -220,7 +219,7 @@ public class MyPageController {
             List<Bet> betList = memberListService.getsBetList(mNo);
             model.addAttribute("betList",betList);
         }catch(NullPointerException e){
-            String script = String.format("Swal.fire('%s','','error')" +
+            String script = String.format("Swal.fire({title:'%s',text:'',icon:'error'})" +
                     ".then(function(){history.back();})",e.getMessage());
         }
 

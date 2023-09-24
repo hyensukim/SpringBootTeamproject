@@ -88,7 +88,7 @@
                 <div class="error" th:each="err : ${#fields.errors('mPhone')}" th:text="${err}"></div>
             </dd>
         </dl>
-        <div class="btn btn-block">
+        <div class="btn">
             <button type="submit">수정하기</button>
             <a th:href="@{/member/mypage/deletepw/{mNo}(mNo = ${mNo})}">회원 탈퇴</a>
         </div>
