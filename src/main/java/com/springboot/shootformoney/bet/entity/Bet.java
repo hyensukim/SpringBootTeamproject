@@ -50,4 +50,8 @@ public class Bet {
 
     @Column(name = "bt_end_paid")
     private Byte endPaid = 0;    //0은 false(아직 정산 후 지급 안 됨.), 1은 true(정산 후 지급됨)를 뜻한다.
+
+    //배팅 적중 여부 표시. 1은 적중, 0은 적중 실패, 기본값 0
+    @Column(name = "bt_correct")
+    private Byte correct = 0;
 }
