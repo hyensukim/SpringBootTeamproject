@@ -11,8 +11,10 @@
                 </th:block>
                 <th:block sec:authorize="isAuthenticated()">
                 <span class="hbt">
-                    <span class="nickname" th:text="${session.memberInfo.mNickName}"></span>
-                    (보유 유로 : <span class="hbt" th:text="${formattedEuro}"></span> €) 님, 환영합니다.
+                    <th:block th:replace="~{outlines/mypage/_levelblock::common}"></th:block>
+                    (<span class="hbt" th:text="${formattedEuro}"></span> € /
+                    <span class="hbt" th:text="${level}"></span> Lv
+                    ) 님, 환영합니다.
                 </span>
                     <a class="hbt" th:href="@{/member/logout}">로그아웃</a>
                     <a class="hbt" th:href="@{/member/mypage/checkpw}" id='mypage-link'>마이페이지</a>

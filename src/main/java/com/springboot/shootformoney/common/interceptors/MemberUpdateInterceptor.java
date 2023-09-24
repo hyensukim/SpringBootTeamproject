@@ -31,12 +31,16 @@ public class MemberUpdateInterceptor implements HandlerInterceptor {
         if(memberUtil.isLogin()){
             MemberInfo memberInfo = memberUtil.getMember();
             Long mNo = memberInfo.getMNo();
+            String nickname = memberInfo.getMNickName();
+            Member member = memberRepository.findBymNickName(nickname);
+            Integer level = member.getMLevel();
             Euro euro = euroRepository.findBymNo(mNo);
             String formattedEuro = String.format("%,d",euro.getValue());
             req.setAttribute("mNo",mNo);
             req.setAttribute("formattedEuro",formattedEuro);
+            req.setAttribute("level",level);
 
-            Member member = levelRankUtil.levelUp(mNo);
+            member = levelRankUtil.levelUp(mNo);
             member = levelRankUtil.gradeUp(member);
 
             LoginData loginData = member.getLoginData();
