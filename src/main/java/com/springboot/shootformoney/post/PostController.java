@@ -2,6 +2,7 @@ package com.springboot.shootformoney.post;
 
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
+import com.springboot.shootformoney.member.dto.SearchInfo;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.MemberRepository;
 import com.springboot.shootformoney.member.utils.MemberUtil;
@@ -75,14 +76,23 @@ public class PostController {
         return "redirect:/post/all"; // 'post/all' 뷰로 이동
     }
 
-    // 게시판별 목록 조회 - 추가 구현(Service - if)
+    // 게시판별 목록 조회 - 추가 구현
     @GetMapping("/all/{bNo}")
-    public String getAllPostsByBoard(@PathVariable Long bNo, Model model) {
-        List<Post> postList = postService.findPostsByBoardBNo(bNo);
+    public String getAllPostsByBoard(@PathVariable Long bNo, @ModelAttribute PostSearchInfo postSearchInfo,
+                                     Model model) {
+        Page<Post> pageList = postService.findByBoardWithPage(postSearchInfo,bNo);
+        List<Post> postList = pageList.getContent();
+
+        int nowPage = pageList.getPageable().getPageNumber() + 1; // 현재 페이지
+        int startPage = (nowPage-1) / 10 * 10 + 1; // 첫페이지
+        int endPage = Math.min(startPage + 10 - 1, pageList.getTotalPages()); // 마지막 페이지
 
         model.addAttribute("postList", postList);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
-        return "post/posts2";
+        return "post/posts";
     }
 
     // 단일 게시글 조회

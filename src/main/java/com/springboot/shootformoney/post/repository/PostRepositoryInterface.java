@@ -12,9 +12,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PostRepositoryInterface extends JpaRepository<Post,Long>, QuerydslPredicateExecutor<Post> {
-    Page<Post> findByBoardBNo(Long bNo, Pageable pageable);
 
-
+//    Page<Post> findByBoardBNo(Long bNo, Pageable pageable);// 게시판 번호별 조회
     /*
     페이징 처리용 by 유난
      */
@@ -26,10 +25,4 @@ public interface PostRepositoryInterface extends JpaRepository<Post,Long>, Query
     @Query("SELECT p FROM Post p WHERE p.board.bName = :bName")
     Page<Post> findByBoardbName(String bName, Pageable pageable); // 게시판 명 조회
     Page<Post> findBypTitle(String pTile, Pageable pageable); // 게시판 제목 조회
-
-
-
-
-
-
 }
