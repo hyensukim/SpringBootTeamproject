@@ -6,7 +6,7 @@
 <main layout:fragment="common">
 <div class="frmLogin">
     <form th:action="@{/member/login}" th:object="${loginForm}" method="post" autocomplete="off">
-        <div th:if="${session.loginGlobal != null}" th:text="${session.loginGlobal}"></div>
+        <div class="error" th:if="${session.loginGlobal != null}" th:text="${session.loginGlobal}"></div>
 
         <div class="form-group">
             <label for="mId">ID:</label>

@@ -50,8 +50,8 @@ public class SecurityConfig {
          */
         http.authorizeHttpRequests(f->f
                     .requestMatchers("/member/login").anonymous()
-                    .requestMatchers("/mypage/**").authenticated() // 회원 전용
-//                    .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")// 관리자 전용\
+                    .requestMatchers("/member/mypage/**").authenticated() // 회원 전용
+                    .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")// 관리자 전용\
                     .anyRequest().permitAll()
         );
 

@@ -1,13 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<header th:fragment="common">
-    헤더
-    <section class="header_left">
-        <a th:href="@{/}">
-            <img src="/image/qq.png" alt="logo">
-        </a>
-    </section>
-    <section class="header_right">
-    </section>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header class="header" th:fragment="common">
+    <div class="container">
+        <div class="header-content">
+            <div class="header-buttons">
+                <th:block sec:authorize="isAnonymous()">
+                    <a class="hbt" th:href="@{/member/login}" >로그인</a>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                <span class="hbt">
+                    <span class="nickname" th:text="${session.memberInfo.mNickName}"></span>
+                    (보유 유로 : <span class="hbt" th:text="${formattedEuro}"></span> €) 님, 환영합니다.
+                </span>
+                    <a class="hbt" th:href="@{/member/logout}">로그아웃</a>
+                    <a class="hbt" th:href="@{/member/mypage/checkpw}" id='mypage-link'>마이페이지</a>
+                    <a class="hbt" th:href="@{/member/reward}" id='attendance-button'>출석</a>
+                    <th:block sec:authorize="hasRole('ADMIN')">
+                        <a class="hbt" th:href="@{/admin/config}" id='adminpage-link'>관리자페이지</a>
+                    </th:block>
+                </th:block>
+            </div>
+        </div>
+    </div>
 </header>
 </html>

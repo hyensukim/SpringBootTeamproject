@@ -17,6 +17,7 @@
                             <th>배팅시간</th>
                             <th>리그명</th>
                             <th colspan="3">홈팀 VS 어웨이팀</th>
+                            <th>경기 시작 시간</th>
                             <th colspan="3">배팅금액(만)</th>
                             <th>비고</th>
                         </tr>
@@ -29,6 +30,7 @@
                             <td class="list_text" th:text="*{game.GHomeTeam}"></td>
                             <td> VS </td>
                             <td class="list_text" th:text="*{game.GAwayTeam}"></td>
+                            <td th:text="${bet.game.GStartTime}"></td>
                             <td th:if="${bet.expect.toString().equals('WIN')}"
                                 th:text="승 + ${bet.btMoney}"></td>
                             <td th:unless="${bet.expect.toString().equals('WIN')}"

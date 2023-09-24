@@ -6,6 +6,8 @@ import com.springboot.shootformoney.member.dto.SearchInfo;
 import com.springboot.shootformoney.member.dto.MemberInfo;
 import com.springboot.shootformoney.member.dto.SignUpForm;
 import com.springboot.shootformoney.member.entity.Euro;
+import com.springboot.shootformoney.member.entity.Member;
+import com.springboot.shootformoney.member.exceptions.MemberNotExistException;
 import com.springboot.shootformoney.member.repository.MemberRepository;
 import com.springboot.shootformoney.member.services.MemberDeleteService;
 import com.springboot.shootformoney.member.services.MemberListService;
@@ -23,6 +25,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/member/mypage")
@@ -36,13 +39,16 @@ public class MyPageController {
     private final UpdateValidator updateValidator;
     private final MemberDeleteService memberDeleteService;
     private final MemberListService memberListService;
-    private final EuroService euroService;
-
-
 
     // 마이페이지 들어가기 전 비밀번호 확인
     @GetMapping("/checkpw")
     public String checkPw(Model model){
+        if(!memberUtil.isLogin()){
+            String script = String.format("Swal.fire(title:'로그인 여부 확인',text:'로그인 후 입장해주세요.',icon:'warning')" +
+                    ".then(function(){location.href='/member/login';})");
+            model.addAttribute("script",script);
+            return "script/sweet";
+        }
         model.addAttribute("memberInfo",new MemberInfo());
         model.addAttribute("pageTitle","비밀번호 확인");
         return "member/mypage/checkpw";
@@ -51,22 +57,17 @@ public class MyPageController {
     @PostMapping("/checkpw")
     public String checkPw(MemberInfo memberInfo, Model model) {
         MemberInfo getMember = memberUtil.getMember();
-
-        if(!memberUtil.isLogin()){
-            String script = String.format("Swal.fire('로그인 바랍니다.','','error').then(" +
-                    "function(){location.href='/member/login';})");
-            model.addAttribute("script",script);
-            return "script/sweet";
-        }
-
         String mPassword = memberInfo.getMPassword();
         Long mNo = getMember.getMNo();
         try {
             memberPwCheckService.check(mPassword);
+            model.addAttribute("pageTitle","비밀번호 확인");
             return "redirect:/member/mypage/info/" + mNo;
         } catch (Exception e) {
-            String script = String.format("Swal.fire('%s', '', 'error').then(function(){history.back();})", e.getMessage());
+            String script = String.format("Swal.fire(title:'비밀번호 일치 여부 확인',text:'%s',icon:'error')" +
+                    ".then(function(){history.back();})", e.getMessage());
             model.addAttribute("script", script);
+            model.addAttribute("pageTitle","비밀번호 확인");
             return "script/sweet";
         }
     }
@@ -75,32 +76,37 @@ public class MyPageController {
     @GetMapping("/info/{mNo}")
     public String myPage(@PathVariable Long mNo, Model model){
         model.addAttribute("pageTitle","마이페이지-회원정보");
-        // 다른 회원이 마이페이지에 접근하는 것을 방지
+        // 로그인 여부 확인
         if(memberUtil.isLogin()) {
-            Long no = memberUtil.getMember().getMNo();
+            // 동일한 회원 여부 확인
+            Long no = memberUtil.getEntity().getMNo();
             if (!mNo.equals(no)) {
                 String script = String.format("Swal.fire('본인 계정만 접근 가능합니다.', '', 'error')" +
                         ".then(function(){location.href='/';})");
                 model.addAttribute("script", script);
                 return "script/sweet";
             }
-            MemberInfo memberInfo = memberUtil.getMember();
+            Member memberInfo = memberUtil.getEntity();
+            Optional<Member> member = memberRepository.findById(memberInfo.getMNo());
+            if(member.isPresent()){memberInfo = member.get();}
+            Integer value = memberInfo.getEuro().getValue();
+            String euroValue = String.format("%,d",value);
             SignUpForm signUpForm = SignUpForm.builder()
                     .mId(memberInfo.getMId())
                     .mName(memberInfo.getMName())
                     .mNickName(memberInfo.getMNickName())
                     .grade(memberInfo.getGrade())
-                    .level(memberInfo.getLevel())
+                    .level(memberInfo.getMLevel())
                     .mPhone(memberInfo.getMPhone())
                     .mEmail(memberInfo.getMEmail())
-                    .euroValue(memberInfo.getEuro().getValue())
+                    .euroValue(euroValue)
+                    .mStack(memberInfo.getMStack())
                     .build();
-
             model.addAttribute("signUpForm", signUpForm);
             return "member/mypage/info";
         }
-        String script = String.format("Swal.fire('로그인 바랍니다.','','error').then(" +
-                "function(){location.href='/member/login';})");
+        String script = String.format("Swal.fire(title:'로그인 여부 확인',text:'로그인 후 입장해주세요.',icon:'warning')" +
+                ".then(function(){location.href='/member/login';})");
         model.addAttribute("script",script);
         return "script/sweet";
     }
@@ -108,7 +114,7 @@ public class MyPageController {
     @PostMapping("/info/{mNo}")
     public String myPagePs(@PathVariable Long mNo, @ModelAttribute @Valid SignUpForm signUpForm,
                            Errors errors, Model model){
-
+        model.addAttribute("pageTitle","마이페이지-회원정보");
         String mPassword = signUpForm.getMPassword();
         String mPhone = signUpForm.getMPhone();
 
@@ -163,7 +169,7 @@ public class MyPageController {
         try {
             Long no = memberUtil.getMember().getMNo();
             if (!mNo.equals(no)) {
-                String script = String.format("Swal.fire('본인 계정만 접근 가능합니다.', '', 'error')" +
+                String script = String.format("Swal.fire('본인 계정만 접근 가능합니다.', '', 'warning')" +
                         ".then(function(){location.href='/';})");
                 model.addAttribute("script", script);
                 return "script/sweet";

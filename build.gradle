@@ -27,7 +27,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.1.0'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
-
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     // queryDSL 설정
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
