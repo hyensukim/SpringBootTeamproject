@@ -169,4 +169,9 @@ public class PostService {
 //        return postRepositoryInterface.findByBoardBNo(bNo, pageable);
 //    }
 
+    public List<Post> searchPosts(String sopt, String skey) {
+        return postRepository.searchPosts(sopt, skey);
+    }
+
+
 }

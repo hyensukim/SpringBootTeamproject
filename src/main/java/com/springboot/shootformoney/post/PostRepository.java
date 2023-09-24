@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -101,6 +102,27 @@ public class PostRepository {
                 .getResultList();
     }
 
+        public List<Post> searchPosts(String sopt, String skey) {
+            if ("all".equals(sopt)) {
+                // 전체 검색
+                return em.createQuery("select p from Post p where p.pTitle like :skey or p.pContent like :skey", Post.class)
+                        .setParameter("skey", "%" + skey + "%")
+                        .getResultList();
+            } else if ("bld".equals(sopt)) {
+                // 게시판 아이디로 검색
+                Long bNo = Long.parseLong(skey);  // bNo가 숫자 형태라고 가정합니다.
+                return em.createQuery("select p from Post p where p.board.bNo = :bNo", Post.class)
+                        .setParameter("bNo", bNo)
+                        .getResultList();
+            }
+             else if ("bName".equals(sopt)) {
+                // 게시판명으로 검색
+                return em.createQuery("select p from Post p where p.board.bName = :skey", Post.class)
+                        .setParameter("skey", skey)
+                        .getResultList();
+            }
 
+            return new ArrayList<>();  // 일치하는 옵션이 없을 경우 빈 리스트 반환
+        }
 
 }

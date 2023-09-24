@@ -24,20 +24,34 @@ public class PostController {
     private final MemberRepository memberRepository;
     private  final BoardRepository boardRepository;
 
-    // 페이징 처리한 전체 목록 조회
-    @GetMapping("/all") 
-    public String getAllPosts(@ModelAttribute PostSearchInfo postSearchInfo,Model model) {
-        Page<Post> pageList = postService.getAllWithPage(postSearchInfo);
-        List<Post> postList = pageList.getContent();
+//     페이징 처리한 전체 목록 조회
+//    @GetMapping("/all")
+//    public String getAllPosts(@ModelAttribute PostSearchInfo postSearchInfo,Model model) {
+//        Page<Post> pageList = postService.getAllWithPage(postSearchInfo);
+//        List<Post> postList = pageList.getContent();
+//
+//        int nowPage = pageList.getPageable().getPageNumber() + 1; // 현재 페이지
+//        int startPage = (nowPage-1) / 10 * 10 + 1; // 첫페이지
+//        int endPage = Math.min(startPage + 10 - 1, pageList.getTotalPages());
+//
+//        model.addAttribute("startPage",startPage);
+//        model.addAttribute("endPage",endPage);
+//        model.addAttribute("nowPage",nowPage);
+//        model.addAttribute("postList", postList);
+//        return "post/posts";
+//    }
 
-        int nowPage = pageList.getPageable().getPageNumber() + 1; // 현재 페이지
-        int startPage = (nowPage-1) / 10 * 10 + 1; // 첫페이지
-        int endPage = Math.min(startPage + 10 - 1, pageList.getTotalPages());
+    @GetMapping("/all")
+    public String getAllPosts(@ModelAttribute PostSearchInfo postSearchInfo, Model model) {
+        String sopt = postSearchInfo.getSOpt(); //검색 옵션
+        String skey = postSearchInfo.getSKey(); //검색어
 
-        model.addAttribute("startPage",startPage);
-        model.addAttribute("endPage",endPage);
-        model.addAttribute("nowPage",nowPage);
+        //검색 옵션과 검색어를 이용하여 게시글 검색
+        List<Post> postList = postService.searchPosts(sopt, skey);
+
+        //검색 결과를 모델에 추가
         model.addAttribute("postList", postList);
+
         return "post/posts";
     }
 
