@@ -2,49 +2,53 @@
 <html lang="en"
     xmlns:th="http://www.thymeleaf.org">
 <th:block class="level-section" th:fragment="common">
-    <div th:switch="${level}">
+    <div class="nickname-div" th:switch="${level}">
         <span class="hbt"
-              th:text="${session.memberInfo.mNickName}"
+              th:text="${nickname}"
+              th:case="1">
+        </span>
+        <span class="hbt"
+              th:text="${nickname}"
               th:style="'background-color: red'"
               th:case="2">
         </span>
         <span class="hbt"
-              th:text="${session.memberInfo.mNickName}"
+              th:text="${nickname}"
               th:style="'background-color: orange'"
               th:case="3">
         </span>
         <span class="hbt"
-              th:text="${session.memberInfo.mNickName}"
+              th:text="${nickname}"
               th:style="'background-color: yellow'"
               th:case="4">
         </span>
         <span class="hbt"
-              th:text="${session.memberInfo.mNickName}"
+              th:text="${nickname}"
               th:style="'background-color: green'"
               th:case="5">
         </span>
         <span class="hbt"
-              th:text="${session.memberInfo.mNickName}"
+              th:text="${nickname}"
               th:style="'background-color: blue'"
               th:case="6">
         </span>
         <span class="hbt"
-              th:text="${session.memberInfo.mNickName}"
+              th:text="${nickname}"
               th:style="'background-color: purple'"
               th:case="7">
         </span>
         <span class="hbt"
-              th:text="${session.memberInfo.mNickName}"
+              th:text="${nickname}"
               th:style="'background-color: silver'"
               th:case="8">
         </span>
         <span class="hbt"
-              th:text="${session.memberInfo.mNickName}"
+              th:text="${nickname}"
               th:style="'background-color: gold'"
               th:case="9">
         </span>
         <span class="hbt"
-              th:text="${session.memberInfo.mNickName}"
+              th:text="${nickname}"
               th:style="'background-color: aqua'"
               th:case="10">
         </span>

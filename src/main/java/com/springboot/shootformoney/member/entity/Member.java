@@ -48,11 +48,11 @@ public class Member extends BaseEntity implements Serializable {
     private String mNickName;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="m_role", nullable = false)
+    @Column(nullable = false)
     private Role role = Role.MEMBER;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="m_grade", nullable = false)
+    @Column(nullable = false)
     private Grade grade = Grade.CONFERENCE;
 
     @Column(name = "m_level",nullable = false)
