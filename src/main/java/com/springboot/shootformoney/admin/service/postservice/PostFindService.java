@@ -44,31 +44,6 @@ public class PostFindService {
         }
     }
 
-//    // 각 카테고리별 검색 기능 서비스
-//    public List<Post> searchPosts(String category, String query) {
-//        switch (category) {
-//            case "pNo":
-//                Post post = postRepository.findOne(Long.parseLong(query));
-//                return post != null ? Arrays.asList(post) : new ArrayList<>();
-//
-//            case "mId":
-//                return postRepository.findByMemberId(query);
-//
-//            case "mNickName":
-//                return postRepository.findByMember_MNickName(query);
-//
-//            case "bName":
-//                return postRepository.findByBoard_BName(query);
-//
-//            case "pTitle":
-//                return postRepository.findByTitle(query);
-//
-//            default:
-//                throw new IllegalArgumentException("Invalid category: " + category);
-//        }
-//    }
-
-
     // 전체 리스트 조회 서비스 (+ 페이징 처리)
     public Page<Post> getsAdminPostWithPages(AdminSearchInfo adminSearchInfo) {
 
@@ -84,7 +59,7 @@ public class PostFindService {
         return adminPostList;
     }
 
-
+    // 검색(필터링) 페이징 처리
     public Page<Post> searchPosts(AdminSearchInfo adminSearchInfo) {
         int page = adminSearchInfo.getPage();
         int pageSize = adminSearchInfo.getPageSize();

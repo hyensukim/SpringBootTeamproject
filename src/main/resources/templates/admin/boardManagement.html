@@ -66,7 +66,7 @@
         <br/>
 
     </table>
-    <!-- 게시판 생성 폼 (기본적으로 숨겨져 있음) -->
+    <!-- 게시판 생성 폼 (기본적으로 숨겨져 있음), 버튼 눌렀을 때 노출 -->
     <form id="createBoardForm" th:action="@{/admin/board/create}" method="post" style="display: none;"
           onsubmit="return handleFormSubmit();">
         <label for="bName">게시판 이름:</label><br/>

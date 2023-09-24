@@ -6,12 +6,6 @@
 <main layout:fragment="common">
 
     <h2>게시글 관리</h2>
-    <!--    <a href="/admin/post/postList/">전체게시판</a>-->
-
-    <!--    &lt;!&ndash; 각각의 게시판 별로 조회 &ndash;&gt;-->
-    <!--    <div th:each="board : ${boards}">-->
-    <!--        <a th:href="@{/admin/post/postList(bName=${board.bName})}" th:text="${board.bName}"></a>-->
-    <!--    </div>-->
 
     <form th:action="@{/admin/post/postList/search}" method="get">
         <select name="sOpt">
@@ -66,15 +60,6 @@
         <!--                            <i class="xi-angle-left-min"></i>-->
         <!--                        </a>-->
         <!--                    </li>-->
-<!--        <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}">-->
-<!--            <li th:if="${item > 0}" class='page' th:classappend="on">-->
-<!--                <a th:if="${item != nowPage && item > 0}"-->
-<!--                   th:href="@{/admin/post/postList/all?page={page}(page=${item})}"-->
-<!--                   th:text="${item}">-->
-<!--                </a>-->
-<!--                <strong th:if="${item == nowPage}" th:text="${item}"></strong>-->
-<!--            </li>-->
-<!--        </th:block>-->
 
     <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}">
         <li th:class="${item == nowPage} ? 'page on' : 'page'">
@@ -96,7 +81,7 @@
 </main>
 </html>
 
-<!-- 일괄 삭제 예외 처리 알림창 -->
+<!-- 일괄 삭제 예외 처리 알림창 (선택 하지 않았을 때) -->
 <script>
     function checkBeforeSubmit() {
         var checkboxes = document.getElementsByName('selectPosts');

@@ -3,13 +3,14 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/admin/main}">
 
+<!-- 임시 postDetail / Post 완성되면 해당 URL로 이동 -->
 <main layout:fragment="common">
 
     <h2>게시글 상세보기</h2>
 
     <div class="post-details">
         <h4 th:text="'제목 : ' + ${post.pTitle}"></h4>
-        <p th:text =" '작성자 : ' + ${post.member.mNickName}"></p>
+        <p th:text=" '작성자 : ' + ${post.member.mNickName}"></p>
         <h5>내용</h5>
         <p th:text="${post.pContent}"></p>
         <p>작성일: <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
@@ -24,7 +25,8 @@
 
     <!-- 게시글 삭제 -->
     <td>
-        <form th:action="@{'/admin/post/' + ${post.pNo}}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
+        <form th:action="@{'/admin/post/' + ${post.pNo}}" method="post"
+              onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
             <a href="javascript:history.back()">< 뒤로가기</a>
             <input type="hidden" name="_method" value="delete"/>
             <button type="submit">게시글 삭제</button>

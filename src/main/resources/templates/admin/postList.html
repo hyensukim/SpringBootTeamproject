@@ -66,15 +66,6 @@
         <!--                            <i class="xi-angle-left-min"></i>-->
         <!--                        </a>-->
         <!--                    </li>-->
-        <!--        <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}">-->
-        <!--            <li th:if="${item > 0}" class='page' th:classappend="on">-->
-        <!--                <a th:if="${item != nowPage && item > 0}"-->
-        <!--                   th:href="@{/admin/post/postList/all?page={page}(page=${item})}"-->
-        <!--                   th:text="${item}">-->
-        <!--                </a>-->
-        <!--                <strong th:if="${item == nowPage}" th:text="${item}"></strong>-->
-        <!--            </li>-->
-        <!--        </th:block>-->
 
         <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}">
             <li th:class="${item == nowPage} ? 'page on' : 'page'">

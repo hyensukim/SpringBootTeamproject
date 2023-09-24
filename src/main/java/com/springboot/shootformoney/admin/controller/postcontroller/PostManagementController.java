@@ -67,59 +67,6 @@ public class PostManagementController {
     }
 
 
-//    @GetMapping("/postList")
-//    public String postList(@RequestParam(required = false) String bName, Model model) {
-//        List<Board> boards = boardRepository.findAll();
-//        model.addAttribute("boards", boards);
-//
-//        List<Post> posts;
-//        if (bName != null) {
-//            posts = postFindService.searchPosts("bName", bName);
-//        } else {
-//            posts = postFindService.findAllposts();
-//        }
-//
-//        model.addAttribute("posts", posts);
-//
-//        return "/admin/postList";
-//    }
-
-
-//    // 각 기능 별 게시글 조회
-//    @GetMapping("/postList/search")
-//    public String searchPost(@RequestParam String category, @RequestParam String query, Model model) {
-//
-//        List<Post> posts = postFindService.searchPosts(category, query);
-//        model.addAttribute("posts", posts);
-//
-//        switch (category) {
-//            case "pNo":
-//                model.addAttribute("pageTitle", "게시글 조회 | 번호");
-//                break;
-//
-//            case "mId":
-//                model.addAttribute("pageTitle", "게시글 조회 | 작성자 ID");
-//                break;
-//
-//            case "mNickName":
-//                model.addAttribute("pageTitle", "게시글 조회 | 작성자 별명");
-//                break;
-//
-//            case "bName":
-//                model.addAttribute("pageTitle", "게시글 조회 | 게시판 이름");
-//                break;
-//
-//            case "pTitle":
-//                model.addAttribute("pageTitle", "게시글 조회 | 게시글 제목");
-//                break;
-//
-//            default:
-//                throw new IllegalArgumentException("Invalid category: " + category);
-//        }
-//
-//        return "admin/postList";
-//    }
-
     // 게시글 검색 조회 (+ 페이징 처리)
     @GetMapping("/postList/search")
     public String getAllMembers(@ModelAttribute AdminSearchInfo searchInfo,

@@ -87,6 +87,7 @@ public class MemberManagementService {
 
     }
 
+    // 검색(필터링) 페이징 처리
     public Page<Member> searchMembers(AdminSearchInfo adminSearchInfo) {
         int page = adminSearchInfo.getPage();
         int pageSize = adminSearchInfo.getPageSize();
@@ -97,6 +98,7 @@ public class MemberManagementService {
         String sOpt = adminSearchInfo.getSOpt();
         String sKey = adminSearchInfo.getSKey();
 
+        // 권한(Admin / Member) 오름차순, 생성일 내림차순
         Pageable pageable = PageRequest.of(page - 1, pageSize,
                 Sort.by(Sort.Order.asc("role"), Sort.Order.desc("createdAt")));
 

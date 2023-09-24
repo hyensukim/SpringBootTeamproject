@@ -29,6 +29,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>, QuerydslP
     Page<Member> findBymLevel(Integer mLevel, Pageable pageable); // 회원 LV 조회
     Page<Member> findByGrade(Grade grade, Pageable pageable); // 회원 등급 조회
     Page<Member> findByRole(Role role, Pageable pageable); // 회원 권한 조회
+    // 여기까지 ~
 
     @Query("SELECT m FROM Member m WHERE m.mEmail = :mEmail AND m.mName = :mName ")
     Member findBymEmailAndmName(String mEmail, String mName); // 이메일 + 이름으로 조회
