@@ -14,8 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import java.text.NumberFormat;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Component("memberUpdate")
 @RequiredArgsConstructor
@@ -31,27 +31,48 @@ public class MemberUpdateInterceptor implements HandlerInterceptor {
         if(memberUtil.isLogin()){
             MemberInfo memberInfo = memberUtil.getMember();
             Long mNo = memberInfo.getMNo();
-            String nickname = memberInfo.getMNickName();
-            Member member = memberRepository.findBymNickName(nickname);
-            Integer level = member.getMLevel();
+            Member member = null;
+            LoginData loginData = null;
+            String nickname = "";
+            Integer level= 0;
+            String formattedEuro = "";
+
+            Optional<Member> om = memberRepository.findById(mNo);
+            if(om.isPresent()){
+                member = om.get();
+            }
+
             Euro euro = euroRepository.findBymNo(mNo);
-            String formattedEuro = String.format("%,d",euro.getValue());
+
+            if(member != null){
+                member = levelRankUtil.levelUp(mNo);
+                member = levelRankUtil.gradeUp(member);
+                loginData = member.getLoginData();
+                level = member.getMLevel();
+                nickname = member.getMNickName();
+            }
+
+            if(euro != null){
+                formattedEuro = String.format("%,d",euro.getValue());
+            }
+
             req.setAttribute("mNo",mNo);
+            req.setAttribute("nickname",nickname);
             req.setAttribute("formattedEuro",formattedEuro);
             req.setAttribute("level",level);
 
-            member = levelRankUtil.levelUp(mNo);
-            member = levelRankUtil.gradeUp(member);
 
-            LoginData loginData = member.getLoginData();
-            if(loginData == null){
+            if(loginData == null && member!= null){
                 loginData = new LoginData();
                 loginData.setLoginDate(LocalDateTime.now());
                 member.setLoginData(loginData);
-            }else{
+            }else if(loginData != null){
                 loginData.setLoginDate(LocalDateTime.now());
             }
-            memberRepository.saveAndFlush(member);
+
+            if(member != null) {
+                memberRepository.saveAndFlush(member);
+            }
         }
         return true;
     }

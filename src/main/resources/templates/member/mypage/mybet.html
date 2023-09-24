@@ -43,8 +43,10 @@
                                 th:text="패 + ${bet.btMoney}">-</td>
                             <td th:unless="${bet.expect.toString().equals('LOSE')}"
                                 th:text="'-'"></td>
-                            <td th:if="*{endPaid.toString().equals('1')}"
-                                th:text="'결과 배당률' + ' : ' +${bet.btRatio}"></td>
+                            <td th:if="*{endPaid.toString().equals('1')}">
+                                <span th:if="*{correct.toString().equals('1')}" th:text="'적중 배당률' + ' : ' +${bet.btRatio}"></span>
+                                <span th:unless="*{correct.toString().equals('0')}" >적중 실패</span>
+                            </td>
                             <td th:unless="*{endPaid.toString().equals('1')}" class="list_button">
                                 <a th:href="@{/bet/cancelbet/confirm/{btNo}(btNo = ${bet.btNo})}">배팅 취소</a>
                             </td>

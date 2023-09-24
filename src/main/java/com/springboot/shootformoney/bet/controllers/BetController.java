@@ -70,8 +70,12 @@ public class BetController {
             }
 
         } else {
-            String errorMsg = "error : 경기가 이미 시작되어 배팅할 수 없습니다.";
-            model.addAttribute("errorMsg", errorMsg);
+//            String errorMsg = "error : 경기가 이미 시작되어 배팅할 수 없습니다.";
+//            model.addAttribute("errorMsg", errorMsg);
+            String script = String.format("Swal.fire({title:'배팅 오류!',text:'경기가 이미 시작되어 배팅할 수 없습니다.',icon:'error'})" +
+                    ".then(function(){location.href='/';})");
+            model.addAttribute("script", script);
+            return "script/sweet";
         }
         return "redirect:/list/unstarted/entirelist";
 

@@ -6,23 +6,31 @@
     <div class="container">
         <div class="header-content">
             <div class="header-buttons">
-                <th:block sec:authorize="isAnonymous()">
-                    <a class="hbt" th:href="@{/member/login}" >로그인</a>
-                </th:block>
-                <th:block sec:authorize="isAuthenticated()">
-                <span class="hbt">
-                    <th:block th:replace="~{outlines/mypage/_levelblock::common}"></th:block>
-                    (<span class="hbt" th:text="${formattedEuro}"></span> € /
-                    <span class="hbt" th:text="${level}"></span> Lv
-                    ) 님, 환영합니다.
-                </span>
-                    <a class="hbt" th:href="@{/member/logout}">로그아웃</a>
-                    <a class="hbt" th:href="@{/member/mypage/checkpw}" id='mypage-link'>마이페이지</a>
-                    <a class="hbt" th:href="@{/member/reward}" id='attendance-button'>출석</a>
-                    <th:block sec:authorize="hasRole('ADMIN')">
+                <div class="left">
+                    <th:block sec:authorize="isAuthenticated()">
+                        <div class="member-info">
+                            <span class="hbt">
+                            <th:block th:replace="~{outlines/mypage/_levelblock::common}"></th:block>
+                            (<span class="hbt" th:text="${formattedEuro}"></span> € /
+                            <span class="hbt" th:text="${level}"></span> Lv
+                            ) 님, 환영합니다.
+                            </span>
+                        </div>
+                        <a class="hbt" th:href="@{/member/reward}" id='attendance-button'>출석</a>
+                    </th:block>
+                </div>
+                <div class="right">
+                    <th:block sec:authorize="isAuthenticated()">
+                        <a class="hbt" th:href="@{/member/logout}">로그아웃</a>
+                        <a class="hbt" th:href="@{/member/mypage/checkpw}" id='mypage-link'>마이페이지</a>
+                    </th:block>
+                    <th:block sec:authorize="isAnonymous()">
+                        <a class="hbt" th:href="@{/member/login}" >로그인</a>
+                    </th:block>
+                    <th:block sec:authorize="hasAuthority('ADMIN')">
                         <a class="hbt" th:href="@{/admin/config}" id='adminpage-link'>관리자페이지</a>
                     </th:block>
-                </th:block>
+                </div>
             </div>
         </div>
     </div>

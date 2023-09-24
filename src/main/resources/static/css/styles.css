@@ -11239,6 +11239,14 @@ button[type='submit']:not(.no-style){
   margin-left: 5px;
 }
 
+.saveId-group{
+  display: flex;
+}
+
+.saveId-group > input[type="checkbox"]{
+  margin-right : 15px;
+}
+
 .frmLogin label {
   display: block;
   margin-bottom: 5px;
@@ -11403,15 +11411,27 @@ form[name="frmMyPage"] dd input[type='password']{
   border-bottom-color: #4d5154;
 }
 
-.header-content {
+.welcome-message {
+  font-size: 1.2em;
+  color: white;
+}
+.header-buttons{
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.welcome-message {
-  font-size: 1.2em;
-  color: white;
+.header-buttons > .left{
+  display: flex;
+}
+
+.header-buttons > .left > .member-info{
+  margin-right: 10px;
+}
+
+.nickname-div{
+  display: inline-block;
+  margin-right: 5px;
 }
 
 .header-buttons button,
@@ -11623,7 +11643,7 @@ transition:.5s; // 전환 시간 조절
 
 .form-group label{
   font-weight:bold ;
-  display:block ;
+  display:inline-block ;
   margin-bottom :5px ;
 }
 
@@ -11636,7 +11656,6 @@ transition:.5s; // 전환 시간 조절
   border :1px solid #ddd;
 }
 /* 등록, 취소 버튼 스타일링*/
-/* 등록, 취소 버튼 스타일링 */
 .btn {
   display: flex;
   justify-content: center; /* Centers the buttons horizontally */
@@ -11652,6 +11671,26 @@ transition:.5s; // 전환 시간 조절
   cursor:pointer;
   padding :10px ;
   text-decoration:none ;
+}
+
+/*마이페이지 수정/탈퇴 버튼*/
+.info-btn{
+  margin-left: 150px;
+  margin-bottom: 50px;
+  display: inline-flex;
+}
+
+.info-btn button{
+  margin-right: 10px;
+  text-decoration: none;
+  background: #4d5154;
+}
+
+.info-btn button a{
+  text-decoration: none;
+  background: #4d5154;
+  border: none;
+  color: #fff; /* 흰색으로 설정 */
 }
 
 .board_title h2{
