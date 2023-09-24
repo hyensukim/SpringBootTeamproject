@@ -134,6 +134,7 @@ public class BetService {
                         //Euro 보유량 업데이트.
                         Euro euroAccount = euroRepository.findBymNo(member.getMNo());
                         euroAccount.setValue(originalValue + addValue);
+                        bet.setCorrect((byte) 1);
                     }
                     //Bet엔터티의 중복검사부분 업데이트
                     bet.setEndPaid((byte) 1);
