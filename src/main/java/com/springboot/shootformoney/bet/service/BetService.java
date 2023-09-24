@@ -117,22 +117,24 @@ public class BetService {
             List<Game> finishedGames = gameRepository.findAllFinishedMatches();
 
             for (Game game : finishedGames) {
-                List<Bet> wonBets = betRepository.findByResultAndExpect(game);
-                for (Bet bet : wonBets) {
-                    Member member = bet.getMember();
-                    double fee = member.getGrade().getFee();
+                List<Bet> bets = betRepository.findByGameAndEndPaid(game);
+                for (Bet bet : bets) {
+                    //배팅 적중 시 지급금을 지금하는 if문.
+                    if(bet.getExpect().equals(game.getResult())){
+                        Member member = bet.getMember();
+                        double fee = member.getGrade().getFee();
 
-                    //배당금 = 배팅금 * (배당률 - 1) (만 단위, 배팅금 보전)
-                    double prizeValue = bet.getBtMoney() * (bet.getBtRatio() - 1);
-                    //지급금 = 배당금 * (1 - 수수료) + 배팅금
-                    Integer addValue = (int) (prizeValue * (1 - fee) + bet.getBtMoney()) * 10000;
+                        //배당금 = 배팅금 * (배당률 - 1) (만 단위, 배팅금 보전)
+                        double prizeValue = bet.getBtMoney() * (bet.getBtRatio() - 1);
+                        //지급금 = 배당금 * (1 - 수수료) + 배팅금
+                        Integer addValue = (int) ((prizeValue * (1 - fee) + bet.getBtMoney()) * 10000);
 
-                    //현재 사용자의 유로 보유량 조회.
-                    Integer originalValue = euroRepository.findBymNo(member.getMNo()).getValue();
-                    //Euro 보유량 업데이트.
-                    Euro euroAccount = euroRepository.findBymNo(member.getMNo());
-                    euroAccount.setValue(originalValue + addValue);
-
+                        //현재 사용자의 유로 보유량 조회.
+                        Integer originalValue = euroRepository.findBymNo(member.getMNo()).getValue();
+                        //Euro 보유량 업데이트.
+                        Euro euroAccount = euroRepository.findBymNo(member.getMNo());
+                        euroAccount.setValue(originalValue + addValue);
+                    }
                     //Bet엔터티의 중복검사부분 업데이트
                     bet.setEndPaid((byte) 1);
                 }

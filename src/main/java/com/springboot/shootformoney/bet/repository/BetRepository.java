@@ -23,8 +23,11 @@ public interface BetRepository extends JpaRepository<Bet, Long>, QuerydslPredica
     @Query("SELECT b FROM Bet b WHERE b.game = :game AND b.game.result = b.expect AND b.endPaid = 0")
     List<Bet> findByResultAndExpect(@Param("game") Game game);
 
-    //gNo로 배팅내역 조회하기.
+    //경기가 끝난 배팅 중, 정산 안된 배팅 조회하기
+    @Query("SELECT b FROM Bet b WHERE b.game = :game AND b.endPaid = 0")
+    List<Bet> findByGameAndEndPaid(@Param("game") Game game);
 
+    //gNo로 배팅내역 조회하기.
     @Query("SELECT b FROM Bet b WHERE b.game.gNo = :gNo")
     List<Bet> findAllByGame_gNo(@Param("gNo") Long gNo);
 
