@@ -2,60 +2,46 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
-<main layout:fragment="common">
-
-  <h2>게시글 상세보기</h2>
-  <div class="detail" th:object="${post}">
-    <dl>
-      <dt>제목 </dt>
-      <dd th:text="*{pTitle}"></dd>
-    </dl>
-    <dl>
-      <dt>내용 </dt>
-      <dd th:text="*{pContent}"></dd>
-    </dl>
-    <dl>
-      <dt>별명 </dt>
-      <dd th:text="*{member.mNickName}"></dd>
-    </dl>
-    <dl>
-      <dt>조회수 </dt>
-      <dd th:text="*{view}"></dd>
-    </dl>
-    <dl>
-      <dt>작성일 </dt>
-      <dd th:text="*{#temporals.format(createdAt, 'yyyy-MM-dd HH:mm:ss')}"></dd>
-    </dl>
-    <dl>
-      <dt>수정일 </dt>
-      <th:block th:if="*{updatedAt != null}">
-        <dd th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></dd>
-      </th:block>
-      <th:block th:unless="*{updatedAt != null}">
-        <dd th:text> - </dd>
-      </th:block>
-    </dl>
-  </div>
-
-  <!-- 게시글 삭제 -->
-  <td>
-    <form th:action="@{'/post/' + ${post.pNo}}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
-      <a href="javascript:history.back()"> 뒤로가기</a>
-      <input type="hidden" name="_method" value="delete"/>
-      <button type="submit">게시글 삭제</button>
-    </form>
-  </td>
-
-<!--  <a th:href="@{'post/' + ${post.pNo} + '/edit'}">수정</a>-->
-
-<!--  게시글 수정-->
-    <td>
-      <form th:action="@{'/post/' + ${post.pNo} + '/edit'}" method="post" onsubmit="return confirm('게시글 수정을 진행하시겠습니까?')">
-        <input type="hidden" name="_method" value="put"/></br>
-        <button type="submit">게시글 수정</button>
+  <main layout:fragment="common">
+    <h2>게시글 상세보기</h2>
+    <div class="detail" th:object="${post}">
+      <dl>
+        <dt>제목 </dt>
+        <dd th:text="*{pTitle}"></dd>
+      </dl>
+      <dl>
+        <dt>내용 </dt>
+        <dd th:text="*{pContent}"></dd>
+      </dl>
+      <dl>
+        <dt>별명 </dt>
+        <dd th:text="*{member.mNickName}"></dd>
+      </dl>
+      <dl>
+        <dt>조회수 </dt>
+        <dd th:text="*{view}"></dd>
+      </dl>
+      <dl>
+        <dt>작성일 </dt>
+        <dd th:text="*{#temporals.format(createdAt, 'yyyy-MM-dd HH:mm:ss')}"></dd>
+      </dl>
+      <dl>
+        <dt>수정일 </dt>
+        <th:block th:if="*{updatedAt != null}">
+          <dd th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></dd>
+        </th:block>
+        <th:block th:unless="*{updatedAt != null}">
+          <dd th:text> - </dd>
+        </th:block>
+      </dl>
+    </div>
+    <div>
+      <form th:action="@{'/post/' + ${post.pNo}}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
+        <a href="javascript:history.back()"> 뒤로가기</a>
+        <input type="hidden" name="_method" value="delete"/>
+        <button type="submit">게시글 삭제</button>
       </form>
-    </td>
-
-
-</main>
+      <a th:href="@{/post/{pNo}/edit(pNo=${post.pNo})}">게시글 수정</a>
+    </div>
+  </main>
 </html>

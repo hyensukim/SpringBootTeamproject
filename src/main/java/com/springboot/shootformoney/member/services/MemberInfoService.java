@@ -44,7 +44,6 @@ public class MemberInfoService implements UserDetailsService {
                 .level(member.getMLevel())
                 .loginData(member.getLoginData())
                 .mStack(member.getMStack())
-                .postList(member.getPosts())
                 .euro(member.getEuro())
                 .authorities(authorities)
                 .build();

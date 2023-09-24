@@ -45,5 +45,5 @@ package com.springboot.shootformoney.member.dto;
         
         private Role role;
 
-        private Euro euro;
+        private Integer euroValue;
     }

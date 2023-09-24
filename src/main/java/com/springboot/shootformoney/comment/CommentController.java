@@ -1,6 +1,8 @@
 package com.springboot.shootformoney.comment;
 
 
+import com.springboot.shootformoney.comment.entity.Comment;
+import com.springboot.shootformoney.comment.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +18,11 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/")
-    public String createComment(@ModelAttribute Comment comment) {
-        commentService.save(comment);
-        return "redirect:/comments";
-    } // 댓글 달기
+//    @PostMapping("/")
+//    public String createComment(@ModelAttribute Comment comment) {
+//        commentService.save(comment);
+//        return "redirect:/comments";
+//    } // 댓글 달기
 
 
     @GetMapping("/")

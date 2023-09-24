@@ -42,7 +42,6 @@ public class MemberUtil {
                     .role(memberInfo.getRole())
                     .euro(memberInfo.getEuro())
                     .mStack(memberInfo.getMStack())
-                    .posts(memberInfo.getPostList())
                     .loginData(memberInfo.getLoginData())
                     .grade(memberInfo.getGrade())
                     .mLevel(memberInfo.getLevel())

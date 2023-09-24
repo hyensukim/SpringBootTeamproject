@@ -20,6 +20,7 @@ import org.webjars.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.data.domain.Sort.by;
 
@@ -83,31 +84,49 @@ public class PostService {
     @Transactional
     public void updatePost(Long pNo, String pTitle, String pContent) {
         Post post = postRepository.findOne(pNo);
-        if (post != null) {
+        if (post != null && (pTitle != null && !pTitle.isBlank()) && (pContent != null && !pContent.isBlank())) {
             post.update(pTitle, pContent);
         } else {
             throw new IllegalArgumentException("해당 아이디의 게시물이 존재하지 않습니다.");
         }
     }
 
+    // 게시판별 목록 조회
+    public List<Post> findByBoardBNo(Long bNo) {
+
+        return postRepository.findByBoardBNo(bNo);
+    }
 
     //전체 조회
     public List<Post> findAllPosts() {
         return 	postRepository.findAll();
     }
 
-//    단일 조회
-@Transactional
-public Post findPost(Long pNo) {
-    Post post = postRepository.findOne(pNo);
-    if (post != null) {
-        post.incrementViewCount();
-        return post;
-    } else {
-        throw new IllegalArgumentException("해당 아이디의 게시물이 존재하지 않습니다.");
+    //단일 조회
+    @Transactional
+    public Post findPost(Long pNo) {
+        Post post = postRepository.findOne(pNo);
+        if (post != null) {
+            return post;
+        } else {
+            throw new IllegalArgumentException("**해당 아이디의 게시물이 존재하지 않습니다.");
+        }
     }
-}
 
+    //조회수 증가
+    public void updateView(Long pNo){
+        Optional<Post> post = postRepositoryInterface.findById(pNo);
+        post.ifPresent(Post::incrementViewCount);
+    }
+
+    //단일 조회(postResponseDto 사용 -> 순환 조회 방지)
+    @Transactional
+    public PostResponseDto findById(Long pNo){
+        Post post = postRepositoryInterface.findById(pNo).orElseThrow(()->
+                new IllegalArgumentException("게시글 조회 오류 : 게시글이 존재하지 않습니다."));
+        PostResponseDto postResponseDto = new PostResponseDto(post);
+        return postResponseDto;
+    }
 
 
         // 제목으로 찾기
