@@ -159,4 +159,14 @@ public class PostService {
         return postList;
     }
 
+//    public Page<Post> findByBoardBNoWithPage(Long bNo, PostSearchInfo postSearchInfo) {
+//        int page = postSearchInfo.getPage(); // 현재 페이지
+//        int pageSize = postSearchInfo.getPageSize(); // 페이지 크기
+//        page = Math.max(page, 1);
+//        pageSize = pageSize < 1 ? 10 : pageSize;
+//
+//        Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by(Sort.Direction.DESC,"createdAt"));
+//        return postRepositoryInterface.findByBoardBNo(bNo, pageable);
+//    }
+
 }

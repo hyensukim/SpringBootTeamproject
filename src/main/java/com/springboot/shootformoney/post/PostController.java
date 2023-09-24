@@ -68,18 +68,9 @@ public class PostController {
 
     // 게시판별 목록 조회 - 추가 구현(Service - if)
     @GetMapping("/all/{bNo}")
-    public String getAllPostsByBoard(@PathVariable Long bNo, @ModelAttribute PostSearchInfo postSearchInfo, Model model) {
-        postSearchInfo.setBNo(bNo);
-        Page<Post> pageList = postService.getAllWithPage(postSearchInfo);
-        List<Post> postList = pageList.getContent();
+    public String getAllPostsByBoard(@PathVariable Long bNo, Model model) {
+        List<Post> postList = postService.findPostsByBoardBNo(bNo);
 
-        int nowPage = pageList.getPageable().getPageNumber() + 1; // 현재 페이지
-        int startPage = (nowPage-1) / 10 * 10 + 1; // 첫페이지
-        int endPage = Math.min(startPage + 10 - 1, pageList.getTotalPages());
-
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-        model.addAttribute("nowPage", nowPage);
         model.addAttribute("postList", postList);
 
         return "post/posts2";

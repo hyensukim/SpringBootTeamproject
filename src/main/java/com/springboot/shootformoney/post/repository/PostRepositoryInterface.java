@@ -6,12 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
-import org.springframework.data.repository.query.QueryByExampleExecutor;
-
-import java.util.List;
-import java.util.Optional;
 
 public interface PostRepositoryInterface extends JpaRepository<Post,Long>, QuerydslPredicateExecutor<Post> {
+    Page<Post> findByBoardBNo(Long bNo, Pageable pageable);
+
 
 //    Page<Post> findByPTitleContaining(String query, Pageable pageable);
 
@@ -24,5 +22,6 @@ public interface PostRepositoryInterface extends JpaRepository<Post,Long>, Query
 //    Page<Post> findByMembermNickName(String mNickName, Pageable pageable);
 //
 //    Page<Post> findBypTitleContaining(String pTitle, Pageable pageable);
+
 
 }

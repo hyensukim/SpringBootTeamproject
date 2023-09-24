@@ -46,20 +46,7 @@
         </tr>
         </tbody>
     </table>
-    <!--페이징 처리-->
-    <th:block th:if="${postList != null}">
-        <ul class="pagination">
-            <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}" >
-                <li th:if="${item > 0}" class='page' th:classappend="on">
-                    <a th:if="${item != nowPage && item > 0}"
-                       th:href="@{/post/all?page={page}(page=${item})}"
-                       th:text="${item}">
-                    </a>
-                    <strong th:if="${item == nowPage}" th:text="${item}"></strong>
-                </li>
-            </th:block>
-        </ul>
-    </th:block>
+
 
     <!--게시글 작성-->
     <!--   bNo 0 : 전체, 1 : 자유, 2 : 이피엘, 3 : 라리가, 4:분데스 -->
