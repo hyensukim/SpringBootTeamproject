@@ -32,9 +32,15 @@
     </form>
 
     <!-- ckEditor 에러 처리 메서드, 폼 제출 이벤트 리스너 삭제 -->
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#editor'))
+    <!-- CKEditor 설정 추가 -->
+    <script th:inline="javascript">
+        ClassicEditor.create(document.querySelector('#editor'))
+            .then(editor => {
+                editor.setData([[${postDto.pContent}]]);
+                let data = editor.getData();
+                data = data.replace('/<p>/g','').replace('/<\/p>/g','\n');
+                editor.setData(data);
+            })
             .catch(error => {
                 console.error(error);
             });

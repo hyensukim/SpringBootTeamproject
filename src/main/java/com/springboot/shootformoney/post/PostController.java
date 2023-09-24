@@ -4,6 +4,7 @@ import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.MemberRepository;
+import com.springboot.shootformoney.member.utils.MemberUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
 
+    private final MemberUtil memberUtil;
     private final PostService postService;
     private final MemberRepository memberRepository;
     private  final BoardRepository boardRepository;
@@ -44,9 +46,16 @@ public class PostController {
     // 게시글 작성
     @GetMapping("/create")
     public String createPostForm(@ModelAttribute("postDto") PostDTO postDto, Model model) {
-        List<Board> boards = boardRepository.findAll();
-        model.addAttribute("boards",boards);
-        return "post/addForm";
+        if(memberUtil.isLogin()) {
+            List<Board> boards = boardRepository.findAll();
+            model.addAttribute("boards", boards);
+            return "post/addForm";
+        }else{
+            String script = String.format("Swal.fire({title: '접근 불가!', text: '로그인 후 클릭해주세요.', icon: 'error'})" +
+                    ".then(function() { history.back(); })", "Error!");
+            model.addAttribute("script", script);
+            return "script/sweet";
+        }
     }
     
     @PostMapping("/create")
@@ -80,42 +89,59 @@ public class PostController {
     @GetMapping("/detail/{pNo}")
     public String getOnePost(@PathVariable Long pNo, Model model) {
         try {
-            Post post = postService.findPost(pNo);
+            Post post = postService.findPostWithView(pNo);
+
+            // 작성한 회원인 경우에만 수정/삭제 가능
+            if(memberUtil.isLogin()) {
+                String nickname = memberUtil.getMember().getMNickName();
+                String writer = post.getMember().getMNickName();
+                if(nickname.equals(writer)){
+                    model.addAttribute("writer",writer);
+                }
+            }
             model.addAttribute("post", post);
+            return "post/detail";
         }catch(Exception e){
             String script = String.format("Swal.fire({title: '%s', text: '%s', icon: 'error'})" +
                     ".then(function() { location.href='/post/create'; })", "Error!", e.getMessage());
             model.addAttribute("script", script);
             return "script/sweet";
         }
-        return "post/detail";
     }
 
-    // 매핑
     //삭제
-//    @PostMapping("/{pNo}/delete")
-//    public String deletePost(@PathVariable Long pNo) {
-//        postService.deletePost(pNo);
-//        return "redirect:/posts/all";
-//
-//    }
-
-    //삭제(수정)
     @DeleteMapping("/{pNo}")
     public String deletePost(@PathVariable Long pNo) {
         postService.deletePost(pNo);
         return "redirect:/post/all";
     }
 
+    /* 게시글 수정 */
+    @GetMapping("/{pNo}/edit")
+    public String editPost(@PathVariable Long pNo, Model model){
+        Post post = postService.findPost(pNo);
+        post.decreaseViewCount();
+        PostDTO dto = PostDTO.of(post);
+        model.addAttribute("post",dto);
+        return "post/edit";
+    }
 
-
-    // 전체 게시글 조회
-//    @GetMapping("/")
-//    public ResponseEntity<List<Post>> getAllPosts() {
-//        List<Post> posts = postService.findAllPosts();
-//        return ResponseEntity.ok(posts);
-//    }
-
+    @PutMapping("/{pNo}/edit")
+    public String editPostPs(@PathVariable Long pNo, @ModelAttribute("post") @Valid PostDTO updatedPost, Model model) {
+        try {
+            postService.updatePost(pNo, updatedPost);
+            String str = String.valueOf(pNo);
+            String script = String.format("Swal.fire({title: '수정 완료!', text: '정상적으로 수정되었습니다.', icon: 'success'})" +
+                    ".then(function() { location.href='/post/all'; })", "Success!");
+            model.addAttribute("script", script);
+            return "script/sweet";
+        }catch(Exception e){
+            String script = String.format("Swal.fire({title: '%s', text: '%s', icon: 'error'})" +
+                    ".then(function() { location.href='/post/create'; })", "Error!", e.getMessage());
+            model.addAttribute("script", script);
+            return "script/sweet";
+        }
+    }
 
     //제목으로 찾기
     @GetMapping("/tTitle/{pTitle}")
@@ -144,21 +170,5 @@ public class PostController {
 //        model.addAttribute("post", post);
 //        return "edit";
 //    }
-
-    @GetMapping("/{pNo}/edit")
-    public String editPostForm(@PathVariable Long pNo, Model model) {
-        PostDTO post = PostDTO.of(postService.findPost(pNo));  // getPost() 메서드는 해당 번호의 게시글 정보를 반환해야 합니다.
-        model.addAttribute("post", post);
-        return "post/edit";
-    }
-
-
-    @PutMapping("/{pNo}/edit")
-    public String editPostPs(@PathVariable Long pNo, @ModelAttribute("post") @Valid PostDTO updatedPost, Model model) {
-
-        postService.updatePost(pNo, updatedPost.getPTitle(), updatedPost.getPContent());
-
-        return "post/edit";
-    }
 
 }

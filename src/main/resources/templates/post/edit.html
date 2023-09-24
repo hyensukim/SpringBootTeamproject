@@ -46,18 +46,15 @@
             <a href="/post/detail/{pNo}" th:href="@{/post/detail/{pNo}(pNo=${post.pNo})}">취소</a>
         </div>
     </form>
-
-    <!-- CKEditor 에러 처리 메서드, 폼 제출 이벤트 리스너 삭제 -->
-    <script th:inline="javascript">
-        ClassicEditor
-            .create(document.querySelector('#editor'))
-            .then(editor => {
-                editor.setData([[${post.pContent}]]);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
-</div>
-</body>
+        <script th:inline="javascript">
+            ClassicEditor.create(document.querySelector('#editor'))
+                .then(editor => {
+                    editor.setData([[${post.pContent}]]);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        </script>
+    </div>
+</main>
 </html>
