@@ -5,6 +5,7 @@ import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
 import com.springboot.shootformoney.member.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -21,13 +22,8 @@ public class PostRepository {
 
 
     //게시판 저장
-    public void save(Post post, Long bNo){
+    public void save(Post post){
         if (post.getPNo() == null) {
-            Board board = boardRepository.findBybNo(bNo);
-            if (board == null) {
-                throw new IllegalArgumentException("해당 번호의 게시판이 존재하지 않습니다: " + bNo);
-            }
-            post.setBoard(board);
             em.persist(post);
         } else {
             em.merge(post);
@@ -105,6 +101,6 @@ public class PostRepository {
                 .getResultList();
     }
 
-    
+
 
 }

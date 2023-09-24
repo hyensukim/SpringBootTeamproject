@@ -2,6 +2,7 @@ package com.springboot.shootformoney.post;
 
 
 import com.springboot.shootformoney.board.entity.Board;
+import com.springboot.shootformoney.comment.entity.Comment;
 import com.springboot.shootformoney.common.BaseEntity;
 import com.springboot.shootformoney.member.entity.Member;
 import jakarta.persistence.*;
@@ -9,11 +10,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-
 public class Post extends BaseEntity {
 
     @Id
@@ -29,7 +30,6 @@ public class Post extends BaseEntity {
 
     private Long view = 0L; // 조회수
 
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bNo")
     private Board board;
@@ -38,12 +38,15 @@ public class Post extends BaseEntity {
     @JoinColumn(name = "mNo")
     private Member member;
 
-
     @Builder
     public Post(String title, String content) {
         this.pTitle = title;
         this.pContent= content;
     }
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("createdAt desc")//댓글 관련(정렬)
+    private List<Comment> comments;
 
     public Post() {
 
@@ -66,7 +69,6 @@ public class Post extends BaseEntity {
         }
     }
 
-
     public Long getBNo() {
         return this.board == null ? null : this.board.getBNo();
     }
@@ -75,26 +77,4 @@ public class Post extends BaseEntity {
         return this.board == null ? null : this.board.getBName();
     }
 
-//      public void setMember(Member member) {
-//        this.member= member;
-//        if (!member.getPosts().contains(this)) {
-//            member.getPosts().add(this);
-//       }
-//      }
-//public void setMember(Member member) {
-//    this.member = member;
-//    if (!member.getPosts().contains(this)) {
-//        member.getPosts().add(this);
-//    }
-//    // 회원 정보 설정
-//    this.mId = member.getMId();
-//    this.mNickName = member.getMNickName();
-//}
-
-
-    @Column(name = "m_id")
-    private String mId; // 회원 ID
-
-    @Column(name = "m_nick_name")
-    private String mNickName; // 회원 별명
 }

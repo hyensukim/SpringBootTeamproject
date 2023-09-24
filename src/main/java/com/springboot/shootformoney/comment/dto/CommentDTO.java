@@ -1,4 +1,4 @@
-package com.springboot.shootformoney.comment;
+package com.springboot.shootformoney.comment.dto;
 
 import lombok.Getter;
 import lombok.Setter;

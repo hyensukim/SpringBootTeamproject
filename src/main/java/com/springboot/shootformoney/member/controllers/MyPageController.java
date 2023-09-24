@@ -1,13 +1,10 @@
 package com.springboot.shootformoney.member.controllers;
 
 import com.springboot.shootformoney.bet.entity.Bet;
-import com.springboot.shootformoney.bet.service.EuroService;
 import com.springboot.shootformoney.member.dto.SearchInfo;
 import com.springboot.shootformoney.member.dto.MemberInfo;
 import com.springboot.shootformoney.member.dto.SignUpForm;
-import com.springboot.shootformoney.member.entity.Euro;
 import com.springboot.shootformoney.member.entity.Member;
-import com.springboot.shootformoney.member.exceptions.MemberNotExistException;
 import com.springboot.shootformoney.member.repository.MemberRepository;
 import com.springboot.shootformoney.member.services.MemberDeleteService;
 import com.springboot.shootformoney.member.services.MemberListService;
@@ -102,6 +99,7 @@ public class MyPageController {
                     .euroValue(euroValue)
                     .mStack(memberInfo.getMStack())
                     .build();
+
             model.addAttribute("signUpForm", signUpForm);
             return "member/mypage/info";
         }
@@ -125,8 +123,8 @@ public class MyPageController {
         }
 
         memberUpdateService.update(mNo,mPassword,mPhone);
-        String script = String.format("Swal.fire({'수정 완료, 재로그인 시 수정된 정보가 반영됩니다.','success'})" +
-                ".then(function(){history.back();})");
+        String script = String.format("Swal.fire({title:'수정 성공!', text: '수정 완료 재로그인 시 수정된 정보가 반영됩니다.'" +
+                ",icon: 'success'}).then(function(){ history.back();})");
         model.addAttribute("script",script);
         return "script/sweet";
     }
@@ -202,7 +200,7 @@ public class MyPageController {
             String script = String.format("Swal.fire('%s','','error')" +
                     ".then(function(){history.back();})",e.getMessage());
         }
-        
+
         return "member/mypage/mypost";
     }
 

@@ -49,4 +49,5 @@ package com.springboot.shootformoney.member.dto;
         private String euroValue;
 
         private Long mStack;
+
     }

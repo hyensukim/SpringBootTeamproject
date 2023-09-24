@@ -11,7 +11,7 @@ public class SendMailUtil {
                 + "<br>"
                 + "<h3><a style='text-decoration: none; background-color: #C6BFBFFF; color: red;'"
                 + "href='"+loginUrl+"' target='_blank'>로그인 페이지로 이동</a></h3>"
-                + "<p style='text-decoration-line: underline; color:red;'>로그인 후에 비밀버호를 변경해주세요</p>";
+                + "<p style='text-decoration-line: underline; color:red;'>로그인 후에 비밀번호를 변경해주세요</p>";
     }
 
 }

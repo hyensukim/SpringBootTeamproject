@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/ckeditor/main}">
+<main layout:fragment="common">
+<div class="board_wrap">
+    <!-- 게시판 선택 폼 -->
+    <form th:action="@{/post/create}" th:object="${postDto}" method="post" id="postForm">
+        <div class="form-group">
+            <select name="bNo" th:field="*{bNo}">
+                <option th:value="0" selected>게시판을 선택하세요</option>
+                <option th:each="board : ${boards}" th:value="${board.bNo}" th:text="${board.bName}"></option>
+            </select>
+        </div>
+
+        <!-- 제목 입력란 -->
+        <div class="form-group">
+            <label for="pTitle" th:text="제목"></label>
+            <input type="text" id= "pTitle" name="pTitle" placeholder="제목을 입력하세요."/>
+        </div>
+
+        <!-- 본문 입력란 -->
+        <div class="form-group">
+            <label for="editor" th:text="내용"></label>
+            <textarea id= "editor" name="pContent" placeholder="내용을 입력하세요."></textarea>
+        </div>
+        <!-- 등록 버튼 -->
+        <button type="submit" value="등록"> 등록</button>
+
+        <!-- 취소 버튼, 컨트롤러의 "/posts/all" 경로에 맞춰 href 속성 수정 -->
+        <a href="/post/all" th:href="@{/post/all}">취소</a>
+    </form>
+
+    <!-- ckEditor 에러 처리 메서드, 폼 제출 이벤트 리스너 삭제 -->
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <script>
+        // 폼 제출 시 실행되는 함수
+        function updateTextArea() {
+            const editorData = document.querySelector('#editor').getData();
+            document.querySelector('#pContent').value = editorData;
+        }
+
+        // 폼 제출 버튼 클릭 시 updateTextArea 함수 호출
+        const submitButton = document.querySelector('input[type="submit"]');
+        submitButton.addEventListener('click', updateTextArea);
+    </script>
+</div>
+</main>
+</html>

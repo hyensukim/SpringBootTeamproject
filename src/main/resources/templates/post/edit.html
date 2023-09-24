@@ -1,8 +1,11 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<main layout:fragment="common">
 <head>
     <meta charset="utf-8">
-    <link th:href="@{../static/css/css.css}" href="../static/css/css.css" rel="stylesheet">
+    <link th:href="@{../../static/css/css.css}" href="../../static/css/css.css" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
     <title>글 수정</title>
     <!-- CKEditor 크기 조절을 위한 CSS -->
@@ -17,39 +20,39 @@
 <div class="board_wrap">
     <div class="board_title">
         <!-- 여기에 게시글 수정 제목을 출력하도록 수정 -->
-        <h2 th:text="'글 수정 - ' + ${post.pTitle}">글 수정</h2>
+        <h2>글 수정</h2>
     </div>
 
     <!-- 게시글 수정 폼 -->
-    <form action="/posts/{pNo}/edit" th:action="@{/posts/{pNo}/edit(pNo=${post.pNo})}" method="post">
+    <form action="/post/{pNo}/edit" method="POST">
         <!-- POST 요청을 사용하므로 _method 필드는 제거 -->
-        <!-- <input type="hidden" name="_method" value="post"/> -->
+        <input type="hidden" name="_method" value="put"/>
 
         <div>
-            <label for="pTitle" th:text="#{}">제목 : </label>
+            <label for="pTitle">제목 : </label>
             <!-- 제목 입력 필드의 값은 post.pTitle로 설정 -->
-            <input type="text" id="pTitle" name="pTitle" class="form-control" th:value="${post.pTitle}" required>
+            <input type="text" id="pTitle" name="pTitle" class="form-control" th:value="${post.pTitle}" required />
         </div>
 
         <div>
-            <label for="pContent" th:text="#{}">내용 : </label>
+            <label for="pContent">내용 : </label>
             <!-- CKEditor 추가 -->
-            <textarea id="editor" name="pContent" required></textarea>
+            <textarea id="editor" name="pContent" required th:text="${post.pContent}"></textarea>
         </div>
 
         <div class="bt_wrap">
-            <button type="submit">수정 완료</button>
+            <button type="submit" th:text>수정 완료</button>
             <!-- 게시글 상세 페이지로 이동하는 링크 수정 -->
-            <a href="/posts/{pNo}" th:href="@{/posts/{pNo}(pNo=${post.pNo})}" th:text="#{}">취소</a>
+            <a href="/post/detail/{pNo}" th:href="@{/post/detail/{pNo}(pNo=${post.pNo})}">취소</a>
         </div>
     </form>
 
     <!-- CKEditor 에러 처리 메서드, 폼 제출 이벤트 리스너 삭제 -->
-    <script>
+    <script th:inline="javascript">
         ClassicEditor
             .create(document.querySelector('#editor'))
             .then(editor => {
-                editor.setData(`${post.pContent}`);
+                editor.setData([[${post.pContent}]]);
             })
             .catch(error => {
                 console.error(error);

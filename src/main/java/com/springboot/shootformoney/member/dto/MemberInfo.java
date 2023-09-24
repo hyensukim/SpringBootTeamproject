@@ -30,7 +30,6 @@ public class MemberInfo implements UserDetails {
     private LoginData loginData;
     private Euro euro;
     private Long mStack;
-    private List<Post> postList;
     private Role role;
 //    private
 
