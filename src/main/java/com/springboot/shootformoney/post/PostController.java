@@ -2,6 +2,9 @@ package com.springboot.shootformoney.post;
 
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
+import com.springboot.shootformoney.comment.dto.CommentRequestDto;
+import com.springboot.shootformoney.comment.entity.Comment;
+import com.springboot.shootformoney.comment.service.CommentService;
 import com.springboot.shootformoney.member.dto.SearchInfo;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.MemberRepository;
@@ -24,8 +27,8 @@ public class PostController {
 
     private final MemberUtil memberUtil;
     private final PostService postService;
-    private final MemberRepository memberRepository;
     private  final BoardRepository boardRepository;
+    private  final CommentService commentService;
 
     // 페이징 + 검색 전체 목록 조회
     @GetMapping("/all")
@@ -104,6 +107,8 @@ public class PostController {
     public String getOnePost(@PathVariable Long pNo, Model model) {
         try {
             Post post = postService.findPostWithView(pNo);
+            List<Comment> commentList = commentService.findAllWithPage(pNo);
+            CommentRequestDto commentRequestDto = new CommentRequestDto();
 
             // 작성한 회원인 경우에만 수정/삭제 가능
             if(memberUtil.isLogin()) {
@@ -113,6 +118,9 @@ public class PostController {
                     model.addAttribute("writer",writer);
                 }
             }
+            /* 댓글 관련 객체 추가*/
+            model.addAttribute("commentDto",commentRequestDto);
+            model.addAttribute("commentList", commentList);
             model.addAttribute("post", post);
             return "post/detail";
         }catch(Exception e){
@@ -121,6 +129,16 @@ public class PostController {
             model.addAttribute("script", script);
             return "script/sweet";
         }
+    }
+
+    @PostMapping("/detail/{pNo}")
+    public String saveComment(@PathVariable Long pNo, @Valid CommentRequestDto commentRequestDto,
+                              Errors errors, Model model){
+        if(errors.hasErrors()){
+            return "post/detail";
+        }
+        commentService.commentSave(commentRequestDto,pNo);
+        return "redirect:/post/detail/"+pNo;
     }
 
     //삭제

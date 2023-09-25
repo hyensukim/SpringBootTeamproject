@@ -39,6 +39,7 @@ public class PostService {
         String title = postDto.getPTitle();
         String content = postDto.getPContent();
 
+        // 유효성 검사
         if(memberUtil.isLogin()){
             if (board == null) {
                 throw new IllegalArgumentException("해당 번호의 게시판이 존재하지 않습니다. 게시판을 선택해주세요 : " + postDto.getBNo());

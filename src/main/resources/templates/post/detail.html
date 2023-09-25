@@ -35,6 +35,7 @@
         </th:block>
       </dl>
     </div>
+<!--    버튼-->
     <div class="btns">
       <th:block th:if="${writer != null}">
         <form th:action="@{'/post/' + ${post.pNo}}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
@@ -46,5 +47,38 @@
       <a href="javascript:history.back()"> 뒤로가기</a>
       <a href="javascript:location.href='/post/all'">게시글 목록</a>
     </div>
+
+    <!--    댓글 목록-->
+    <th:block th:if="${commentList != null}">
+      <ul th:each="comment,status : ${commentList}" th:object="${comment}">
+        <li>
+          <div>
+            <div th:text="*{member.mNickName}"></div>
+            <div th:text="*{cContent}"></div>
+          </div>
+          <div>
+            <form th:action="@{/comment/{cNo}/delete(cNo=${comment.cNo})}" method="post"
+                  onsubmit="return confirm('댓글 삭제를 진행하시겠습니까?')">
+              <input type="hidden" name="_method" value="delete"/>
+              <button type="submit">[X]</button>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </th:block>
+
+    <!--  댓글 작성-->
+    <form method="post" th:action="@{/post/detail/{pNo}(pNo=${pNo})}" autocomplete="off">
+      <div>
+        <label for="comment-nickname">작성자 : </label>
+        <input id="comment-nickname" type="text" name="nickname" th:value="${session.memberInfo.mNickName}" readonly/>
+      </div>
+      <div>
+        <label for="comment-content">내용 : </label>
+        <textarea id="comment-content" name="cContent" th:value="${commentDto.cContent}"
+                  placeholder="400자 미만으로 작성해주세요."></textarea>
+      </div>
+      <button type="submit">댓글 작성</button>
+    </form>
   </main>
 </html>
