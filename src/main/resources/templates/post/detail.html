@@ -35,13 +35,16 @@
         </th:block>
       </dl>
     </div>
-    <div>
-      <form th:action="@{'/post/' + ${post.pNo}}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
-        <a href="javascript:history.back()"> 뒤로가기</a>
-        <input type="hidden" name="_method" value="delete"/>
-        <button type="submit">게시글 삭제</button>
-      </form>
-      <a th:href="@{/post/{pNo}/edit(pNo=${post.pNo})}">게시글 수정</a>
+    <div class="btns">
+      <th:block th:if="${writer != null}">
+        <form th:action="@{'/post/' + ${post.pNo}}" method="post" onsubmit="return confirm('게시글 삭제를 진행하면 모든 내용과 댓글이 영구적으로 사라집니다. 계속 진행하시겠습니까??')">
+          <input type="hidden" name="_method" value="delete"/>
+          <button type="submit">게시글 삭제</button>
+        </form>
+        <a th:href="@{/post/{pNo}/edit(pNo=${post.pNo})}">게시글 수정</a>
+      </th:block>
+      <a href="javascript:history.back()"> 뒤로가기</a>
+      <a href="javascript:location.href='/post/all'">게시글 목록</a>
     </div>
   </main>
 </html>

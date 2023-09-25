@@ -6,8 +6,10 @@
 <main layout:fragment="common">
 
     <h2>커뮤니티</h2>
-
     <ul class="board-list">
+        <li class="list-text">
+            <a th:href="@{/post/all}">전체 게시판</a>
+        </li>
         <li class="list-text">
             <a th:href="@{/post/all/1}">자유 게시판</a>
         </li>
@@ -22,20 +24,24 @@
         </li>
     </ul>
 
-    <form th:action="@{/post/all}" method="get">
-        <select name="sopt">
-            <option value="all">전체</option>
-            <option value="bld">게시판 아이디</option>
-            <option value="bName">게시판명</option>
+    <form th:action="@{/post/all/search}" method="get">
+        <!--    <form th:action="@{search}" method="get">-->
+        <!-- Search Category -->
+        <select name="sOpt">
+            <option value="pTitle">제목</option>
+            <option value="pContent">내용</option>
+            <!-- Add more options as needed -->
         </select>
-        <input type="text" name="skey" placeholder="검색어를 입력하세요">
+        <!-- Search Query -->
+        <input type="text" name="sKey" placeholder="검색">
+        <!-- Submit Button -->
         <button type="submit">검색</button>
     </form>
 
     <table class="table text-center">
         <thead>
             <tr>
-                <th>게시글 번호</th>
+                <th>No</th>
                 <th>회원 ID</th>
                 <th>별명</th>
                 <th>게시판</th>
@@ -46,8 +52,8 @@
         </thead>
         <tbody>
             <!-- 게시판 내용 반복 -->
-            <tr th:each="post : ${postList}">
-                <td th:text="${post.pNo}"></td>
+            <tr th:each="post,status : ${postList}">
+                <td th:text="${status.index+1}"></td>
                 <td th:text="${post.member.mId}"></td> <!-- 회원 ID 표시 -->
                 <td th:text="${post.member.mNickName}"></td> <!-- 회원 별명 표시 -->
                 <td th:text="${post.board.bName}"></td>
@@ -58,19 +64,19 @@
         </tbody>
     </table>
     <!--페이징 처리-->
-<!--    <th:block th:if="${postList != null}">-->
-<!--        <ul class="pagination">-->
-<!--            <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}" >-->
-<!--                <li th:if="${item > 0}" class='page' th:classappend="on">-->
-<!--                    <a th:if="${item != nowPage && item > 0}"-->
-<!--                       th:href="@{/post/all?page={page}(page=${item})}"-->
-<!--                       th:text="${item}">-->
-<!--                    </a>-->
-<!--                    <strong th:if="${item == nowPage}" th:text="${item}"></strong>-->
-<!--                </li>-->
-<!--            </th:block>-->
-<!--        </ul>-->
-<!--    </th:block>-->
+    <th:block th:if="${postList != null}">
+        <ul class="pagination">
+            <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}" >
+                <li th:if="${item > 0}" class='page' th:classappend="on">
+                    <a th:if="${item != nowPage && item > 0}"
+                       th:href="@{/post/all?page={page}(page=${item})}"
+                       th:text="${item}">
+                    </a>
+                    <strong th:if="${item == nowPage}" th:text="${item}"></strong>
+                </li>
+            </th:block>
+        </ul>
+    </th:block>
 
     <!--게시글 작성-->
 <!--   bNo 0 : 전체, 1 : 자유, 2 : 이피엘, 3 : 라리가, 4:분데스 -->
