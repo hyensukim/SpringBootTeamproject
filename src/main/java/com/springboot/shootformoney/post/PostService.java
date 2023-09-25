@@ -4,7 +4,6 @@ package com.springboot.shootformoney.post;
 import com.querydsl.core.BooleanBuilder;
 import com.springboot.shootformoney.board.entity.Board;
 import com.springboot.shootformoney.board.repository.BoardRepository;
-import com.springboot.shootformoney.member.dto.SearchInfo;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.utils.MemberUtil;
 import com.springboot.shootformoney.post.repository.PostRepositoryInterface;
@@ -31,18 +30,18 @@ public class PostService {
     private final MemberUtil memberUtil;
     private final PostRepositoryInterface postRepositoryInterface;
 
-    //저장
+    //게시글 저장(확인)
     @Transactional
     public Long savePost(PostDTO postDto){
         Board board = boardRepository.findBybNo(postDto.getBNo());
-        Member member = null;
         String title = postDto.getPTitle();
         String content = postDto.getPContent();
+        Member member = null;
 
         // 유효성 검사
         if(memberUtil.isLogin()){
             if (board == null) {
-                throw new IllegalArgumentException("해당 번호의 게시판이 존재하지 않습니다. 게시판을 선택해주세요 : " + postDto.getBNo());
+                throw new IllegalArgumentException("게시판을 선택해주세요 : " + postDto.getBNo());
             }
             if(title == null || title.isBlank()){
                 throw new IllegalArgumentException("제목을 입력해주세요."+ postDto.getBNo());
@@ -67,7 +66,7 @@ public class PostService {
         return post.getPNo();
     }
 
-    //삭제
+    //게시글 삭제(확인)
     @Transactional
     public void deletePost(Long pNo) {
         Post post = postRepository.findOne(pNo);
@@ -78,7 +77,7 @@ public class PostService {
         }
     }
 
-    //수정
+    //게시글 수정(확인)
     @Transactional
     public void updatePost(Long pNo, PostDTO updatedPost) {
         Post post = postRepository.findOne(pNo);
@@ -90,7 +89,6 @@ public class PostService {
         if(pTitle == null || pTitle.isBlank()){
             throw new IllegalArgumentException("제목을 입력 해주세요.");
         }
-
         if(pContent == null || pContent.isBlank()){
             throw new IllegalArgumentException("내용을 입력 해주세요.");
         }
@@ -99,13 +97,24 @@ public class PostService {
         post.update(pTitle, pContent);
     }
 
+    // 게시판 목록 조회()
     public Page<Post> findByBoardWithPage(PostSearchInfo postSearchInfo, Long bNo){
         QPost post = QPost.post;
         BooleanBuilder andBuilder = new BooleanBuilder();
         andBuilder.and(post.board.bNo.eq(bNo));
 
         int page = postSearchInfo.getPage();
-        int pageSize = postSearchInfo.getPageSize();
+//            int pageSize = postSearchInfo.getPageSize();
+
+        // 게시판 존재 여부 확인
+        if(!boardRepository.existsBybNo(bNo)){
+            throw new IllegalArgumentException("Invaild bNo: " + bNo);
+        }
+        // 게시판 정보 불러오기
+        Board board = boardRepository.findBybNo(bNo);
+    //        int page = board.getBUnitNo();  // 페이지 개수
+        int pageSize = board.getBPageNo(); // 리스트 개수
+
         page = Math.max(page, 1);
         pageSize = pageSize < 1 ? 15 : pageSize;
 
@@ -115,40 +124,34 @@ public class PostService {
     }
 
 
+    // 게시판 전체 목록 조회(확인)
     public Page<Post> gets(PostSearchInfo postSearchInfo) {
         QPost post = QPost.post;
-
         BooleanBuilder andBuilder = new BooleanBuilder();
 
         int page = postSearchInfo.getPage();
         int pageSize = postSearchInfo.getPageSize();
-        page = page < 1 ? 1 : page;
-        pageSize = pageSize < 1 ? 20 : pageSize;
+
+        page = Math.max(page, 1);
+        pageSize = pageSize < 1 ? 15 : pageSize;
 
         /** 검색 조건 처리 S */
-        String sopt = postSearchInfo.getSOpt();
-        String skey = postSearchInfo.getSKey();
-        if (sopt != null && !sopt.isBlank() && skey != null && !skey.isBlank()) {
-            skey = skey.trim();
-            sopt = sopt.trim();
+        String sOpt = postSearchInfo.getSOpt();
+        String sKey = postSearchInfo.getSKey();
+        if (sOpt != null && !sOpt.isBlank() && sKey != null && !sKey.isBlank()) {
+            sOpt = sOpt.trim();
+            sKey = sKey.trim();
 
-            if (sopt.equals("all")) { // 통합 검색 - bId, bName
-                BooleanBuilder orBuilder = new BooleanBuilder();
-                orBuilder.or(post.pTitle.contains(skey))
-                        .or(post.pContent.contains(skey));
-                andBuilder.and(orBuilder);
-
-            } else if (sopt.equals("pTitle")) { // 게시판 제목
-                andBuilder.and(post.pTitle.contains(skey));
-            } else if (sopt.equals("pContent")) { // 게시판 내용
-                andBuilder.and(post.pContent.contains(skey));
+            if (sOpt.equals("pTitle")) { // 게시판 제목
+                andBuilder.and(post.pTitle.contains(sKey));
+            } else if (sOpt.equals("pContent")) { // 게시판 내용
+                andBuilder.and(post.pContent.contains(sKey));
             }
         }
         /** 검색 조건 처리 E */
 
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by(desc("createdAt")));
         Page<Post> data = postRepositoryInterface.findAll(andBuilder, pageable);
-
         return data;
     }
 
@@ -173,55 +176,4 @@ public class PostService {
             throw new IllegalArgumentException("**해당 아이디의 게시물이 존재하지 않습니다.");
         }
     }
-
-    //단일 조회(postResponseDto 사용 -> 순환 조회 방지)
-    @Transactional
-    public PostResponseDto findById(Long pNo){
-        Post post = postRepositoryInterface.findById(pNo).orElseThrow(()->
-                new IllegalArgumentException("게시글 조회 오류 : 게시글이 존재하지 않습니다."));
-        PostResponseDto postResponseDto = new PostResponseDto(post);
-        return postResponseDto;
-    }
-
-
-        // 제목으로 찾기
-    public List<Post> findPostsByTitle(String pTitle) {
-        return postRepository.findByTitle(pTitle);
-    }
-
-
-    public List<Post> findPostsByMemberNickName(String mNickName) {
-        return postRepository.findByMember_MNickName(mNickName);
-    }
-
-
-    public List<Post> findPostsByBoardBNo(Long bNo) {
-        return postRepository.findByBoardBNo(bNo);
-    }
-
-    /**
-     * 페이지 처리 목록
-     */
-    public Page<Post> getAllWithPage(PostSearchInfo postSearchInfo) {
-        
-        int page = postSearchInfo.getPage(); // 현재 페이지
-        int pageSize = postSearchInfo.getPageSize(); // 페이지 크기
-        page = Math.max(page, 1);
-        pageSize = pageSize < 1 ? 10 : pageSize;
-
-        Pageable pageable = PageRequest.of(page - 1, pageSize, by(desc("createdAt")));
-        Page<Post> postList = postRepositoryInterface.findAll(pageable);
-        return postList;
-    }
-
-//    public Page<Post> findByBoardBNoWithPage(Long bNo, PostSearchInfo postSearchInfo) {
-//        int page = postSearchInfo.getPage(); // 현재 페이지
-//        int pageSize = postSearchInfo.getPageSize(); // 페이지 크기
-//        page = Math.max(page, 1);
-//        pageSize = pageSize < 1 ? 10 : pageSize;
-//
-//        Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by(Sort.Direction.DESC,"createdAt"));
-//        return postRepositoryInterface.findByBoardBNo(bNo, pageable);
-//    }
-
 }

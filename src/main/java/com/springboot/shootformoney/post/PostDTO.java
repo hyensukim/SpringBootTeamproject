@@ -23,8 +23,6 @@ public class PostDTO {
     private String pTitle;
     private String pContent;
 
-
-
     public static PostDTO of(Post post) {
         PostDTO dto = new PostDTO();
         dto.setPNo(post.getPNo());

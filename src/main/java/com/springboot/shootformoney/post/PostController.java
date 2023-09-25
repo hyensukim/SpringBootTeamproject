@@ -5,17 +5,12 @@ import com.springboot.shootformoney.board.repository.BoardRepository;
 import com.springboot.shootformoney.comment.dto.CommentRequestDto;
 import com.springboot.shootformoney.comment.entity.Comment;
 import com.springboot.shootformoney.comment.service.CommentService;
-import com.springboot.shootformoney.member.dto.SearchInfo;
-import com.springboot.shootformoney.member.entity.Member;
-import com.springboot.shootformoney.member.repository.MemberRepository;
 import com.springboot.shootformoney.member.utils.MemberUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,24 +25,22 @@ public class PostController {
     private  final BoardRepository boardRepository;
     private  final CommentService commentService;
 
-    // 페이징 + 검색 전체 목록 조회
+    //페이징 + 검색 전체 목록 조회
     @GetMapping("/all")
     public String getAllPostsByTitle(@ModelAttribute PostSearchInfo postSearchInfo, Model model) {
         //검색 옵션과 검색어를 이용하여 게시글 검색
         Page<Post> pageList = postService.gets(postSearchInfo);
         List<Post> postList = pageList.getContent();
 
-
         int nowPage = pageList.getPageable().getPageNumber() + 1; // 현재 페이지
         int startPage = (nowPage-1) / 10 * 10 + 1; // 첫페이지
         int endPage = Math.min(startPage + 10 - 1, pageList.getTotalPages()); // 마지막 페이지
 
+        model.addAttribute("postList", postList);
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         //검색 결과를 모델에 추가
-        model.addAttribute("postList", postList);
-
         return "post/posts";
     }
 
@@ -90,16 +83,21 @@ public class PostController {
         Page<Post> pageList = postService.findByBoardWithPage(postSearchInfo,bNo);
         List<Post> postList = pageList.getContent();
 
-        int nowPage = pageList.getPageable().getPageNumber() + 1; // 현재 페이지
-        int startPage = (nowPage-1) / 10 * 10 + 1; // 첫페이지
-        int endPage = Math.min(startPage + 10 - 1, pageList.getTotalPages()); // 마지막 페이지
+        // 하단 페이지 (관리자 페이징 처리)
+        Board board = boardRepository.findBybNo(bNo);
+        int page = board.getBUnitNo();
 
+        int nowPage = pageList.getPageable().getPageNumber() + 1; // 현재 페이지
+        int startPage = (nowPage-1) / page * page + 1; // 첫페이지
+        int endPage = Math.min(startPage + page - 1, pageList.getTotalPages()); // 마지막 페이지
+
+        model.addAttribute("bNo", bNo);
         model.addAttribute("postList", postList);
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
-        return "post/posts";
+        return "post/filterposts";
     }
 
     // 단일 게시글 조회
@@ -107,7 +105,7 @@ public class PostController {
     public String getOnePost(@PathVariable Long pNo, Model model) {
         try {
             Post post = postService.findPostWithView(pNo);
-            List<Comment> commentList = commentService.findAllWithPage(pNo);
+            List<Comment> commentList = commentService.getList(pNo);
             CommentRequestDto commentRequestDto = new CommentRequestDto();
 
             // 작성한 회원인 경우에만 수정/삭제 가능
@@ -132,11 +130,7 @@ public class PostController {
     }
 
     @PostMapping("/detail/{pNo}")
-    public String saveComment(@PathVariable Long pNo, @Valid CommentRequestDto commentRequestDto,
-                              Errors errors, Model model){
-        if(errors.hasErrors()){
-            return "post/detail";
-        }
+    public String saveComment(@PathVariable Long pNo, @Valid CommentRequestDto commentRequestDto, Model model){
         commentService.commentSave(commentRequestDto,pNo);
         return "redirect:/post/detail/"+pNo;
     }

@@ -20,8 +20,6 @@ import java.time.LocalDateTime;
 public class CommentRequestDto {
 
     private Long cNo;
-    @NotBlank(message="댓글을 작성해주세요.")
-    @Size(max = 400, message = "400자 미만으로 작성해주세요.")
     private String cContent;
     private Member member;
     private Post post;

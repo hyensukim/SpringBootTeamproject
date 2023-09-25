@@ -26,6 +26,7 @@
 
     <!-- 검색 기능 -->
     <form th:action="@{/post/all}" method="get">
+        <!--    <form th:action="@{search}" method="get">-->
         <!-- Search Category -->
         <select name="sOpt">
             <option value="pTitle">제목</option>
@@ -67,10 +68,10 @@
     <!--페이징 처리-->
     <th:block th:if="${postList != null}">
         <ul class="pagination">
-            <th:block class="postListPg" th:each="item : ${#numbers.sequence(startPage,endPage)}" >
+            <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}" >
                 <li th:if="${item > 0}" class='page' th:classappend="on">
                     <a th:if="${item != nowPage && item > 0}"
-                       th:href="@{/post/all?page={page}(page=${item})}"
+                       th:href="@{'/post/all/' + ${bNo} + '?page=' + ${item}}"
                        th:text="${item}">
                     </a>
                     <strong th:if="${item == nowPage}" th:text="${item}"></strong>

@@ -5,8 +5,6 @@ import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.post.Post;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 @Entity

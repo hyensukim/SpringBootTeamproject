@@ -2,7 +2,7 @@ package com.springboot.shootformoney.post;
 
 
 import com.springboot.shootformoney.board.entity.Board;
-import com.springboot.shootformoney.comment.entity.Comment;
+//import com.springboot.shootformoney.comment.entity.Comment;
 import com.springboot.shootformoney.common.BaseEntity;
 import com.springboot.shootformoney.member.entity.Member;
 import jakarta.persistence.*;
@@ -44,9 +44,9 @@ public class Post extends BaseEntity {
         this.pContent= content;
     }
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @OrderBy("createdAt desc")//댓글 관련(정렬)
-    private List<Comment> comments;
+//    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+//    @OrderBy("createdAt desc")//댓글 관련(정렬)
+//    private List<Comment> comments;
 
     public Post() {
 

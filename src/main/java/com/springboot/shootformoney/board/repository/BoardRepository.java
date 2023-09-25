@@ -23,5 +23,8 @@ public interface BoardRepository extends JpaRepository<Board, String> {
     // 게시판 이름으로 검색
     Optional<Board> findBybName(String bName);
 
+    // 게시판 bNo로 중복 여부 판단
+    boolean existsBybNo(Long bNo);
+
 }
 

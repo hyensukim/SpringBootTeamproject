@@ -2,7 +2,6 @@ package com.springboot.shootformoney.comment.service;
 
 import com.querydsl.core.BooleanBuilder;
 import com.springboot.shootformoney.comment.dto.CommentRequestDto;
-import com.springboot.shootformoney.comment.dto.CommentSearchInfo;
 import com.springboot.shootformoney.comment.entity.Comment;
 import com.springboot.shootformoney.comment.entity.QComment;
 import com.springboot.shootformoney.comment.repository.CommentRepository;
@@ -46,9 +45,9 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
-    // 댓글 전체 조회 - 페이징 처리
+    // 댓글 전체 조회
     @Transactional(readOnly = true)
-    public List<Comment> findAllWithPage (Long pNo) {
+    public List<Comment> getList (Long pNo) {
         QComment comment = QComment.comment;
         BooleanBuilder andBuilder = new BooleanBuilder();
         andBuilder.and(comment.post.pNo.eq(pNo));
@@ -57,7 +56,7 @@ public class CommentService {
             commentList.add(value);
         }
         return commentList;
-    } 
+    }
 
     // 삭제
     @Transactional
