@@ -29,14 +29,14 @@ import static org.springframework.data.domain.Sort.by;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final PostRepositoryInterface postRepository;
+    private final PostRepositoryInterface postRepositoryInterface;
     private final MemberUtil memberUtil;
 
     // 생성
     @Transactional
     public void commentSave(CommentRequestDto dto, Long pNo){
 
-        Optional<Post> op = postRepository.findById(pNo);
+        Optional<Post> op = postRepositoryInterface.findById(pNo);
         Post post = null;
         if(op.isPresent()){post = op.get();}
         dto.setMember(memberUtil.getEntity());

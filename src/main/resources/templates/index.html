@@ -129,7 +129,9 @@
                 <tr th:each="r,status : ${rank}" th:object="${r}">
                     <td class="list_text" th:if="${r != null}" th:text="${status.index+1}"></td>
                     <td class="list_text" th:if="${r != null}" th:text="*{mLevel}"></td>
-                    <td class="list_text" th:if="${r != null}" th:text="*{mNickName}"></td>
+                    <td class="list_text" th:if="${r != null}" >
+                        <th:block th:replace="~{outlines/mypage/_levelblock::common}"></th:block>
+                    </td>
                 </tr>
             </tbody>
         </table>

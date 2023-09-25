@@ -29,6 +29,7 @@ public class PostService {
     private final BoardRepository boardRepository;
     private final MemberUtil memberUtil;
     private final PostRepositoryInterface postRepositoryInterface;
+    private final PagingRepository pagingRepository;
 
     //게시글 저장(확인)
     @Transactional
@@ -119,7 +120,7 @@ public class PostService {
         pageSize = pageSize < 1 ? 15 : pageSize;
 
         Pageable pageable = PageRequest.of(page-1,pageSize,Sort.by(desc("createdAt")));
-        Page<Post> boardPostList = postRepositoryInterface.findAll(andBuilder,pageable);
+        Page<Post> boardPostList = pagingRepository.findAll(andBuilder,pageable);
         return boardPostList;
     }
 
@@ -128,16 +129,19 @@ public class PostService {
     public Page<Post> gets(PostSearchInfo postSearchInfo) {
         QPost post = QPost.post;
         BooleanBuilder andBuilder = new BooleanBuilder();
-
-        int page = postSearchInfo.getPage();
-        int pageSize = postSearchInfo.getPageSize();
+        int page = 0, pageSize = 0;
+        String sOpt="", sKey="";
+        if(postSearchInfo != null) {
+            page = postSearchInfo.getPage();
+            pageSize = postSearchInfo.getPageSize();
+            sOpt = postSearchInfo.getSOpt();
+            sKey = postSearchInfo.getSKey();
+        }
 
         page = Math.max(page, 1);
         pageSize = pageSize < 1 ? 15 : pageSize;
 
         /** 검색 조건 처리 S */
-        String sOpt = postSearchInfo.getSOpt();
-        String sKey = postSearchInfo.getSKey();
         if (sOpt != null && !sOpt.isBlank() && sKey != null && !sKey.isBlank()) {
             sOpt = sOpt.trim();
             sKey = sKey.trim();

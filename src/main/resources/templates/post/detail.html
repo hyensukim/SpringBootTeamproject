@@ -15,7 +15,9 @@
       </dl>
       <dl>
         <dt>별명 </dt>
-        <dd th:text="*{member.mNickName}"></dd>
+        <dd th:if="${post!=null}">
+          <th:block th:replace="~{outlines/mypage/_levelblock::common}"></th:block>
+        </dd>
       </dl>
       <dl>
         <dt>조회수 </dt>
@@ -44,7 +46,6 @@
         </form>
         <a th:href="@{/post/{pNo}/edit(pNo=${post.pNo})}">게시글 수정</a>
       </th:block>
-      <a href="javascript:history.back()"> 뒤로가기</a>
       <a href="javascript:location.href='/post/all'">게시글 목록</a>
     </div>
 

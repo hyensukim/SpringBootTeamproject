@@ -2,8 +2,9 @@ package com.springboot.shootformoney.post;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
-@Getter
+@Data
 public class PostSearchInfo {
     
     private Integer page = 1;

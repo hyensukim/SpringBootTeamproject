@@ -25,7 +25,7 @@
     </ul>
 
     <!-- 검색 기능 -->
-    <form th:action="@{/post/all}" method="get">
+    <form style="display: inline-flex;" th:action="@{/post/all}" method="get">
         <!-- Search Category -->
         <select name="sOpt">
             <option value="pTitle">제목</option>
@@ -55,7 +55,9 @@
         <tr th:each="post,status : ${postList}">
             <td th:text="${status.index+1}"></td>
             <td th:text="${post.member.mId}"></td> <!-- 회원 ID 표시 -->
-            <td th:text="${post.member.mNickName}"></td> <!-- 회원 별명 표시 -->
+            <td th:if="${post != null}">
+                <th:block th:replace="~{outlines/mypage/_levelblock::common}"></th:block>
+            </td> <!-- 회원 별명 표시 -->
             <td th:text="${post.board.bName}"></td>
             <td><a th:href="@{/post/detail/{pNo}(pNo=${post.pNo})}" th:text="${post.pTitle}"></a></td>
             <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
@@ -67,8 +69,8 @@
     <!--페이징 처리-->
     <th:block th:if="${postList != null}">
         <ul class="pagination">
-            <th:block class="postListPg" th:each="item : ${#numbers.sequence(startPage,endPage)}" >
-                <li th:if="${item > 0}" class='page' th:classappend="on">
+            <th:block class="myPostPg" th:each="item : ${#numbers.sequence(startPage, endPage)}" >
+                <li class='page' th:classappend="on">
                     <a th:if="${item != nowPage && item > 0}"
                        th:href="@{/post/all?page={page}(page=${item})}"
                        th:text="${item}">
