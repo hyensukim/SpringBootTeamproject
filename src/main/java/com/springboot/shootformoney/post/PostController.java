@@ -27,20 +27,24 @@ public class PostController {
     private final MemberRepository memberRepository;
     private  final BoardRepository boardRepository;
 
-    // 페이징 처리한 전체 목록 조회
-    @GetMapping("/all") 
-    public String getAllPosts(@ModelAttribute PostSearchInfo postSearchInfo,Model model) {
-        Page<Post> pageList = postService.getAllWithPage(postSearchInfo);
+    // 페이징 + 검색 전체 목록 조회
+    @GetMapping("/all")
+    public String getAllPostsByTitle(@ModelAttribute PostSearchInfo postSearchInfo, Model model) {
+        //검색 옵션과 검색어를 이용하여 게시글 검색
+        Page<Post> pageList = postService.gets(postSearchInfo);
         List<Post> postList = pageList.getContent();
+
 
         int nowPage = pageList.getPageable().getPageNumber() + 1; // 현재 페이지
         int startPage = (nowPage-1) / 10 * 10 + 1; // 첫페이지
-        int endPage = Math.min(startPage + 10 - 1, pageList.getTotalPages());
+        int endPage = Math.min(startPage + 10 - 1, pageList.getTotalPages()); // 마지막 페이지
 
-        model.addAttribute("startPage",startPage);
-        model.addAttribute("endPage",endPage);
-        model.addAttribute("nowPage",nowPage);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        //검색 결과를 모델에 추가
         model.addAttribute("postList", postList);
+
         return "post/posts";
     }
 
@@ -152,33 +156,4 @@ public class PostController {
             return "script/sweet";
         }
     }
-
-    //제목으로 찾기
-    @GetMapping("/tTitle/{pTitle}")
-    public ResponseEntity<List<Post>> getPostsByTitle(@PathVariable String pTitle) {
-        List<Post> posts = postService.findPostsByTitle(pTitle);
-        return ResponseEntity.ok(posts);
-    }
-
-    @GetMapping("/member/nickname/{mNickName}")
-    public ResponseEntity<List<Post>> getPostsByMemberNickname(@PathVariable String mNickName) {
-        List<Post> posts = postService.findPostsByMemberNickName(mNickName);
-        return ResponseEntity.ok(posts);
-    }
-
-    @PostMapping("/{pNo}/detail")
-    public String getPostDetail(@PathVariable Long pNo, Model model) {
-        Post post = postService.findPost(pNo);
-        model.addAttribute("post", post);
-        return "post/view";
-    }
-
-    // 게시글 수정
-//    @GetMapping("/{pNo}")
-//    public String editPostForm(@PathVariable Long pNo, Model model) {
-//        Post post = postService.findPost(pNo);
-//        model.addAttribute("post", post);
-//        return "edit";
-//    }
-
 }

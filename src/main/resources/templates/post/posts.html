@@ -24,6 +24,21 @@
         </li>
     </ul>
 
+    <!-- 검색 기능 -->
+    <form th:action="@{/post/all}" method="get">
+        <!--    <form th:action="@{search}" method="get">-->
+        <!-- Search Category -->
+        <select name="sOpt">
+            <option value="pTitle">제목</option>
+            <option value="pContent">내용</option>
+            <!-- Add more options as needed -->
+        </select>
+        <!-- Search Query -->
+        <input type="text" name="sKey" placeholder="검색">
+        <!-- Submit Button -->
+        <button type="submit">검색</button>
+    </form>
+
     <table class="table text-center">
         <thead>
             <tr>
@@ -49,6 +64,7 @@
             </tr>
         </tbody>
     </table>
+
     <!--페이징 처리-->
     <th:block th:if="${postList != null}">
         <ul class="pagination">
@@ -65,11 +81,8 @@
     </th:block>
 
     <!--게시글 작성-->
-<!--   bNo 0 : 전체, 1 : 자유, 2 : 이피엘, 3 : 라리가, 4:분데스 -->
     <div class="btn-create">
         <a th:href="@{/post/create}">게시글 작성</a>
     </div>
-
-
 </main>
 </html>

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.springframework.data.domain.Sort.Order.desc;
 import static org.springframework.data.domain.Sort.by;
 
 @Service
@@ -107,21 +108,47 @@ public class PostService {
         page = Math.max(page, 1);
         pageSize = pageSize < 1 ? 15 : pageSize;
 
-        Pageable pageable = PageRequest.of(page-1,pageSize,Sort.by(Sort.Order.desc("createdAt")));
+        Pageable pageable = PageRequest.of(page-1,pageSize,Sort.by(desc("createdAt")));
         Page<Post> boardPostList = postRepositoryInterface.findAll(andBuilder,pageable);
         return boardPostList;
     }
 
 
-    // 게시판별 목록 조회
-    public List<Post> findByBoardBNo(Long bNo) {
+    public Page<Post> gets(PostSearchInfo postSearchInfo) {
+        QPost post = QPost.post;
 
-        return postRepository.findByBoardBNo(bNo);
-    }
+        BooleanBuilder andBuilder = new BooleanBuilder();
 
-    //전체 조회
-    public List<Post> findAllPosts() {
-        return 	postRepository.findAll();
+        int page = postSearchInfo.getPage();
+        int pageSize = postSearchInfo.getPageSize();
+        page = page < 1 ? 1 : page;
+        pageSize = pageSize < 1 ? 20 : pageSize;
+
+        /** 검색 조건 처리 S */
+        String sopt = postSearchInfo.getSOpt();
+        String skey = postSearchInfo.getSKey();
+        if (sopt != null && !sopt.isBlank() && skey != null && !skey.isBlank()) {
+            skey = skey.trim();
+            sopt = sopt.trim();
+
+            if (sopt.equals("all")) { // 통합 검색 - bId, bName
+                BooleanBuilder orBuilder = new BooleanBuilder();
+                orBuilder.or(post.pTitle.contains(skey))
+                        .or(post.pContent.contains(skey));
+                andBuilder.and(orBuilder);
+
+            } else if (sopt.equals("pTitle")) { // 게시판 제목
+                andBuilder.and(post.pTitle.contains(skey));
+            } else if (sopt.equals("pContent")) { // 게시판 내용
+                andBuilder.and(post.pContent.contains(skey));
+            }
+        }
+        /** 검색 조건 처리 E */
+
+        Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by(desc("createdAt")));
+        Page<Post> data = postRepositoryInterface.findAll(andBuilder, pageable);
+
+        return data;
     }
 
     //단일 조회
@@ -181,7 +208,7 @@ public class PostService {
         page = Math.max(page, 1);
         pageSize = pageSize < 1 ? 10 : pageSize;
 
-        Pageable pageable = PageRequest.of(page - 1, pageSize, by(Sort.Order.desc("createdAt")));
+        Pageable pageable = PageRequest.of(page - 1, pageSize, by(desc("createdAt")));
         Page<Post> postList = postRepositoryInterface.findAll(pageable);
         return postList;
     }
