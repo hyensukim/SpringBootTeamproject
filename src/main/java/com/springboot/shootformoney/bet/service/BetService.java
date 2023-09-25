@@ -10,13 +10,11 @@ import com.springboot.shootformoney.game.repository.GameRepository;
 import com.springboot.shootformoney.member.entity.Euro;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.EuroRepository;
-import com.springboot.shootformoney.member.repository.MemberRepository;
 import com.springboot.shootformoney.member.utils.MemberUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

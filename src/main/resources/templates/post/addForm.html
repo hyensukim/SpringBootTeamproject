@@ -37,9 +37,9 @@
         ClassicEditor.create(document.querySelector('#editor'))
             .then(editor => {
                 editor.setData([[${postDto.pContent}]]);
-                let data = editor.getData();
-                data = data.replace('/<p>/g','').replace('/<\/p>/g','\n');
-                editor.setData(data);
+                // let data = editor.getData();
+                // data = data.replace('/<p>/g','').replace('/<\/p>/g','\n');
+                // editor.setData(data);
             })
             .catch(error => {
                 console.error(error);

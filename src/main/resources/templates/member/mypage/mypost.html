@@ -25,7 +25,7 @@
                             <td class="list_num" th:text="${status.index+1}"/>
                             <td class="list_text" th:text="*{board.bName}"></td>
                             <td class="list_subject">
-                                <a th:href="@{/posts/{pNo}(pNo = *{pNo})}">
+                                <a th:href="@{/post/detail/{pNo}(pNo = *{pNo})}">
                                     [[*{pTitle}]]
                                 </a>
                             </td>

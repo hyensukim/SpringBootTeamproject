@@ -1,19 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-    <meta charset="UTF-8">
-    <link th:href="@{../../static/css/styles.css}"
-          href="../static/css/styles.css" rel="stylesheet">
-
-    <title>Title</title>
-</head>
-<body>
-<!-- 네비게이션 바(헤더) -->
-<nav th:replace="~{/outlines/nav :: common}"></nav>
-
-<main>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<main layout:fragment="common">
     <header class="prediction-hd">
         <h2 class="fw-bolder mb-1">LaLiga 승부 예측</h2>
     </header>
@@ -102,19 +92,4 @@
         </div>
     </div>
 </main>
-
-<!-- 푸터 -->
-<footer th:replace="~{/outlines/footer :: common}"></footer>
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">2023 Ait - Betting Site Prj</p>
-    </div>
-</footer>
-
-
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
-</body>
 </html>
