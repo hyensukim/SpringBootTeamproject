@@ -16,6 +16,7 @@ public class LoginController {
     @GetMapping("/login")
     public String login(HttpSession httpSession,
                         @CookieValue(required = false) String saveId, Model model){
+        model.addAttribute("pageTitle","로그인");
         LoginForm loginForm = new LoginForm();
         if(saveId != null){
             loginForm.setMId(saveId);

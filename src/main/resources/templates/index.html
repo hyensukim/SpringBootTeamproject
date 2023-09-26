@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -106,7 +106,7 @@
                             </th:block>
                         </div>
                     </td>
-                    <td>
+                    <td sec:authorize="isAuthenticated()">
                         <a th:href="@{/list/__${game.getMatchId()}__}">
                             <button type="button" class="betBtn">배팅</button>
                         </a>
@@ -128,9 +128,61 @@
             <tbody>
                 <tr th:each="r,status : ${rank}" th:object="${r}">
                     <td class="list_text" th:if="${r != null}" th:text="${status.index+1}"></td>
-                    <td class="list_text" th:if="${r != null}" th:text="*{mLevel}"></td>
-                    <td class="list_text" th:if="${r != null}" >
-                        <th:block th:replace="~{outlines/mypage/_levelblock::common}"></th:block>
+                    <td class="list_text" th:if="${r != null}">
+                        <span th:text="*{mLevel}"></span>Lv
+                    </td>
+                    <td class="list_text" th:if="${r != null}">
+                        <div class="nickname-div" th:switch="*{mLevel}">
+                            <span class="hbt"
+                                  th:text="*{mNickName}"
+                                  th:case="1">
+                            </span>
+                            <span class="hbt"
+                                  th:text="*{mNickName}"
+                                  th:style="'background-color: red; color: white; font-weight:bold;' "
+                                  th:case="2">
+                            </span>
+                            <span class="hbt"
+                                  th:text="*{mNickName}"
+                                  th:style="'background-color: orange; font-weight:bold;'"
+                                  th:case="3">
+                            </span>
+                            <span class="hbt"
+                                  th:text="*{mNickName}"
+                                  th:style="'background-color: yellow; font-weight:bold;'"
+                                  th:case="4">
+                            </span>
+                            <span class="hbt"
+                                  th:text="*{mNickName}"
+                                  th:style="'background-color: green; color: white; font-weight:bold;'"
+                                  th:case="5">
+                            </span>
+                            <span class="hbt"
+                                  th:text="*{mNickName}"
+                                  th:style="'background-color: blue; color: white; font-weight:bold;'"
+                                  th:case="6">
+                            </span>
+                            <span class="hbt"
+                                  th:text="*{mNickName}"
+                                  th:style="'background-color: purple; color: white; font-weight:bold;'"
+                                  th:case="7">
+                            </span>
+                            <span class="hbt"
+                                  th:text="*{mNickName}"
+                                  th:style="'background-color: silver; font-weight:bold;'"
+                                  th:case="8">
+                            </span>
+                            <span class="hbt"
+                                  th:text="*{mNickName}"
+                                  th:style="'background-color: gold; font-weight:bold;'"
+                                  th:case="9">
+                            </span>
+                            <span class="hbt"
+                                  th:text="*{mNickName}"
+                                  th:style="'background-color: aqua; font-weight:bold;'"
+                                  th:case="10">
+                            </span>
+                        </div>
                     </td>
                 </tr>
             </tbody>

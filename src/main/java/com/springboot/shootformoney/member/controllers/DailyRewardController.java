@@ -22,6 +22,7 @@ public class DailyRewardController {
 
     @GetMapping("/reward")
     public String dailyReward(Model model){
+        model.addAttribute("pageTitle","출석 보상");
         try {
             if (memberUtil.isLogin()) {
                 Long mNo = memberUtil.getMember().getMNo();

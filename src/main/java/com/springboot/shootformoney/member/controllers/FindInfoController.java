@@ -26,6 +26,7 @@ public class FindInfoController {
     // 회원 아이디 찾기
     @GetMapping("/findid")
     public String findId(Model model){
+        model.addAttribute("pageTitle","아이디 찾기");
         model.addAttribute("findIdForm",new FindIdForm());
         return "member/findid";
     }
@@ -56,6 +57,7 @@ public class FindInfoController {
     // 회원 비밀번호 찾기
     @GetMapping("/findpw")
     public String findPw(Model model){
+        model.addAttribute("pageTitle","비밀번호 찾기");
         model.addAttribute("findPwForm",new FindPwForm());
         return "member/findpw";
     }

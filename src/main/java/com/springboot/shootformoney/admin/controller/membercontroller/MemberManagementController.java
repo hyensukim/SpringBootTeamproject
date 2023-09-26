@@ -86,7 +86,7 @@ public class MemberManagementController {
     @DeleteMapping("/{mId}")
     public RedirectView deleteMember(@PathVariable String mId) {
         memberManagementService.deleteMember(mId);
-        return new RedirectView("/admin/member/memberList/all");
+        return new RedirectView("/admin/member/memberList");
     }
 
     // 회원 권한 변경
@@ -94,7 +94,7 @@ public class MemberManagementController {
     public RedirectView changeMemberRole(@PathVariable String mId, @RequestParam("newRole") Role newRole) {
         try {
             memberManagementService.changeMemberRole(mId, newRole);
-            return new RedirectView("/admin/member/memberList/all");
+            return new RedirectView("/admin/member/memberList");
         } catch (IllegalArgumentException e) {
             // 예외가 발생시 해당 예외 메시지와 함께 HTTP 상태 코드 400(Bad Request)를 반환
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);

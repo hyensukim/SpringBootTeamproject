@@ -40,6 +40,7 @@ public class MyPageController {
     // 마이페이지 들어가기 전 비밀번호 확인
     @GetMapping("/checkpw")
     public String checkPw(Model model){
+        model.addAttribute("pageTitle","비밀번호 확인");
         if(!memberUtil.isLogin()){
             String script = String.format("Swal.fire({title:'로그인 여부 확인',text:'로그인 후 입장해주세요.',icon:'warning'})" +
                     ".then(function(){location.href='/member/login';})");
@@ -47,7 +48,6 @@ public class MyPageController {
             return "script/sweet";
         }
         model.addAttribute("memberInfo",new MemberInfo());
-        model.addAttribute("pageTitle","비밀번호 확인");
         return "member/mypage/checkpw";
     }
 

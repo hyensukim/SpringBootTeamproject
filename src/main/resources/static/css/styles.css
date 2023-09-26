@@ -11266,6 +11266,21 @@ button[type='submit']:not(.no-style){
   display: flex;
   justify-content: center; /* 가로 정렬 */
   align-items: center; /* 세로 정렬 */
+  height: 45px;
+}
+
+/*.btns a, form{*/
+/*  text-decoration: none;*/
+/*  color: white;*/
+/*  display: inline-block;*/
+/*  background: #4d5154;*/
+/*  height: 45px;*/
+/*}*/
+
+.btns a{
+  padding-right: 10px;
+  padding-top: 1px;
+  line-height: 45px;
 }
 
 .form-group {
@@ -11793,4 +11808,9 @@ aside {
 
 .progress-bar a:hover {
   color: #007bff; /* 호버 시 링크 텍스트 색상 변경 */
+}
+
+/*댓글 목록*/
+.comment-list{
+  position: relative;
 }

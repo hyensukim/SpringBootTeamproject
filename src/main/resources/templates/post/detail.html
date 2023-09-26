@@ -16,7 +16,58 @@
       <dl>
         <dt>별명 </dt>
         <dd th:if="${post!=null}">
-          <th:block th:replace="~{outlines/mypage/_levelblock::common}"></th:block>
+          <div class="nickname-div" th:switch="*{member.mLevel}">
+            <span class="hbt"
+                  th:text="*{member.mNickName}"
+                  th:case="1"
+                  th:style="'color: block;font-weight:bold;'">
+            </span>
+            <span class="hbt"
+                  th:text="*{member.mNickName}"
+                  th:style="'background-color: red; color: block; font-weight:bold;' "
+                  th:case="2">
+                            </span>
+            <span class="hbt"
+                  th:text="*{member.mNickName}"
+                  th:style="'background-color: orange; font-weight:bold; color: block;'"
+                  th:case="3">
+                            </span>
+            <span class="hbt"
+                  th:text="*{member.mNickName}"
+                  th:style="'background-color: yellow; font-weight:bold; color: block;'"
+                  th:case="4">
+                            </span>
+            <span class="hbt"
+                  th:text="*{member.mNickName}"
+                  th:style="'background-color: green; color: white; font-weight:bold;'"
+                  th:case="5">
+                            </span>
+            <span class="hbt"
+                  th:text="*{member.mNickName}"
+                  th:style="'background-color: blue; color: block; font-weight:bold;'"
+                  th:case="6">
+                            </span>
+            <span class="hbt"
+                  th:text="*{member.mNickName}"
+                  th:style="'background-color: purple; color: block; font-weight:bold;'"
+                  th:case="7">
+                            </span>
+            <span class="hbt"
+                  th:text="*{member.mNickName}"
+                  th:style="'background-color: silver; font-weight:bold; color: block;'"
+                  th:case="8">
+                            </span>
+            <span class="hbt"
+                  th:text="*{member.mNickName}"
+                  th:style="'background-color: gold; font-weight:bold; color: block;'"
+                  th:case="9">
+                            </span>
+            <span class="hbt"
+                  th:text="*{member.mNickName}"
+                  th:style="'background-color: aqua; font-weight:bold; color: block;'"
+                  th:case="10">
+                            </span>
+          </div>
         </dd>
       </dl>
       <dl>
@@ -50,14 +101,65 @@
     </div>
 
     <!--    댓글 목록-->
-    <th:block th:if="${commentList != null}">
-      <ul th:each="comment,status : ${commentList}" th:object="${comment}">
-        <li>
-          <div>
-            <div th:text="*{member.mNickName}"></div>
+    <th:block  th:if="${commentList != null}">
+      <ul class="comment-list" >
+        <li th:each="comment,status : ${commentList}" th:object="${comment}">
+          <div class="comment-block">
+            <div class="nickname-div" th:switch="*{member.mLevel}">
+            <span class="hbt"
+                  th:text="*{member.mNickName}"
+                  th:case="1"
+                  th:style="'color: block;font-weight:bold;'">
+            </span>
+              <span class="hbt"
+                    th:text="*{member.mNickName}"
+                    th:style="'background-color: red; color: block; font-weight:bold;' "
+                    th:case="2">
+                            </span>
+              <span class="hbt"
+                    th:text="*{member.mNickName}"
+                    th:style="'background-color: orange; font-weight:bold; color: block;'"
+                    th:case="3">
+                            </span>
+              <span class="hbt"
+                    th:text="*{member.mNickName}"
+                    th:style="'background-color: yellow; font-weight:bold; color: block;'"
+                    th:case="4">
+                            </span>
+              <span class="hbt"
+                    th:text="*{member.mNickName}"
+                    th:style="'background-color: green; color: white; font-weight:bold;'"
+                    th:case="5">
+                            </span>
+              <span class="hbt"
+                    th:text="*{member.mNickName}"
+                    th:style="'background-color: blue; color: block; font-weight:bold;'"
+                    th:case="6">
+                            </span>
+              <span class="hbt"
+                    th:text="*{member.mNickName}"
+                    th:style="'background-color: purple; color: block; font-weight:bold;'"
+                    th:case="7">
+                            </span>
+              <span class="hbt"
+                    th:text="*{member.mNickName}"
+                    th:style="'background-color: silver; font-weight:bold; color: block;'"
+                    th:case="8">
+                            </span>
+              <span class="hbt"
+                    th:text="*{member.mNickName}"
+                    th:style="'background-color: gold; font-weight:bold; color: block;'"
+                    th:case="9">
+                            </span>
+              <span class="hbt"
+                    th:text="*{member.mNickName}"
+                    th:style="'background-color: aqua; font-weight:bold; color: block;'"
+                    th:case="10">
+                            </span>
+            </div>
             <div th:text="*{cContent}"></div>
           </div>
-          <div>
+          <div ckass="comment-delete">
             <form th:action="@{/comment/{cNo}/delete(cNo=${comment.cNo})}" method="post"
                   onsubmit="return confirm('댓글 삭제를 진행하시겠습니까?')">
               <input type="hidden" name="_method" value="delete"/>
@@ -69,15 +171,17 @@
     </th:block>
 
     <!--  댓글 작성-->
-    <form method="post" th:action="@{/post/detail/{pNo}(pNo=${pNo})}" autocomplete="off">
-      <div>
-        <label for="comment-nickname">작성자 : </label>
-        <input id="comment-nickname" type="text" name="nickname" th:value="${session.memberInfo.mNickName}" readonly/>
-      </div>
-      <div>
-        <label for="comment-content">내용 : </label>
-        <textarea id="comment-content" name="cContent" th:value="${commentDto.cContent}"
-                  placeholder="400자 미만으로 작성해주세요."></textarea>
+    <form class="comment-form" method="post" th:action="@{/post/detail/{pNo}(pNo=${pNo})}" autocomplete="off">
+      <div class="comment-input">
+        <div>
+          <label for="comment-nickname">작성자 : </label>
+          <input id="comment-nickname" type="text" name="nickname" th:value="${session.memberInfo.mNickName}" readonly/>
+        </div>
+        <div>
+          <label for="comment-content">내용 : </label>
+          <textarea id="comment-content" name="cContent" th:value="${commentDto.cContent}"
+                    placeholder="400자 미만으로 작성해주세요."></textarea>
+        </div>
       </div>
       <button type="submit">댓글 작성</button>
     </form>

@@ -49,10 +49,12 @@ public class SecurityConfig {
          * 권한 설정
          */
         http.authorizeHttpRequests(f->f
-                    .requestMatchers("/member/login").anonymous()
-                    .requestMatchers("/member/mypage/**").authenticated() // 회원 전용
-                    .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")// 관리자 전용\
-                    .anyRequest().permitAll()
+            .requestMatchers("/member/login").anonymous()
+            .requestMatchers("/member/mypage/**").authenticated() // 회원 전용
+            .requestMatchers("/post/**").authenticated()
+            .requestMatchers("/list/unstarted/**").authenticated()
+            .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")// 관리자 전용\
+            .anyRequest().permitAll()
         );
 
         /**

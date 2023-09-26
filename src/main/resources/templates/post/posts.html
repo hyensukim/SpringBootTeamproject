@@ -56,7 +56,57 @@
             <td th:text="${status.index+1}"></td>
             <td th:text="${post.member.mId}"></td> <!-- 회원 ID 표시 -->
             <td th:if="${post != null}">
-                <th:block th:replace="~{outlines/mypage/_levelblock::common}"></th:block>
+                <div class="nickname-div" th:switch="${post.member.mLevel}">
+                    <span
+                          th:text="${post.member.mNickName}"
+                          th:case="1"
+                          th:style="'color: block;font-weight:bold;'">
+                    </span>
+                    <span th:text="${post.member.mNickName}"
+                          th:style="'background-color: red; color:black; font-weight:bold;' "
+                          th:case="2">
+                            </span>
+                    <span class="hbt"
+                          th:text="${post.member.mNickName}"
+                          th:style="'background-color: orange; font-weight:bold; color:black;'"
+                          th:case="3">
+                            </span>
+                    <span class="hbt"
+                          th:text="${post.member.mNickName}"
+                          th:style="'background-color: yellow; font-weight:bold; color:black;'"
+                          th:case="4">
+                            </span>
+                    <span class="hbt"
+                          th:text="${post.member.mNickName}"
+                          th:style="'background-color: green; color:black; font-weight:bold;'"
+                          th:case="5">
+                            </span>
+                    <span class="hbt"
+                          th:text="${post.member.mNickName}"
+                          th:style="'background-color: blue; color:black; font-weight:bold;'"
+                          th:case="6">
+                            </span>
+                    <span class="hbt"
+                          th:text="${post.member.mNickName}"
+                          th:style="'background-color: purple; color:black; font-weight:bold;'"
+                          th:case="7">
+                            </span>
+                    <span class="hbt"
+                          th:text="${post.member.mNickName}"
+                          th:style="'background-color: silver; font-weight:bold; color:black;'"
+                          th:case="8">
+                            </span>
+                    <span class="hbt"
+                          th:text="${post.member.mNickName}"
+                          th:style="'background-color: gold; font-weight:bold; color:black;'"
+                          th:case="9">
+                            </span>
+                    <span class="hbt"
+                          th:text="${post.member.mNickName}"
+                          th:style="'background-color: aqua; font-weight:bold; color:black;'"
+                          th:case="10">
+                            </span>
+                </div>
             </td> <!-- 회원 별명 표시 -->
             <td th:text="${post.board.bName}"></td>
             <td><a th:href="@{/post/detail/{pNo}(pNo=${post.pNo})}" th:text="${post.pTitle}"></a></td>

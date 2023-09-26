@@ -28,6 +28,7 @@ public class PostController {
     //페이징 + 검색 전체 목록 조회
     @GetMapping("/all")
     public String getAllPostsByTitle(@ModelAttribute PostSearchInfo postSearchInfo, Model model) {
+        model.addAttribute("pageTitle","게시글 전체 목록");
         //검색 옵션과 검색어를 이용하여 게시글 검색
         Page<Post> pageList = postService.gets(postSearchInfo);
         List<Post> postList = pageList.getContent();
@@ -47,6 +48,7 @@ public class PostController {
     // 게시글 작성
     @GetMapping("/create")
     public String createPostForm(@ModelAttribute("postDto") PostDTO postDto, Model model) {
+        model.addAttribute("pageTitle","게시글 작성");
         if(memberUtil.isLogin()) {
             List<Board> boards = boardRepository.findAll();
             model.addAttribute("boards", boards);
@@ -80,6 +82,7 @@ public class PostController {
     @GetMapping("/all/{bNo}")
     public String getAllPostsByBoard(@PathVariable Long bNo, @ModelAttribute PostSearchInfo postSearchInfo,
                                      Model model) {
+        model.addAttribute("pageTitle","게시글 목록 조회");
         Page<Post> pageList = postService.findByBoardWithPage(postSearchInfo,bNo);
         List<Post> postList = pageList.getContent();
 
@@ -103,6 +106,7 @@ public class PostController {
     // 단일 게시글 조회
     @GetMapping("/detail/{pNo}")
     public String getOnePost(@PathVariable Long pNo, Model model) {
+        model.addAttribute("pageTitle","게시글 상세");
         try {
             Post post = postService.findPostWithView(pNo);
             List<Comment> commentList = commentService.getList(pNo);
@@ -145,6 +149,7 @@ public class PostController {
     /* 게시글 수정 */
     @GetMapping("/{pNo}/edit")
     public String editPost(@PathVariable Long pNo, Model model){
+        model.addAttribute("pageTitle","게시글 수정");
         Post post = postService.findPost(pNo);
         post.decreaseViewCount();
         PostDTO dto = PostDTO.of(post);

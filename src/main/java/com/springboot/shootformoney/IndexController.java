@@ -25,6 +25,7 @@ public class IndexController {
     private final EuroPoolService euroPoolService;
     @GetMapping
     public String index(Model model){
+        model.addAttribute("pageTitle","Main");
         List<Member> rank = rankListService.getRankList();
         model.addAttribute("rank",rank);
 

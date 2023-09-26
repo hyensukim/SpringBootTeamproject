@@ -36,12 +36,16 @@ public class LevelGradeUtil {
         setMemberStack(member);
         Long stack = member.getMStack();
 
-        if(stack >= 10000 * 10000){
+        if(stack >= 10000){
             member.setGrade(Grade.EUROPA);
+        }else if(member.getGrade() == Grade.EUROPA){
+            member.setGrade(Grade.CONFERENCE);
         }
 
-        if (stack >= 20000 * 10000) {
+        if (stack >= 20000) {
             member.setGrade(Grade.CHAMPIONS);
+        }else if(member.getGrade() == Grade.CHAMPIONS){
+            member.setGrade(Grade.EUROPA);
         }
 
         return member;

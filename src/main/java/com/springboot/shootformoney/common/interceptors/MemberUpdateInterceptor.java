@@ -32,47 +32,37 @@ public class MemberUpdateInterceptor implements HandlerInterceptor {
             MemberInfo memberInfo = memberUtil.getMember();
             Long mNo = memberInfo.getMNo();
             Member member = null;
-            LoginData loginData = null;
-            String nickname = "";
-            Integer level= 0;
-            String formattedEuro = "";
-
             Optional<Member> om = memberRepository.findById(mNo);
             if(om.isPresent()){
                 member = om.get();
             }
+            String nickname = member.getMNickName();
+            req.setAttribute("nickname",nickname);
 
             Euro euro = euroRepository.findBymNo(mNo);
-
-            if(member != null){
-                member = levelRankUtil.levelUp(mNo);
-                member = levelRankUtil.gradeUp(member);
-                loginData = member.getLoginData();
-                level = member.getMLevel();
-                nickname = member.getMNickName();
-            }
+            member = levelRankUtil.levelUp(mNo);
+            member = levelRankUtil.gradeUp(member);
+            LoginData loginData = member.getLoginData();
+            Integer level = member.getMLevel();
+            String formattedEuro = "";
 
             if(euro != null){
                 formattedEuro = String.format("%,d",euro.getValue());
             }
 
             req.setAttribute("mNo",mNo);
-            req.setAttribute("nickname",nickname);
             req.setAttribute("formattedEuro",formattedEuro);
             req.setAttribute("level",level);
 
-
-            if(loginData == null && member!= null){
+            if(loginData == null){
                 loginData = new LoginData();
                 loginData.setLoginDate(LocalDateTime.now());
                 member.setLoginData(loginData);
-            }else if(loginData != null){
+            }else{
                 loginData.setLoginDate(LocalDateTime.now());
             }
 
-            if(member != null) {
-                memberRepository.saveAndFlush(member);
-            }
+            memberRepository.saveAndFlush(member);
         }
         return true;
     }
