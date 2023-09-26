@@ -101,7 +101,7 @@ public class PostManagementController {
     @DeleteMapping("/deleteMultiple")
     public String deleteMultiplePosts(@RequestParam("selectPosts") List<Long> pNos) {
         postFindService.deleteMultiplePosts(pNos);
-        return "redirect:/admin/post/postList/all";
+        return "redirect:/admin/post/postList";
     }
 
 }
