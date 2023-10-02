@@ -14,10 +14,6 @@ public class LoginData implements Serializable {
     @Column(name="l_no")
     private Long lNo;
 
-//    @OneToOne(fetch=FetchType.LAZY)
-//    @JoinColumn
-//    private Member member;
-
     private LocalDateTime loginDate;
 
     private LocalDateTime lastLoginDate;

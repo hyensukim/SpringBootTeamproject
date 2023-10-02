@@ -11108,6 +11108,11 @@ main{
   text-align: center;
 }
 
+.betBtn {
+  width : 50px;
+  height: 60px;
+}
+
 .betBtn2 {
   width: 100px;
   height: 100px;
@@ -11458,6 +11463,7 @@ form[name="frmMyPage"] dd input[type='password']{
 }
 
 #attendance-button {
+  margin-right: 10px;
   background-color:#4d5154;
   color:white;
 }

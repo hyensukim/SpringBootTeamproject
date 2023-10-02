@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -36,23 +37,19 @@ public class MemberUpdateInterceptor implements HandlerInterceptor {
             if(om.isPresent()){
                 member = om.get();
             }
-            String nickname = member.getMNickName();
-            req.setAttribute("nickname",nickname);
-
             Euro euro = euroRepository.findBymNo(mNo);
             member = levelRankUtil.levelUp(mNo);
             member = levelRankUtil.gradeUp(member);
             LoginData loginData = member.getLoginData();
             Integer level = member.getMLevel();
+            String nickname = member.getMNickName();
             String formattedEuro = "";
+            String remain = null;
+
 
             if(euro != null){
                 formattedEuro = String.format("%,d",euro.getValue());
             }
-
-            req.setAttribute("mNo",mNo);
-            req.setAttribute("formattedEuro",formattedEuro);
-            req.setAttribute("level",level);
 
             if(loginData == null){
                 loginData = new LoginData();
@@ -61,6 +58,28 @@ public class MemberUpdateInterceptor implements HandlerInterceptor {
             }else{
                 loginData.setLoginDate(LocalDateTime.now());
             }
+
+            /* 출석 이벤트 후 이벤트 받기 까지 남은 시간 S */
+            if(loginData.getLastLoginDate() != null) {
+                LocalDateTime nextTime = loginData.getLastLoginDate().plusDays(1);
+                LocalDateTime now = LocalDateTime.now();
+                Duration duration = Duration.between(nextTime, now).abs();
+                long sec = duration.getSeconds();
+
+                long hours = sec / 3600;
+                long minutes = ((sec % 3600) / 60);
+
+                if (now.isBefore(nextTime)) {
+                    remain = String.format("다음 출석까지 %02d시 %02d분 남았습니다.", hours, minutes);
+                }
+            }
+            /* 출석 이벤트 후 이벤트 받기 까지 남은 시간 E */
+
+            req.setAttribute("nickname",nickname);
+            req.setAttribute("remain",remain);
+            req.setAttribute("mNo",mNo);
+            req.setAttribute("formattedEuro",formattedEuro);
+            req.setAttribute("level",level);
 
             memberRepository.saveAndFlush(member);
         }

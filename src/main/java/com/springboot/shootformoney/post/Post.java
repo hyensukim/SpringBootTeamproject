@@ -44,7 +44,7 @@ public class Post extends BaseEntity {
         this.pContent= content;
     }
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     @OrderBy("createdAt desc")//댓글 관련(정렬)
     private List<Comment> comments;
 

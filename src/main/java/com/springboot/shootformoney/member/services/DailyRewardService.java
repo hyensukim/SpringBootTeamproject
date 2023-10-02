@@ -34,7 +34,6 @@ public class DailyRewardService {
                 member.getLoginData().setLastLoginDate(now);
                 memberRepository.save(member);
             }
-
             if (lastLoginData != null && loginDate.isBefore(lastLoginData.plusDays(1))) {
                 throw new RuntimeException("출석 포인트를 이미 지급 받았습니다.");
             }
