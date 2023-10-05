@@ -19,6 +19,7 @@
 
 ## 2. 개발 환경
 
+![spec](https://raw.githubusercontent.com/hyensukim/SpringBootTeamproject/main/image/spec.png)
 - Intelli J
 - Spring Boot framework 3.1.3 ver.
 - Spring-Security
