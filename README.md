@@ -171,9 +171,9 @@
 
 # 5. ERD 작성
 
-엔티티 관계도_ver.1
+[엔티티 관계도_ver.1](https://raw.githubusercontent.com/hyensukim/SpringBootTeamproject/main/image/%EC%BB%A4%EB%AE%A4%EB%8B%88%ED%8B%B0%20(v1).png)
 
-엔티티 관계도_ver.2
+[엔티티 관계도_ver.2](https://raw.githubusercontent.com/hyensukim/SpringBootTeamproject/main/image/%EC%BB%A4%EB%AE%A4%EB%8B%88%ED%8B%B0%20(v2).png)
 
 [엔티티 관계도_final](https://raw.githubusercontent.com/hyensukim/SpringBootTeamproject/main/image/%EC%BB%A4%EB%AE%A4%EB%8B%88%ED%8B%B0%20(%EC%B5%9C%EC%A2%85).png)
 
