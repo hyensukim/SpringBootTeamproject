@@ -5,7 +5,7 @@ server:
 # MySQL 연동 
 spring:
   profiles:
-    active : db,mail
+    active : db,mail,football
   datasource:
     driver-class-name: ${driver-class-name-db}
     url: ${url-db}
