@@ -1,0 +1,4 @@
+driver-class-name-db: com.mysql.cj.jdbc.Driver
+url-db : jdbc:mysql://localhost:3306/shootformoney
+user-name-db : root
+password-db : aA!123456

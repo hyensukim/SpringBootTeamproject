@@ -35,3 +35,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### 개인 정보 보호 ###
+**/main/resources/application-db.yml
+**/main/resources/application-mail.yml
+**/main/resources/application-football.yml
+

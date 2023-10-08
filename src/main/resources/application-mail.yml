@@ -1,0 +1,11 @@
+# 메일 정보
+host : smtp.gmail.com
+port : 587
+user-name-mail : crazymin180@gmail.com
+password-mail : zumb zjje zocn cdmb
+
+# site 설정
+siteName : shootformoney
+siteMainUri : http://localhost:8080
+emailFrom : test@localhost
+emailFromName : admin

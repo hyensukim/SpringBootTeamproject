@@ -4,12 +4,13 @@ server:
 
 # MySQL 연동 
 spring:
+  profiles:
+    active : db,mail
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/shootformoney
-    username: root
-    password: aA!123456
-
+    driver-class-name: ${driver-class-name-db}
+    url: ${url-db}
+    username: ${user-name-db}
+    password: ${password-db}
   jpa:
     hibernate:
       ddl-auto: update
@@ -31,21 +32,21 @@ spring:
 
   # mail 설정
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: crazymin180@gmail.com
-    password: zumb zjje zocn cdmb
+    host: ${host}
+    port: ${port}
+    username: ${user-name-mail}
+    password: ${password-mail}
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
-custom:
-  siteName: shootformoney
-  siteMainUri: http://localhost:8080
-  emailFrom: test@localhost
-  emailFromName: admin
+            custom:
+              siteName: ${siteName}
+              siteMainUri: ${siteMainUri}
+              emailFrom: ${emailFrom}
+              emailFromName: ${emailFromName}
 
 logging.level:
   org.hibernate.SQL: debug
@@ -53,6 +54,6 @@ logging.level:
 # football-data.org API 연동
 football:
   api:
-    key: e8d32766f0054b69984dd581e9ddcb62
-    base-url: https://api.football-data.org/v4
+    key: ${key-football}
+    base-url: ${base-url-football}
 
