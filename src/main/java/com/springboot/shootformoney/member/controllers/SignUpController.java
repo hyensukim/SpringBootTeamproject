@@ -1,6 +1,7 @@
 package com.springboot.shootformoney.member.controllers;
 
 import com.springboot.shootformoney.member.dto.SignUpForm;
+import com.springboot.shootformoney.member.exceptions.MemberIdDupException;
 import com.springboot.shootformoney.member.services.MemberSaveService;
 import com.springboot.shootformoney.member.validators.SignUpValidator;
 import jakarta.validation.Valid;
@@ -9,11 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,9 +35,7 @@ public class SignUpController {
 
         signUpValidator.validate(signUpForm,errors);
 
-        if(errors.hasErrors()){
-            return "member/signup";
-        }
+        if(errors.hasErrors()) return "member/signup";
 
         memberSaveService.save(signUpForm);
 
@@ -45,4 +44,12 @@ public class SignUpController {
         return "redirect:/member/login";
     }
 
+//    @GetMapping("/checkMemberId")
+//    @ResponseBody
+//    public Map<String,Boolean> checkMemberId(@RequestParam("mId") String mId){
+//        boolean isDuplicate = memberSaveService.checkDupId(mId);
+//        Map<String,Boolean> response = new HashMap<>();
+//        response.put("isDuplicate",isDuplicate);
+//        return response;
+//    }
 }

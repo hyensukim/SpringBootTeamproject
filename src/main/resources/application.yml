@@ -42,11 +42,11 @@ spring:
           auth: true
           starttls:
             enable: true
-            custom:
-              siteName: ${siteName}
-              siteMainUri: ${siteMainUri}
-              emailFrom: ${emailFrom}
-              emailFromName: ${emailFromName}
+custom:
+  siteName: ${siteName}
+  siteMainUri: ${siteMainUri}
+  emailFrom: ${emailFrom}
+  emailFromName: ${emailFromName}
 
 logging.level:
   org.hibernate.SQL: debug

@@ -5,6 +5,7 @@ import com.springboot.shootformoney.member.entity.Euro;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.enum_.Grade;
 import com.springboot.shootformoney.member.enum_.Role;
+import com.springboot.shootformoney.member.exceptions.MemberIdDupException;
 import com.springboot.shootformoney.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,5 +47,9 @@ public class MemberSaveService {
         member.setMPassword(passwordEncoder.encode(member.getMPassword()));
 
         return memberRepository.saveAndFlush(member);
+    }
+
+    public boolean checkDupId(String mId){
+        return memberRepository.isPresent(mId);
     }
 }

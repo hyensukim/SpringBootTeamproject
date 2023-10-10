@@ -37,4 +37,12 @@ public interface MemberRepository extends JpaRepository<Member, Long>, QuerydslP
     Member findBymIdAndmEmail(String mId, String mEmail); // 아이디 + 이메일로 조회
     @Query("SELECT m FROM Member m ORDER BY m.mLevel DESC, m.mStack DESC")
     List<Member> findByMemberOrderBymLevelAAndMStack();
+
+    default boolean isPresent(String mId){
+        Member member = findBymId(mId);
+        if(member != null){
+            return false;
+        }
+        return true;
+    }
 }   
