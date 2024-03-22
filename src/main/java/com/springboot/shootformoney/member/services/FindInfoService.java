@@ -4,10 +4,7 @@ import com.springboot.shootformoney.member.dto.FindIdForm;
 import com.springboot.shootformoney.member.dto.FindPwForm;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.repository.MemberRepository;
-import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service

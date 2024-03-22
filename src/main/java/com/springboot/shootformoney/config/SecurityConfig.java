@@ -1,7 +1,5 @@
 package com.springboot.shootformoney.config;
 
-import com.springboot.shootformoney.member.repository.EuroRepository;
-import com.springboot.shootformoney.member.services.DailyRewardService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.context.annotation.Bean;
@@ -12,8 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @Configuration
@@ -27,23 +23,22 @@ public class SecurityConfig {
          */
 
         http.formLogin(f -> f
-            .loginPage("/member/login")
-            .usernameParameter("mId")
-            .passwordParameter("mPassword")
-            .successHandler(new LoginSuccessHandler())
-            .failureHandler(new LoginFailureHandler())
+                .loginPage("/member/login")
+                .usernameParameter("mId")
+                .passwordParameter("mPassword")
+                .successHandler(new LoginSuccessHandler())
+                .failureHandler(new LoginFailureHandler())
             ).logout(f -> f
-            .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 로그아웃 처리 url
-            .logoutSuccessUrl("/member/login")// 로그아웃 성공 후 이동 페이지
-            .deleteCookies("JSESSIONID", "saveId")// 로그아웃 이후 쿠키 삭제
-            .addLogoutHandler((req, resp, authentication) -> {
-                HttpSession session = req.getSession();
-                session.invalidate();//세션 삭제
-            })//로그아웃 처리
-            .logoutSuccessHandler((req, resp, authentication) -> {
-                resp.sendRedirect("/member/login");
-            })//로그아웃 성공 후 처리
-        );
+                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 로그아웃 처리 url
+                .logoutSuccessUrl("/member/login")// 로그아웃 성공 후 이동 페이지
+                .deleteCookies("JSESSIONID", "saveId")// 로그아웃 이후 쿠키 삭제
+                .addLogoutHandler((req, resp, authentication) -> {
+                    HttpSession session = req.getSession();
+                    session.invalidate();})//세션 삭제
+                .logoutSuccessHandler((req, resp, authentication) -> {
+                    resp.sendRedirect("/member/login");
+                })
+            );
 
         /**
          * 권한 설정
@@ -71,14 +66,14 @@ public class SecurityConfig {
                     }
                 })
         );
-
+        
+        /**
+         * csrf 관련 처리
+         */
         http.csrf(csrf->csrf
                 .ignoringRequestMatchers(new AntPathRequestMatcher("/member/resetpw/**"))
                 .ignoringRequestMatchers(new AntPathRequestMatcher("/admin/member/**"))
                 .ignoringRequestMatchers(new AntPathRequestMatcher("/member/mypage/**"))
-                        //.ignoringRequestMatchers(new AntPathRequestMatcher("/bet/cancel/**"))
-//                .ignoringRequestMatchers(new AntPathRequestMatcher("https://api.football-data.org/v4"))
-//                .ignoringRequestMatchers(new AntPathRequestMatcher("/game/service/**"))
         );
 
         http.headers(f->f.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));

@@ -1,9 +1,5 @@
 package com.springboot.shootformoney.member.controllers;
 
-import com.springboot.shootformoney.member.dto.MemberInfo;
-import com.springboot.shootformoney.member.entity.Member;
-import com.springboot.shootformoney.member.exceptions.MemberNotExistException;
-import com.springboot.shootformoney.member.repository.MemberRepository;
 import com.springboot.shootformoney.member.services.DailyRewardService;
 import com.springboot.shootformoney.member.utils.MemberUtil;
 import lombok.RequiredArgsConstructor;

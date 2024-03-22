@@ -1,18 +1,11 @@
 package com.springboot.shootformoney.member.services;
 
-import com.springboot.shootformoney.member.dto.MemberInfo;
 import com.springboot.shootformoney.member.entity.Euro;
-import com.springboot.shootformoney.member.entity.LoginData;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.exceptions.MemberNotExistException;
 import com.springboot.shootformoney.member.repository.EuroRepository;
 import com.springboot.shootformoney.member.repository.MemberRepository;
-import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

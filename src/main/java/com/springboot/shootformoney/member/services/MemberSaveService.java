@@ -1,11 +1,9 @@
 package com.springboot.shootformoney.member.services;
 
 import com.springboot.shootformoney.member.dto.SignUpForm;
-import com.springboot.shootformoney.member.entity.Euro;
 import com.springboot.shootformoney.member.entity.Member;
 import com.springboot.shootformoney.member.enum_.Grade;
 import com.springboot.shootformoney.member.enum_.Role;
-import com.springboot.shootformoney.member.exceptions.MemberIdDupException;
 import com.springboot.shootformoney.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
